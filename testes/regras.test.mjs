@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { regraCatalogo, regraHabilidades, regraReferencias, regraTexto, regraFimDeLinha, checarTudo } from '../ferramentas/lib/regras.mjs';
+import { regraCatalogo, regraHabilidades, regraReferencias, regraTexto, regraFimDeLinha, regraReferenciasPorEdicao, checarTudo } from '../ferramentas/lib/regras.mjs';
 
 function pluginFalso(grupo, arquivos) {
   const dir = mkdtempSync(join(tmpdir(), 'plugin-'));
@@ -82,6 +82,25 @@ test('regraCatalogo: sem metadata.version, sem plugin.json, name trocado e fora 
   assert.match(regraCatalogo(repoFalso({ semManifesto: true })).join('\n'), /sem \.claude-plugin\/plugin\.json/);
   assert.match(regraCatalogo(repoFalso({ manifesto: { name: 'y' } })).join('\n'), /plugin\.json diz name "y"/);
   assert.match(regraCatalogo(repoFalso({ entrada: { source: './outro/x' } })).join('\n'), /fora de plugins/);
+});
+
+test('regraReferenciasPorEdicao: referência a habilidade fora da edição é erro, salvo com "se instalada"', () => {
+  const raiz = mkdtempSync(join(tmpdir(), 'ed-'));
+  const grava = (rel, txt) => { mkdirSync(join(raiz, rel, '..'), { recursive: true }); writeFileSync(join(raiz, rel), txt); };
+  const base = 'plugins/motores/x';
+  const ref = (alvo) => '${CLAUDE_PLUGIN_ROOT}/skills/' + alvo;
+  grava('.claude-plugin/marketplace.json', JSON.stringify({ metadata: { version: '1.0.0' }, plugins: [{ name: 'x', source: './' + base, category: 'motores' }] }));
+  grava(base + '/.claude-plugin/plugin.json', JSON.stringify({ name: 'x', version: '1.0.0' }));
+  grava('edicoes.json', JSON.stringify({ edicoes: ['essencial', 'completa'], plugins: { x: { essencial: ['a'], completa: ['b'] } } }));
+  grava(base + '/skills/a/SKILL.md', '---\nname: a\ndescription: d\n---\n');
+  grava(base + '/skills/b/SKILL.md', '---\nname: b\ndescription: d\n---\n');
+  grava(base + '/commands/ruim.md', `rode ${ref('b/scripts/z.py')}\n`);
+  grava(base + '/commands/boa.md', `use ${ref('b/scripts/z.py')}, se instalada\nuse ${ref('a/x')}\n`);
+  const erros = regraReferenciasPorEdicao(raiz);
+  assert.equal(erros.length, 1);
+  assert.match(erros[0], /x: commands\/ruim\.md:1 .*"b".*essencial/);
+  grava(base + '/commands/ruim.md', `rode ${ref('b/scripts/z.py')} se existir\n`);
+  assert.deepEqual(regraReferenciasPorEdicao(raiz), []);
 });
 
 test('o repositório atual passa em todas as regras', () => {

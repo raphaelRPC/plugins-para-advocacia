@@ -3,7 +3,7 @@ import { join, basename, dirname } from 'node:path';
 import { listarArquivos } from './arquivos.mjs';
 import { lerCatalogo } from './catalogo.mjs';
 import { lerFrontmatter } from './frontmatter.mjs';
-import { lerEdicoes, conferirEdicoes } from './edicoes.mjs';
+import { lerEdicoes, conferirEdicoes, habilidadesDaEdicao, arquivosDaEdicao } from './edicoes.mjs';
 
 const GRUPOS_COM_REGRA_DE_TEXTO = new Set(['fundacao', 'motores']);
 const PROIBIDAS = /\b(evento|aulas?|nivelamento|apostila|alunos?|ADV 6|RPC)\b/i;
@@ -86,8 +86,29 @@ export function regraEdicoes(raiz) {
   return [...semPlugin, ...conferirEdicoes(config, habilidades)];
 }
 
+export function regraReferenciasPorEdicao(raiz) {
+  const erros = [];
+  const config = lerEdicoes(raiz);
+  const { plugins } = lerCatalogo(raiz);
+  for (const p of plugins.filter(x => config.plugins[x.nome] && existsSync(x.dir))) {
+    const todos = listarArquivos(p.dir).filter(r => /\.(md|json|sh|py)$/.test(r));
+    for (const edicao of config.edicoes) {
+      const permitidas = habilidadesDaEdicao(config, p.nome, edicao);
+      for (const rel of arquivosDaEdicao(todos, permitidas)) {
+        ler(p, rel).split('\n').forEach((linha, i) => {
+          if (/se instalada|se existir/i.test(linha)) return;
+          for (const m of linha.matchAll(/\$\{CLAUDE_PLUGIN_ROOT\}\/skills\/([A-Za-z0-9_.-]+)/g)) {
+            if (!permitidas.has(m[1])) erros.push(`${p.nome}: ${rel}:${i + 1} cita a habilidade "${m[1]}", que a edição ${edicao} não inclui (use "se instalada" na mesma linha)`);
+          }
+        });
+      }
+    }
+  }
+  return erros;
+}
+
 export function checarTudo(raiz) {
-  const erros = [...regraCatalogo(raiz), ...regraEdicoes(raiz)];
+  const erros = [...regraCatalogo(raiz), ...regraEdicoes(raiz), ...regraReferenciasPorEdicao(raiz)];
   for (const p of lerCatalogo(raiz).plugins.filter(x => existsSync(x.dir))) {
     erros.push(...regraHabilidades(p), ...regraReferencias(p), ...regraTexto(p), ...regraFimDeLinha(p));
   }
