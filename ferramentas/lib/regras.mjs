@@ -3,6 +3,7 @@ import { join, basename, dirname } from 'node:path';
 import { listarArquivos } from './arquivos.mjs';
 import { lerCatalogo } from './catalogo.mjs';
 import { lerFrontmatter } from './frontmatter.mjs';
+import { regraReadme } from './readme.mjs';
 import { lerEdicoes, conferirEdicoes, habilidadesDaEdicao, arquivosDaEdicao } from './edicoes.mjs';
 
 const GRUPOS_COM_REGRA_DE_TEXTO = new Set(['fundacao', 'motores']);
@@ -108,7 +109,7 @@ export function regraReferenciasPorEdicao(raiz) {
 }
 
 export function checarTudo(raiz) {
-  const erros = [...regraCatalogo(raiz), ...regraEdicoes(raiz), ...regraReferenciasPorEdicao(raiz)];
+  const erros = [...regraCatalogo(raiz), ...regraEdicoes(raiz), ...regraReferenciasPorEdicao(raiz), ...regraReadme(raiz)];
   for (const p of lerCatalogo(raiz).plugins.filter(x => existsSync(x.dir))) {
     erros.push(...regraHabilidades(p), ...regraReferencias(p), ...regraTexto(p), ...regraFimDeLinha(p));
   }
