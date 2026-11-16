@@ -1,8 +1,9 @@
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, basename, dirname } from 'node:path';
 import { listarArquivos } from './arquivos.mjs';
 import { lerCatalogo } from './catalogo.mjs';
 import { lerFrontmatter } from './frontmatter.mjs';
+import { lerEdicoes, conferirEdicoes } from './edicoes.mjs';
 
 const GRUPOS_COM_REGRA_DE_TEXTO = new Set(['fundacao', 'motores']);
 const PROIBIDAS = /\b(evento|aulas?|nivelamento|apostila|alunos?|ADV 6|RPC)\b/i;
@@ -73,8 +74,20 @@ export function regraFimDeLinha(p) {
     .map(r => `${p.nome}: ${r} tem CRLF (o script quebra no Mac e no Linux)`);
 }
 
+export function regraEdicoes(raiz) {
+  const config = lerEdicoes(raiz);
+  const { plugins } = lerCatalogo(raiz);
+  const habilidades = {};
+  for (const p of plugins) {
+    if (!config.plugins[p.nome]) continue;
+    habilidades[p.nome] = readdirSync(join(p.dir, 'skills'), { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name);
+  }
+  const semPlugin = Object.keys(config.plugins).filter(n => !habilidades[n]).map(n => `edicoes.json cita o plugin "${n}", que não está no catálogo`);
+  return [...semPlugin, ...conferirEdicoes(config, habilidades)];
+}
+
 export function checarTudo(raiz) {
-  const erros = regraCatalogo(raiz);
+  const erros = [...regraCatalogo(raiz), ...regraEdicoes(raiz)];
   for (const p of lerCatalogo(raiz).plugins.filter(x => existsSync(x.dir))) {
     erros.push(...regraHabilidades(p), ...regraReferencias(p), ...regraTexto(p), ...regraFimDeLinha(p));
   }

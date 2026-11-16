@@ -1,0 +1,25 @@
+{
+  "edicoes": ["essencial", "completa", "avancada"],
+  "plugins": {
+    "motor-comercial": {
+      "essencial": ["triar-contato", "mensagens-comerciais", "roteiro-da-consulta", "proposta-de-honorarios", "rotina-comercial", "adaptar-comercial"],
+      "completa": ["qualificar-contato", "agenda-da-consulta", "ata-da-consulta", "follow-up", "objecoes-comerciais", "contrato-de-honorarios", "passagem-para-o-caso"],
+      "avancada": ["painel-do-funil", "assistente-de-primeira-resposta", "auditar-conversas-comerciais"]
+    },
+    "motor-experiencia": {
+      "essencial": ["jornada-do-cliente", "boas-vindas-do-cliente", "status-para-o-cliente", "resumo-mensal-do-caso", "rotina-da-experiencia", "adaptar-experiencia"],
+      "completa": ["triar-mensagem-do-cliente", "pagina-do-caso", "cliente-com-ia", "checklist-de-documentos", "preparar-o-cliente", "reclamacao-e-recuperacao", "encerramento-do-caso", "pesquisa-de-satisfacao"],
+      "avancada": ["painel-da-carteira", "auditar-conversas", "relacionamento-depois-do-caso"]
+    },
+    "motor-juridico": {
+      "essencial": ["trazer-pesquisa", "conferir-citacoes", "conferir-peca", "minutar-peca", "peca-vira-habilidade", "dossie-do-caso", "estrategia-do-caso", "rotina-juridica", "adaptar-juridico"],
+      "completa": ["banco-de-teses-vivo", "leitura-dos-autos", "comparar-versoes", "mapa-jurisprudencial", "advogado-do-diabo", "preparar-protocolo", "conflito-de-interesses", "lgpd-do-escritorio"],
+      "avancada": ["pecas-em-lote", "monitor-de-precedentes", "compliance-para-clientes", "sustentacao-oral"]
+    },
+    "motor-controladoria": {
+      "essencial": ["captar-publicacoes", "triar-publicacoes", "calendario-forense", "calcular-prazo", "dupla-conferencia", "agenda-de-prazos", "encaminhar-providencia", "rotina-da-controladoria", "adaptar-controladoria"],
+      "completa": ["leitura-da-decisao", "providencia-sugerida", "audiencias-e-pericias", "carteira-de-processos", "paineis-dos-sistemas", "cobertura-de-ausencia", "auditoria-de-prazos"],
+      "avancada": ["painel-da-controladoria", "triagem-em-massa", "acompanhar-valores", "prazos-em-lote"]
+    }
+  }
+}
