@@ -87,3 +87,12 @@ test('regraCatalogo: sem metadata.version, sem plugin.json, name trocado e fora 
 test('o repositório atual passa em todas as regras', () => {
   assert.deepEqual(checarTudo(join(import.meta.dirname, '..')), []);
 });
+
+import { conferirTag } from '../ferramentas/lib/versao.mjs';
+
+test('tag diferente da versão do pacote é erro', () => {
+  const raiz = join(import.meta.dirname, '..');
+  assert.deepEqual(conferirTag(raiz, 'v1.0.0'), []);
+  assert.match(conferirTag(raiz, 'v7.7.7').join('\n'), /marketplace\.json diz 1\.0\.0/);
+  assert.match(conferirTag(raiz, '1.0.0').join('\n'), /começar com "v"/);
+});
