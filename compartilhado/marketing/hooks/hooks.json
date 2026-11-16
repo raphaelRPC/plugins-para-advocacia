@@ -1,0 +1,16 @@
+{
+  "description": "Registro de uso do plugin: anota o endereço do histórico de cada conversa para o resumo 'quanto eu gastei?'. Não copia conteúdo.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/registrar-uso.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
