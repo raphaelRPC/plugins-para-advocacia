@@ -1,0 +1,17 @@
+name: Checar
+on:
+  push:
+    branches: ['**']
+  pull_request:
+jobs:
+  checar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test "testes/*.test.mjs"
+      - run: node ferramentas/checar.mjs
+      - run: node ferramentas/sincronizar.mjs --verificar
+      - run: node ferramentas/montar_zips.mjs --versao 0.0.0-teste --saida /tmp/dist
