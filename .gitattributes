@@ -1,0 +1,11 @@
+* text=auto eol=lf
+*.csv -text
+*.tsv -text
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.zip binary
