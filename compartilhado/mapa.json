@@ -1,0 +1,184 @@
+{
+  "grupos": [
+    {
+      "fonte": "compartilhado/marketing/hooks/hooks.json",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/hooks/hooks.json",
+        "plugins/marketing/marketing-juridico-claude/hooks/hooks.json"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/hooks/registrar-uso.sh",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/hooks/registrar-uso.sh",
+        "plugins/marketing/marketing-juridico-claude/hooks/registrar-uso.sh"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/arquitetura-de-copy/references/desenvolvimento.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/arquitetura-de-copy/references/desenvolvimento.md",
+        "plugins/marketing/plugin-copywriter/skills/arquitetura-de-copy/references/desenvolvimento.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/arquitetura-de-copy/references/fecho.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/arquitetura-de-copy/references/fecho.md",
+        "plugins/marketing/plugin-copywriter/skills/arquitetura-de-copy/references/fecho.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/arquitetura-de-copy/references/ganchos.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/arquitetura-de-copy/references/ganchos.md",
+        "plugins/marketing/plugin-copywriter/skills/arquitetura-de-copy/references/ganchos.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/humanizar-texto/references/manual-humanizacao.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/humanizar-texto/references/manual-humanizacao.md",
+        "plugins/marketing/plugin-copywriter/skills/humanizar-texto/references/manual-humanizacao.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/polimento-textual/references/bateria-perguntas.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/polimento-textual/references/bateria-perguntas.md",
+        "plugins/marketing/plugin-copywriter/skills/polimento-textual/references/bateria-perguntas.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/repertorio-textual/references/fichas-tipos-generos.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/repertorio-textual/references/fichas-tipos-generos.md",
+        "plugins/marketing/plugin-copywriter/skills/repertorio-textual/references/fichas-tipos-generos.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/rito-pico/assets/oferta.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/rito-pico/assets/oferta.md",
+        "plugins/marketing/marketing-juridico-claude/skills/rito-pico/assets/oferta.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/rito-pico/assets/posicionamento.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/rito-pico/assets/posicionamento.md",
+        "plugins/marketing/marketing-juridico-claude/skills/rito-pico/assets/posicionamento.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/rito-pico/references/fase-1-posicionamento.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/rito-pico/references/fase-1-posicionamento.md",
+        "plugins/marketing/marketing-juridico-claude/skills/rito-pico/references/fase-1-posicionamento.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/rito-pico/references/fase-5-protocolo.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/rito-pico/references/fase-5-protocolo.md",
+        "plugins/marketing/marketing-juridico-claude/skills/rito-pico/references/fase-5-protocolo.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/rito-pico/references/fase-7-rotinas.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/rito-pico/references/fase-7-rotinas.md",
+        "plugins/marketing/marketing-juridico-claude/skills/rito-pico/references/fase-7-rotinas.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/uso-do-plano/references/gaste-menos.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/uso-do-plano/references/gaste-menos.md",
+        "plugins/marketing/marketing-juridico-claude/skills/uso-do-plano/references/gaste-menos.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/uso-do-plano/references/linha-de-status.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/uso-do-plano/references/linha-de-status.md",
+        "plugins/marketing/marketing-juridico-claude/skills/uso-do-plano/references/linha-de-status.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/uso-do-plano/references/regua-de-peso.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/uso-do-plano/references/regua-de-peso.md",
+        "plugins/marketing/marketing-juridico-claude/skills/uso-do-plano/references/regua-de-peso.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/marketing/skills/uso-do-plano/SKILL.md",
+      "destinos": [
+        "plugins/marketing/editor-de-carrossel-mjc/skills/uso-do-plano/SKILL.md",
+        "plugins/marketing/marketing-juridico-claude/skills/uso-do-plano/SKILL.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/motores/docs/adaptar-ao-escritorio.md",
+      "destinos": [
+        "plugins/motores/motor-comercial/docs/adaptar-ao-escritorio.md",
+        "plugins/motores/motor-controladoria/docs/adaptar-ao-escritorio.md",
+        "plugins/motores/motor-experiencia/docs/adaptar-ao-escritorio.md",
+        "plugins/motores/motor-juridico/docs/adaptar-ao-escritorio.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/motores/docs/agentes-e-fila.md",
+      "destinos": [
+        "plugins/motores/motor-comercial/docs/agentes-e-fila.md",
+        "plugins/motores/motor-controladoria/docs/agentes-e-fila.md",
+        "plugins/motores/motor-experiencia/docs/agentes-e-fila.md",
+        "plugins/motores/motor-juridico/docs/agentes-e-fila.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/motores/docs/aprender-com-o-uso.md",
+      "destinos": [
+        "plugins/motores/motor-comercial/docs/aprender-com-o-uso.md",
+        "plugins/motores/motor-controladoria/docs/aprender-com-o-uso.md",
+        "plugins/motores/motor-experiencia/docs/aprender-com-o-uso.md",
+        "plugins/motores/motor-juridico/docs/aprender-com-o-uso.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/motores/docs/ficha-do-escritorio-modelo.md",
+      "destinos": [
+        "plugins/motores/motor-comercial/docs/ficha-do-escritorio-modelo.md",
+        "plugins/motores/motor-controladoria/docs/ficha-do-escritorio-modelo.md",
+        "plugins/motores/motor-experiencia/docs/ficha-do-escritorio-modelo.md",
+        "plugins/motores/motor-juridico/docs/ficha-do-escritorio-modelo.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/motores/docs/pasta.md",
+      "destinos": [
+        "plugins/motores/motor-comercial/docs/pasta.md",
+        "plugins/motores/motor-controladoria/docs/pasta.md",
+        "plugins/motores/motor-experiencia/docs/pasta.md",
+        "plugins/motores/motor-juridico/docs/pasta.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/motores/docs/regras.md",
+      "destinos": [
+        "plugins/motores/motor-comercial/docs/regras.md",
+        "plugins/motores/motor-controladoria/docs/regras.md",
+        "plugins/motores/motor-experiencia/docs/regras.md",
+        "plugins/motores/motor-juridico/docs/regras.md"
+      ]
+    },
+    {
+      "fonte": "compartilhado/motores/scripts/md_para_docx.py",
+      "destinos": [
+        "plugins/motores/motor-comercial/skills/contrato-de-honorarios/scripts/md_para_docx.py",
+        "plugins/motores/motor-comercial/skills/proposta-de-honorarios/scripts/md_para_docx.py"
+      ]
+    }
+  ]
+}

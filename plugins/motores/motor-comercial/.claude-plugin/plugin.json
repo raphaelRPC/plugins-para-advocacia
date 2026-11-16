@@ -1,0 +1,23 @@
+{
+  "name": "motor-comercial",
+  "version": "2.0.1",
+  "description": "O comercial do escritório de advocacia rodando no Claude, do primeiro contato ao contrato assinado: triagem de cada mensagem, convite e agenda da consulta, roteiro e ata, proposta e contrato de honorários, retorno a quem sumiu, funil registrado e um agente que roda o ciclo do dia e deixa tudo numa fila para aprovação. Parte das fichas do escritório e se adapta ao nicho, às rotinas e às correções de cada uso.",
+  "author": {
+    "name": "Raphael Cardoso"
+  },
+  "license": "MIT",
+  "keywords": [
+    "advocacia",
+    "comercial",
+    "vendas",
+    "triagem",
+    "consulta",
+    "honorarios",
+    "proposta",
+    "contrato",
+    "follow-up",
+    "funil",
+    "agente",
+    "brasil"
+  ]
+}

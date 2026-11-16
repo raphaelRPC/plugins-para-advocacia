@@ -1,0 +1,21 @@
+{
+  "name": "motor-experiencia",
+  "version": "1.0.1",
+  "description": "A experiência e o suporte ao cliente do escritório de advocacia, do contrato ao encerramento e depois: boas-vindas, régua de atualização, status traduzido, resumo mensal, página do caso, cliente que chega com resposta de IA, preparação para audiência e perícia, reclamação, prestação de contas e pesquisa. Um agente roda o ciclo do dia na carteira e deixa os rascunhos numa fila para aprovação. Parte das fichas do escritório e se adapta ao nicho e às rotinas.",
+  "author": {
+    "name": "Raphael Cardoso"
+  },
+  "license": "MIT",
+  "keywords": [
+    "advocacia",
+    "experiencia-do-cliente",
+    "suporte",
+    "relacionamento",
+    "andamento",
+    "resumo-mensal",
+    "pagina-do-caso",
+    "satisfacao",
+    "agente",
+    "brasil"
+  ]
+}
