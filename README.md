@@ -22,13 +22,13 @@ Os quatro motores usam a mesma pasta `escritorio/` e o mesmo código de cliente:
 **Claude Code** (com acesso a este repositório):
 
 ```
-/plugin install motor-comercial --marketplace <organizacao>/<repositorio>
+/plugin install motor-comercial --marketplace raphaelRPC/plugins-para-advocacia
 ```
 
 Troque `motor-comercial` pelo plugin que quiser. Em versões mais antigas do Claude Code, em dois passos:
 
 ```
-/plugin marketplace add <organizacao>/<repositorio>
+/plugin marketplace add raphaelRPC/plugins-para-advocacia
 /plugin install motor-comercial@plugins-para-advocacia
 ```
 
