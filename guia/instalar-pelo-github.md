@@ -4,16 +4,23 @@ Este caminho usa o Claude Code e o repositório `raphaelRPC/plugins-para-advocac
 
 ## Antes de começar
 
-O repositório é privado. O acesso ao repositório é liberado pela equipe; veja com quem te enviou o curso. Você precisa de duas coisas:
+O repositório é privado. O acesso ao repositório é liberado pela equipe que te enviou os plugins. Você precisa de duas coisas:
 
 1. Uma conta no GitHub com o acesso ao repositório liberado. Peça a liberação a quem administra o repositório.
 2. Estar logado no GitHub neste computador. Faça isso de um destes jeitos:
    - Instale o GitHub Desktop e entre com a sua conta.
-   - Ou, no terminal, rode `gh auth login` e depois `gh auth setup-git`.
+   - Ou, no terminal, rode `gh auth login` e depois `gh auth setup-git`. Isso precisa do GitHub CLI instalado (https://cli.github.com). Se preferir não instalar, use o login do GitHub Desktop.
 
 O Claude Code não pede senha. Ele usa o login que o git já tem no computador.
 
 Se você não tem chave SSH no GitHub, defina antes a variável de ambiente `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1`. Só ter a variável `GITHUB_TOKEN` não basta.
+
+Para definir essa variável:
+
+- **Windows (PowerShell, vale para sempre):** `[Environment]::SetEnvironmentVariable("CLAUDE_CODE_PLUGIN_PREFER_HTTPS","1","User")`
+- **Mac:** acrescente a linha `export CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` no arquivo `~/.zshrc`.
+
+Depois, feche e abra o terminal e o Claude Code.
 
 ## Instalar em um passo
 
@@ -46,7 +53,7 @@ Esse comando de um passo existe a partir do Claude Code 2.1.275. Se o seu for ma
 
 3. Escreva `/reload-plugins`, ou reinicie o Claude Code.
 
-Os mesmos comandos funcionam no terminal comum, escrevendo `claude plugin marketplace add ...` e `claude plugin install ...`.
+Só os comandos de dois passos funcionam também no terminal comum, escrevendo `claude plugin marketplace add ...` e `claude plugin install ...`.
 
 ## Atualizar
 

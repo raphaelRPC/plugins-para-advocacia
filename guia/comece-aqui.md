@@ -28,12 +28,19 @@ Uma edição contém a anterior. Dá para subir de edição quando quiser: você
 
 ## Como instalar
 
-Escolha um dos dois caminhos:
+Resumo para instalar pelo app do Claude, sem precisar do GitHub:
 
-- Pelo app do Claude, com o arquivo zip: [instalar-pelo-app.md](instalar-pelo-app.md)
-- Pelo GitHub, no Claude Code: [instalar-pelo-github.md](instalar-pelo-github.md)
+1. Abra o zip do pacote e entre na pasta `plugins`. Cada plugin tem o seu zip. Não descompacte esses zips.
+2. No app do Claude, clique em Personalizar, depois em Plugins, depois em Adicionar e em Enviar plugin.
+3. Escolha o zip de um plugin (comece pelo `inicio-automacao`) e espere ele aparecer na lista, ativado. Repita para cada plugin que quiser.
+4. Escreva no chat o comando de começo do plugin, por exemplo `/motor-comercial:comecar`.
 
-Se algo não funcionar, veja [problemas-comuns.md](problemas-comuns.md).
+Os guias completos, para quem tem acesso ao GitHub:
+
+- Pelo app do Claude, com o arquivo zip: [instalar-pelo-app.md](https://github.com/raphaelRPC/plugins-para-advocacia/blob/main/guia/instalar-pelo-app.md)
+- Pelo GitHub, no Claude Code: [instalar-pelo-github.md](https://github.com/raphaelRPC/plugins-para-advocacia/blob/main/guia/instalar-pelo-github.md)
+
+Se algo não funcionar, veja [problemas-comuns.md](https://github.com/raphaelRPC/plugins-para-advocacia/blob/main/guia/problemas-comuns.md).
 
 ## Cuidados
 

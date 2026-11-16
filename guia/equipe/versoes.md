@@ -18,4 +18,4 @@ O pacote junta tudo o que mudou desde a última publicação:
 
     node ferramentas/versao.mjs fechar 1.1.0
 
-Depois: commit, `git tag v1.1.0` e `git push origin v1.1.0`. O GitHub monta o release (ver `publicar-uma-versao.md`).
+Depois: commit, `git tag v1.1.0` e `git push origin main v1.1.0`. O GitHub monta o release (ver `publicar-uma-versao.md`).

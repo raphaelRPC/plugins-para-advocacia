@@ -9,6 +9,8 @@
 Sem GitHub Actions (por exemplo, sem minutos no plano). Rode antes `npm run testar` e `npm run checar`. Depois, na raiz do repositório:
 
 ```
+node ferramentas/checar.mjs --tag vX.Y.Z
+node ferramentas/sincronizar.mjs --verificar
 npm run zips -- --versao X.Y.Z
 node ferramentas/versao.mjs notas X.Y.Z > notas.md
 gh release create vX.Y.Z dist/*.zip dist/plugins/*.zip dist/SHA256SUMS.txt --draft --notes-file notas.md
