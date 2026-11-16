@@ -4,7 +4,7 @@ Este caminho usa o Claude Code e o repositório `raphaelRPC/plugins-para-advocac
 
 ## Antes de começar
 
-O repositório é privado. Você precisa de duas coisas:
+O repositório é privado. O acesso ao repositório é liberado pela equipe; veja com quem te enviou o curso. Você precisa de duas coisas:
 
 1. Uma conta no GitHub com o acesso ao repositório liberado. Peça a liberação a quem administra o repositório.
 2. Estar logado no GitHub neste computador. Faça isso de um destes jeitos:
