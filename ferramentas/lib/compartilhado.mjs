@@ -43,6 +43,18 @@ export function divergencias(raiz, mapa) {
   return saida;
 }
 
+export function pluginsAfetados(raiz, mapa) {
+  const nomes = new Set();
+  for (const { fonte, destinos } of mapa.grupos) {
+    if (!existsSync(join(raiz, fonte))) continue;
+    const original = conteudo(raiz, fonte);
+    for (const d of destinos) {
+      if (!existsSync(join(raiz, d)) || !conteudo(raiz, d).equals(original)) nomes.add(d.split('/')[2]);
+    }
+  }
+  return [...nomes].sort();
+}
+
 export function aplicar(raiz, mapa) {
   let copiados = 0;
   for (const { fonte, destinos } of mapa.grupos) {

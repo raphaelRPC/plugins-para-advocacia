@@ -26,7 +26,7 @@ try {
   } else if (acao === 'fechar') {
     const [versao] = args;
     if (!/^\d+\.\d+\.\d+$/.test(versao ?? '')) throw new Error('uso: versao.mjs fechar X.Y.Z');
-    const hoje = new Date().toISOString().slice(0, 10);
+    const hoje = new Date().toLocaleDateString('sv');
     writeFileSync(arqChangelog, fecharVersao(readFileSync(arqChangelog, 'utf8'), versao, hoje));
     const { dados } = lerCatalogo(raiz);
     dados.metadata.version = versao;

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { regraCatalogo, regraHabilidades, regraReferencias, regraTexto, regraFimDeLinha, checarTudo } from '../ferramentas/lib/regras.mjs';
@@ -92,7 +92,9 @@ import { conferirTag } from '../ferramentas/lib/versao.mjs';
 
 test('tag diferente da versão do pacote é erro', () => {
   const raiz = join(import.meta.dirname, '..');
-  assert.deepEqual(conferirTag(raiz, 'v1.0.0'), []);
-  assert.match(conferirTag(raiz, 'v7.7.7').join('\n'), /marketplace\.json diz 1\.0\.0/);
-  assert.match(conferirTag(raiz, '1.0.0').join('\n'), /começar com "v"/);
+  const versao = JSON.parse(readFileSync(join(raiz, '.claude-plugin', 'marketplace.json'), 'utf8')).metadata.version;
+  const outra = versao.replace(/^\d+/, n => String(Number(n) + 1));
+  assert.match(conferirTag(raiz, 'v' + outra).join('\n'), /marketplace\.json diz/);
+  assert.match(conferirTag(raiz, versao).join('\n'), /começar com "v"/);
+  assert.equal(conferirTag(raiz, 'v' + versao).some(e => /marketplace\.json diz/.test(e)), false);
 });

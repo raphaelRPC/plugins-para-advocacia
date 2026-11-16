@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { encontrarRepetidos, gerarMapa, divergencias, aplicar } from '../ferramentas/lib/compartilhado.mjs';
+import { encontrarRepetidos, gerarMapa, divergencias, aplicar, pluginsAfetados } from '../ferramentas/lib/compartilhado.mjs';
 
 const TEXTO = 'regra do escritorio\n'.repeat(20);
 
@@ -41,7 +41,9 @@ test('editar a cópia dentro do plugin é acusado pelo nome; aplicar corrige', (
     'plugins/motores/b/docs/regras.md difere de compartilhado/motores/docs/regras.md',
     'plugins/motores/c/docs/regras.md não existe (deveria ser cópia de compartilhado/motores/docs/regras.md)',
   ]);
+  assert.deepEqual(pluginsAfetados(raiz, mapa), ['b', 'c']);
   assert.equal(aplicar(raiz, mapa), 2);
+  assert.deepEqual(pluginsAfetados(raiz, mapa), []);
   assert.deepEqual(divergencias(raiz, mapa), []);
   assert.equal(readFileSync(join(raiz, 'plugins/motores/b/docs/regras.md'), 'utf8'), TEXTO);
 });

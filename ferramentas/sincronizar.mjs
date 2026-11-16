@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { lerMapa, divergencias, aplicar } from './lib/compartilhado.mjs';
+import { lerMapa, divergencias, aplicar, pluginsAfetados } from './lib/compartilhado.mjs';
 
 const raiz = join(import.meta.dirname, '..');
 const mapa = lerMapa(raiz);
@@ -11,5 +11,10 @@ if (process.argv.includes('--verificar')) {
   }
   console.log('Cópias iguais à fonte.');
 } else {
+  const afetados = pluginsAfetados(raiz, mapa);
   console.log(`${aplicar(raiz, mapa)} arquivo(s) atualizado(s).`);
+  if (afetados.length) {
+    console.log(`Plugins que receberam arquivo alterado: ${afetados.join(', ')}.`);
+    console.log('Lembrete: rode "node ferramentas/versao.mjs subir <plugin> patch \"<o que mudou>\"" para cada um.');
+  }
 }
