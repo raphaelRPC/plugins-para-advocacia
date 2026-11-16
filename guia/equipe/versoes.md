@@ -10,7 +10,7 @@ Nunca mude o número à mão. Use:
 
     node ferramentas/versao.mjs subir motor-comercial patch "corrige a régua de retorno"
 
-Isso muda o plugin.json e escreve a linha no CHANGELOG.md.
+Isso muda o plugin.json, escreve a linha no CHANGELOG.md e atualiza a versão na tabela do README.md. O `fechar` também troca a versão do pacote no topo do README. Se você criar ou remover uma habilidade, atualize à mão a contagem na tabela e no resumo do topo do README: o `npm run checar` avisa quando estiver diferente.
 
 ## Do pacote (a tag do GitHub)
 

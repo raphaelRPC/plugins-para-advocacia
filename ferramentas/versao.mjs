@@ -1,11 +1,13 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { lerCatalogo } from './lib/catalogo.mjs';
+import { atualizarVersaoDoPlugin, atualizarVersaoDoPacote } from './lib/readme.mjs';
 import { proximaVersao, acrescentarLinha, fecharVersao, notasDaVersao } from './lib/versao.mjs';
 
 const raiz = join(import.meta.dirname, '..');
 const arqCatalogo = join(raiz, '.claude-plugin', 'marketplace.json');
 const arqChangelog = join(raiz, 'CHANGELOG.md');
+const arqReadme = join(raiz, 'README.md');
 const [acao, ...args] = process.argv.slice(2);
 const json = (obj) => JSON.stringify(obj, null, 2) + '\n';
 
@@ -22,13 +24,15 @@ try {
     manifesto.version = nova;
     writeFileSync(arqPlugin, json(manifesto));
     writeFileSync(arqChangelog, acrescentarLinha(readFileSync(arqChangelog, 'utf8'), `- \`${nome}\` ${nova}: ${texto}`));
-    console.log(`${nome}: ${p.versao} → ${nova}`);
+    writeFileSync(arqReadme, atualizarVersaoDoPlugin(readFileSync(arqReadme, 'utf8'), nome, nova));
+    console.log(`${nome}: ${p.versao} → ${nova} (plugin.json, CHANGELOG.md e README.md)`);
   } else if (acao === 'fechar') {
     const [versao] = args;
     if (!/^\d+\.\d+\.\d+$/.test(versao ?? '')) throw new Error('uso: versao.mjs fechar X.Y.Z');
     const hoje = new Date().toLocaleDateString('sv');
     writeFileSync(arqChangelog, fecharVersao(readFileSync(arqChangelog, 'utf8'), versao, hoje));
     const { dados } = lerCatalogo(raiz);
+    writeFileSync(arqReadme, atualizarVersaoDoPacote(readFileSync(arqReadme, 'utf8'), dados.metadata.version, versao));
     dados.metadata.version = versao;
     writeFileSync(arqCatalogo, json(dados));
     console.log(`Pacote ${versao} fechado. Próximo: commit, tag v${versao} e push da tag.`);
