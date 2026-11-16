@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Versão própria desta habilidade: o encerramento-do-caso tem política própria do .docx (cor da identidade, campos do envio em verde, conferência do Antes de enviar não impede o .docx e mensagens diferentes). Não sincronizar.
 """Converte a prestação de contas do encerramento (.md) em .docx e confere se está pronta.
 
 Mesma lógica e mesma política do script do resumo da resumo-mensal-do-caso,

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Converte a proposta de honorários (.md) em .docx e confere se está pronta.
+"""Converte um .md do escritório em .docx e diz se está pronto para enviar.
 
 Uso:
-    python3 md_para_docx.py <proposta.md> [saida.docx] [--manter-cabecalho] [--forcar]
-    python3 md_para_docx.py <proposta.md> --so-conferir
-    python3 md_para_docx.py --conferir-docx <proposta.docx>
+    python3 md_para_docx.py <documento.md> [saida.docx] [--manter-cabecalho] [--forcar]
+    python3 md_para_docx.py <documento.md> --so-conferir
+    python3 md_para_docx.py --conferir-docx <documento.docx>
 
 O que fica fora do .docx (é controle interno do escritório):
 - o cabeçalho YAML do topo (entre linhas ---): versão, dono, contato;
@@ -462,6 +462,14 @@ def texto_do_docx(caminho):
     return paragrafos
 
 
+def exemplo_de_uso():
+    """Caminho de exemplo da mensagem de uso, conforme a habilidade onde o script está."""
+    habilidade = os.path.basename(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    if habilidade == "contrato-de-honorarios":
+        return "escritorio/07-operacao/comercial/contratos/C-2026-0001-contrato-v1.md"
+    return "escritorio/07-operacao/comercial/propostas/C-2026-0001-proposta-v1.md"
+
+
 def main(argv):
     opcoes = [a for a in argv[1:] if a.startswith("--")]
     args = [a for a in argv[1:] if not a.startswith("--")]
@@ -470,7 +478,7 @@ def main(argv):
         return 0
     if not args:
         print("ERRO: diga qual arquivo converter ou conferir.")
-        print("Exemplo: python3 scripts/md_para_docx.py escritorio/07-operacao/comercial/propostas/C-2026-0001-proposta-v1.md")
+        print("Exemplo: python3 scripts/md_para_docx.py %s" % exemplo_de_uso())
         return 1
 
     if "--conferir-docx" in opcoes:

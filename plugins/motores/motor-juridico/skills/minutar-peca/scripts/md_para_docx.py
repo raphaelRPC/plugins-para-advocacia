@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Versão própria desta habilidade: a minutar-peca formata peça (padrão visual, citação em recuo, timbre) e confere citações [CONFERIR] e variáveis {{...}}. Não sincronizar.
 """Converte a minuta da peça (.md) em .docx no padrão visual do escritório e confere se está pronta.
 
 Cópia própria da minutar-peca (motor-juridico). Funciona sozinha, só com a biblioteca padrão

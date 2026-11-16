@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Converte o contrato de honorários (.md) em .docx e confere se está pronto.
+"""Converte um .md do escritório em .docx e diz se está pronto para enviar.
 
 Uso:
-    python3 md_para_docx.py <contrato.md> [saida.docx] [--manter-cabecalho] [--forcar]
-    python3 md_para_docx.py <contrato.md> --so-conferir
-    python3 md_para_docx.py --conferir-docx <contrato.docx>
+    python3 md_para_docx.py <documento.md> [saida.docx] [--manter-cabecalho] [--forcar]
+    python3 md_para_docx.py <documento.md> --so-conferir
+    python3 md_para_docx.py --conferir-docx <documento.docx>
 
 O que fica fora do .docx (é controle interno do escritório):
 - o cabeçalho YAML do topo (entre linhas ---): versão, dono, contato;
@@ -37,10 +37,9 @@ Sem nenhuma pendência e sem chaves, a primeira linha diz "PRONTO PARA ENVIAR".
 --so-conferir     confere o .md sem criar o .docx.
 --forcar          cria o .docx mesmo com pendência e avisa (não use para
                   enviar ao cliente).
---conferir-docx   confere o .docx depois que o escritório preencheu a
-                  qualificação das partes e os dados de pagamento no próprio
-                  sistema (lê só o texto, com a biblioteca padrão, e não mostra
-                  o que foi preenchido; mostra só o que ainda está pendente).
+--conferir-docx   confere um .docx já preenchido pelo escritório (lê só o
+                  texto, com a biblioteca padrão, e não mostra o conteúdo
+                  preenchido; mostra só o que ainda está pendente).
 
 Saída: 0 quando o .docx foi criado (inclusive com --forcar) ou quando a
 conferência diz "pronto" (no .md, com ou sem campos do envio); 2 quando não
@@ -463,6 +462,14 @@ def texto_do_docx(caminho):
     return paragrafos
 
 
+def exemplo_de_uso():
+    """Caminho de exemplo da mensagem de uso, conforme a habilidade onde o script está."""
+    habilidade = os.path.basename(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    if habilidade == "contrato-de-honorarios":
+        return "escritorio/07-operacao/comercial/contratos/C-2026-0001-contrato-v1.md"
+    return "escritorio/07-operacao/comercial/propostas/C-2026-0001-proposta-v1.md"
+
+
 def main(argv):
     opcoes = [a for a in argv[1:] if a.startswith("--")]
     args = [a for a in argv[1:] if not a.startswith("--")]
@@ -471,7 +478,7 @@ def main(argv):
         return 0
     if not args:
         print("ERRO: diga qual arquivo converter ou conferir.")
-        print("Exemplo: python3 scripts/md_para_docx.py escritorio/07-operacao/comercial/contratos/C-2026-0001-contrato-v1.md")
+        print("Exemplo: python3 scripts/md_para_docx.py %s" % exemplo_de_uso())
         return 1
 
     if "--conferir-docx" in opcoes:

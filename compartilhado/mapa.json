@@ -172,6 +172,13 @@
         "plugins/motores/motor-experiencia/docs/regras.md",
         "plugins/motores/motor-juridico/docs/regras.md"
       ]
+    },
+    {
+      "fonte": "compartilhado/motores/scripts/md_para_docx.py",
+      "destinos": [
+        "plugins/motores/motor-comercial/skills/contrato-de-honorarios/scripts/md_para_docx.py",
+        "plugins/motores/motor-comercial/skills/proposta-de-honorarios/scripts/md_para_docx.py"
+      ]
     }
   ]
 }
