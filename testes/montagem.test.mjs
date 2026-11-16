@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, existsSync } from 'node:fs';
+import { mkdtempSync, readFileSync, existsSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { montar } from '../ferramentas/lib/montagem.mjs';
@@ -39,4 +39,30 @@ test('pacote leva o LEIA-ME e um zip por plugin', () => {
   const pacote = lerZip(readFileSync(join(saida, 'plugins-para-advocacia-v9.9.9-essencial.zip'))).map(e => e.caminho);
   assert.ok(pacote.includes('LEIA-ME.md'));
   assert.equal(pacote.filter(c => c.startsWith('plugins/') && c.endsWith('.zip')).length, 8);
+});
+
+test('saída que é a raiz do repositório ou pasta-pai dela é recusada', () => {
+  assert.throws(() => montar(RAIZ, '9.9.9', RAIZ), /repositório/);
+  assert.throws(() => montar(RAIZ, '9.9.9', join(RAIZ, '..')), /repositório/);
+  assert.ok(existsSync(join(RAIZ, 'edicoes.json')));
+});
+
+test('pasta com conteúdo alheio ou com .git é recusada e nada é apagado', () => {
+  const alheia = mkdtempSync(join(tmpdir(), 'alheia-'));
+  writeFileSync(join(alheia, 'meu-arquivo.txt'), 'importante');
+  assert.throws(() => montar(RAIZ, '9.9.9', alheia), /já tem arquivos/);
+  assert.ok(existsSync(join(alheia, 'meu-arquivo.txt')));
+  const repo = mkdtempSync(join(tmpdir(), 'repo-'));
+  mkdirSync(join(repo, '.git'));
+  assert.throws(() => montar(RAIZ, '9.9.9', repo), /\.git/);
+  assert.ok(existsSync(join(repo, '.git')));
+});
+
+test('pasta de montagem anterior (com SHA256SUMS.txt) é refeita', () => {
+  const pasta = mkdtempSync(join(tmpdir(), 'refaz-'));
+  writeFileSync(join(pasta, 'SHA256SUMS.txt'), 'velho');
+  writeFileSync(join(pasta, 'velho.zip'), 'x');
+  montar(RAIZ, '9.9.9', pasta);
+  assert.equal(existsSync(join(pasta, 'velho.zip')), false);
+  assert.ok(existsSync(join(pasta, 'plugins-para-advocacia-v9.9.9-essencial.zip')));
 });

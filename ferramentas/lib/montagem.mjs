@@ -1,6 +1,6 @@
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { join } from 'node:path';
+import { join, resolve, relative, isAbsolute } from 'node:path';
 import { listarArquivos } from './arquivos.mjs';
 import { ehTextoNormalizavel, paraLF } from './texto.mjs';
 import { criarZip } from './zip.mjs';
@@ -15,11 +15,30 @@ export function zipDoPlugin(plugin, permitidas) {
   }));
 }
 
-export function montar(raiz, versao, saida) {
-  rmSync(saida, { recursive: true, force: true });
-  mkdirSync(join(saida, 'plugins'), { recursive: true });
+export function conferirSaida(raiz, saida) {
+  const alvo = resolve(saida);
+  const dentro = relative(alvo, resolve(raiz));
+  if (dentro === '' || (!dentro.startsWith('..') && !isAbsolute(dentro))) {
+    throw new Error(`a pasta de saída (${alvo}) é o repositório ou uma pasta que o contém; escolha outra, por exemplo dist`);
+  }
+  if (!existsSync(alvo)) return alvo;
+  if (!statSync(alvo).isDirectory()) throw new Error(`${alvo} existe e não é uma pasta`);
+  const conteudo = readdirSync(alvo);
+  if (conteudo.includes('.git') || conteudo.includes('.claude-plugin')) {
+    throw new Error(`${alvo} parece ser um repositório ou plugin (tem .git ou .claude-plugin); escolha outra pasta`);
+  }
+  if (conteudo.length > 0 && !conteudo.includes('SHA256SUMS.txt')) {
+    throw new Error(`${alvo} já tem arquivos que não são de uma montagem anterior; escolha uma pasta vazia ou nova`);
+  }
+  return alvo;
+}
+
+export function montar(raiz, versao, saidaPedida) {
   const config = lerEdicoes(raiz);
   const { plugins } = lerCatalogo(raiz);
+  const saida = conferirSaida(raiz, saidaPedida);
+  rmSync(saida, { recursive: true, force: true });
+  mkdirSync(join(saida, 'plugins'), { recursive: true });
   const gerados = [];
   const porEdicao = Object.fromEntries(config.edicoes.map(e => [e, []]));
   const gravar = (rel, dados) => { writeFileSync(join(saida, rel), dados); gerados.push(rel); };
