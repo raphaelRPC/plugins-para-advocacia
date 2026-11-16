@@ -1,0 +1,37 @@
+{
+ "codigo": "C04",
+ "nome": "Retrato",
+ "resumo": "Foto real sangrada com véu escuro e grão, título em serifa condensada na cor de destaque, palavra-chave em itálico e detalhes datilografados. Sem foto, vira fundo escuro com grão.",
+ "serve": [
+  "capa forte",
+  "bastidor da rotina",
+  "número com fonte",
+  "explicativo curto",
+  "convite"
+ ],
+ "evite": [
+  "quem não tem foto própria (use C02 ou C05)",
+  "lista longa"
+ ],
+ "foto_modo": "sangrada",
+ "fontes": {
+  "titulo": "Instrument Serif",
+  "texto": "Inter",
+  "detalhe": "Courier Prime"
+ },
+ "google_fonts": [
+  "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=block"
+ ],
+ "cores": {
+  "fundo": "#1E1B17",
+  "texto": "#FBF4E6",
+  "destaque": "#F4C542",
+  "apoio": "#2B2722",
+  "suave": "#D9D0C0",
+  "linha": "#5B5348"
+ },
+ "usa_da_marca": [
+  "destaque"
+ ],
+ "tratamento": "saturate(.72) contrast(1.06) brightness(.92)"
+}

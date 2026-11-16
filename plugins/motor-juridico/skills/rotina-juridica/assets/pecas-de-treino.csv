@@ -1,0 +1,4 @@
+id,codigo_caso,cliente_curto,area,peca,origem,prazo_interno,etapa,responsavel,tese,habilidade_usada,citacoes,dados,protocolo_sistema,protocolo_numero,protocolo_data,atualizado_em
+P-2026-0001,C-2026-0001,Marta,previdenciario,peticao-inicial,passagem,2026-04-17,minuta,estagiario,restabelecimento-incapacidade,minutar-peca,com-vermelho,com-alerta,eproc,,,2026-04-15
+P-2026-0002,C-2026-0002,Paulo,trabalhista,reclamacao-trabalhista,passagem,2026-04-24,em-analise,estagiario,,,nao-conferidas,nao-conferidos,PJe,,,2026-04-08
+P-2026-0003,C-2026-0005,Renata,familia,divorcio-consensual,consulta,2026-04-22,aprovada,advogada,divorcio-consensual-com-partilha,minutar-peca,verde,ok,PJe,,,2026-04-14

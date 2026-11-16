@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesa de edição</title>
+<style>
+/* Mesa de edição: preview vertical à esquerda, painel de texto/inserts/notas à direita, linha do tempo embaixo.
+   Visual escuro de ilha de edição; a caneta azul marca seleção e ações, o âmbar marca inserts, o vermelho marca cortes. */
+:root{
+  --bg:#0E1218; --painel:#151B24; --painel2:#1B2330; --linha:#273141; --tx:#E6EAF0; --mut:#8D98A8;
+  --pen:#4A6FF0; --pen2:#9DB2F7; --ambar:#F2B33D; --corte:#E5534B; --ok:#4CC38A; --navy:#14243F;
+  --ui:-apple-system, "Avenir Next", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono:Menlo, ui-monospace, Consolas, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--ui);font-size:14px;display:flex;flex-direction:column;min-height:100%}
+button{font-family:var(--ui);font-size:13px;color:var(--tx);background:var(--painel2);border:1px solid var(--linha);border-radius:8px;padding:7px 12px;cursor:pointer}
+button:hover{border-color:var(--pen2)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--pen);outline-offset:1px}
+button.primario{background:var(--pen);border-color:var(--pen);color:#fff;font-weight:600}
+button.perigo{border-color:#5a2b2b;color:#ffb4ae}
+button:disabled{opacity:.4;cursor:default}
+input,textarea,select{font-family:var(--ui);font-size:13px;color:var(--tx);background:var(--bg);border:1px solid var(--linha);border-radius:7px;padding:7px 9px;width:100%}
+kbd{font-family:var(--mono);font-size:11px;background:var(--painel2);border:1px solid var(--linha);border-radius:4px;padding:1px 5px;color:var(--mut)}
+
+header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 18px;border-bottom:1px solid var(--linha);background:var(--painel)}
+header h1{font-size:16px;margin:0;font-weight:700;letter-spacing:.01em}
+header h1 span{color:var(--mut);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto;align-items:center}
+.chip{font-family:var(--mono);font-size:12px;color:var(--mut);background:var(--bg);border:1px solid var(--linha);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.chip b{color:var(--tx);font-weight:500}
+
+main{flex:1 0 auto;display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:16px;padding:16px 18px;min-height:0}
+@media (max-width:860px){main{grid-template-columns:minmax(0,1fr)}}
+
+/* preview */
+.preview{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}
+.tela{position:relative;height:clamp(300px, calc(100vh - 360px), 680px);width:auto;max-width:100%;aspect-ratio:9/16;background:#000;border-radius:14px;overflow:hidden;container-type:inline-size;border:1px solid var(--linha)}
+.tela video{width:100%;height:100%;object-fit:cover;display:block}
+.tela .aviso-corte{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(229,83,75,.28);font-family:var(--mono);font-size:4cqw;color:#fff;letter-spacing:.08em}
+.tela.no-corte .aviso-corte{display:flex}
+.tela video{transform-origin:50% 33%}
+/* zonas na mesma posição do vídeo final (1080 x 1920): títulos em cima, inserts de baixo acima dos botões da rede */
+#camada,#zona-topo{position:absolute;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:2cqw;pointer-events:none}
+#camada{bottom:19.8%}
+#zona-topo{top:19.9cqw}
+#leg{position:absolute;left:4cqw;right:4cqw;top:113.6cqw;text-align:center;font-weight:600;font-size:5cqw;color:#fff;text-shadow:0 .3cqw 1.2cqw rgba(0,0,0,.85);pointer-events:none;line-height:1.1}
+#leg .k{color:var(--ambar)}
+#leg .g{font-weight:800;font-size:1.55em}
+.ins{width:89%;background:rgba(20,36,63,.93);border-radius:3cqw;padding:3.6cqw 4cqw;animation:entra .25s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(3cqw)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ins,.carimbo{animation:none}}
+.ins .rot{font-family:var(--mono);font-weight:700;font-size:2.6cqw;color:var(--ambar);letter-spacing:.04em;margin-bottom:1.4cqw}
+.ins .tit{font-weight:800;font-size:6.6cqw;line-height:1.1;color:#fff}
+.ins .sub{font-weight:600;font-size:4cqw;color:#C9D1DE;margin-top:1cqw}
+.ins .fluxo{display:flex;align-items:center;gap:3cqw}
+.ins .fluxo span{font-weight:800;font-size:5.2cqw;border-radius:2cqw;padding:1.4cqw 4cqw;background:var(--pen);color:#fff}
+.ins .fluxo span:last-child{background:var(--ok);color:var(--navy)}
+.ins .fluxo i{flex:0 0 12cqw;height:.6cqw;background:#fff;position:relative}
+.ins .fluxo i::after{content:"";position:absolute;right:-.4cqw;top:-1.5cqw;border:1.8cqw solid transparent;border-left:2.4cqw solid #fff;border-right:0}
+.ins .grade{display:grid;grid-template-columns:1fr 1fr;gap:1.8cqw}
+.ins .grade span{background:#fff;color:var(--navy);font-weight:800;font-size:4.4cqw;border-radius:1.8cqw;padding:1.3cqw;text-align:center}
+.ins .lista{display:grid;grid-template-columns:1fr 1fr;gap:1.6cqw 3cqw}
+.ins .lista span{font-weight:600;font-size:3.3cqw;color:#fff;display:flex;align-items:center;gap:1.6cqw}
+.ins .lista span::before{content:"✓";display:inline-grid;place-items:center;width:4cqw;height:4cqw;border-radius:50%;background:var(--ok);color:#fff;font-size:2.6cqw;flex:none}
+.ins.cta{background:var(--pen);text-align:center;border-radius:4cqw}
+.ins.cta .rot{color:#fff}
+.ins.cta .tit{font-size:13cqw}
+.carimbo{display:inline-block;font-family:var(--mono);font-weight:700;font-size:4.6cqw;color:var(--ambar);border:.6cqw solid currentColor;border-radius:999px;padding:1.4cqw 4.6cqw;background:rgba(20,36,63,.9);transform:rotate(-5deg);animation:carimbo .3s ease-out}
+.carimbo.verde{color:var(--ok)}
+/* estilos do catálogo (references/catalogo-de-estilos.md) */
+.dc{width:83%;background:rgba(20,36,63,.93);border-radius:2.8cqw;padding:3.4cqw 3cqw 2.4cqw;text-align:center;animation:entra .25s ease-out}
+.dc .r{font-weight:600;font-size:3.7cqw;color:#fff}
+.dc .t{font-weight:800;font-size:9.4cqw;line-height:1.1;color:var(--ambar)}
+.dc .s{font-weight:600;font-size:3.7cqw;color:#C9D1DE}
+.esq{align-self:flex-start;margin-left:8.3cqw;display:flex;flex-direction:column;align-items:flex-start;gap:.8cqw}
+.tarja span{background:#DE3430;color:#fff;font-weight:800;font-size:5.9cqw;text-transform:uppercase;padding:.6cqw 2cqw;animation:entra .25s ease-out}
+.rotulos span{background:rgba(20,36,63,.94);color:var(--ambar);font-weight:800;font-size:4.3cqw;text-transform:uppercase;padding:1cqw 2.6cqw;border-radius:999px;margin-bottom:.5cqw;animation:entra .25s ease-out}
+.formula{width:87%;background:rgba(20,36,63,.93);border-radius:2.8cqw;padding:3.3cqw 3cqw 2cqw;display:flex;flex-direction:column;gap:1.3cqw}
+.formula div{display:flex;align-items:center;gap:2.2cqw}
+.formula b{width:3.4cqw;text-align:center;color:#fff;font-size:4.3cqw}
+.formula span{font-weight:800;font-size:4.1cqw;padding:.7cqw 2.2cqw;border-radius:1.3cqw;color:#fff;animation:entra .25s ease-out}
+.formula span.vazio{min-width:24cqw;height:5.6cqw;border:.3cqw solid rgba(255,255,255,.35);animation:none}
+.chamada{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.7cqw}
+.chamada .r{background:var(--navy);color:#fff;font-weight:600;font-size:3.7cqw;padding:.7cqw 2.2cqw;border-radius:1cqw}
+.chamada .t{background:#fff;color:var(--navy);font-weight:800;font-size:8.9cqw;padding:.8cqw 3.7cqw;border-radius:1.5cqw}
+.perfil{display:flex;align-items:center;gap:2cqw;background:#fff;border-radius:999px;padding:1.6cqw 4cqw 1.6cqw 1.6cqw;animation:entra .3s ease-out}
+.perfil i{width:8.5cqw;height:8.5cqw;border-radius:50%;background:var(--navy);color:#fff;font-style:normal;font-weight:800;font-size:3.5cqw;display:grid;place-items:center}
+.perfil b{display:block;color:var(--navy);font-size:4.1cqw}
+.perfil small{color:#5a6476;font-size:3cqw;font-weight:600}
+.card .topo .tipo.efeito{color:#B89CF5}
+.anim{position:absolute;pointer-events:none}
+/* famílias visuais na prévia (mesmas medidas do motor: px do vídeo / 10,8 = cqw) */
+#fam{position:absolute;inset:0;pointer-events:none;--ouro:#E9C478}
+#fam .t{position:absolute;text-shadow:0 .35cqw 2cqw rgba(0,0,0,.55),0 0 .5cqw rgba(0,0,0,.3);animation:entra .3s ease-out;white-space:nowrap}
+#fam .peq{font:600 3.3cqw "Avenir Next",sans-serif;letter-spacing:.55cqw;text-transform:uppercase;color:#fff}
+#fam .cond{font:800 15.7cqw/0.92 "Avenir Next Condensed","Arial Narrow",sans-serif;color:#fff;white-space:normal}
+#fam .ser{font:italic 400 13cqw/1.05 "Didot","Bodoni 72",Georgia,serif;color:#fff;white-space:normal}
+#fam .o{color:var(--ouro)}
+#fam .fio{position:absolute;height:.5cqw;width:11cqw;background:var(--ouro)}
+#fam .gig{position:absolute;left:0;right:0;text-align:center;font:800 32cqw/1 "Avenir Next Condensed",sans-serif;color:#F6ECD6;opacity:.92;white-space:nowrap}
+#fam .nota{position:absolute;left:50%;transform:translateX(-50%);bottom:24%;background:rgba(184,156,245,.92);color:#14243F;font:700 2.8cqw sans-serif;padding:1cqw 2cqw;border-radius:1.4cqw;white-space:nowrap}
+#fam mark{background:var(--ouro);color:#14161A;padding:0 .8cqw;text-shadow:none}
+.tela.f-editorial #leg{font:800 7cqw "Avenir Next Condensed",sans-serif}
+.tela.f-atras #leg{font:800 6.3cqw "Avenir Next Condensed",sans-serif;text-transform:uppercase}
+.tela.f-atras #leg .k{color:#fff}
+.tela.f-revista #leg{font:italic 400 6.5cqw "Didot","Bodoni 72",Georgia,serif;text-shadow:0 0 1.5cqw rgba(0,0,0,.9),0 .3cqw 1cqw rgba(0,0,0,.7)}
+.tela.f-revista #leg .k{color:#fff;font:600 .8em "Avenir Next",sans-serif;text-transform:uppercase;font-style:normal}
+.tela.f-celular #leg{font:800 6.3cqw "Avenir Next","Segoe UI",sans-serif;-webkit-text-stroke:.5cqw #000;paint-order:stroke fill}
+#fam .cel{font:800 6.1cqw/1.12 "Avenir Next","Segoe UI",sans-serif;color:#fff;-webkit-text-stroke:.35cqw rgba(0,0,0,.6);paint-order:stroke fill;white-space:normal}
+#fam .cel small{font-size:.62em}
+#fam .cel.fundo{background:#fff;color:#111;-webkit-text-stroke:0;padding:.6cqw 2cqw;border-radius:1.3cqw}
+.mito{display:flex;flex-direction:column;gap:1cqw;color:#fff;text-shadow:0 .3cqw 1.2cqw rgba(0,0,0,.8);align-self:flex-start;margin-left:7.8cqw}
+.mito small{font:600 3cqw "Avenir Next",sans-serif;letter-spacing:.5cqw;text-transform:uppercase}
+.mito s{font:800 6.5cqw "Avenir Next Condensed","Arial Narrow",sans-serif;text-transform:uppercase;text-decoration-thickness:.9cqw}
+.mito b{font:800 9.2cqw/1 "Avenir Next Condensed","Arial Narrow",sans-serif;text-transform:uppercase}
+.print{align-self:flex-start;margin-left:8.3cqw;display:block}
+.anim-aviso{background:rgba(184,156,245,.92);color:#14243F;font-weight:700;font-size:3.2cqw;padding:1.4cqw 2.6cqw;border-radius:1.5cqw}
+.bilhete{position:relative;width:70cqw;background:#F8F4EB;border-radius:1cqw;padding:4.6cqw 3cqw 3.6cqw;text-align:center;transform:rotate(-2deg);box-shadow:0 1.6cqw 3cqw rgba(0,0,0,.35);animation:entra .35s ease-out}
+.bilhete::after{content:"";position:absolute;inset:1.3cqw;border:.2cqw solid rgba(242,179,61,.8);border-radius:.6cqw}
+.bilhete .r{font-family:"New York",Georgia,serif;font-size:3.1cqw;letter-spacing:.65cqw;text-transform:uppercase;color:var(--navy)}
+.bilhete .r::after{content:"";display:block;width:11cqw;height:.2cqw;background:var(--ambar);margin:1.6cqw auto 0}
+.bilhete .t{font-family:"New York",Georgia,serif;font-style:italic;font-size:10.9cqw;line-height:1.15;color:var(--navy);margin-top:1.4cqw}
+@keyframes carimbo{from{transform:rotate(-5deg) scale(1.7);opacity:0}to{transform:rotate(-5deg) scale(1);opacity:1}}
+.controles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;width:100%;max-width:380px}
+.tempo{font-family:var(--mono);font-size:13px;color:var(--mut);min-width:120px;text-align:center}
+.tempo b{color:var(--tx);font-weight:500}
+
+/* painel */
+.painel{background:var(--painel);border:1px solid var(--linha);border-radius:12px;display:flex;flex-direction:column;min-width:0;min-height:420px;max-height:calc(100vh - 330px)}
+.abas{display:flex;gap:4px;padding:8px;border-bottom:1px solid var(--linha)}
+.abas button{background:transparent;border-color:transparent}
+.abas button[aria-selected="true"]{background:var(--painel2);border-color:var(--linha);font-weight:600}
+.conteudo{flex:1;overflow:auto;padding:14px 16px}
+.dica{font-size:12.5px;color:var(--mut);margin:0 0 12px;line-height:1.5}
+#texto{font-size:17px;line-height:2;user-select:none}
+#texto .p{cursor:pointer;border-radius:4px;padding:2px 1px}
+#texto .p:hover{background:var(--painel2)}
+#texto .p.cut{color:#6b7482;text-decoration:line-through;text-decoration-color:var(--corte)}
+#texto .p.ativa{background:var(--pen);color:#fff}
+#texto .p.sel{background:rgba(74,111,240,.35)}
+#texto .pausa{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--mut);border:1px dashed var(--linha);border-radius:999px;padding:0 7px;margin:0 3px;cursor:pointer;line-height:20px;vertical-align:middle}
+#texto .pausa.cut{color:var(--corte);border-color:var(--corte);text-decoration:line-through}
+.card{background:var(--painel2);border:1px solid var(--linha);border-radius:10px;padding:12px;margin-bottom:10px}
+.card.off{opacity:.55}
+.card .topo{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.card .topo b{font-size:13px}
+.card .topo .tipo{font-family:var(--mono);font-size:11px;color:var(--ambar)}
+.card .topo label{margin-left:auto;font-size:12px;color:var(--mut);display:flex;gap:6px;align-items:center}
+.card .topo label input{width:auto}
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.campos .inteiro{grid-column:1/-1}
+.campos label{font-size:11.5px;color:var(--mut);display:flex;flex-direction:column;gap:4px}
+.tempos{display:flex;gap:6px;align-items:end;flex-wrap:wrap;margin-top:8px}
+.tempos label{flex:1;min-width:90px}
+.nota{display:flex;gap:10px;align-items:flex-start;background:var(--painel2);border:1px solid var(--linha);border-radius:10px;padding:10px;margin-bottom:8px}
+.nota .t{font-family:var(--mono);font-size:12px;color:var(--ambar);cursor:pointer;white-space:nowrap}
+.nota p{margin:0;flex:1;font-size:13.5px;line-height:1.45}
+
+/* linha do tempo */
+.linha-tempo{border-top:1px solid var(--linha);background:var(--painel);padding:10px 18px 14px}
+.lt-barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.lt-barra .esp{flex:1}
+.lt-barra select{width:auto}
+#lt{width:100%;height:150px;display:block;border-radius:8px;background:var(--bg);cursor:crosshair;touch-action:none}
+.legenda-lt{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;font-size:12px;color:var(--mut)}
+.legenda-lt span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+
+dialog{background:var(--painel);color:var(--tx);border:1px solid var(--linha);border-radius:14px;max-width:720px;width:calc(100% - 32px);padding:20px}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h2{margin:0 0 6px;font-size:18px}
+dialog textarea{height:260px;font-family:var(--mono);font-size:12px;margin:12px 0}
+dialog .acoes{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+</style>
+</head>
+<body>
+<header>
+  <h1>Mesa de edição <span id="nome-projeto"></span></h1>
+  <div class="chips">
+    <span class="chip">final <b id="dur-final"></b></span>
+    <span class="chip">cortes <b id="n-cortes"></b></span>
+    <span class="chip">inserts <b id="n-inserts"></b></span>
+    <label for="estilo-fam" style="font-size:12px;color:var(--mut)">Família</label>
+    <select id="estilo-fam" style="width:auto">
+      <option value="editorial">Editorial</option><option value="revista">Revista</option>
+      <option value="atras">Atrás de você</option><option value="celular">Celular</option><option value="institucional">Institucional (cartão)</option>
+    </select>
+    <label for="estilo-leg" style="font-size:12px;color:var(--mut)">Legenda</label>
+    <select id="estilo-leg" style="width:auto">
+      <option value="destaque">Destaque</option><option value="discreta">Discreta</option>
+      <option value="palavra-grande">Palavra grande</option><option value="nenhuma">Sem legenda</option>
+    </select>
+    <button id="b-desfazer" title="Desfazer (Ctrl/Cmd+Z)">Desfazer</button>
+    <button id="b-original" class="perigo" title="Voltar à edição que o Claude entregou">Voltar ao original</button>
+    <button id="b-enviar" class="primario">Enviar alterações ao Claude</button>
+  </div>
+</header>
+
+<main>
+  <section class="preview" aria-label="Preview">
+    <div class="tela" id="tela">
+      <video id="video" playsinline preload="auto"></video>
+      <div id="leg"></div>
+      <div id="fam"></div>
+      <div id="zona-topo"></div>
+      <div id="camada"></div>
+      <div class="aviso-corte">TRECHO CORTADO</div>
+    </div>
+    <div class="controles">
+      <button id="b-play" title="Tocar ou pausar (espaço)">Tocar</button>
+      <span class="tempo"><b id="t-atual">0:00.0</b> / <span id="t-total"></span></span>
+      <button id="b-voltar" title="Voltar 2 s (←)">−2 s</button>
+      <button id="b-avancar" title="Avançar 2 s (→)">+2 s</button>
+    </div>
+  </section>
+
+  <section class="painel" aria-label="Edição">
+    <div class="abas" role="tablist">
+      <button role="tab" aria-selected="true" data-aba="texto">Texto</button>
+      <button role="tab" aria-selected="false" data-aba="inserts">Inserts</button>
+      <button role="tab" aria-selected="false" data-aba="notas">Pedidos ao Claude</button>
+    </div>
+    <div class="conteudo" id="aba-texto">
+      <p class="dica">Clique numa palavra para ir até ela. Para cortar, clique na primeira palavra e depois, com <kbd>Shift</kbd>, na última; então aperte <b>Cortar seleção</b> ou <kbd>X</kbd>. Os blocos <span style="font-family:var(--mono)">pausa</span> cortam ou devolvem um respiro com um clique. Palavras riscadas já estão fora do vídeo.</p>
+      <div id="texto"></div>
+    </div>
+    <div class="conteudo" id="aba-inserts" hidden>
+      <p class="dica">Os títulos que aparecem na tela e os efeitos de imagem. Mude o texto, ajuste o tempo (em segundos do vídeo original) ou desligue.</p>
+      <div id="lista-inserts"></div>
+      <div id="lista-efeitos"></div>
+    </div>
+    <div class="conteudo" id="aba-notas" hidden>
+      <p class="dica">Peça uma correção presa a um momento do vídeo. Ex.: "aqui o zoom ficou forte", "troque a música", "deixe esse respiro".</p>
+      <label for="nova-nota" style="font-size:12px;color:var(--mut)">Pedido no momento <b id="t-nota"></b></label>
+      <textarea id="nova-nota" rows="3" style="margin:6px 0 8px"></textarea>
+      <button id="b-nota" class="primario">Adicionar pedido</button>
+      <div id="lista-notas" style="margin-top:14px"></div>
+    </div>
+  </section>
+</main>
+
+<section class="linha-tempo" aria-label="Linha do tempo">
+  <div class="lt-barra">
+    <button id="b-in" title="Marcar início no ponto atual (I)">Início <kbd>I</kbd></button>
+    <button id="b-out" title="Marcar fim no ponto atual (O)">Fim <kbd>O</kbd></button>
+    <button id="b-cortar" class="primario" title="Cortar a seleção (X)">Cortar seleção <kbd>X</kbd></button>
+    <button id="b-restaurar" title="Devolver a seleção ao vídeo (R)">Restaurar seleção <kbd>R</kbd></button>
+    <span class="chip" id="info-sel">nada selecionado</span>
+    <span class="esp"></span>
+    <label for="vel" style="font-size:12px;color:var(--mut)">Velocidade</label>
+    <select id="vel"><option value="1">1.0x</option><option value="1.1">1.1x</option><option value="1.2">1.2x</option><option value="1.25">1.25x</option></select>
+  </div>
+  <canvas id="lt" aria-label="Linha do tempo: arraste para selecionar, clique para ir"></canvas>
+  <div class="legenda-lt">
+    <span style="--c:var(--corte)">corte</span><span style="--c:var(--pen)">seleção</span><span style="--c:var(--ambar)">insert</span><span style="--c:#B89CF5">efeito</span><span style="--c:#fff">cursor</span><span>arraste para selecionar · clique para ir</span>
+  </div>
+</section>
+
+<dialog id="dlg">
+  <h2>Enviar alterações ao Claude</h2>
+  <p class="dica" style="margin:0">Copie o texto abaixo e cole na conversa com o Claude. Ele aplica as mudanças e gera o vídeo final. Se preferir, baixe o arquivo e coloque na pasta do vídeo.</p>
+  <textarea id="saida" readonly></textarea>
+  <div class="acoes">
+    <button id="b-baixar">Baixar arquivo</button>
+    <button id="b-copiar" class="primario">Copiar</button>
+    <button id="b-fechar">Fechar</button>
+  </div>
+</dialog>
+
+<script src="projeto.js"></script>
+<script src="animacoes.js"></script>
+<script>
+// Aviso de página aberta pela metade: as imagens e as listas ficam em arquivos ao lado desta página, e o painel de
+// navegador do app (ou outro visualizador) não os carrega. Fica num script separado para aparecer mesmo se o resto falhar.
+function avisoAbertura() {
+  if (document.getElementById('aviso-abertura')) return;
+  var d = document.createElement('div');
+  d.id = 'aviso-abertura'; d.setAttribute('role', 'alert');
+  d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#F2B33D;color:#14181F;font:600 15px/1.45 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:14px 16px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.45)';
+  d.innerHTML = 'Esta página abriu pela metade: as imagens e as opções dela não carregaram aqui.<br><span style="font-weight:400">Ela precisa abrir no navegador do computador (Chrome, Safari ou Edge). Peça ao Claude na conversa: <b>abre esta página no meu navegador</b>.</span>';
+  (document.body || document.documentElement).appendChild(d);
+}
+if (!window.PROJETO) avisoAbertura();
+</script>
+<script>
+(function(){
+  const ORIG = JSON.parse(JSON.stringify(window.PROJETO));
+  const CHAVE = 'mesa-edicao-' + ORIG.id;
+  // o que foi salvo no navegador só vale para a mesma versão do projeto.js (o Claude pode ter gerado uma nova)
+  const ASSIN = (s => { let h = 5381; for (let i = 0; i < s.length; i++) h = (h * 33 + s.charCodeAt(i)) >>> 0; return h.toString(36); })(JSON.stringify(ORIG));
+  let P = JSON.parse(JSON.stringify(ORIG));
+  try { const s = JSON.parse(localStorage.getItem(CHAVE) || 'null'); if (s && s.assinatura === ASSIN && s.P) P = s.P; } catch (e) {}
+  const hist = [];
+  let selA = null, selB = null;
+  const $ = id => document.getElementById(id);
+  const video = $('video'), tela = $('tela'), camada = $('camada'), cv = $('lt');
+  video.src = P.video;
+
+  const fmt = t => { t = Math.max(0, t); const m = Math.floor(t / 60), s = t - m * 60; return m + ':' + s.toFixed(1).padStart(4, '0'); };
+  const fmtCurto = t => { const m = Math.floor(t / 60), s = Math.round(t - m * 60); return m + ':' + String(s).padStart(2, '0'); };
+
+  function salvar(){ try { localStorage.setItem(CHAVE, JSON.stringify({ assinatura: ASSIN, P })); } catch (e) {} }
+  function guardar(){ hist.push(JSON.stringify(P)); if (hist.length > 80) hist.shift(); $('b-desfazer').disabled = false; }
+  function mudou(){ salvar(); render(); }
+
+  function juntar(c){
+    c = c.filter(r => r[1] - r[0] > 0.02).map(r => [Math.max(0, r[0]), Math.min(P.duracao, r[1])]).sort((a, b) => a[0] - b[0]);
+    const out = [];
+    for (const r of c) { if (out.length && r[0] <= out[out.length - 1][1] + 0.01) out[out.length - 1][1] = Math.max(out[out.length - 1][1], r[1]); else out.push([r[0], r[1]]); }
+    return out.map(r => [+r[0].toFixed(2), +r[1].toFixed(2)]);
+  }
+  function tirar(c, a, b){
+    const out = [];
+    for (const [x, y] of c) { if (y <= a || x >= b) out.push([x, y]); else { if (x < a) out.push([x, a]); if (y > b) out.push([b, y]); } }
+    return juntar(out);
+  }
+  const cortado = t => P.cortes.some(([a, b]) => t >= a && t < b);
+  const totalCortado = () => P.cortes.reduce((s, [a, b]) => s + (b - a), 0);
+
+  // ---------- texto ----------
+  function itensTexto(){
+    const it = []; const W = P.palavras;
+    for (let i = 0; i < W.length; i++) {
+      if (i > 0) {
+        const g = W[i].s - W[i - 1].e;
+        if (g > 0.35) it.push({ pausa: true, a: W[i - 1].e, b: W[i].s, d: g });
+      }
+      it.push({ i, ...W[i] });
+    }
+    return it;
+  }
+  const ITENS = itensTexto();
+  function montarTexto(){
+    const box = $('texto'); box.innerHTML = '';
+    ITENS.forEach((it, k) => {
+      const el = document.createElement('span');
+      if (it.pausa) { el.className = 'pausa'; el.textContent = 'pausa ' + it.d.toFixed(1).replace('.', ',') + ' s'; el.title = 'Clique para cortar ou devolver este respiro'; }
+      else { el.className = 'p'; const b = it.t.replace(/[^\wÀ-ú%]/g, ''); el.textContent = CORR[b] ? it.t.replace(b, CORR[b]) : it.t; }
+      el.dataset.k = k; box.appendChild(el); box.appendChild(document.createTextNode(' '));
+    });
+  }
+  function pintarTexto(t){
+    const box = $('texto'); const [a, b] = sel();
+    box.querySelectorAll('[data-k]').forEach(el => {
+      const it = ITENS[+el.dataset.k];
+      if (it.pausa) {
+        const meio = (it.a + it.b) / 2; el.classList.toggle('cut', cortado(meio + 0.05) && cortado(meio - 0.05));
+      } else {
+        const meio = (it.s + it.e) / 2;
+        el.classList.toggle('cut', cortado(meio));
+        el.classList.toggle('ativa', t >= it.s && t < it.e);
+        el.classList.toggle('sel', a !== null && meio >= a && meio <= b);
+      }
+    });
+  }
+  $('texto').addEventListener('click', ev => {
+    const el = ev.target.closest('[data-k]'); if (!el) return;
+    const it = ITENS[+el.dataset.k];
+    if (it.pausa) {
+      guardar();
+      const a = it.a + 0.12, b = it.b - 0.06;
+      const meio = (it.a + it.b) / 2;
+      if (cortado(meio)) P.cortes = tirar(P.cortes, it.a, it.b);
+      else if (b > a) P.cortes = juntar(P.cortes.concat([[a, b]]));
+      mudou(); return;
+    }
+    if (ev.shiftKey && selA !== null) { selB = it.e; if (selB < selA) { const x = selA; selA = it.s; selB = x; } }
+    else { selA = it.s; selB = it.e; video.currentTime = it.s; }
+    render();
+  });
+
+  // ---------- inserts ----------
+  const NOMES = { cartao: 'Cartão', fluxo: 'Fluxo', chips: 'Plataformas', carimbo: 'Carimbo', lista: 'Lista', cta: 'Chamada final',
+    bilhete: 'Cartão-convite', duascamadas: 'Título em duas camadas', tarja: 'Tarja', rotulos: 'Rótulos de exemplo', formula: 'Fórmula que se monta',
+    chamada: 'Chamada em duas camadas', perfil: 'Cartão de identificação', animacao: 'Animação', mitofato: 'Mito e fato', print: 'Print', fixo: 'Título fixo', cartaz: 'Cartaz (sem fala)' };
+  const MODELOS = { notebook3d: 'Notebook em 3D', trilha: 'Trilha de passos', leque: 'Leque de artes', palavra: 'Palavra revelada', diagrama: 'Diagrama no lugar',
+    citacao: 'Citação com aspas', frase: 'Frase com destaque', assinatura: 'Assinatura com o nome', capitulo: 'Cartela de capítulo', progresso: 'Barra de capítulos',
+    dado: 'Dado com fonte', linhadotempo: 'Linha do tempo', calendario: 'Prazo no calendário', tela: 'Tela genérica', anotacao: 'Anotação sobre imagem',
+    foto: 'Foto de apoio', antesdepois: 'Antes e depois' };
+  const OCULTOS = ['imagem', 'imagens', 'pastaMidia', 'cores', 'marcas', 'fim', 'topo', 'lado'];
+  // campos que cada tipo mostra, com o nome que o advogado entende
+  const CAMPOS = {
+    cartao: [['rotulo', 'Rótulo'], ['titulo', 'Título'], ['sub', 'Linha de apoio']], cta: [['rotulo', 'Rótulo'], ['titulo', 'Título'], ['sub', 'Linha de apoio']],
+    fluxo: [['rotulo', 'Rótulo'], ['itens', 'Itens (separados por vírgula)']], chips: [['rotulo', 'Rótulo'], ['itens', 'Itens (separados por vírgula)']],
+    lista: [['rotulo', 'Rótulo'], ['itens', 'Itens (separados por vírgula)']], carimbo: [['titulo', 'Texto do selo']],
+    duascamadas: [['rotulo', 'Linha pequena'], ['titulo', 'Linha grande'], ['sub', 'Linha de apoio']],
+    bilhete: [['rotulo', 'Linha pequena'], ['titulo', 'Linha grande'], ['sub', 'Linha de apoio']],
+    tarja: [['titulo', 'Linha 1'], ['sub', 'Linha 2']], rotulos: [['itens', 'Rótulos (separados por vírgula)']],
+    formula: [['itens', 'Termos (separados por vírgula)'], ['titulo', 'Resultado']],
+    chamada: [['rotulo', 'Etiqueta'], ['titulo', 'Texto grande']], perfil: [['titulo', 'O @ (ou o nome, se você pedir)'], ['sub', 'Linha de baixo (área; OAB/UF só se você pedir)']],
+    mitofato: [['mito', 'Mito'], ['fato', 'Fato']], print: [['imagem', 'Imagem (arquivo na pasta midia)']],
+    fixo: [['rotulo', 'Linha pequena'], ['titulo', 'Título fixo']], cartaz: [['rotulo', 'Rótulo'], ['titulo', 'Título'], ['itens', 'Linhas (separadas por vírgula)'], ['assinatura', 'Assinatura']]
+  };
+  const FAM_TIPOS = ['duascamadas', 'rotulos', 'chamada', 'carimbo', 'perfil'];
+  const EFEITOS = { pb: 'Preto e branco', aproximacao: 'Aproximação', dividida: 'Tela dividida (antes e depois)', faixa: 'Faixa de imagem em cima', edicaoaovivo: 'Edição acontecendo na tela',
+    holofote: 'Holofote', transicao: 'Troca de assunto' };
+  const AVISOS = { dividida: 'Tela dividida: cru em cima, editado embaixo (aparece no vídeo final)', faixa: 'Faixa: imagem ou página em cima, você embaixo (aparece no vídeo final)',
+    edicaoaovivo: 'Painel da edição acontecendo (aparece no vídeo final)', holofote: 'Holofote: tudo escurece menos você (aparece no vídeo final)',
+    transicao: 'Troca de assunto (aparece no vídeo final)' };
+  const ZONA_BASE = ['formula', 'chamada', 'cartao', 'fluxo', 'chips', 'lista', 'cta', 'cartaz'];
+  if (!ORIG.efeitos) ORIG.efeitos = [];
+  if (!ORIG.estilo) ORIG.estilo = { legenda: 'nenhuma' };
+  if (!P.efeitos) P.efeitos = [];
+  if (!P.estilo) P.estilo = JSON.parse(JSON.stringify(ORIG.estilo));
+  function montarInserts(){
+    const box = $('lista-inserts'); box.innerHTML = '';
+    P.inserts.forEach((ins, k) => {
+      const c = document.createElement('div'); c.className = 'card' + (ins.ativo ? '' : ' off'); c.dataset.k = k; c.dataset.g = 'inserts';
+      let campos = (CAMPOS[ins.tipo] || [['rotulo', 'Rótulo'], ['titulo', 'Título']]).map(([f, nome]) =>
+        `<label class="inteiro">${nome}<input data-f="${f}" value="${esc(f === 'itens' ? (ins.itens || []).join(', ') : ins[f])}"></label>`).join('');
+      if (ins.tipo === 'animacao') campos = Object.entries(ins.dados || {}).filter(([k, v]) => !OCULTOS.includes(k) && (typeof v === 'string' || Array.isArray(v))).map(([k, v]) =>
+        `<label class="inteiro">${k[0].toUpperCase() + k.slice(1)}${Array.isArray(v) ? ' (separados por vírgula)' : ''}<input data-d="${k}" value="${esc(Array.isArray(v) ? v.join(', ') : v)}"></label>`).join('');
+      c.innerHTML = `<div class="topo"><span class="tipo">${ins.tipo === 'animacao' ? 'Animação · ' + (MODELOS[ins.modelo] || ins.modelo) : (NOMES[ins.tipo] || ins.tipo)}</span><b>${esc(ins.titulo || ins.rotulo || (ins.itens || []).join(', '))}</b>
+        <label><input type="checkbox" data-f="ativo" ${ins.ativo ? 'checked' : ''}> ligado</label></div>
+        <div class="campos">${campos}${FAM_TIPOS.includes(ins.tipo) ? `<label class="inteiro">Família deste insert<select data-f="familia">${[['', 'Igual ao vídeo'], ['editorial', 'Editorial'], ['revista', 'Revista'], ['atras', 'Atrás de você'], ['celular', 'Celular'], ['institucional', 'Institucional (cartão)']].map(([v, n]) => `<option value="${v}" ${(ins.familia || '') === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label>` : ''}</div>
+        <div class="tempos">
+          <label>Entra (s)<input type="number" step="0.1" data-f="inicio" value="${ins.inicio}"></label>
+          <label>Sai (s)<input type="number" step="0.1" data-f="fim" value="${ins.fim}"></label>
+          <button data-a="ini-agora" title="Usar o tempo atual como entrada">Entra agora</button>
+          <button data-a="fim-agora" title="Usar o tempo atual como saída">Sai agora</button>
+          <button data-a="ir">Ver</button>
+        </div>`;
+      box.appendChild(c);
+    });
+    const be = $('lista-efeitos'); be.innerHTML = P.efeitos.length ? '<p class="dica" style="margin-top:16px">Efeitos de imagem</p>' : '';
+    P.efeitos.forEach((e, k) => {
+      const c = document.createElement('div'); c.className = 'card' + (e.ativo ? '' : ' off'); c.dataset.k = k; c.dataset.g = 'efeitos';
+      c.innerHTML = `<div class="topo"><span class="tipo efeito">Efeito</span><b>${EFEITOS[e.tipo] || e.tipo}</b>
+        <label><input type="checkbox" data-f="ativo" ${e.ativo ? 'checked' : ''}> ligado</label></div>
+        ${e.tipo === 'aproximacao' ? `<div class="campos"><label>Força (1,05 leve a 1,30 forte)<input type="number" step="0.05" min="1" max="1.5" data-f="forca" value="${e.forca || 1.15}"></label></div>` : ''}
+        <div class="tempos">
+          <label>Entra (s)<input type="number" step="0.1" data-f="inicio" value="${e.inicio}"></label>
+          <label>Sai (s)<input type="number" step="0.1" data-f="fim" value="${e.fim}"></label>
+          <button data-a="ini-agora">Entra agora</button><button data-a="fim-agora">Sai agora</button><button data-a="ir">Ver</button>
+        </div>`;
+      be.appendChild(c);
+    });
+  }
+  function esc(s){ return String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+  let tDeb = null;
+  const itemDe = el => { const c = el.closest('.card'); return P[c.dataset.g][+c.dataset.k]; };
+  $('aba-inserts').addEventListener('input', ev => {
+    const f = ev.target.dataset.f, dk = ev.target.dataset.d; if (!f && !dk) return;
+    const ins = itemDe(ev.target);
+    if (dk) { if (!tDeb) guardar(); clearTimeout(tDeb); tDeb = setTimeout(() => { tDeb = null; }, 600);
+      ins.dados[dk] = Array.isArray(ins.dados[dk]) ? ev.target.value.split(',').map(x => x.trim()).filter(Boolean) : ev.target.value; salvar(); render(false); return; }
+    if (!tDeb) guardar(); clearTimeout(tDeb); tDeb = setTimeout(() => { tDeb = null; }, 600);
+    if (f === 'ativo') { ins.ativo = ev.target.checked; ev.target.closest('.card').classList.toggle('off', !ins.ativo); }
+    else if (f === 'itens') ins.itens = ev.target.value.split(',').map(s => s.trim()).filter(Boolean);
+    else if (f === 'inicio' || f === 'fim' || f === 'forca') { const v = parseFloat(ev.target.value); if (!isNaN(v)) ins[f] = f === 'forca' ? Math.max(1, Math.min(1.5, v)) : Math.max(0, Math.min(P.duracao, v)); }
+    else if (f === 'familia') { if (ev.target.value) ins.familia = ev.target.value; else delete ins.familia; }
+    else ins[f] = ev.target.value;
+    salvar(); render(false);
+  });
+  $('aba-inserts').addEventListener('click', ev => {
+    const a = ev.target.dataset.a; if (!a) return;
+    const ins = itemDe(ev.target);
+    if (a === 'ir') { video.currentTime = ins.inicio + 0.3; return; }
+    guardar();
+    if (a === 'ini-agora') ins.inicio = +video.currentTime.toFixed(2);
+    if (a === 'fim-agora') ins.fim = +video.currentTime.toFixed(2);
+    mudou(); montarInserts();
+  });
+
+  // ---------- notas ----------
+  function montarNotas(){
+    const box = $('lista-notas'); box.innerHTML = '';
+    if (!P.notas.length) { box.innerHTML = '<p class="dica">Nenhum pedido ainda.</p>'; return; }
+    P.notas.forEach((n, k) => {
+      const d = document.createElement('div'); d.className = 'nota';
+      d.innerHTML = `<span class="t" data-t="${n.t}">${fmt(n.t)}</span><p>${esc(n.texto)}</p><button data-del="${k}" title="Apagar pedido">Apagar</button>`;
+      box.appendChild(d);
+    });
+  }
+  $('b-nota').addEventListener('click', () => {
+    const tx = $('nova-nota').value.trim(); if (!tx) return;
+    guardar(); P.notas.push({ t: +video.currentTime.toFixed(2), texto: tx }); P.notas.sort((a, b) => a.t - b.t);
+    $('nova-nota').value = ''; mudou(); montarNotas();
+  });
+  $('lista-notas').addEventListener('click', ev => {
+    if (ev.target.dataset.t) video.currentTime = +ev.target.dataset.t;
+    if (ev.target.dataset.del !== undefined) { guardar(); P.notas.splice(+ev.target.dataset.del, 1); mudou(); montarNotas(); }
+  });
+
+  // ---------- preview dos inserts ----------
+  // tempos em que cada parte de um insert aparece (mesma regra do motor)
+  function marcas(i, n){
+    const mk = (i.marcas || []).slice(0, n);
+    if (mk.length < n) {
+      const ini = mk.length ? mk[mk.length - 1] : i.inicio, resto = n - mk.length;
+      const passo = Math.max(0.3, (i.fim - 0.6 - ini) / Math.max(1, resto));
+      for (let k = 0; k < resto; k++) mk.push(ini + passo * (k + (mk.length ? 1 : 0)));
+    }
+    return mk;
+  }
+  const PALETA = ['#4A6FF0', '#F2B33D', '#9B6DF0', '#2EAADC'];
+  const famDe = i => i.familia || P.estilo.familia || 'institucional';
+  const ATRAS = ['duascamadas', 'chamada', 'carimbo'];
+  const colore = txt => esc(txt).split(' ').map(w => (P.estilo.destaques || []).map(x => x.toLowerCase()).includes(w.replace(/[^\wÀ-ú]/g, '').toLowerCase()) ? `<span class="o">${w}</span>` : w).join(' ');
+  function htmlFamilia(i, t){
+    const f = famDe(i), rev = f === 'revista';
+    if (f === 'institucional' || !FAM_TIPOS.includes(i.tipo)) return null;
+    if (f === 'celular') {          // celular: texto forte, branco, pequeno, à esquerda, sem movimento
+      if (i.tipo === 'rotulos') { const mk = marcas(i, i.itens.length); return `<div class="t cel" style="left:8.3cqw;top:21.5cqw">${i.itens.filter((x, k) => t >= mk[k]).map(x => (/^(não|nao|x )/i.test(x) ? '<span style="color:#DE3430">✕</span> ' : '<span style="color:#4CC38A">✓</span> ') + esc(x.replace(/^x /i, ''))).join('<br>')}</div>`; }
+      if (i.tipo === 'carimbo') return `<div class="t cel fundo" style="left:8.3cqw;top:22.4cqw">${esc(i.titulo)}</div>`;
+      if (i.tipo === 'chamada' || i.tipo === 'cta') return `<div class="t cel" style="left:8.3cqw;top:109cqw">${esc(i.rotulo || '')} <span class="o">${esc((i.titulo || '').toUpperCase())}</span></div>`;
+      return `<div class="t cel" style="left:8.3cqw;right:8cqw;top:21.5cqw">${i.rotulo ? `<small>${esc(i.rotulo)}</small><br>` : ''}${colore(i.titulo || '')}${i.sub ? `<br><small>${esc(i.sub)}</small>` : ''}</div>`;
+    }
+    if (f === 'atras' && ATRAS.includes(i.tipo)) {
+      const base = i.titulo || '', pal = (i.palavra || (i.tipo === 'chamada' ? base : base.split(/\s+/).pop() || '')).toUpperCase().replace(/[.,!?]/g, '');
+      const topo = i.tipo === 'carimbo' ? base.slice(0, Math.max(0, base.length - pal.length)).trim() : (i.rotulo || '');
+      return `<div class="gig" style="top:${(i.yGigante || 560) / 10.8 - 16}cqw">${esc(pal)}</div>` + (topo ? `<div class="t peq" style="left:0;right:0;text-align:center;top:13.4cqw">${esc(topo)}</div>` : '') +
+        (i.sub ? `<div class="t cond" style="left:0;right:0;text-align:center;top:126cqw;font-size:5.9cqw;text-transform:uppercase">${esc(i.sub)}</div>` : '') + `<div class="nota">no vídeo final, a palavra fica atrás de você</div>`;
+    }
+    if (i.tipo === 'duascamadas') return (i.rotulo ? `<div class="t peq" style="left:7.4cqw;top:12cqw">${esc(i.rotulo)}</div>` : '') + (rev ? `<i class="fio" style="left:7.8cqw;top:17.2cqw"></i>` : '') +
+      `<div class="t ${rev ? 'ser' : 'cond'}" style="left:${rev ? 6.9 : 6.7}cqw;right:6cqw;top:${rev ? 18.2 : 17.8}cqw">${rev ? esc(i.titulo) : colore(i.titulo)}</div>` +
+      (i.sub ? `<div class="t" style="left:7.4cqw;right:6cqw;white-space:normal;top:${rev ? 46 : 52}cqw;font:600 3.7cqw 'Avenir Next',sans-serif;color:#fff">${esc(i.sub)}</div>` : '');
+    if (i.tipo === 'rotulos') { const mk = marcas(i, i.itens.length); return `<div class="t ${rev ? 'ser' : 'cond'}" style="left:7.4cqw;top:13.5cqw;font-size:${rev ? 7.8 : 8.5}cqw;line-height:1.05">${i.itens.filter((x, k) => t >= mk[k]).map(x => `<span class="o">${rev ? '·' : '/'}</span> ${esc(rev ? x : x.toUpperCase())}`).join('<br>')}</div>`; }
+    if (i.tipo === 'perfil') return `<div class="t" style="left:7.4cqw;top:9.7cqw;font:${rev ? 'italic 400 4.6cqw Didot,Georgia,serif' : '600 3.7cqw Avenir Next,sans-serif'};color:#fff">${esc(i.titulo)}<div style="font:500 2.8cqw 'Avenir Next',sans-serif;opacity:.85;margin-top:.5cqw">${esc(i.sub)}</div></div>`;
+    if (i.tipo === 'carimbo') { const ws = (i.titulo || '').split(/\s+/), ult = ws.pop(); const corpo = esc(rev ? ws.join(' ') : ws.join(' ').toUpperCase());
+      return `<div class="t ${rev ? 'ser' : 'cond'}" style="left:6.8cqw;right:6cqw;top:14.4cqw;font-size:${rev ? 10.9 : 13.9}cqw">${corpo} ${rev ? `<u style="text-decoration-color:var(--ouro);text-decoration-thickness:.5cqw">${esc(ult)}</u>` : `<mark>${esc(ult.toUpperCase())}</mark>`}</div>`; }
+    if (i.tipo === 'chamada') return (i.rotulo ? `<div class="t peq" style="left:7.6cqw;top:115.7cqw">${esc(i.rotulo)}</div>` : '') + (rev ? `<i class="fio" style="left:7.8cqw;top:120.4cqw"></i>` : '') +
+      `<div class="t ${rev ? 'ser' : 'cond o'}" style="left:6.7cqw;top:121cqw;font-size:${rev ? 17.6 : 25.9}cqw">${esc(rev ? i.titulo : (i.titulo || '').toUpperCase())}</div>` +
+      (i.sub ? `<div class="t" style="left:7.6cqw;top:${rev ? 144 : 147}cqw;font:600 3.9cqw 'Avenir Next',sans-serif;color:#fff">${esc(i.sub)}</div>` : '');
+    return null;
+  }
+  function htmlInsert(i, t){
+    if (i.tipo === 'duascamadas') {
+      const mk = marcas(i, 3);
+      return `<div class="dc">${i.rotulo ? `<div class="r" style="opacity:${t >= mk[0] ? 1 : 0}">${esc(i.rotulo)}</div>` : ''}<div class="t" style="opacity:${t >= mk[1] ? 1 : 0}">${esc(i.titulo)}</div>${i.sub ? `<div class="s" style="opacity:${t >= mk[2] ? 1 : 0}">${esc(i.sub)}</div>` : ''}</div>`;
+    }
+    if (i.tipo === 'bilhete') {
+      const mk = marcas(i, 2);
+      return `<div class="bilhete">${i.rotulo ? `<div class="r" style="opacity:${t >= mk[0] ? 1 : 0}">${esc(i.rotulo)}</div>` : ''}<div class="t" style="opacity:${t >= mk[1] ? 1 : 0}">${esc(i.titulo)}</div>${i.sub ? `<div class="r" style="letter-spacing:0;text-transform:none">${esc(i.sub)}</div>` : ''}</div>`;
+    }
+    if (i.tipo === 'tarja') return `<div class="esq tarja">${[i.titulo, i.sub].filter(Boolean).map(x => `<span>${esc(x)}</span>`).join('')}</div>`;
+    if (i.tipo === 'rotulos') { const mk = marcas(i, i.itens.length); return `<div class="esq rotulos">${i.itens.filter((x, k) => t >= mk[k]).map(x => `<span>${esc(x)}</span>`).join('')}</div>`; }
+    if (i.tipo === 'perfil') { const ini = (i.titulo || '').split(/\s+/).slice(0, 2).map(p => p[0] || '').join('').toUpperCase(); return `<div class="esq"><div class="perfil"><i>${esc(ini)}</i><div><b>${esc(i.titulo)}</b><small>${esc(i.sub)}</small></div></div></div>`; }
+    if (i.tipo === 'formula') {
+      const n = i.itens.length, mk = marcas(i, n + 1);
+      const linhas = i.itens.concat([i.titulo]).map((x, k) => {
+        const op = k === n ? '=' : (k ? '+' : ''), res = k === n;
+        const chip = t >= mk[k] ? `<span style="background:${res ? '#4CC38A' : PALETA[k % 4]};color:${res || k % 4 === 1 ? '#14243F' : '#fff'}">${esc(x)}</span>` : '<span class="vazio"></span>';
+        return `<div><b>${op}</b>${chip}</div>`;
+      });
+      return `<div class="formula">${linhas.join('')}</div>`;
+    }
+    if (i.tipo === 'animacao') return (window.ANIMACOES || {})[i.id] ? '' : `<span class="anim-aviso">${esc(MODELOS[i.modelo] || 'Animação')}: a prévia aparece quando o Claude gerar</span>`;
+    if (i.tipo === 'mitofato') { const mk = marcas(i, 3);
+      return `<div class="esq mito"><small>${esc((i.rotulos || ['Mito'])[0])}</small><s style="text-decoration-color:${t >= mk[1] ? '#DE3430' : 'transparent'}">${esc(i.mito)}</s>${t >= mk[2] ? `<small><b style="color:#4CC38A">✓</b> ${esc((i.rotulos || [0, 'Fato'])[1])}</small><b>${esc(i.fato)}</b>` : ''}</div>`; }
+    if (i.tipo === 'fixo') return `<div class="dc"><div class="r">${esc(i.rotulo || '')}</div><div class="t" style="font-size:5.4cqw">${esc(i.titulo)}</div></div>`;
+    if (i.tipo === 'cartaz') return `<div class="dc" style="background:rgba(20,36,63,.85);padding:6cqw 5cqw;border-radius:2cqw"><div class="r">${esc(i.rotulo || '')}</div><div class="t">${esc(i.titulo)}</div>${(i.itens || []).map(x => `<div class="s">· ${esc(x)}</div>`).join('')}</div>`;
+    if (i.tipo === 'print') return `<img class="print" src="${esc(i.imagem)}" alt="" style="width:${(i.largura || 620) / 10.8}cqw">`;
+    if (i.tipo === 'chamada') return `<div class="chamada">${i.rotulo ? `<span class="r">${esc(i.rotulo)}</span>` : ''}<span class="t">${esc(i.titulo)}</span></div>`;
+    return null;
+  }
+  // legenda: mesmos blocos do motor (até 4 palavras, quebra em pontuação ou pausa)
+  const CORR = Object.assign({ cloud: 'Claude', Cloud: 'Claude' }, (P.estilo && P.estilo.correcoes) || {});
+  const tEdit = t => t - P.cortes.reduce((s, [a, b]) => s + (b <= t ? b - a : (a < t ? t - a : 0)), 0);
+  function blocosLegenda(){
+    const ws = P.palavras.filter(w => !cortado((w.s + w.e) / 2)).map(w => {
+      let t = w.t; const base = t.replace(/[^\wÀ-ú%]/g, ''); if (CORR[base]) t = t.replace(base, CORR[base]);
+      return { t, s: w.s, e: w.e, se: tEdit(w.s), ee: tEdit(w.e) };
+    });
+    const out = []; let cur = [];
+    for (const w of ws) {
+      if (cur.length && (cur.length >= 4 || /[.,?!]$/.test(cur[cur.length - 1].t) || w.se - cur[cur.length - 1].ee > 0.4)) { out.push(cur); cur = []; }
+      cur.push(w);
+    }
+    if (cur.length) out.push(cur);
+    return out.map((c, k) => ({ ini: c[0].s - 0.05, fim: k + 1 < out.length ? Math.min(out[k + 1][0].s - 0.05, c[c.length - 1].e + 0.5) : c[c.length - 1].e + 0.6, c }));
+  }
+  let LEG = null, legChave = '';
+  function pintarLegenda(t, oculta){
+    const modo = P.estilo.legenda || 'nenhuma', box = $('leg');
+    if (modo === 'nenhuma' || oculta) { box.innerHTML = ''; return; }
+    const ch = JSON.stringify(P.cortes); if (ch !== legChave) { LEG = blocosLegenda(); legChave = ch; }
+    const b = LEG.find(x => t >= x.ini && t <= x.fim);
+    const dest = new Set((P.estilo.destaques || []).map(x => x.toLowerCase()));
+    box.innerHTML = b ? b.c.map(w => {
+      const p = w.t.replace(/[.,]$/, ''), k = dest.has(p.replace(/[^\wÀ-ú]/g, '').toLowerCase());
+      const cls = k && modo !== 'discreta' ? 'k' + (modo === 'palavra-grande' ? ' g' : '') : '';
+      return cls ? `<span class="${cls}">${esc(p)}</span>` : esc(p);
+    }).join(' ') : '';
+  }
+  // efeitos de imagem e o zoom alternado a cada corte, como no vídeo final
+  function pintarEfeitos(t){
+    let z = 1, pb = false, idx = 0;
+    for (const [a] of P.cortes) if (a > 0.05 && a <= t) idx++;
+    if (idx % 2) z = 1 + ((P.estilo && P.estilo.zoomAlternado) || 0);
+    for (const e of P.efeitos) if (e.ativo && t >= e.inicio && t <= e.fim) { if (e.tipo === 'pb') pb = true; if (e.tipo === 'aproximacao') z *= e.forca || 1.15; }
+    const div = P.efeitos.find(e => e.ativo && AVISOS[e.tipo] && t >= e.inicio && t <= e.fim);
+    let av = document.getElementById('aviso-div');
+    if (div && !av) { av = document.createElement('div'); av.id = 'aviso-div'; av.className = 'anim-aviso'; av.style.cssText += ';position:absolute;left:50%;top:48%;transform:translateX(-50%);z-index:3;white-space:normal;text-align:center;width:80%'; tela.appendChild(av); }
+    if (av) { av.style.display = div ? '' : 'none'; if (div) av.textContent = AVISOS[div.tipo]; }
+    video.style.transform = z !== 1 ? `scale(${z})` : '';
+    video.style.filter = pb ? 'grayscale(1) contrast(1.12)' : '';
+  }
+  // animações: a prévia é o vídeo transparente que o motor grava (anim-<id>.webm); antes disso, um aviso
+  const VIDS = {};
+  function pintarAnimacoes(t){
+    const AN = window.ANIMACOES || {};
+    for (const i of P.inserts.filter(x => x.tipo === 'animacao')) {
+      const on = i.ativo && t >= i.inicio && t <= i.fim + 0.45, a = AN[i.id];
+      if (!a) continue;
+      let v = VIDS[i.id];
+      if (!v) { v = VIDS[i.id] = document.createElement('video'); v.className = 'anim'; v.muted = true; v.playsInline = true; v.src = a.arquivo;
+        Object.assign(v.style, { left: a.area.x / 10.8 + '%', top: a.area.y / 19.2 + '%', width: a.area.w / 10.8 + '%' }); tela.appendChild(v); }
+      v.style.display = on ? '' : 'none';
+      if (!on) { if (!v.paused) v.pause(); continue; }
+      const alvo = Math.max(0, tEdit(t) - tEdit(i.inicio));
+      if (Math.abs(v.currentTime - alvo) > 0.12) v.currentTime = alvo;
+      v.playbackRate = P.velocidade;
+      if (video.paused) { if (!v.paused) v.pause(); } else if (v.paused) v.play().catch(() => {});
+    }
+  }
+  let ultimaCamada = '';
+  function pintarCamada(t){
+    pintarAnimacoes(t);
+    const ativos = P.inserts.filter(i => i.ativo && t >= i.inicio && t <= i.fim);
+    pintarEfeitos(t);
+    pintarLegenda(t, ativos.some(i => ZONA_BASE.includes(i.tipo) || i.ocultaLegenda));
+    const chave = ativos.map(i => i.id + JSON.stringify(i) + (htmlFamilia(i, t) || htmlInsert(i, t) || '')).join('|') + P.estilo.legenda + P.estilo.familia;
+    if (chave === ultimaCamada) return; ultimaCamada = chave;
+    camada.innerHTML = ''; $('zona-topo').innerHTML = '';
+    $('fam').innerHTML = '';
+    tela.classList.remove('f-editorial', 'f-revista', 'f-atras', 'f-celular', 'f-institucional'); tela.classList.add('f-' + (P.estilo.familia || 'institucional'));
+    for (const i of ativos) {
+      const hf = htmlFamilia(i, t);
+      if (hf !== null) { $('fam').insertAdjacentHTML('beforeend', hf); continue; }
+      const hi = htmlInsert(i, t);
+      if (hi !== null) { const d = document.createElement('div'); d.style.display = 'contents'; d.innerHTML = hi; (ZONA_BASE.includes(i.tipo) ? camada : $('zona-topo')).appendChild(d); continue; }
+      if (i.tipo === 'carimbo') {
+        const s = document.createElement('div'); s.className = 'carimbo' + (/APROVA/i.test(i.titulo) ? ' verde' : ''); s.textContent = i.titulo; camada.appendChild(s); continue;
+      }
+      const d = document.createElement('div'); d.className = 'ins' + (i.tipo === 'cta' ? ' cta' : '');
+      let h = i.rotulo ? `<div class="rot">${esc(i.rotulo)}</div>` : '';
+      if (i.tipo === 'cartao' || i.tipo === 'cta') h += `<div class="tit">${esc(i.titulo)}</div>` + (i.sub ? `<div class="sub">${esc(i.sub)}</div>` : '');
+      if (i.tipo === 'fluxo') h += `<div class="fluxo">${i.itens.map(esc).map(x => `<span>${x}</span>`).join('<i></i>')}</div>`;
+      if (i.tipo === 'chips') h += `<div class="grade">${i.itens.map(x => `<span>${esc(x)}</span>`).join('')}</div>`;
+      if (i.tipo === 'lista') h += `<div class="lista">${i.itens.map(x => `<span>${esc(x)}</span>`).join('')}</div>`;
+      d.innerHTML = h; camada.appendChild(d);
+    }
+  }
+
+  // ---------- linha do tempo ----------
+  const ctx = cv.getContext('2d');
+  function tamanho(){ const r = cv.getBoundingClientRect(); cv.width = Math.round(r.width * devicePixelRatio); cv.height = Math.round(r.height * devicePixelRatio); }
+  const X = t => t / P.duracao * cv.width;
+  const T = x => Math.max(0, Math.min(P.duracao, x / cv.width * P.duracao));
+  function sel(){ if (selA === null || selB === null) return [null, null]; return [Math.min(selA, selB), Math.max(selA, selB)]; }
+  function pintarLT(t){
+    const w = cv.width, h = cv.height, dpr = devicePixelRatio;
+    const topoOnda = 18 * dpr, altOnda = h - 58 * dpr, faixa = h - 30 * dpr;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#273141'; ctx.font = `${10 * dpr}px Menlo, monospace`;
+    for (let s = 0; s <= P.duracao; s += 10) { const x = X(s); ctx.fillRect(x, 0, 1, 8 * dpr); ctx.fillStyle = '#8D98A8'; ctx.fillText(fmtCurto(s), x + 3 * dpr, 10 * dpr); ctx.fillStyle = '#273141'; }
+    const meio = topoOnda + altOnda / 2;
+    for (let i = 0; i < P.picos.length; i++) {
+      const tt = i * P.passoPicos, x = X(tt), a = P.picos[i] * altOnda / 2;
+      ctx.fillStyle = cortado(tt) ? '#3a2a2e' : '#5d6f8f';
+      ctx.fillRect(x, meio - a, Math.max(1, X(P.passoPicos) - 0.5), a * 2 || 1);
+    }
+    for (const [a, b] of P.cortes) {
+      ctx.fillStyle = 'rgba(229,83,75,.22)'; ctx.fillRect(X(a), topoOnda, X(b) - X(a), altOnda);
+      ctx.fillStyle = '#E5534B'; ctx.fillRect(X(a), topoOnda, X(b) - X(a), 3 * dpr);
+    }
+    const [sa, sb] = sel();
+    if (sa !== null) { ctx.fillStyle = 'rgba(74,111,240,.35)'; ctx.fillRect(X(sa), topoOnda, Math.max(2, X(sb) - X(sa)), altOnda); }
+    ctx.font = `${10.5 * dpr}px -apple-system, Helvetica, sans-serif`;
+    P.inserts.forEach((i, k) => {
+      const x = X(i.inicio), x2 = X(i.fim), y = faixa + (k % 2 ? 13 * dpr : 0);
+      ctx.fillStyle = i.ativo ? '#F2B33D' : '#4b5363'; ctx.fillRect(x, y, Math.max(3, x2 - x), 11 * dpr);
+      ctx.save(); ctx.beginPath(); ctx.rect(x, y, Math.max(3, x2 - x), 11 * dpr); ctx.clip();
+      ctx.fillStyle = '#14243F'; ctx.fillText(i.titulo || i.rotulo, x + 3 * dpr, y + 9 * dpr); ctx.restore();
+    });
+    for (const e of P.efeitos) {
+      ctx.fillStyle = e.ativo ? 'rgba(184,156,245,.9)' : '#4b5363';
+      ctx.fillRect(X(e.inicio), topoOnda + altOnda - 5 * dpr, Math.max(3, X(e.fim) - X(e.inicio)), 5 * dpr);
+    }
+    ctx.fillStyle = '#F2B33D';
+    for (const n of P.notas) { const x = X(n.t); ctx.beginPath(); ctx.moveTo(x, topoOnda); ctx.lineTo(x + 7 * dpr, topoOnda + 5 * dpr); ctx.lineTo(x, topoOnda + 10 * dpr); ctx.fill(); ctx.fillRect(x, topoOnda, 1.5 * dpr, altOnda); }
+    ctx.fillStyle = '#fff'; ctx.fillRect(X(t) - dpr, 0, 2 * dpr, h);
+  }
+  let arrasto = null;
+  cv.addEventListener('pointerdown', ev => { cv.setPointerCapture(ev.pointerId); const t = T(ev.offsetX * devicePixelRatio); arrasto = { t0: t, x0: ev.offsetX, moveu: false }; });
+  cv.addEventListener('pointermove', ev => {
+    if (!arrasto) return; if (Math.abs(ev.offsetX - arrasto.x0) > 4) arrasto.moveu = true;
+    if (arrasto.moveu) { selA = arrasto.t0; selB = T(ev.offsetX * devicePixelRatio); render(false); }
+  });
+  cv.addEventListener('pointerup', ev => {
+    if (arrasto && !arrasto.moveu) { video.currentTime = T(ev.offsetX * devicePixelRatio); }
+    arrasto = null; render(false);
+  });
+
+  // ---------- ações ----------
+  function cortarSel(){ const [a, b] = sel(); if (a === null || b - a < 0.05) return; guardar(); P.cortes = juntar(P.cortes.concat([[a, b]])); selA = selB = null; mudou(); }
+  function restaurarSel(){ const [a, b] = sel(); if (a === null) return; guardar(); P.cortes = tirar(P.cortes, a, b); selA = selB = null; mudou(); }
+  $('b-cortar').onclick = cortarSel; $('b-restaurar').onclick = restaurarSel;
+  $('b-in').onclick = () => { selA = video.currentTime; if (selB === null || selB < selA) selB = Math.min(P.duracao, selA + 1); render(false); };
+  $('b-out').onclick = () => { selB = video.currentTime; if (selA === null || selA > selB) selA = Math.max(0, selB - 1); render(false); };
+  $('b-desfazer').onclick = () => { if (!hist.length) return; P = JSON.parse(hist.pop()); $('b-desfazer').disabled = !hist.length; salvar(); montarInserts(); montarNotas(); render(); };
+  $('b-original').onclick = () => { guardar(); P = JSON.parse(JSON.stringify(ORIG)); salvar(); montarInserts(); montarNotas(); render(); };
+  $('vel').onchange = ev => { guardar(); P.velocidade = parseFloat(ev.target.value); video.playbackRate = P.velocidade; mudou(); };
+  $('estilo-leg').onchange = ev => { guardar(); P.estilo.legenda = ev.target.value; mudou(); };
+  $('estilo-fam').onchange = ev => { guardar(); P.estilo.familia = ev.target.value; mudou(); };
+  $('b-play').onclick = () => { if (video.paused) { if (cortado(video.currentTime)) pular(); video.play(); } else video.pause(); };
+  $('b-voltar').onclick = () => { video.currentTime = Math.max(0, video.currentTime - 2); };
+  $('b-avancar').onclick = () => { video.currentTime = Math.min(P.duracao, video.currentTime + 2); };
+  video.onplay = () => { $('b-play').textContent = 'Pausar'; video.playbackRate = P.velocidade; };
+  video.onpause = () => { $('b-play').textContent = 'Tocar'; };
+
+  document.querySelectorAll('.abas button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.abas button').forEach(x => x.setAttribute('aria-selected', x === b));
+    ['texto', 'inserts', 'notas'].forEach(a => $('aba-' + a).hidden = a !== b.dataset.aba);
+  });
+  document.addEventListener('keydown', ev => {
+    if (ev.target.matches('input, textarea, select')) return;
+    if (ev.key === ' ') { ev.preventDefault(); $('b-play').click(); }
+    else if (ev.key === 'ArrowLeft') video.currentTime = Math.max(0, video.currentTime - (ev.shiftKey ? 0.1 : 1));
+    else if (ev.key === 'ArrowRight') video.currentTime = Math.min(P.duracao, video.currentTime + (ev.shiftKey ? 0.1 : 1));
+    else if (ev.key === 'i' || ev.key === 'I') $('b-in').click();
+    else if (ev.key === 'o' || ev.key === 'O') $('b-out').click();
+    else if (ev.key === 'x' || ev.key === 'X' || ev.key === 'Delete' || ev.key === 'Backspace') { ev.preventDefault(); cortarSel(); }
+    else if (ev.key === 'r' || ev.key === 'R') restaurarSel();
+    else if ((ev.metaKey || ev.ctrlKey) && ev.key.toLowerCase() === 'z') { ev.preventDefault(); $('b-desfazer').click(); }
+  });
+
+  // ---------- enviar ----------
+  function pacote(){
+    const mudInserts = P.inserts.filter(i => JSON.stringify(i) !== JSON.stringify(ORIG.inserts.find(o => o.id === i.id)));
+    const mudEfeitos = P.efeitos.filter(e => JSON.stringify(e) !== JSON.stringify(ORIG.efeitos.find(o => o.id === e.id)));
+    return {
+      mesaDeEdicao: 3, projeto: P.id, velocidade: P.velocidade, legenda: P.estilo.legenda, familia: P.estilo.familia || 'institucional',
+      cortes: P.cortes, cortesMudaram: JSON.stringify(P.cortes) !== JSON.stringify(ORIG.cortes),
+      insertsAlterados: mudInserts, efeitosAlterados: mudEfeitos, pedidos: P.notas,
+      duracaoFinalEstimada: +((P.duracao - totalCortado()) / P.velocidade).toFixed(1)
+    };
+  }
+  function textoEnvio(){
+    const p = pacote(); const linhas = ['Aplica as alterações da Mesa de edição neste vídeo (' + P.nome + ').', ''];
+    linhas.push('Resumo: ' + p.cortes.length + ' cortes' + (p.cortesMudaram ? ' (alterados por mim)' : ' (iguais aos seus)') + ', velocidade ' + p.velocidade + 'x, família ' + p.familia + ', legenda ' + p.legenda + ', ' + p.insertsAlterados.length + ' insert(s) e ' + p.efeitosAlterados.length + ' efeito(s) alterado(s), ' + p.pedidos.length + ' pedido(s).');
+    p.pedidos.forEach(n => linhas.push('- Pedido em ' + fmt(n.t) + ': ' + n.texto));
+    linhas.push('', '```json', JSON.stringify(p, null, 1), '```');
+    return linhas.join('\n');
+  }
+  $('b-enviar').onclick = () => { $('saida').value = textoEnvio(); $('dlg').showModal(); };
+  $('b-fechar').onclick = () => $('dlg').close();
+  $('b-copiar').onclick = async () => {
+    try { await navigator.clipboard.writeText($('saida').value); $('b-copiar').textContent = 'Copiado'; }
+    catch (e) { $('saida').select(); document.execCommand('copy'); $('b-copiar').textContent = 'Copiado'; }
+    setTimeout(() => $('b-copiar').textContent = 'Copiar', 1600);
+  };
+  $('b-baixar').onclick = () => {
+    const blob = new Blob([JSON.stringify(pacote(), null, 1)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mesa-de-edicao-' + P.id + '.json'; a.click();
+  };
+
+  // ---------- laço ----------
+  function pular(){
+    const t = video.currentTime;
+    for (const [a, b] of P.cortes) if (t >= a - 0.01 && t < b) { if (b >= P.duracao - 0.05) { video.pause(); video.currentTime = a - 0.05; } else video.currentTime = b; return true; }
+    return false;
+  }
+  function render(tudo = true){
+    const t = video.currentTime || 0;
+    $('t-atual').textContent = fmt(t);
+    $('t-total').textContent = fmt(P.duracao);
+    $('dur-final').textContent = fmtCurto((P.duracao - totalCortado()) / P.velocidade) + ' (' + P.velocidade + 'x)';
+    $('n-cortes').textContent = P.cortes.length;
+    $('n-inserts').textContent = P.inserts.filter(i => i.ativo).length;
+    $('t-nota').textContent = fmt(t);
+    $('vel').value = String(P.velocidade);
+    $('estilo-leg').value = P.estilo.legenda || 'nenhuma';
+    $('estilo-fam').value = P.estilo.familia || 'institucional';
+    const [a, b] = sel();
+    $('info-sel').textContent = a === null ? 'nada selecionado' : 'seleção ' + fmt(a) + ' a ' + fmt(b) + ' (' + (b - a).toFixed(1).replace('.', ',') + ' s)';
+    tela.classList.toggle('no-corte', video.paused && cortado(t));
+    pintarTexto(t); pintarCamada(t); pintarLT(t);
+  }
+  function laco(){
+    if (!video.paused) pular();
+    render(false);
+    requestAnimationFrame(laco);
+  }
+  window.addEventListener('resize', () => { tamanho(); render(false); });
+  $('nome-projeto').textContent = '· ' + P.nome;
+  $('b-desfazer').disabled = true;
+  montarTexto(); montarInserts(); montarNotas(); tamanho();
+  function inicio(){ if (P.cortes[0] && P.cortes[0][0] <= 0.05 && video.currentTime < P.cortes[0][1]) video.currentTime = P.cortes[0][1]; }
+  if (video.readyState >= 1) inicio(); else video.addEventListener('loadedmetadata', inicio, { once: true });
+  requestAnimationFrame(laco);
+})();
+</script>
+</body>
+</html>

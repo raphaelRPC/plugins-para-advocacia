@@ -1,0 +1,45 @@
+{
+ "codigo": "C02",
+ "nome": "Ensaio",
+ "resumo": "Papel claro, serifa condensada enorme com itálico na palavra-chave, texto curto ao lado e lados que alternam a cada lâmina, como páginas de revista.",
+ "serve": [
+  "explicativo",
+  "uma ideia por lâmina",
+  "mito e fato",
+  "regra com a lei literal"
+ ],
+ "evite": [
+  "tutorial com muitos prints"
+ ],
+ "fontes": {
+  "titulo": "Instrument Serif",
+  "texto": "Jost",
+  "detalhe": "Jost"
+ },
+ "google_fonts": [
+  "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=block"
+ ],
+ "cores": {
+  "fundo": "#EFEEE9",
+  "texto": "#2E3125",
+  "destaque": "#6B7053",
+  "apoio": "#E3E2DA",
+  "suave": "#5F6253",
+  "linha": "#6B7053"
+ },
+ "usa_da_marca": [
+  "fundo",
+  "texto",
+  "destaque",
+  "suave"
+ ],
+ "foto_modos": {
+  "capa": "janela",
+  "texto": "metade",
+  "numero": "janela",
+  "citacao": "janela",
+  "lista": "metade",
+  "convite": "recorte"
+ },
+ "tratamento": "saturate(.8) contrast(1.02) sepia(.1) brightness(1.02)"
+}

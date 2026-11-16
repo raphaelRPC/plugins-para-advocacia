@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Dado com fonte</title>
+<!-- Dado com fonte: um número que se explica sozinho, acima da cabeça. A fonte é obrigatória e aparece embaixo.
+     tipo "contador": o número sobe até o valor (prefixo e sufixo opcionais, ex.: "R$" e "mil");
+     tipo "rosca": o anel enche até a porcentagem;
+     tipo "pictograma": "1 em cada N" em bonequinhos, o destacado acende;
+     tipo "barras": duas a quatro barras crescem, uma por marca (itens [{rotulo, valor}]);
+     tipo "conta": a conta se monta termo a termo (termos [..], o último é o resultado).
+     Nunca honorário, desconto, gratuidade ou resultado de cliente (Provimento 205, art. 3º, I e IV).
+     DADOS: tipo, valor, prefixo, sufixo, casas, legenda, fonte, total e destacados (pictograma), itens, termos, marcas, topo, escala (0,5 a 1: menor, para caber acima da cabeça), fim, familia, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#c{position:absolute;left:84px;right:84px}
+#fundo{position:absolute;left:-18px;right:-18px;top:-50px;bottom:-40px;background:radial-gradient(ellipse at 40% 50%,rgba(0,0,0,.62),rgba(0,0,0,.34) 55%,rgba(0,0,0,0) 78%)}
+.inst #fundo{left:-36px;right:-36px;top:-34px;bottom:-30px;background:var(--c-fundo);border-radius:30px}
+#leg{position:relative;font:600 44px/1.15 var(--t-texto);color:var(--c-texto);margin-top:14px;max-width:880px}
+#fonte{position:relative;margin-top:22px;font:600 26px var(--t-texto);letter-spacing:.12em;text-transform:uppercase;color:var(--c-texto);opacity:.85}
+#fonte i{display:inline-block;width:56px;height:3px;background:var(--c-destaque);vertical-align:middle;margin-right:14px}
+.txt{text-shadow:0 3px 16px rgba(0,0,0,.5)}
+.inst .txt{text-shadow:none}
+.num{font:var(--titulo-estilo) 800 200px/0.95 var(--t-titulo);color:var(--c-destaque);letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.num small{font-size:.42em;font-weight:700;color:var(--c-texto);margin:0 .12em}
+#rosca{position:relative;display:flex;align-items:center;gap:40px}
+#rosca svg{width:330px;height:330px;transform:rotate(-90deg)}
+#rosca .num{position:absolute;left:0;width:330px;text-align:center;font-size:96px}
+#pic{position:relative;display:flex;gap:18px;flex-wrap:wrap}
+#pic svg{width:120px;height:170px}
+#barras{position:relative;display:flex;flex-direction:column;gap:22px}
+.b{display:grid;grid-template-columns:240px 1fr;align-items:center;gap:22px;font:600 38px var(--t-texto);color:var(--c-texto)}
+.b .trilho{height:56px;position:relative}
+.b .trilho i{position:absolute;left:0;top:0;bottom:0;background:var(--c-destaque);border-radius:10px;width:0}
+.b .trilho b{position:absolute;top:50%;transform:translateY(-50%);font:800 40px var(--t-texto);white-space:nowrap}
+#conta{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+#conta div{font:var(--titulo-estilo) 800 110px/1.02 var(--t-titulo);color:var(--c-texto);white-space:nowrap}
+#conta div.res{color:var(--c-destaque)}
+</style></head><body>
+<div id="c"><div id="fundo"></div><div id="corpo"></div><div id="leg" class="txt"></div><div id="fonte" class="txt"><i></i><span></span></div></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, tipo = D.tipo || 'contador', c = document.getElementById('c'), corpo = document.getElementById('corpo');
+if (FAMILIA === 'institucional') document.body.classList.add('inst');
+c.style.top = (D.topo ?? 262) + 'px';
+if (D.escala) { c.style.transformOrigin = '0 0'; c.style.transform = `scale(${D.escala})`; }   // escala: dado menor, para caber acima da cabeça
+document.getElementById('leg').textContent = D.legenda || '';
+document.querySelector('#fonte span').textContent = D.fonte ? 'Fonte: ' + D.fonte : 'Fonte: indicar';
+const fmt = (v, casas) => v.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
+const casas = D.casas ?? 0;
+let desenhaCorpo = () => {};
+if (tipo === 'contador') {
+  corpo.innerHTML = `<div class="num txt">${D.prefixo ? `<small>${D.prefixo}</small>` : ''}<span></span>${D.sufixo ? `<small>${D.sufixo}</small>` : ''}</div>`;
+  const s = corpo.querySelector('span'), [m] = U.marcas(1, FIM);
+  desenhaCorpo = t => { s.textContent = fmt((D.valor ?? 0) * U.eo(U.pr(t, m, m + 1.4)), casas); };
+}
+if (tipo === 'rosca') {
+  corpo.innerHTML = `<div id="rosca"><svg viewBox="0 0 330 330"><circle cx="165" cy="165" r="140" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="30"/><circle id="arco" cx="165" cy="165" r="140" fill="none" stroke="var(--c-destaque)" stroke-width="30" stroke-linecap="round"/></svg><div class="num txt"><span></span><small>%</small></div></div>`;
+  const arco = corpo.querySelector('#arco'), s = corpo.querySelector('span'), L = 2 * Math.PI * 140, [m] = U.marcas(1, FIM);
+  arco.style.strokeDasharray = L;
+  desenhaCorpo = t => { const p = U.eo(U.pr(t, m, m + 1.4)); arco.style.strokeDashoffset = L * (1 - p * (D.valor ?? 0) / 100); arco.style.opacity = p > 0.01 ? 1 : 0; s.textContent = fmt((D.valor ?? 0) * p, casas); };
+}
+if (tipo === 'pictograma') {
+  const total = Math.min(10, D.total ?? 5), dest = D.destacados ?? 1;
+  const boneco = '<svg viewBox="0 0 120 170"><circle cx="60" cy="36" r="28"/><path d="M14 166c0-50 18-82 46-82s46 32 46 82z"/></svg>';
+  corpo.innerHTML = `<div id="pic">${boneco.repeat(total)}</div>`;
+  const bs = [...corpo.querySelectorAll('svg')], [m1, m2] = U.marcas(2, FIM);
+  desenhaCorpo = t => bs.forEach((b, i) => {
+    const e = U.mola(t - m1 - i * 0.06, 0.4); b.style.opacity = U.clamp(e * 1.4); b.style.transform = `translateY(${(1 - e) * 30}px)`;
+    const on = i < dest && t >= m2 + i * 0.1; b.style.fill = on ? 'var(--c-destaque)' : 'rgba(255,255,255,.35)';
+    if (on) b.style.transform += ` scale(${1 + 0.12 * (1 - U.pr(t, m2 + i * 0.1, m2 + i * 0.1 + 0.3))})`;
+  });
+}
+if (tipo === 'barras') {
+  const itens = (D.itens || []).slice(0, 4), max = Math.max(...itens.map(x => x.valor), 1);
+  corpo.innerHTML = `<div id="barras">${itens.map(x => `<div class="b txt"><span></span><div class="trilho"><i></i><b></b></div></div>`).join('')}</div>`;
+  const linhas = [...corpo.querySelectorAll('.b')], MK = U.marcas(itens.length, FIM);
+  linhas.forEach((l, i) => { l.querySelector('span').textContent = itens[i].rotulo; });
+  desenhaCorpo = t => linhas.forEach((l, i) => {
+    const p = U.eo(U.pr(t, MK[i], MK[i] + 0.8)), larg = 100 * itens[i].valor / max * 0.78;
+    l.style.opacity = U.clamp(U.mola(t - MK[i] + 0.2, 0.3) * 1.5);
+    l.querySelector('i').style.width = larg * p + '%';
+    const b = l.querySelector('b'); b.style.left = `calc(${larg * p}% + 16px)`; b.textContent = (itens[i].prefixo || '') + fmt(itens[i].valor * p, itens[i].casas ?? 0) + (itens[i].sufixo || '');
+  });
+}
+if (tipo === 'conta') {
+  const termos = D.termos || [];
+  corpo.innerHTML = `<div id="conta">${termos.map((x, i) => `<div class="txt${i === termos.length - 1 ? ' res' : ''}"></div>`).join('')}</div>`;
+  const ls = [...corpo.querySelectorAll('#conta div')], MK = U.marcas(termos.length, FIM);
+  ls.forEach((l, i) => l.textContent = termos[i]);
+  desenhaCorpo = t => ls.forEach((l, i) => { const p = U.mola(t - MK[i], 0.45); l.style.opacity = U.clamp(p * 1.4); l.style.transform = `translateX(${(1 - p) * -60}px)`; });
+}
+window.AREA = { x: 0, y: 160, w: 1080, h: 1000 };
+window.desenhar = t => {
+  c.style.opacity = U.janela(t, FIM, 0.3, 0.35);
+  desenhaCorpo(t);
+  const fimCorpo = (D.marcas || [0.3]).slice(-1)[0] + 1.2;
+  document.getElementById('leg').style.opacity = U.clamp(U.mola(t - 0.4, 0.45) * 1.4);
+  document.getElementById('fonte').style.opacity = 0.85 * U.eo(U.pr(t, Math.min(fimCorpo, FIM - 0.6), Math.min(fimCorpo, FIM - 0.6) + 0.5));
+};
+document.fonts.ready.then(() => {
+  // linhas da conta cabem na largura: diminui a letra até caber
+  const ls = [...document.querySelectorAll('#conta div')];
+  let tam = 110; while (tam > 56 && ls.some(l => l.offsetWidth > 900)) { tam -= 6; ls.forEach(l => l.style.fontSize = tam + 'px'); }
+  const r = c.getBoundingClientRect(); window.AREA = { x: 0, y: Math.max(0, Math.floor(r.top) - 70), w: 1080, h: Math.ceil(r.height) + 140 };
+  window.PRONTO = true;
+});
+</script>
+</body></html>

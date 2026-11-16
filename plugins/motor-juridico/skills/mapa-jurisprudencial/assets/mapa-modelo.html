@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa jurisprudencial</title>
+<style>
+  :root {
+    --fundo: #f6f7f9;
+    --cartao: #ffffff;
+    --texto: #1c2430;
+    --texto-suave: #5b6675;
+    --borda: #dde2e8;
+    --destaque: #2f5d8a;
+    --favor: #2f6f9f;
+    --contra: #b4532a;
+    --neutro: #8a94a3;
+    --trilho: #eef1f5;
+    --atencao: #8a5300;
+    --atencao-fundo: #fff4e0;
+    --alerta: #b42318;
+    --alerta-fundo: #fdecea;
+    --ok: #23683f;
+    --ok-fundo: #e6f4ec;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fundo: #12161c;
+      --cartao: #1b2129;
+      --texto: #e6e9ee;
+      --texto-suave: #a3adba;
+      --borda: #2c3540;
+      --destaque: #8db6e0;
+      --favor: #6fa8d6;
+      --contra: #e08a63;
+      --neutro: #7d8796;
+      --trilho: #242c36;
+      --atencao: #f0b357;
+      --atencao-fundo: #3a2c12;
+      --alerta: #f28b82;
+      --alerta-fundo: #3d1d1b;
+      --ok: #7fd1a1;
+      --ok-fundo: #173323;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --fundo: #12161c;
+    --cartao: #1b2129;
+    --texto: #e6e9ee;
+    --texto-suave: #a3adba;
+    --borda: #2c3540;
+    --destaque: #8db6e0;
+    --favor: #6fa8d6;
+    --contra: #e08a63;
+    --neutro: #7d8796;
+    --trilho: #242c36;
+    --atencao: #f0b357;
+    --atencao-fundo: #3a2c12;
+    --alerta: #f28b82;
+    --alerta-fundo: #3d1d1b;
+    --ok: #7fd1a1;
+    --ok-fundo: #173323;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--fundo);
+    color: var(--texto);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 48px; }
+  header h1 { font-size: 1.55rem; margin: 0 0 4px; line-height: 1.25; }
+  header p { margin: 0; color: var(--texto-suave); }
+  .faixa { margin: 16px 0 20px; padding: 10px 14px; border-radius: 8px; background: var(--alerta-fundo); color: var(--alerta); font-weight: 600; }
+  .faixa.treino { background: var(--atencao-fundo); color: var(--atencao); }
+  .numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .numero { background: var(--cartao); border: 1px solid var(--borda); border-radius: 10px; padding: 14px; }
+  .numero strong { display: block; font-size: 1.6rem; line-height: 1.1; }
+  .numero span { color: var(--texto-suave); font-size: .88rem; }
+  .numero.favor strong { color: var(--favor); }
+  .numero.contra strong { color: var(--contra); }
+  .numero.atencao strong { color: var(--atencao); }
+  .numero.ok strong { color: var(--ok); }
+  .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  section { background: var(--cartao); border: 1px solid var(--borda); border-radius: 10px; padding: 16px; min-width: 0; }
+  section h2 { font-size: 1.05rem; margin: 0 0 12px; }
+  section.largo { grid-column: 1 / -1; }
+  .legenda { display: flex; flex-wrap: wrap; gap: 12px; font-size: .85rem; color: var(--texto-suave); margin-bottom: 10px; }
+  .legenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .f { background: var(--favor); } .c { background: var(--contra); } .n { background: var(--neutro); }
+  .linhas { display: grid; gap: 10px; }
+  .linha { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 10px; align-items: center; font-size: .9rem; }
+  .linha .rotulo { overflow-wrap: anywhere; }
+  .pilha { display: flex; height: 18px; border-radius: 4px; overflow: hidden; background: var(--trilho); }
+  .pilha span { display: block; height: 100%; }
+  .contagem { font-size: .8rem; color: var(--texto-suave); grid-column: 2; margin-top: -6px; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin: 5px 0; }
+  .suave { color: var(--texto-suave); }
+  .vazio { color: var(--texto-suave); font-style: italic; }
+  .rolagem { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--borda); vertical-align: top; }
+  th { color: var(--texto-suave); font-weight: 600; }
+  .selo { display: inline-block; font-size: .76rem; padding: 1px 7px; border-radius: 999px; white-space: nowrap; }
+  .selo.ok { background: var(--ok-fundo); color: var(--ok); }
+  .selo.atencao { background: var(--atencao-fundo); color: var(--atencao); }
+  .selo.alerta { background: var(--alerta-fundo); color: var(--alerta); }
+  .tabela-julgados td:first-child { white-space: nowrap; }
+  .pos { font-weight: 600; }
+  .pos.favor { color: var(--favor); } .pos.contra { color: var(--contra); } .pos.neutro { color: var(--texto-suave); }
+  .resumo { margin: 0; }
+  .aprovacao { font-size: .85rem; color: var(--texto-suave); margin-top: 8px; }
+  a { color: var(--destaque); }
+  footer { margin-top: 24px; color: var(--texto-suave); font-size: .85rem; }
+  @media (max-width: 560px) {
+    .linha { grid-template-columns: 1fr; gap: 4px; }
+    .contagem { grid-column: 1; margin-top: 0; }
+    .tabela-julgados thead { display: none; }
+    .tabela-julgados tr { display: block; border-bottom: 1px solid var(--borda); padding: 8px 0; }
+    .tabela-julgados td { display: block; border: 0; padding: 2px 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="titulo">Mapa jurisprudencial</h1>
+    <p id="subtitulo"></p>
+  </header>
+  <div class="faixa" id="faixa">Uso interno do escritório. Feito só com a base de jurisprudência do escritório. Não compartilhar com cliente.</div>
+  <div class="numeros" id="numeros"></div>
+  <div class="grade">
+    <section class="largo"><h2>Como o tema está hoje</h2><p class="resumo" id="resumo"></p><p class="aprovacao" id="teses"></p></section>
+    <section><h2>Como decide cada tribunal</h2><div class="legenda"><span><i class="f"></i>a favor</span><span><i class="c"></i>contra</span><span><i class="n"></i>neutro</span></div><div class="linhas" id="por-tribunal"></div></section>
+    <section><h2>Por órgão julgador</h2><div class="legenda"><span><i class="f"></i>a favor</span><span><i class="c"></i>contra</span><span><i class="n"></i>neutro</span></div><div class="linhas" id="por-orgao"></div></section>
+    <section><h2>No tempo</h2><div class="legenda"><span><i class="f"></i>a favor</span><span><i class="c"></i>contra</span><span><i class="n"></i>neutro</span></div><div class="linhas" id="por-ano"></div></section>
+    <section><h2>Sinais da base</h2><p class="suave">Automáticos, feitos com a contagem da base. São pistas, não conclusão.</p><div id="sinais"></div></section>
+    <section class="largo"><h2>Correntes</h2><div id="correntes"></div><p class="aprovacao" id="aprovacao"></p></section>
+    <section><h2>Viradas</h2><div id="viradas"></div></section>
+    <section><h2>Distinções</h2><div id="distincoes"></div></section>
+    <section><h2>Precedentes qualificados</h2><div id="qualificados"></div></section>
+    <section><h2>Perguntas em aberto</h2><div id="perguntas"></div></section>
+    <section class="largo"><h2>Julgados da base</h2><div class="rolagem"><table class="tabela-julgados" id="julgados"></table></div></section>
+    <section class="largo" id="sec-avisos" hidden><h2>Avisos</h2><div id="avisos"></div></section>
+  </div>
+  <footer id="rodape">Gerado pelo script do mapa a partir do arquivo do tema. Nenhuma citação desta página vai para a peça sem a conferência das citações.</footer>
+</main>
+<script id="dados" type="application/json">__DADOS_DO_MAPA__</script>
+<script>
+(function () {
+  var d;
+  try { d = JSON.parse(document.getElementById("dados").textContent); }
+  catch (e) {
+    document.getElementById("subtitulo").textContent = "Modelo sem dados. Rode o script do mapa com --html para preencher.";
+    return;
+  }
+  function el(tag, texto, classe) {
+    var n = document.createElement(tag);
+    if (texto !== undefined && texto !== null) n.textContent = texto;
+    if (classe) n.className = classe;
+    return n;
+  }
+  function lista(alvo, itens, vazio) {
+    var box = document.getElementById(alvo);
+    if (!itens || !itens.length) { box.appendChild(el("p", vazio, "vazio")); return; }
+    var ul = el("ul");
+    itens.forEach(function (t) { ul.appendChild(el("li", t)); });
+    box.appendChild(ul);
+  }
+  function pilhas(alvo, linhas) {
+    var box = document.getElementById(alvo);
+    if (!linhas.length) { box.appendChild(el("p", "Nada a mostrar.", "vazio")); return; }
+    linhas.forEach(function (l) {
+      var total = l[1] + l[2] + l[3];
+      var linha = el("div", null, "linha");
+      linha.appendChild(el("span", l[0], "rotulo"));
+      var p = el("div", null, "pilha");
+      p.setAttribute("role", "img");
+      p.setAttribute("aria-label", l[0] + ": " + l[1] + " a favor, " + l[2] + " contra, " + l[3] + " neutro");
+      [[l[1], "f"], [l[2], "c"], [l[3], "n"]].forEach(function (x) {
+        if (!x[0]) return;
+        var s = el("span", null, x[1]);
+        s.style.width = (x[0] / total * 100) + "%";
+        p.appendChild(s);
+      });
+      linha.appendChild(p);
+      linha.appendChild(el("span", l[1] + " a favor · " + l[2] + " contra · " + l[3] + " neutro", "contagem"));
+      box.appendChild(linha);
+    });
+  }
+  function classeSelo(s) {
+    if (s === "conferido") return "selo ok";
+    if (s === "não usar") return "selo alerta";
+    return "selo atencao";
+  }
+
+  var t = d.totais;
+  document.getElementById("titulo").textContent = d.titulo + (d.treino ? " (treino)" : "");
+  document.title = "Mapa jurisprudencial";
+  document.getElementById("subtitulo").textContent = (d.escritorio ? d.escritorio + " · " : "") + "tema " + d.tema +
+    (d.versao ? " · versão " + d.versao : "") + (d.revisado_em ? " · revisado em " + d.revisado_em : "") + " · referência " + d.hoje;
+  if (d.treino) {
+    var f = document.getElementById("faixa");
+    f.className = "faixa treino";
+    f.textContent = "Tema de treino, com julgados inventados. Uso interno do escritório.";
+  }
+  [[t.julgados, "julgados na base", ""], [t.a_favor, "a favor", "favor"], [t.contra, "contra", "contra"], [t.neutro, "neutros", ""],
+   [t.conferidos, "conferidos e vigentes", "ok"], [t.nao_conferidos + t.vencidos, "não conferidos ou vencidos", (t.nao_conferidos + t.vencidos) ? "atencao" : ""]]
+    .forEach(function (c) {
+      var n = el("div", null, "numero " + c[2]);
+      n.appendChild(el("strong", String(c[0])));
+      n.appendChild(el("span", c[1]));
+      document.getElementById("numeros").appendChild(n);
+    });
+  var r = document.getElementById("resumo");
+  if (d.resumo) r.textContent = d.resumo; else { r.textContent = "O advogado ainda não escreveu o resumo do tema."; r.className = "resumo vazio"; }
+  document.getElementById("teses").textContent = d.teses.length ? "Teses do escritório que usam o tema: " + d.teses.join(", ") : "Nenhuma tese do escritório ligada a este tema.";
+  pilhas("por-tribunal", d.por_tribunal);
+  pilhas("por-orgao", d.por_orgao);
+  pilhas("por-ano", d.por_ano);
+  lista("sinais", d.sinais, "Nenhum sinal.");
+  var lt = d.leitura || {};
+  var semLeitura = "Ainda sem leitura do advogado.";
+  lista("correntes", lt.correntes, semLeitura);
+  lista("viradas", lt.viradas, semLeitura);
+  lista("distincoes", lt.distincoes, semLeitura);
+  lista("perguntas", lt.perguntas, semLeitura);
+  document.getElementById("aprovacao").textContent = lt.aprovada ? "Leitura aprovada por " + lt.aprovado_por + (lt.aprovado_em ? " em " + lt.aprovado_em : "") + "." : "Leitura ainda não aprovada pelo advogado.";
+  lista("qualificados", d.qualificados.map(function (j) { return j.titulo + " · " + j.situacao + " · " + j.selo; }), "Nenhum precedente qualificado na base.");
+
+  var tab = document.getElementById("julgados");
+  var cab = el("thead"); var tr = el("tr");
+  ["Data", "Tribunal e órgão", "Número e tese", "Posição", "Uso"].forEach(function (c) { tr.appendChild(el("th", c)); });
+  cab.appendChild(tr); tab.appendChild(cab);
+  var corpo = el("tbody");
+  d.julgados.forEach(function (j) {
+    var linha = el("tr");
+    linha.appendChild(el("td", j.data || "-"));
+    linha.appendChild(el("td", j.tribunal + (j.orgao ? " · " + j.orgao : "")));
+    var tdn = el("td");
+    if (j.link) { var a = el("a", j.numero); a.href = j.link; a.rel = "noopener"; a.target = "_blank"; tdn.appendChild(a); }
+    else tdn.appendChild(el("span", j.numero));
+    if (j.tese) tdn.appendChild(el("div", j.tese, "suave"));
+    linha.appendChild(tdn);
+    var pc = j.posicao === "a favor" ? "favor" : (j.posicao === "contra" ? "contra" : "neutro");
+    linha.appendChild(el("td", j.posicao, "pos " + pc));
+    var tdu = el("td");
+    tdu.appendChild(el("span", j.selo, classeSelo(j.selo)));
+    tdu.appendChild(el("div", "conferência: " + j.cor + (j.conf_data ? " em " + j.conf_data : "") + " · situação: " + j.situacao, "suave"));
+    linha.appendChild(tdu);
+    corpo.appendChild(linha);
+  });
+  tab.appendChild(corpo);
+  if (d.avisos.length) { document.getElementById("sec-avisos").hidden = false; lista("avisos", d.avisos, ""); }
+  document.getElementById("rodape").textContent = "Gerado pelo script do mapa a partir de " + d.tema + ".md. Validade da conferência: " + d.validade + " dias. Nenhuma citação desta página vai para a peça sem a conferência das citações.";
+})();
+</script>
+</body>
+</html>

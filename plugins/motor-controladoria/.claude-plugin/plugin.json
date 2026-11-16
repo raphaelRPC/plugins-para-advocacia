@@ -1,0 +1,21 @@
+{
+  "name": "motor-controladoria",
+  "version": "1.0.0",
+  "description": "A controladoria do escritório de advocacia rodando no Claude: captação das publicações (DJEN, e-mail do tribunal, exportação do sistema), triagem ligada ao caso, cálculo do prazo pelo calendário de cada tribunal com a conta à vista, dupla conferência por uma pessoa antes de agendar, agenda com data de segurança, audiências e perícias, e o encaminhamento da providência para a produção jurídica e para o aviso ao cliente. A IA capta e calcula; quem confirma o prazo é uma pessoa.",
+  "author": {
+    "name": "Raphael Cardoso"
+  },
+  "license": "MIT",
+  "keywords": [
+    "advocacia",
+    "controladoria",
+    "prazos",
+    "publicacoes",
+    "djen",
+    "intimacoes",
+    "agenda",
+    "audiencias",
+    "agente",
+    "brasil"
+  ]
+}

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo da Ilha de edição</title>
+<style>
+/* Catálogo visual da Ilha de edição: tudo o que o Claude sabe fazer no vídeo, com um código em cada item.
+   É o primeiro passo de cada edição: antes de processar, o advogado escolhe o caminho (já sei o que quero, só corta e
+   legenda, sugere para mim), um favorito ou as peças soltas, e copia o pedido. O motor gera uma cópia com os favoritos
+   dele (montar_video.py catalogo); aberto direto da pasta do plugin, funciona sem favoritos. */
+:root{
+  --bg:#0E1218; --painel:#151B24; --painel2:#1B2330; --linha:#273141; --tx:#E6EAF0; --mut:#8D98A8;
+  --pen:#4A6FF0; --ambar:#F2B33D; --ok:#4CC38A; --ouro:#E9C478;
+  --ui:-apple-system, "Avenir Next", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --mono:Menlo, ui-monospace, Consolas, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 var(--ui)}
+header{padding:22px 16px 14px;border-bottom:1px solid var(--linha);background:var(--painel)}
+.in{max-width:1240px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--mut);margin:0;max-width:820px}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+nav a{color:var(--tx);text-decoration:none;background:var(--bg);border:1px solid var(--linha);border-radius:999px;padding:4px 11px;font-size:13px}
+main{padding:16px 16px 110px}
+section{margin:26px 0 40px;scroll-margin-top:16px}
+h2{font-size:19px;margin:0 0 4px}
+h2 small{color:var(--mut);font-weight:500;font-size:13px;margin-left:8px}
+.dica{color:var(--mut);margin:0 0 14px;max-width:820px}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.grade.larga{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.c{position:relative;background:var(--painel);border:2px solid var(--linha);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.c.sel{border-color:var(--pen)}
+.cod{font:700 12px var(--mono);color:var(--ambar)}
+.c b{font-size:14px;line-height:1.25}
+.c small{color:var(--mut);font-size:12.5px;line-height:1.35}
+.oab{color:var(--ouro) !important}
+.tela{position:relative;width:100%;aspect-ratio:9/16;border-radius:8px;overflow:hidden;background:#000}
+.tela>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tela iframe{position:absolute;left:0;top:0;width:1080px;height:1920px;border:0;transform-origin:0 0;pointer-events:none;color-scheme:normal;background:transparent}
+.tela .sem{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:14px;color:var(--mut);font-size:13px;background:var(--painel2)}
+.marcar{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;cursor:pointer;background:var(--painel2);border:1px solid var(--linha);border-radius:8px;padding:6px 9px;margin-top:auto}
+.marcar input{width:16px;height:16px;accent-color:var(--pen)}
+.formato{display:grid;grid-template-columns:150px 1fr;gap:14px}
+@media (max-width:560px){.formato{grid-template-columns:1fr}}
+.formato ol{margin:6px 0 0;padding-left:18px;color:#C9D1DE;font-size:13.5px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.chip{font:600 11.5px var(--ui);background:var(--painel2);border:1px solid var(--linha);border-radius:999px;padding:2px 8px;color:#C9D1DE;text-decoration:none}
+.meta{font-size:12.5px;color:var(--mut)}
+.grupo{margin:20px 0 8px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.fonte .vit{background:#202733;border-radius:8px;padding:14px 12px;min-height:118px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.caminho{cursor:pointer}.caminho b{font-size:16px}.caminho .marcar{margin-top:8px}
+.caminho .peso{font-size:12px;font-weight:700;color:var(--ambar)}
+.fav .resumo-fav{font-size:12.5px;color:#C9D1DE}
+#comeco h3{font-size:15px;margin:22px 0 4px}
+.fonte .t1{font-size:27px;line-height:1.05;color:#fff}.fonte .t2{font-size:14px;color:#C9D1DE}
+.pedido{position:fixed;left:0;right:0;bottom:0;background:var(--painel);border-top:1px solid var(--linha);z-index:6}
+.pedido .in{padding:10px 16px;display:flex;gap:12px;align-items:center}
+#resumo{flex:1;font-size:13px;color:#C9D1DE;max-height:40px;overflow:auto;min-width:0}
+#seu-pedido .campos{display:grid;grid-template-columns:1fr;gap:10px;max-width:820px}
+#seu-pedido input,#seu-pedido textarea{width:100%}
+#seu-pedido textarea{min-height:120px}
+#resumo b{color:var(--tx)}
+.campos input,.campos textarea{font:14px var(--ui);color:var(--tx);background:var(--bg);border:1px solid var(--linha);border-radius:8px;padding:9px 10px}
+button{font:600 14px var(--ui);color:#fff;background:var(--pen);border:0;border-radius:8px;padding:10px 16px;cursor:pointer;white-space:nowrap}
+button.sec{background:var(--painel2);border:1px solid var(--linha);color:var(--tx)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--pen);outline-offset:1px}
+#estado{font-size:12.5px;color:var(--mut);display:block;margin-top:4px}
+.so{font:700 11px var(--ui);color:var(--ouro);letter-spacing:.04em}
+section.fora>.grade,section.fora>#g-pecas{opacity:.45}
+.fora-aviso{display:none;color:var(--ouro);font-size:13px;margin:0 0 10px}
+section.fora .fora-aviso{display:block}
+#voz-bloco{display:none;margin:0 0 12px}
+#voz-bloco.on{display:block}
+#voz-bloco .esc{display:flex;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <h1>Catálogo da Ilha de edição</h1>
+  <p class="sub">Escolha aqui como quer o seu vídeo antes de o Claude processar. Assim ele faz o vídeo uma vez só, no jeito que você escolheu, com menos idas e voltas. Comece pelo caminho, marque o que quiser e copie o pedido para a conversa.</p>
+  <nav><a href="#comeco">Começo</a><a href="#formatos">Formatos</a><a href="#familias">Famílias</a><a href="#legendas">Legenda</a><a href="#cores">Cor do vídeo</a><a href="#fontes">Fontes</a><a href="#pecas">Peças</a><a href="#seu-pedido">Seu pedido</a></nav>
+</div></header>
+<main class="in">
+  <section id="comeco"><h2>Como você quer este vídeo? <small>escolha um caminho</small></h2>
+    <p class="dica">Escolher antes poupa tempo e uso do plano: o Claude processa o vídeo uma vez, já no jeito escolhido. Se ainda não sabe, deixe que ele sugira.</p>
+    <div class="grade larga" id="g-caminho"></div>
+    <div id="favoritos-sec" style="display:none"><h3>Seus favoritos</h3><p class="dica">Os jeitos que você guardou em vídeos anteriores. Um clique e o visual inteiro vem junto; as peças de cada momento o Claude prepara pelo que você falar.</p><div class="grade larga" id="g-favoritos"></div></div>
+  </section>
+  <section id="formatos"><h2>Formatos <small>escolha um</small></h2><p class="dica">O formato decide a estrutura do vídeo e já sugere as peças. Você pode trocar qualquer peça depois.</p><div class="grade larga" id="g-formatos"></div></section>
+  <section id="familias"><h2>Famílias visuais <small>escolha uma</small></h2><p class="dica">O jeito de todos os textos do vídeo.</p><div class="grade" id="g-familias"></div></section>
+  <section id="legendas"><h2>Legenda <small>escolha uma</small></h2><p class="fora-aviso">No vídeo sem rosto não há legenda: o texto das cenas já é o conteúdo.</p><div class="grade" id="g-legendas"></div></section>
+  <section id="cores"><h2>Cor do vídeo <small>escolha uma</small></h2><p class="fora-aviso">No vídeo sem rosto não há imagem de câmera para colorir: as cores vêm da sua marca ou do padrão da família.</p><p class="dica">A cor do vídeo inteiro. As cores dos textos vêm da sua marca ou do cenário do vídeo.</p><div class="grade" id="g-cores"></div></section>
+  <section id="fontes"><h2>Fontes <small>escolha um par</small></h2><p class="dica">Todas livres e com os acentos do português. A de cima vai nos títulos; a de baixo, na legenda.</p><div class="grade" id="g-fontes"></div></section>
+  <section id="pecas"><h2>Peças <small id="n-pecas"></small></h2><p class="dica">Marque as que você quer ver no vídeo. As animadas mostram o movimento; as outras, um quadro do resultado.</p><div id="g-pecas"></div></section>
+  <section id="seu-pedido"><h2>Seu pedido</h2><p class="dica">O vídeo e as adaptações. Diga em que frase entra cada peça, o que trocar no formato e o que evitar. O Claude processa o vídeo já nesse jeito e, antes de montar, mostra só a escolha das peças de cada momento.</p>
+    <div id="voz-bloco"><p class="dica" style="margin-bottom:8px"><b>Vídeo sem rosto: com a sua voz?</b> Sem voz, cada bloco fica na tela o tempo de alguém ler. Com voz, cada bloco entra na palavra em que você fala dele.</p>
+      <div class="esc"><label class="marcar" style="margin:0"><input type="radio" name="voz" value="sem"> Só com texto na tela</label><label class="marcar" style="margin:0"><input type="radio" name="voz" value="deste"> Com a voz do vídeo ou áudio abaixo</label><label class="marcar" style="margin:0"><input type="radio" name="voz" value="depois"> Gravo a voz depois</label></div></div>
+    <div class="campos">
+      <input id="video" placeholder="Caminho do vídeo (ex.: videos/crus/inventario.mov)" aria-label="Caminho do vídeo">
+      <textarea id="adapta" placeholder="Ex.: P03 na frase sobre o prazo de dois meses; no fecho, P46 com a palavra SALVE; sem preto e branco." aria-label="Adaptações"></textarea>
+    </div></section>
+</main>
+<div class="pedido"><div class="in">
+  <div id="resumo">Nada marcado ainda.</div>
+  <a href="#seu-pedido" class="chip" style="font-size:13px;padding:6px 10px">Vídeo e adaptações</a>
+  <button id="copiar">Copiar pedido</button><button class="sec" id="limpar">Limpar</button>
+</div><span id="estado" style="display:none"></span></div>
+<script src="../animacoes/pecas.js"></script>
+<script src="../animacoes/fontes.js"></script>
+<script src="formatos.js"></script>
+<script>
+// Aviso de página aberta pela metade: as imagens e as listas ficam em arquivos ao lado desta página, e o painel de
+// navegador do app (ou outro visualizador) não os carrega. Fica num script separado para aparecer mesmo se o resto falhar.
+function avisoAbertura() {
+  if (document.getElementById('aviso-abertura')) return;
+  var d = document.createElement('div');
+  d.id = 'aviso-abertura'; d.setAttribute('role', 'alert');
+  d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#F2B33D;color:#14181F;font:600 15px/1.45 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:14px 16px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.45)';
+  d.innerHTML = 'Esta página abriu pela metade: as imagens e as opções dela não carregaram aqui.<br><span style="font-weight:400">Ela precisa abrir no navegador do computador (Chrome, Safari ou Edge). Peça ao Claude na conversa: <b>abre esta página no meu navegador</b>.</span>';
+  (document.body || document.documentElement).appendChild(d);
+}
+if (!window.PECAS || !window.FORMATOS || !window.LEGENDAS) avisoAbertura();
+</script>
+<script>
+const P = window.PECAS || [], F = window.FORMATOS || [], PF = window.PARES_FONTES || [];
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const cod = (l, i) => l + String(i + 1).padStart(2, '0');
+const PC = Object.fromEntries(P.map((p, i) => [p.id, Object.assign({ cod: cod('P', i) }, p)]));
+const fundo = '../vitrine/img/pacote.jpg';
+const pedido = { caminho: null, favorito: null, video: '', formato: null, familia: null, legenda: null, cor: null, fontes: null, voz: null, pecas: new Set() };
+const FAVS = window.FAVORITOS || [];
+try { Object.assign(pedido, JSON.parse(localStorage.getItem('catalogo-pedido') || '{}'), { pecas: new Set(JSON.parse(localStorage.getItem('catalogo-pedido') || '{}').pecas || []) }); } catch (e) {}
+const guardar = () => { try { localStorage.setItem('catalogo-pedido', JSON.stringify(Object.assign({}, pedido, { pecas: [...pedido.pecas] }))); } catch (e) {} };
+function dadosPrevia(p) {
+  const d = JSON.parse(JSON.stringify(p.como.dados || {}));
+  d.familia = pedido.familia || 'editorial'; d.cores = { destaque: '#E9C478', fundo: '#1E2A3A' }; d.baseMidia = '../pecas/';
+  const par = PF.find(x => x.id === pedido.fontes);
+  if (par) { const pil = f => `"${f.familia}", "Avenir Next", sans-serif`; d.fontes = { titulo: pil(par.titulo), texto: pil(par.texto), serifa: pil(par.serifa || par.titulo) }; d.googleFontes = 'https://fonts.googleapis.com/css2?' + par.google + '&display=swap'; }
+  return d;
+}
+function tela(id) {
+  const p = PC[id];
+  if (p && p.previa === 'modelo' && p.como.tipo === 'animacao') return `<img src="${fundo}" alt=""><iframe title="${esc(p.nome)}" data-src="../animacoes/${esc(p.como.modelo)}.html?previa" data-id="${esc(id)}"></iframe>`;
+  if (!p || p.previa === 'imagem') return `<img src="../pecas/${esc(id)}.jpg" alt="${esc(p ? p.nome : id)}" loading="lazy">`;
+  return `<div class="sem">Prévia com a sua imagem: precisa de um print ou foto seu.</div>`;
+}
+const marca = (grupo, val, rot, tipo = 'radio') => `<label class="marcar"><input type="${tipo}" name="${grupo}" value="${esc(val)}"> ${rot}</label>`;
+const CAMINHOS = [
+  ['escolhido', 'Já sei o que quero', 'Marque abaixo um favorito ou o formato, a família, a legenda, a cor, as fontes e as peças. O Claude processa o vídeo já nesse jeito e mostra só a escolha das peças de cada momento.', 'Pesa pouco no plano'],
+  ['so-corta', 'Só corta e legenda', 'Tira as pausas e os tropeços e põe a legenda, sem peças na tela. Se você marcar um favorito ou uma legenda, ele usa.', 'O que menos pesa no plano'],
+  ['sugere', 'Sugere para mim', 'O Claude ouve o vídeo e sugere o formato numa prancha, com alternativas sobre o seu próprio quadro. Bom para testar jeitos novos.', 'Pesa mais no plano']];
+function montarComeco() {
+  document.getElementById('g-caminho').innerHTML = CAMINHOS.map(([id, n, t, p]) => `<label class="c caminho" data-g="caminho" data-v="${id}"><b>${esc(n)}</b><small>${esc(t)}</small><span class="peso">${esc(p)}</span>${marca('caminho', id, 'Este caminho')}</label>`).join('');
+  if (!FAVS.length) return;
+  document.getElementById('favoritos-sec').style.display = '';
+  document.getElementById('g-favoritos').innerHTML = FAVS.map(f => { const v = f.visual || {};
+    const linha = [f.formato && nomeDe.formato(f.formato), v.familia && 'família ' + nomeDe.familia(v.familia).replace(/^V\d+ /, ''), v.legenda && 'legenda ' + nomeDe.legenda(v.legenda).replace(/^L\d+ /, ''), v.tom && v.tom !== 'natural' && 'cor ' + nomeDe.cor(v.tom).replace(/^C\d+ /, '')].filter(Boolean).join(' · ');
+    return `<label class="c fav" data-g="favorito" data-v="${esc(f.nome)}"><b>${esc(f.nome)}</b><small>${f.data ? 'Guardado em ' + esc(f.data) : 'Seu favorito'}</small><span class="resumo-fav">${esc(linha)}</span>${marca('favorito', f.nome, 'Este favorito')}</label>`; }).join('');
+}
+function montar() {
+  montarComeco();
+  document.getElementById('g-formatos').innerHTML = F.map((f, i) => `<div class="c" data-g="formato" data-v="${f.id}"><div class="formato">
+    <div class="tela">${tela(f.imagem)}</div>
+    <div><span class="cod">${cod('F', i)}</span> <b>${esc(f.nome)}</b><br><small>${esc(f.quando)}</small>
+      <div class="meta">${esc(f.duracao)} · ${esc(f.ritmo)} · ${f.semRosto ? 'sem você na câmera · voz opcional' : `família ${esc(f.familia)} · legenda ${esc(f.legenda)}${f.cor ? ' · cor ' + esc(f.cor) : ''}`}</div>
+      <ol>${f.estrutura.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+      <div class="chips">${f.pecas.map(id => PC[id] ? `<a class="chip" href="#p-${id}">${PC[id].cod} ${esc(PC[id].nome)}</a>` : '').join('')}</div></div></div>
+    ${marca('formato', f.id, 'Quero este formato')}</div>`).join('');
+  const FAM = [['editorial', 'Editorial', 'Sem caixa, condensada, à esquerda.'], ['revista', 'Revista', 'Serifa itálica com fio; sério.'], ['atras', 'Atrás de você', 'Palavra gigante atrás da pessoa.'], ['celular', 'Celular', 'Editado no celular: seco, sem movimento.'], ['institucional', 'Institucional', 'Tudo em cartão com caixa.']];
+  document.getElementById('g-familias').innerHTML = FAM.map(([id, n, t], i) => `<div class="c" data-g="familia" data-v="${id}"><div class="tela"><img src="../pecas/familia-${id}.jpg" alt="Família ${esc(n)}"></div><span class="cod">${cod('V', i)}</span><b>${esc(n)}</b><small>${esc(t)}</small>${marca('familia', id, 'Esta família')}</div>`).join('');
+  document.getElementById('g-legendas').innerHTML = (window.LEGENDAS || []).map((l, i) => `<div class="c" data-g="legenda" data-v="${l.id}"><div class="tela">${l.id === 'nenhuma' ? `<img src="../pecas/cor-natural.jpg" alt=""><div class="sem" style="background:rgba(0,0,0,.55);color:#fff">sem legenda</div>` : `<img src="../pecas/legenda-${l.id}.jpg" alt="Legenda ${esc(l.nome)}" loading="lazy">`}</div><span class="cod">${cod('L', i)}</span><b>${esc(l.nome)}</b><small>${esc(l.uso)}</small>${marca('legenda', l.id, 'Esta legenda')}</div>`).join('');
+  document.getElementById('g-cores').innerHTML = (window.CORES_VIDEO || []).map((c, i) => `<div class="c" data-g="cor" data-v="${c.id}"><div class="tela"><img src="../pecas/cor-${c.id}.jpg" alt="Cor ${esc(c.nome)}" loading="lazy"></div><span class="cod">${cod('C', i)}</span><b>${esc(c.nome)}</b><small>${esc(c.uso)}</small>${marca('cor', c.id, 'Esta cor')}</div>`).join('') +
+    `<div class="c" data-g="cor" data-v="moldura"><div class="tela"><img src="../pecas/moldura.jpg" alt="Moldura fina" loading="lazy"></div><span class="cod">C04</span><b>Moldura fina (Revista)</b><small>Um fio na cor de destaque em volta do quadro.</small>${marca('moldura', 'sim', 'Quero a moldura', 'checkbox')}</div>`;
+  if (PF.length) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?' + PF.map(p => p.google).join('&') + '&display=swap'; document.head.appendChild(l); }
+  document.getElementById('g-fontes').innerHTML = `<div class="c fonte" data-g="fontes" data-v="sistema"><div class="vit"><div class="t1" style="font-family:'Avenir Next','Segoe UI',sans-serif;font-weight:800">A casa não passa sozinha</div><div class="t2">o prazo é de dois meses</div></div><span class="cod">T01</span><b>Fontes do sistema</b><small>Padrão do plugin.</small>${marca('fontes', 'sistema', 'Este par')}</div>` +
+    PF.map((p, i) => `<div class="c fonte" data-g="fontes" data-v="${p.id}"><div class="vit"><div class="t1" style="font-family:'${p.titulo.familia}',serif;font-weight:${p.titulo.peso};font-style:${p.titulo.italico ? 'italic' : 'normal'}">A casa não passa sozinha</div><div class="t2" style="font-family:'${p.texto.familia}',sans-serif;font-weight:${p.texto.peso}">o prazo é de dois meses, ação, ênfase</div></div>
+      <span class="cod">${cod('T', i + 1)}</span><b>${esc(p.nome)}</b><small>${esc(p.titulo.familia)} + ${esc(p.texto.familia)}. ${esc(p.clima)}.</small>${marca('fontes', p.id, 'Este par')}</div>`).join('');
+  const grupos = [...new Set(P.map(p => p.grupo))];
+  document.getElementById('n-pecas').textContent = P.length + ' peças';
+  document.getElementById('g-pecas').innerHTML = grupos.map(g => `<div class="grupo">${esc(g)}</div><div class="grade">` + P.filter(p => p.grupo === g).map(p => `<div class="c" id="p-${p.id}" data-g="peca" data-v="${p.id}">
+    <div class="tela">${tela(p.id)}</div><span class="cod">${PC[p.id].cod}</span>${p.semRosto ? '<span class="so">SÓ NO VÍDEO SEM ROSTO</span>' : ''}<b>${esc(p.nome)}</b><small>${esc(p.uso)}</small>${p.oab ? `<small class="oab">OAB: ${esc(p.oab)}</small>` : ''}
+    ${marca('peca', p.id, 'Quero esta peça', 'checkbox')}</div>`).join('') + '</div>').join('');
+  // estado salvo neste navegador
+  document.querySelectorAll('input').forEach(i => {
+    if (i.name === 'peca') i.checked = pedido.pecas.has(i.value);
+    else if (i.name === 'moldura') i.checked = !!pedido.moldura;
+    else if (i.type === 'radio') i.checked = pedido[i.name] === i.value;
+  });
+  if (window.CATALOGO_VIDEO) {                          // vídeo novo: o visual fica, as peças e o caminho são deste vídeo
+    if (pedido.video !== window.CATALOGO_VIDEO) { pedido.video = window.CATALOGO_VIDEO; pedido.caminho = null; pedido.pecas = new Set(); document.querySelectorAll('input[name=peca],input[name=caminho]').forEach(i => { i.checked = false; }); guardar(); }
+    document.getElementById('video').value = window.CATALOGO_VIDEO;
+  }
+  marcarCartoes(); observar(); resumo(); semRosto();
+}
+// formato sem rosto: legenda e cor do vídeo não valem, e aparece a pergunta da voz
+function semRosto() {
+  const sr = !!(F.find(f => f.id === pedido.formato) || {}).semRosto;
+  ['legendas', 'cores'].forEach(id => document.getElementById(id).classList.toggle('fora', sr));
+  document.getElementById('voz-bloco').classList.toggle('on', sr);
+  document.getElementById('video').placeholder = sr ? 'Vídeo ou áudio com a sua voz (opcional)' : 'Caminho do vídeo (ex.: videos/crus/inventario.mov)';
+}
+function marcarCartoes() { document.querySelectorAll('.c').forEach(c => c.classList.toggle('sel', !!c.querySelector('input:checked'))); }
+let obs;
+function observar() {
+  if (obs) obs.disconnect();
+  obs = new IntersectionObserver(es => es.forEach(e => {
+    const f = e.target;
+    if (e.isIntersecting && !f.src) f.src = f.dataset.src + '#' + encodeURIComponent(JSON.stringify(dadosPrevia(PC[f.dataset.id])));
+    if (!e.isIntersecting && f.src) f.removeAttribute('src');
+  }), { rootMargin: '300px' });
+  document.querySelectorAll('.tela iframe').forEach(f => obs.observe(f)); escala();
+}
+const escala = () => document.querySelectorAll('.tela iframe').forEach(f => { f.style.transform = `scale(${f.parentElement.clientWidth / 1080})`; });
+addEventListener('resize', escala);
+const nomeDe = { formato: id => { const i = F.findIndex(f => f.id === id); return i < 0 ? id : `${cod('F', i)} ${F[i].nome}`; },
+  fontes: id => id === 'sistema' ? 'T01 do sistema' : (() => { const i = PF.findIndex(p => p.id === id); return i < 0 ? id : `${cod('T', i + 1)} ${PF[i].nome}`; })(),
+  legenda: id => { const i = (window.LEGENDAS || []).findIndex(l => l.id === id); return i < 0 ? id : `${cod('L', i)} ${LEGENDAS[i].nome}`; },
+  cor: id => { const i = (window.CORES_VIDEO || []).findIndex(c => c.id === id); return i < 0 ? id : `${cod('C', i)} ${CORES_VIDEO[i].nome}`; },
+  familia: id => { const n = { editorial: 'Editorial', revista: 'Revista', atras: 'Atrás de você', celular: 'Celular', institucional: 'Institucional' }, o = Object.keys(n).indexOf(id); return o < 0 ? id : `${cod('V', o)} ${n[id]}`; } };
+const ROTULO = { formato: 'Formato', familia: 'Família', legenda: 'Legenda', cor: 'Cor do vídeo', fontes: 'Fontes' };
+const NOME_CAMINHO = Object.fromEntries(CAMINHOS.map(c => [c[0], c[1]]));
+function resumo() {
+  const partes = [];
+  if (pedido.caminho) partes.push(`<b>${esc(NOME_CAMINHO[pedido.caminho])}</b>`);
+  if (pedido.favorito) partes.push(`<b>Favorito</b> ${esc(pedido.favorito)}`);
+  for (const k of ['formato', 'familia', 'legenda', 'cor', 'fontes']) if (pedido[k]) partes.push(`<b>${ROTULO[k]}</b> ${esc(nomeDe[k](pedido[k]))}`);
+  if (pedido.moldura) partes.push('<b>Moldura</b> sim');
+  if (pedido.voz && (F.find(f => f.id === pedido.formato) || {}).semRosto) partes.push('<b>Voz</b> ' + ({ sem: 'sem voz', deste: 'com a sua voz', depois: 'grava depois' }[pedido.voz]));
+  if (pedido.pecas.size) partes.push(`<b>Peças</b> ${[...pedido.pecas].map(id => PC[id] ? PC[id].cod + ' ' + esc(PC[id].nome) : id).join(', ')}`);
+  document.getElementById('resumo').innerHTML = partes.join(' · ') || 'Nada marcado ainda.';
+}
+document.addEventListener('change', ev => {
+  const t = ev.target; if (!t.name) return;
+  if (t.name === 'peca') { t.checked ? pedido.pecas.add(t.value) : pedido.pecas.delete(t.value);
+    if (t.checked && !pedido.caminho) { pedido.caminho = 'escolhido'; document.querySelectorAll('input[name=caminho]').forEach(i => { i.checked = i.value === 'escolhido'; }); } }
+  else if (t.name === 'moldura') pedido.moldura = t.checked;
+  else if (t.type === 'radio') {
+    pedido[t.name] = t.value;
+    if (t.name !== 'caminho' && t.name !== 'voz' && pedido.caminho !== 'so-corta' && pedido.caminho !== 'escolhido') {   // marcou algo: o caminho é "já sei o que quero"
+      pedido.caminho = 'escolhido'; document.querySelectorAll('input[name=caminho]').forEach(i => { i.checked = i.value === 'escolhido'; });
+    }
+    if (t.name === 'formato') {                        // o formato já marca as peças dele (dá para desmarcar)
+      const f = F.find(x => x.id === t.value); f.pecas.forEach(id => pedido.pecas.add(id));
+      document.querySelectorAll('input[name=peca]').forEach(i => { i.checked = pedido.pecas.has(i.value); });
+    }
+    if (t.name === 'familia' || t.name === 'fontes') { document.querySelectorAll('.tela iframe[src]').forEach(f => f.removeAttribute('src')); observar(); }
+  }
+  marcarCartoes(); resumo(); guardar(); semRosto();
+});
+document.getElementById('limpar').onclick = () => { Object.assign(pedido, { caminho: null, favorito: null, formato: null, familia: null, legenda: null, cor: null, fontes: null, voz: null, moldura: false, pecas: new Set() }); guardar(); document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i => { i.checked = false; }); marcarCartoes(); resumo(); semRosto(); };
+const FECHO = { escolhido: 'Processe o vídeo já neste jeito; na prancha, só as peças de cada momento.', 'so-corta': 'Só corta e legenda: pode ir direto ao vídeo.', sugere: 'Sugere para mim: prepare a prancha completa.' };
+document.getElementById('copiar').onclick = async () => {
+  const b = document.getElementById('copiar');
+  const marcou = pedido.favorito || pedido.pecas.size || ['formato', 'familia', 'legenda', 'cor', 'fontes'].some(k => pedido[k]);
+  const caminho = pedido.caminho || (marcou ? 'escolhido' : null);
+  if (!caminho) { location.hash = '#comeco'; b.textContent = 'Escolha um caminho no começo'; setTimeout(() => { b.textContent = 'Copiar pedido'; }, 2500); return; }
+  const linhas = ['Pedido de edição (Catálogo da Ilha de edição)', 'Caminho: ' + NOME_CAMINHO[caminho]];
+  const v = document.getElementById('video').value.trim().replace(/^["']|["']$/g, '');
+  linhas.push('Vídeo: ' + (v || '(vou mandar em seguida)'));
+  if (pedido.favorito) linhas.push('Favorito: ' + pedido.favorito);
+  const sr = !!(F.find(f => f.id === pedido.formato) || {}).semRosto;
+  for (const k of ['formato', 'familia', 'legenda', 'cor', 'fontes']) if (pedido[k] && !(sr && (k === 'legenda' || k === 'cor'))) linhas.push(`${ROTULO[k]}: ${nomeDe[k](pedido[k])}`);
+  if (sr) linhas.push('Voz: ' + ({ sem: 'só com texto na tela', deste: 'com a voz do vídeo ou áudio indicado', depois: 'gravo a voz depois' }[pedido.voz] || 'a combinar'));
+  if (pedido.moldura) linhas.push('Moldura fina: sim');
+  if (pedido.pecas.size && caminho !== 'so-corta') linhas.push('Peças: ' + [...pedido.pecas].map(id => PC[id] ? `${PC[id].cod} ${PC[id].nome}` : id).join('; '));
+  const ad = document.getElementById('adapta').value.trim(); if (ad) linhas.push('Adaptações: ' + ad);
+  linhas.push(sr ? 'Vídeo sem rosto: monte o roteiro de cenas comigo e mostre a prancha das cenas antes de montar.' : FECHO[caminho]);
+  const r = { catalogo: 1, caminho, video: v, favorito: pedido.favorito, formato: pedido.formato, familia: pedido.familia, legenda: pedido.legenda,
+              cor: sr ? null : pedido.cor, fontes: pedido.fontes, voz: sr ? pedido.voz : null, moldura: !!pedido.moldura, pecas: caminho === 'so-corta' ? [] : [...pedido.pecas], adaptacoes: ad };
+  const txt = linhas.join('\n') + '\n\n```json\n' + JSON.stringify(r) + '\n```';
+  try { await navigator.clipboard.writeText(txt); } catch { const x = document.createElement('textarea'); x.value = txt; document.body.appendChild(x); x.select(); document.execCommand('copy'); x.remove(); }
+  b.textContent = 'Copiado: cole na conversa'; setTimeout(() => { b.textContent = 'Copiar pedido'; }, 2500);
+};
+montar();
+</script>
+</body>
+</html>

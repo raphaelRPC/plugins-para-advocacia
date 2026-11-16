@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel da carteira</title>
+<style>
+  :root {
+    --fundo: #f6f7f9;
+    --cartao: #ffffff;
+    --texto: #1c2430;
+    --texto-suave: #5b6675;
+    --borda: #dde2e8;
+    --destaque: #2f5d8a;
+    --barra: #7fa3c7;
+    --atencao: #b26a00;
+    --atencao-fundo: #fff4e0;
+    --alerta: #b42318;
+    --alerta-fundo: #fdecea;
+    --ok: #2e7d4f;
+    --aviso-fundo: #eef3f8;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fundo: #12161c;
+      --cartao: #1b2129;
+      --texto: #e6e9ee;
+      --texto-suave: #a3adba;
+      --borda: #2c3540;
+      --destaque: #8db6e0;
+      --barra: #4f7aa3;
+      --atencao: #f0b357;
+      --atencao-fundo: #3a2c12;
+      --alerta: #f28b82;
+      --alerta-fundo: #3d1d1b;
+      --ok: #7fd1a1;
+      --aviso-fundo: #1f2a36;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --fundo: #12161c;
+    --cartao: #1b2129;
+    --texto: #e6e9ee;
+    --texto-suave: #a3adba;
+    --borda: #2c3540;
+    --destaque: #8db6e0;
+    --barra: #4f7aa3;
+    --atencao: #f0b357;
+    --atencao-fundo: #3a2c12;
+    --alerta: #f28b82;
+    --alerta-fundo: #3d1d1b;
+    --ok: #7fd1a1;
+    --aviso-fundo: #1f2a36;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--fundo);
+    color: var(--texto);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 48px; }
+  header h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  header p { margin: 0; color: var(--texto-suave); }
+  .interno {
+    margin: 16px 0 24px; padding: 10px 14px; border-radius: 8px;
+    background: var(--alerta-fundo); color: var(--alerta); font-weight: 600;
+  }
+  .treino { background: var(--atencao-fundo); color: var(--atencao); }
+  .numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .numero { background: var(--cartao); border: 1px solid var(--borda); border-radius: 10px; padding: 14px; }
+  .numero strong { display: block; font-size: 1.7rem; line-height: 1.1; }
+  .numero span { color: var(--texto-suave); font-size: .88rem; }
+  .numero.atencao strong { color: var(--atencao); }
+  .numero.alerta strong { color: var(--alerta); }
+  .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  section { background: var(--cartao); border: 1px solid var(--borda); border-radius: 10px; padding: 16px; min-width: 0; }
+  section h2 { font-size: 1.05rem; margin: 0 0 12px; }
+  section.largo { grid-column: 1 / -1; }
+  .barras { display: grid; gap: 8px; }
+  .barra { display: grid; grid-template-columns: 120px 1fr 32px; gap: 8px; align-items: center; font-size: .9rem; }
+  .trilho { background: var(--aviso-fundo); border-radius: 4px; height: 14px; overflow: hidden; }
+  .trilho i { display: block; height: 100%; background: var(--barra); border-radius: 4px; }
+  .trilho i.acima { background: var(--atencao); }
+  .barra b { text-align: right; }
+  .rolagem { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--borda); vertical-align: top; }
+  th { color: var(--texto-suave); font-weight: 600; }
+  td.num, th.num { text-align: right; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin: 4px 0; }
+  .suave { color: var(--texto-suave); }
+  .selo { display: inline-block; font-size: .78rem; padding: 1px 6px; border-radius: 999px; margin-left: 4px; }
+  .selo.atencao { background: var(--atencao-fundo); color: var(--atencao); }
+  .selo.alerta { background: var(--alerta-fundo); color: var(--alerta); }
+  .vazio { color: var(--texto-suave); font-style: italic; }
+  footer { margin-top: 24px; color: var(--texto-suave); font-size: .85rem; }
+  @media (max-width: 480px) {
+    .barra { grid-template-columns: 96px 1fr 28px; }
+    .numero strong { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="titulo">Painel da carteira</h1>
+    <p id="subtitulo"></p>
+  </header>
+  <div class="interno" id="faixa-interna">Uso interno do escritório. Não compartilhar com cliente.</div>
+  <div class="numeros" id="numeros"></div>
+  <div class="grade">
+    <section><h2>Dias sem notícia</h2><div class="barras" id="distribuicao"></div><p class="suave" id="regua"></p></section>
+    <section class="largo"><h2>Os piores</h2><div class="rolagem"><table id="piores"></table></div></section>
+    <section class="largo"><h2>Clientes ativos por fase e área</h2><div class="rolagem"><table id="fase-area"></table></div></section>
+    <section><h2>Compromissos</h2><div id="compromissos"></div></section>
+    <section><h2>Documentos pendentes</h2><div id="documentos"></div></section>
+    <section><h2>Reclamações e humor</h2><div id="reclamacoes"></div></section>
+    <section><h2>Satisfação</h2><div id="satisfacao"></div></section>
+    <section><h2>Resumo mensal e página do caso</h2><div id="resumo"></div></section>
+    <section><h2>Próximos contatos</h2><div id="contatos"></div></section>
+    <section class="largo" id="sec-avisos" hidden><h2>Avisos de preenchimento</h2><div id="avisos"></div></section>
+  </div>
+  <footer>Gerado pelo script do painel a partir da carteira. Os números são da carteira: coluna vazia é dado que ainda não existe.</footer>
+</main>
+<script id="dados" type="application/json">__DADOS_DO_PAINEL__</script>
+<script>
+(function () {
+  var d;
+  try { d = JSON.parse(document.getElementById("dados").textContent); }
+  catch (e) {
+    document.getElementById("subtitulo").textContent = "Modelo sem dados. Rode o script do painel com --html para preencher.";
+    return;
+  }
+  function el(tag, texto, classe) {
+    var n = document.createElement(tag);
+    if (texto !== undefined && texto !== null) n.textContent = texto;
+    if (classe) n.className = classe;
+    return n;
+  }
+  function nome(c) { return c.nome ? c.codigo + " " + c.nome : c.codigo; }
+  function num(x) { return x === null || x === undefined ? "-" : String(x).replace(".", ","); }
+  function lista(alvo, itens, vazio) {
+    var box = document.getElementById(alvo);
+    if (!itens.length) { box.appendChild(el("p", vazio, "vazio")); return; }
+    var ul = el("ul");
+    itens.forEach(function (t) {
+      var li = el("li");
+      if (typeof t === "string") li.textContent = t; else { li.textContent = t[0]; if (t[1]) li.appendChild(el("span", t[1], "selo " + (t[2] || "atencao"))); }
+      ul.appendChild(li);
+    });
+    box.appendChild(ul);
+  }
+  function tabela(alvo, cab, linhas, numericas) {
+    var t = document.getElementById(alvo);
+    var tr = el("tr");
+    cab.forEach(function (c, i) { tr.appendChild(el("th", c, numericas && numericas.indexOf(i) >= 0 ? "num" : "")); });
+    t.appendChild(tr);
+    if (!linhas.length) { var r = el("tr"); var td = el("td", "Nada a mostrar.", "vazio"); td.colSpan = cab.length; r.appendChild(td); t.appendChild(r); return; }
+    linhas.forEach(function (l) {
+      var r = el("tr");
+      l.forEach(function (v, i) { r.appendChild(el("td", v, numericas && numericas.indexOf(i) >= 0 ? "num" : "")); });
+      t.appendChild(r);
+    });
+  }
+
+  var mes = d.hoje.slice(0, 7);
+  document.getElementById("titulo").textContent = "Painel da carteira" + (d.treino ? " (treino)" : "");
+  document.title = "Painel da carteira " + mes;
+  document.getElementById("subtitulo").textContent = (d.escritorio ? d.escritorio + " · " : "") + "referência " + d.hoje;
+  if (d.treino) {
+    var f = document.getElementById("faixa-interna");
+    f.className = "interno treino";
+    f.textContent = "Carteira de treino, com casos fictícios. Uso interno do escritório.";
+  }
+
+  var s = d.satisfacao;
+  var cards = [
+    [d.ativos, "clientes ativos", ""],
+    [d.maximo === null ? "-" : d.acima_do_maximo, d.maximo === null ? "sem régua definida" : "sem notícia há mais de " + d.maximo + " dias", d.acima_do_maximo ? "atencao" : ""],
+    [d.compromissos_7.length, "compromissos em 7 dias", d.compromissos_7.length ? "atencao" : ""],
+    [d.reclamacoes.length, "reclamações abertas", d.reclamacoes.length ? "alerta" : ""],
+    [d.insatisfeitos.length, "insatisfeitos", d.insatisfeitos.length ? "alerta" : ""],
+    [d.documentos.clientes, "com documento pendente", ""],
+    [s.com_nota ? num(s.media) : "-", s.com_nota ? "média de " + s.com_nota + " notas" : "sem notas", ""],
+    [d.contatos_vencidos.length, "próximos contatos vencidos", d.contatos_vencidos.length ? "atencao" : ""]
+  ];
+  var box = document.getElementById("numeros");
+  cards.forEach(function (c) {
+    var n = el("div", null, "numero " + c[2]);
+    n.appendChild(el("strong", String(c[0])));
+    n.appendChild(el("span", c[1]));
+    box.appendChild(n);
+  });
+
+  var maior = Math.max.apply(null, d.distribuicao.map(function (x) { return x[1]; }).concat([1]));
+  var dist = document.getElementById("distribuicao");
+  d.distribuicao.forEach(function (x, i) {
+    var linha = el("div", null, "barra");
+    linha.appendChild(el("span", x[0]));
+    var trilho = el("div", null, "trilho");
+    var barra = el("i", null, i >= 3 ? "acima" : "");
+    barra.style.width = (x[1] / maior * 100) + "%";
+    trilho.appendChild(barra);
+    linha.appendChild(trilho);
+    linha.appendChild(el("b", String(x[1])));
+    dist.appendChild(linha);
+  });
+  document.getElementById("regua").textContent = (d.maximo === null ? "Máximo sem notícia: a definir na ficha." : "Máximo sem notícia: " + d.maximo + " dias corridos.") +
+    (d.mediana_dias !== null ? " Mediana: " + num(d.mediana_dias) + " dias." : "") + (d.sem_data ? " Sem data: " + d.sem_data + "." : "");
+
+  tabela("piores", ["Cliente", "Área", "Fase", "Dias", "Humor", "Observação"], d.piores.map(function (c) {
+    var obs = [];
+    if (c.acima) obs.push("além do máximo");
+    if (c.nao_receber) obs.push("pediu para não receber rotina; notícia relevante continua");
+    return [nome(c), c.area, c.fase, String(c.dias), c.humor || "-", obs.join("; ") || "-"];
+  }), [3]);
+
+  var fa = d.fase_area;
+  tabela("fase-area", ["Fase"].concat(fa.areas).concat(["Total"]), fa.linhas.map(function (l) {
+    var tot = l.slice(1).reduce(function (a, b) { return a + b; }, 0);
+    return [l[0]].concat(l.slice(1).map(String)).concat([String(tot)]);
+  }), fa.areas.map(function (_, i) { return i + 1; }).concat([fa.areas.length + 1]));
+
+  function comp(c) { return [nome(c) + ", " + c.tipo + " em " + c.data, c.em_dias >= 0 ? (c.em_dias === 0 ? "hoje" : "em " + c.em_dias + (c.em_dias === 1 ? " dia" : " dias")) : "passou há " + (-c.em_dias) + " dias", c.em_dias < 0 ? "alerta" : "atencao"]; }
+  lista("compromissos", d.compromissos_7.map(comp).concat(d.compromissos_30.map(function (c) { return [nome(c) + ", " + c.tipo + " em " + c.data]; })).concat(d.compromissos_passados.map(function (c) { var x = comp(c); x[1] = "data passada, linha não atualizada"; return x; })), "Nenhum compromisso com data na carteira.");
+  lista("documentos", d.documentos.lista.map(function (c) { return nome(c) + " · fase " + c.fase + " · " + c.docs + (c.docs === 1 ? " documento" : " documentos"); }), "Nenhum documento pendente.");
+  lista("reclamacoes", d.reclamacoes.map(function (c) { return [nome(c), "reclamação aberta", "alerta"]; })
+    .concat(d.insatisfeitos.map(function (c) { return [nome(c) + " · insatisfeito", c.reclamacao ? "" : "sem reclamação registrada", "alerta"]; }))
+    .concat(["Humor dos ativos: " + d.humor.filter(function (h) { return h[1]; }).map(function (h) { return h[0] + " " + h[1]; }).join(", ")]), "Nada a mostrar.");
+  lista("satisfacao", s.com_nota ? ["Faixas: " + s.faixas.map(function (f) { return f[0] + ": " + f[1]; }).join(", "), "Mediana: " + num(s.mediana) + " · sem nota: " + s.sem_nota]
+    .concat(s.baixas.map(function (c) { return [nome(c) + " · nota " + num(c.nota), c.reclamacao ? "" : "sem reclamação registrada", "alerta"]; })) : [], "Nenhuma nota registrada na coluna satisfacao.");
+  var r = d.resumo;
+  lista("resumo", ["Recebem resumo mensal: " + r.recebe + " · não recebem: " + r.nao_recebe,
+    "Pediram para não receber rotina: " + (r.pediu_para_nao_receber.map(nome).join("; ") || "ninguém"),
+    "Página do caso: " + r.pagina.map(function (p) { return p[0] + " " + p[1]; }).join(", ")], "");
+  lista("contatos", d.contatos_vencidos.map(function (c) { return [nome(c) + " · " + c.motivo + " · previsto para " + c.data, c.atraso + (c.atraso === 1 ? " dia de atraso" : " dias de atraso"), "atencao"]; })
+    .concat(d.contatos_hoje.map(function (c) { return [nome(c) + " · " + c.motivo, "hoje", "atencao"]; }))
+    .concat(d.sem_proximo_contato.length ? ["Sem próximo contato marcado: " + d.sem_proximo_contato.join(", ")] : []), "Nenhum contato vencido.");
+  var avisos = (d.ausentes && d.ausentes.length ? ["Colunas que não existem nesta carteira: " + d.ausentes.join(", ")] : []).concat(d.avisos);
+  if (avisos.length) { document.getElementById("sec-avisos").hidden = false; lista("avisos", avisos, ""); }
+})();
+</script>
+</body>
+</html>

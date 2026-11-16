@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Diagrama no lugar</title>
+<!-- Diagrama no lugar: um plano claro cobre a tela por alguns segundos e explica como uma regra funciona,
+     passo a passo. Os elementos ficam no mesmo lugar e mudam ali mesmo: texto que troca, peça que entra,
+     seta que se desenha. Uma cor de destaque só; ressalva em cinza embaixo do rótulo do passo.
+     DADOS: passos [{rotulo, ressalva, nos: [{id, texto, sub, x, y, destaque}], setas: [{de, para, rotulo, tracejada, destaque}]}],
+            marcas [uma por passo], fim, familia, cores. x e y de 0 a 100 dentro da área útil (x 90 a 990, y 470 a 1330).
+     Use ocultaLegenda no insert: o plano cobre a pessoa e a fala segue por baixo. -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#plano{position:absolute;inset:0;background:var(--papel)}
+#topo{position:absolute;left:96px;top:250px;width:888px}
+.rot{position:absolute;left:0;top:0;font:600 34px "Avenir Next",Bahnschrift,Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta)}
+.res{position:absolute;left:0;top:58px;font:500 30px "Avenir Next",Bahnschrift,Arial,sans-serif;color:#6B7178}
+.no{position:absolute;transform:translate(-50%,-50%);text-align:center;max-width:430px;color:var(--tinta);white-space:normal}
+.no b{display:block;font:700 66px/1.02 "Avenir Next Condensed","Bahnschrift Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:-.01em}
+.no i{display:block;font:500 30px/1.2 "Avenir Next",Bahnschrift,Arial,sans-serif;font-style:normal;color:#6B7178;margin-top:10px}
+.no.d b{color:var(--acento)}
+.rev .no b{font:italic 400 70px/1.05 Didot,"Bodoni 72",Georgia,serif}
+.rev .rot{font-family:Didot,"Bodoni 72",Georgia,serif;font-weight:400}
+svg{position:absolute;inset:0}
+.sr{font:600 28px "Avenir Next",Bahnschrift,Arial,sans-serif;fill:#4A525B}
+</style></head><body>
+<div id="plano"></div>
+<svg id="sv" width="1080" height="1920"><defs>
+  <marker id="pt" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker>
+</defs></svg>
+<div id="topo"></div>
+<script src="base.js"></script>
+<script>
+window.AREA = { x: 0, y: 0, w: 1080, h: 1920 };
+const D = DADOS, PASSOS = D.passos || [], n = PASSOS.length, MK = U.marcas(n, FIM);
+const AX = [90, 990], AY = [470, 1330];
+// destaque escurecido para ler sobre o papel claro
+function escuro(hex) {
+  const v = parseInt(hex.slice(1), 16), r = v >> 16 & 255, g = v >> 8 & 255, b = v & 255;
+  const m = Math.max(r, g, b) || 1, k = Math.min(1, 120 / m);
+  return `rgb(${Math.round(r * k)},${Math.round(g * k)},${Math.round(b * k)})`;
+}
+const raiz = document.documentElement.style;
+raiz.setProperty('--papel', '#F6F4EF'); raiz.setProperty('--tinta', '#1C2530'); raiz.setProperty('--acento', escuro(COR.destaque));
+if (FAMILIA === 'revista') document.body.classList.add('rev');
+const plano = document.getElementById('plano'), topo = document.getElementById('topo'), sv = document.getElementById('sv');
+// um elemento por nó em cada passo; o mesmo id em passos seguidos é o mesmo nó que muda no lugar
+const NOS = PASSOS.map(p => Object.fromEntries((p.nos || []).map(no => {
+  const el = document.createElement('div'); el.className = 'no' + (no.destaque ? ' d' : '');
+  el.innerHTML = '<b></b>' + (no.sub ? '<i></i>' : ''); el.querySelector('b').textContent = no.texto;
+  if (no.sub) el.querySelector('i').textContent = no.sub;
+  document.body.appendChild(el);
+  return [no.id, { el, no, x: AX[0] + (AX[1] - AX[0]) * no.x / 100, y: AY[0] + (AY[1] - AY[0]) * no.y / 100 }];
+})));
+const TOPOS = PASSOS.map(p => {
+  const r = document.createElement('div'); r.className = 'rot'; r.textContent = p.rotulo || ''; topo.appendChild(r);
+  const s = document.createElement('div'); s.className = 'res'; s.textContent = p.ressalva || ''; topo.appendChild(s);
+  return [r, s];
+});
+const SETAS = PASSOS.map(p => (p.setas || []).map(s => {
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  const ln = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  ln.setAttribute('fill', 'none'); ln.setAttribute('stroke-width', s.destaque ? 6 : 4); ln.setAttribute('marker-end', 'url(#pt)');
+  ln.setAttribute('stroke', s.destaque ? 'var(--acento)' : '#1C2530');
+  const tx = document.createElementNS('http://www.w3.org/2000/svg', 'text'); tx.setAttribute('class', 'sr'); tx.setAttribute('text-anchor', 'middle'); tx.textContent = s.rotulo || '';
+  if (s.destaque) tx.style.fill = 'var(--acento)';
+  g.appendChild(ln); g.appendChild(tx); sv.appendChild(g);
+  return { s, g, ln, tx, chave: s.de + '>' + s.para };
+}));
+let caixas = [];
+function borda(c, alvo) {            // ponto na borda da caixa do nó, na direção do outro nó, com folga
+  const dx = alvo[0] - c.x, dy = alvo[1] - c.y, hw = c.w / 2 + 22, hh = c.h / 2 + 18;
+  const k = Math.min(hw / Math.abs(dx || 1e-6), hh / Math.abs(dy || 1e-6));
+  return [c.x + dx * k, c.y + dy * k];
+}
+window.desenhar = t => {
+  const al = U.janela(t, FIM, 0.3, 0.3);
+  plano.style.opacity = al; topo.style.opacity = al; sv.style.opacity = al;
+  let k = 0; for (let i = 0; i < n; i++) if (t >= MK[i]) k = i;
+  const tr = k === 0 ? U.clamp(U.mola(t - MK[0], 0.5)) : U.clamp(U.mola(t - MK[k], 0.5));
+  const ant = k > 0 ? NOS[k - 1] : {}, cur = NOS[k] || {};
+  // esconde o que não é do passo atual nem do anterior
+  NOS.forEach((m, i) => { if (i !== k && i !== k - 1) Object.values(m).forEach(x => x.el.style.opacity = 0); });
+  const pos = {};
+  for (const [id, c] of Object.entries(cur)) {
+    const p = ant[id];
+    let x = c.x, y = c.y, op = tr, dy = (1 - tr) * 24;
+    if (p) {
+      const mesmoTexto = p.no.texto === c.no.texto && (p.no.sub || '') === (c.no.sub || '');
+      x = U.lerp(p.x, c.x, tr); y = U.lerp(p.y, c.y, tr); dy = 0;
+      if (mesmoTexto) { op = 1; p.el.style.opacity = 0; }
+      else { p.el.style.opacity = (1 - tr) * al; p.el.style.left = x + 'px'; p.el.style.top = y + 'px'; p.el.style.transform = `translate(-50%,-50%)`; }
+    }
+    c.el.style.left = x + 'px'; c.el.style.top = y + 'px'; c.el.style.transform = `translate(-50%,calc(-50% + ${dy}px))`;
+    c.el.style.opacity = op * al;
+    pos[id] = { x, y, w: c.w, h: c.h };
+  }
+  for (const [id, p] of Object.entries(ant)) if (!cur[id]) { p.el.style.opacity = (1 - tr) * al; pos[id] = pos[id] || { x: p.x, y: p.y, w: p.w, h: p.h }; }
+  // setas: as que já existiam ficam; as novas se desenham; as que saem somem
+  const antes = new Set((SETAS[k - 1] || []).map(s => s.chave));
+  SETAS.forEach((lista, i) => lista.forEach(s => {
+    if (i !== k && !(i === k - 1 && !(SETAS[k] || []).some(o => o.chave === s.chave))) { s.g.style.opacity = 0; return; }
+    const a = pos[s.s.de], b = pos[s.s.para]; if (!a || !b) { s.g.style.opacity = 0; return; }
+    const p0 = borda(a, [b.x, b.y]), p1 = borda(b, [a.x, a.y]);
+    s.ln.setAttribute('d', `M${p0[0]},${p0[1]}L${p1[0]},${p1[1]}`);
+    const comp = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]);
+    // rótulo afastado da linha, do lado de cima (normal da seta)
+    let nx = -(p1[1] - p0[1]) / (comp || 1), ny = (p1[0] - p0[0]) / (comp || 1); if (ny > 0) { nx = -nx; ny = -ny; }
+    s.tx.setAttribute('x', (p0[0] + p1[0]) / 2 + nx * 34); s.tx.setAttribute('y', (p0[1] + p1[1]) / 2 + ny * 34 + 10);
+    s.tx.setAttribute('text-anchor', Math.abs(nx) > 0.5 ? (nx < 0 ? 'end' : 'start') : 'middle');
+    if (i === k - 1) { s.g.style.opacity = 1 - tr; return; }
+    const desenho = antes.has(s.chave) ? 1 : U.eo(U.pr(t, MK[k] + 0.15, MK[k] + 0.75));
+    if (s.s.tracejada) { s.ln.setAttribute('stroke-dasharray', '14 12'); s.ln.style.clipPath = `inset(0 ${100 - desenho * 100}% 0 0)`; }
+    else { s.ln.setAttribute('stroke-dasharray', comp); s.ln.setAttribute('stroke-dashoffset', comp * (1 - desenho)); }
+    s.ln.style.opacity = desenho > 0.02 ? 1 : 0;
+    if (desenho > 0.97) s.ln.setAttribute('marker-end', 'url(#pt)'); else s.ln.removeAttribute('marker-end');   // ponta só no fim do traço
+    s.tx.style.opacity = U.eo(U.pr(t, MK[k] + 0.6, MK[k] + 1.0)) * (antes.has(s.chave) ? 0 : 1) + (antes.has(s.chave) ? 1 : 0);
+    s.g.style.opacity = 1;
+  }));
+  TOPOS.forEach(([r, s], i) => { const o = i === k ? (k === 0 ? 1 : tr) : i === k - 1 ? 1 - tr : 0; r.style.opacity = o; s.style.opacity = o; });
+};
+document.fonts.ready.then(() => {
+  // mede cada nó uma vez (a seta encosta na borda do texto)
+  NOS.forEach(m => Object.values(m).forEach(c => { const r = c.el.getBoundingClientRect(); c.w = r.width; c.h = r.height; c.el.style.opacity = 0; }));
+  window.PRONTO = true;
+});
+</script>
+</body></html>

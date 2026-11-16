@@ -1,0 +1,11 @@
+data_decisao;id_peca;codigo_caso;tese;orgao_julgador;instancia;resultado;tese_enfrentada;observacao
+10/06/2025;P-2025-0101;C-2025-0201;restabelecimento-incapacidade;1º JEF BH;primeira;procedente;sim;perícia judicial confirmou a limitação
+22/07/2025;P-2025-0102;C-2025-0202;restabelecimento-incapacidade;1º JEF BH;primeira;procedente;sim;
+30/08/2025;P-2025-0103;C-2025-0203;restabelecimento-incapacidade;3º JEF BH;primeira;parcial;sim;restabelecido a partir da perícia judicial, não da cessação
+15/10/2025;P-2025-0104;C-2025-0204;restabelecimento-incapacidade;3º JEF BH;primeira;improcedente;sim;juízo seguiu a perícia administrativa
+02/12/2025;P-2025-0105;C-2025-0205;restabelecimento-incapacidade;3º JEF BH;primeira;improcedente;sim;mesmo fundamento do caso anterior
+20/01/2026;P-2025-0101;C-2025-0201;restabelecimento-incapacidade;1ª TR MG;recurso;procedente;sim;sentença mantida
+11/02/2026;P-2025-0106;C-2025-0206;restabelecimento-incapacidade;1º JEF BH;primeira;acordo;nao;acordo na audiência
+2026-03-05;P-2025-0107;C-2025-0207;Restabelecimento-Incapacidade-Persistente;1º JEF BH;primeira;IMPROCEDENTE;nao;perícia judicial não viu limitação: tese não chegou a ser enfrentada
+2026-03-20;P-2025-0109;C-2025-0101;rescisao-divida-reconhecida;2ª Vara do Trabalho BH;primeira;procedente;sim;
+2026-04-02;P-2025-0110;C-2025-0300;tese-sem-arquivo;1º JEF BH;primeira;procedente;sim;

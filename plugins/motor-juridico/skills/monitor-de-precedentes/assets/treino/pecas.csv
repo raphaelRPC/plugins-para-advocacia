@@ -1,0 +1,4 @@
+﻿id;codigo_caso;cliente_curto;area;peca;origem;prazo_interno;etapa;responsavel;tese;habilidade_usada;citacoes;dados;protocolo_sistema;protocolo_numero;protocolo_data;atualizado_em
+P-2026-0001;C-2026-0001;Marta;previdenciario;peticao-inicial;passagem;2026-04-20;Minuta;estagiario;restabelecimento-incapacidade;minutar-peca;nao-conferidas;com-alerta;;;;2026-04-10
+P-2026-0002;C-2026-0002;Paulo;trabalhista;reclamacao-trabalhista;passagem;2026-04-25;em-analise;estagiario;;;;;;;;2026-04-09
+P-2026-0003;C-2026-0001;Marta;previdenciario;pedido-de-prorrogacao;advogado;2026-03-02;protocolada;advogada;restabelecimento-incapacidade;minutar-peca;verde;ok;PJe;[PROCESSO];2026-03-01 10:00;2026-03-01

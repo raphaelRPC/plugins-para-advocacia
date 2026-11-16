@@ -1,0 +1,18 @@
+{
+  "tema": "A pensão pode mudar de valor",
+  "tipo": "explicativo",
+  "estilo": "C01",
+  "exemplo": true,
+  "marca": {"arroba": "@seuperfil.adv", "nome": "Seu Nome", "oab": "OAB/UF 00.000"},
+  "rodape": "Direito de família",
+  "laminas": [
+    {"tipo": "capa", "antetitulo": "Direito de família", "titulo": "A pensão pode *mudar* de valor", "subtitulo": "Quando a lei permite revisar, para quem paga e para quem recebe."},
+    {"tipo": "texto", "titulo": "O valor fixado pode ser *revisto*", "texto": "A pensão é fixada pela necessidade de quem recebe e pela possibilidade de quem paga. Se uma das duas muda, o valor pode mudar."},
+    {"tipo": "regra", "titulo": "O que diz o *Código Civil*", "trecho": "Se, fixados os alimentos, sobrevier ==mudança na situação financeira== de quem os supre, ou na de quem os recebe, poderá o interessado reclamar ao juiz [...] exoneração, redução ou majoração do encargo.", "fonte": "Código Civil, art. 1.699"},
+    {"tipo": "lista", "titulo": "Situações que podem levar ao pedido", "itens": ["Queda de renda de quem paga", "Aumento de renda de quem paga", {"texto": "Novas despesas de quem recebe", "detalhe": "saúde, escola, tratamento"}, "Quem recebe passou a ter renda própria"]},
+    {"tipo": "mito", "mito": "Fez 18 anos, a pensão acaba sozinha", "fato": "O fim da pensão do filho que atingiu a maioridade depende de *decisão judicial*, com direito de defesa.", "fonte": "STJ, Súmula 358"},
+    {"tipo": "comparacao", "titulo": "Combinar de boca não muda o valor", "antes": {"titulo": "Combinado informal", "texto": "O valor antigo continua valendo e pode ser cobrado."}, "depois": {"titulo": "Pelo caminho certo", "texto": "O valor muda por decisão judicial ou por acordo homologado."}},
+    {"tipo": "texto", "fundo": "escuro", "titulo": "Quem pede precisa *mostrar* a mudança", "texto": "Contracheque, comprovantes de despesa e documentos de saúde são a prova do pedido."},
+    {"tipo": "convite", "titulo": "Salve para *consultar* depois", "texto": "E mande para quem paga ou recebe pensão.", "chamada": "Salve", "detalhe": "o post fica no seu perfil"}
+  ]
+}

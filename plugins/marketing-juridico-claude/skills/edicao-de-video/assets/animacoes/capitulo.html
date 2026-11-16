@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Cartela de capítulo</title>
+<!-- Cartela de capítulo: número grande e o título da parte ("Passo 2 · Converse com os herdeiros").
+     tela "cheia": um plano na cor de fundo cobre o vídeo por um instante (use ocultaLegenda no insert);
+     tela "alto": número e título acima da cabeça, sem plano.
+     DADOS: numero (ex.: 2), total (opcional, ex.: 4), rotulo (ex.: "Passo"), titulo, tela, fim, familia, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#plano{position:absolute;inset:0;background:var(--c-fundo)}
+#c{position:absolute;left:84px;right:84px}
+#rot{font:600 36px var(--t-texto);letter-spacing:.22em;text-transform:uppercase;color:var(--c-texto)}
+#num{display:flex;align-items:flex-end;gap:22px;margin:6px 0 4px}
+#n{font:var(--titulo-estilo) 800 330px/0.86 var(--t-titulo);color:var(--c-destaque);letter-spacing:-.03em;overflow:hidden;height:.86em}
+#n b{display:block;font-weight:inherit}
+#tot{font:500 52px var(--t-texto);color:var(--c-texto);opacity:.7;padding-bottom:28px}
+#fio{height:6px;background:var(--c-destaque);transform-origin:left;margin:18px 0 26px;width:180px;border-radius:3px}
+#tit{font:var(--titulo-estilo) var(--titulo-peso) 96px/1.04 var(--t-titulo);color:var(--c-texto)}
+.cond #tit{text-transform:uppercase}
+.alto #c{top:232px}.alto #n{font-size:210px}.alto #tit{font-size:76px}
+.alto #rot,.alto #tit,.alto #tot{text-shadow:0 3px 16px rgba(0,0,0,.55)}
+.cheia #c{top:620px}
+</style></head><body>
+<div id="plano"></div>
+<div id="c"><div id="rot"></div><div id="num"><div id="n"><b></b></div><div id="tot"></div></div><div id="fio"></div><div id="tit"></div></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, cheia = (D.tela || 'cheia') === 'cheia';
+document.body.classList.add(cheia ? 'cheia' : 'alto');
+if (FAMILIA === 'editorial' || FAMILIA === 'atras') document.body.classList.add('cond');
+if (!cheia) document.getElementById('plano').style.display = 'none';
+document.getElementById('rot').textContent = D.rotulo || '';
+document.querySelector('#n b').textContent = String(D.numero ?? 1).padStart(2, '0');
+document.getElementById('tot').textContent = D.total ? `de ${String(D.total).padStart(2, '0')}` : '';
+document.getElementById('tit').textContent = D.titulo || '';
+window.AREA = cheia ? { x: 0, y: 0, w: 1080, h: 1920 } : { x: 0, y: 200, w: 1080, h: 760 };
+const el = id => document.getElementById(id);
+window.desenhar = t => {
+  const al = U.janela(t, FIM, 0.3, 0.3);
+  el('plano').style.opacity = al; el('c').style.opacity = al;
+  const n = U.mola(t - 0.1, 0.55); el('n').querySelector('b').style.transform = `translateY(${(1 - n) * 100}%)`;
+  el('rot').style.opacity = U.clamp(U.mola(t, 0.4) * 1.4);
+  el('tot').style.opacity = 0.7 * U.clamp(U.mola(t - 0.35, 0.4));
+  el('fio').style.transform = `scaleX(${SECO ? 1 : U.eo(U.pr(t, 0.3, 0.9))})`;
+  const q = U.mola(t - 0.5, 0.5); el('tit').style.opacity = U.clamp(q * 1.4); el('tit').style.transform = `translateY(${(1 - q) * 26}px)`;
+};
+document.fonts.ready.then(() => { window.PRONTO = true; });
+</script>
+</body></html>

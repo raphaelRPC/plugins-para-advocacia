@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Linha do tempo</title>
+<!-- Linha do tempo: os marcos descem um abaixo do outro, ligados por um fio; cada um acende na sua marca,
+     com o ano grande e uma frase; o anterior fica mais claro. Para o histórico de uma lei ou de um caso público.
+     DADOS: marcos [{ano, texto}] (2 a 4), fonte (opcional), marcas [um por marco], topo, fim, familia, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#c{position:absolute;left:84px;width:900px}
+#fio{position:absolute;left:17px;top:40px;width:5px;background:rgba(255,255,255,.35);border-radius:3px}
+#cheio{position:absolute;left:17px;top:40px;width:5px;background:var(--c-destaque);border-radius:3px}
+.m{position:relative;display:grid;grid-template-columns:40px auto 1fr;align-items:center;gap:22px;height:136px}
+.m .pt{width:38px;height:38px;border-radius:50%;background:var(--c-fundo);border:6px solid rgba(255,255,255,.65);box-sizing:border-box;position:relative;z-index:1}
+.m .ano{font:var(--titulo-estilo) 800 104px/1 var(--t-titulo);color:var(--c-texto);text-shadow:0 3px 16px rgba(0,0,0,.5);font-variant-numeric:tabular-nums}
+.m .tx{font:600 40px/1.15 var(--t-texto);color:var(--c-texto);text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.m.on .ano{color:var(--c-destaque)}.m.on .pt{background:var(--c-destaque);border-color:var(--c-destaque)}
+#fonte{margin-top:14px;padding-left:62px;font:600 26px var(--t-texto);letter-spacing:.12em;text-transform:uppercase;color:var(--c-texto);text-shadow:0 2px 12px rgba(0,0,0,.6)}
+</style></head><body>
+<div id="c"><i id="fio"></i><i id="cheio"></i><div id="lista"></div><div id="fonte"></div></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, marcos = (D.marcos || []).slice(0, 4), n = marcos.length, ALT = 136;
+const c = document.getElementById('c'); c.style.top = (D.topo ?? 240) + 'px';
+document.getElementById('fonte').textContent = D.fonte ? 'Fonte: ' + D.fonte : '';
+const els = marcos.map(m => { const e = document.createElement('div'); e.className = 'm';
+  e.innerHTML = '<i class="pt"></i><div class="ano"></div><div class="tx"></div>'; e.querySelector('.ano').textContent = m.ano; e.querySelector('.tx').textContent = m.texto;
+  document.getElementById('lista').appendChild(e); return e; });
+const total = Math.max(0, (n - 1) * ALT);
+document.getElementById('fio').style.height = (total + 30) + 'px';
+const MK = U.marcas(n, FIM);
+window.AREA = { x: 0, y: (D.topo ?? 240) - 20, w: 1080, h: n * ALT + 140 };
+window.desenhar = t => {
+  c.style.opacity = U.janela(t, FIM, 0.3, 0.35);
+  let k = 0; MK.forEach((m, i) => { if (t >= m) k = i; });
+  const p = k === 0 ? 0 : U.eo(U.pr(t, MK[k] - 0.3, MK[k] + 0.2));
+  document.getElementById('cheio').style.height = (Math.max(0, (k - 1 + p) * ALT) + (t >= MK[0] ? 30 : 0)) + 'px';
+  els.forEach((e, i) => {
+    const q = U.mola(t - MK[i], 0.45);
+    e.style.opacity = i > k || t < MK[i] ? 0 : (i === k ? U.clamp(q * 1.4) : 0.55);
+    e.style.transform = `translateX(${(1 - q) * -40}px)`;
+    e.classList.toggle('on', i === k && t >= MK[i]);
+  });
+  document.getElementById('fonte').style.opacity = U.eo(U.pr(t, MK[n - 1] + 0.6, MK[n - 1] + 1.1));
+};
+document.fonts.ready.then(() => { window.PRONTO = true; });
+</script>
+</body></html>

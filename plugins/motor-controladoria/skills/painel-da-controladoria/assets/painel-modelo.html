@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel da controladoria</title>
+<style>
+  :root {
+    --fundo: #f5f6f8;
+    --cartao: #ffffff;
+    --texto: #1b2330;
+    --texto-suave: #5a6574;
+    --borda: #dce1e7;
+    --destaque: #2c5a86;
+    --barra: #7ea2c5;
+    --atencao: #a35f00;
+    --atencao-fundo: #fff3df;
+    --alerta: #b3261e;
+    --alerta-fundo: #fdebe9;
+    --ok: #2d7a4c;
+    --ok-fundo: #e7f4ec;
+    --neutro-fundo: #eef2f6;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fundo: #11151b;
+      --cartao: #1a2028;
+      --texto: #e5e8ed;
+      --texto-suave: #a2acb9;
+      --borda: #2b343f;
+      --destaque: #8cb4de;
+      --barra: #4d78a1;
+      --atencao: #f0b257;
+      --atencao-fundo: #392b12;
+      --alerta: #f28b82;
+      --alerta-fundo: #3c1c1a;
+      --ok: #7fd0a0;
+      --ok-fundo: #16301f;
+      --neutro-fundo: #1f2934;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --fundo: #11151b;
+    --cartao: #1a2028;
+    --texto: #e5e8ed;
+    --texto-suave: #a2acb9;
+    --borda: #2b343f;
+    --destaque: #8cb4de;
+    --barra: #4d78a1;
+    --atencao: #f0b257;
+    --atencao-fundo: #392b12;
+    --alerta: #f28b82;
+    --alerta-fundo: #3c1c1a;
+    --ok: #7fd0a0;
+    --ok-fundo: #16301f;
+    --neutro-fundo: #1f2934;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--fundo);
+    color: var(--texto);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    overflow-wrap: anywhere;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 48px; }
+  header h1 { font-size: 1.5rem; margin: 0 0 4px; line-height: 1.25; }
+  header p { margin: 0; color: var(--texto-suave); }
+  .faixa { margin: 14px 0; padding: 10px 14px; border-radius: 8px; font-weight: 600; }
+  .interno { background: var(--alerta-fundo); color: var(--alerta); }
+  .treino { background: var(--atencao-fundo); color: var(--atencao); }
+  .numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 18px 0 22px; }
+  .numero { background: var(--cartao); border: 1px solid var(--borda); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+  .numero strong { display: block; font-size: 1.6rem; line-height: 1.1; }
+  .numero span { color: var(--texto-suave); font-size: .86rem; }
+  .numero.atencao strong { color: var(--atencao); }
+  .numero.alerta strong { color: var(--alerta); }
+  .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+  section { background: var(--cartao); border: 1px solid var(--borda); border-radius: 10px; padding: 16px; min-width: 0; }
+  section.largo { grid-column: 1 / -1; }
+  section h2 { font-size: 1.05rem; margin: 0 0 10px; }
+  section h3 { font-size: .95rem; margin: 14px 0 6px; color: var(--destaque); }
+  section h3:first-of-type { margin-top: 0; }
+  ul.itens { list-style: none; margin: 0; padding: 0; }
+  ul.itens li { padding: 8px 0; border-bottom: 1px solid var(--borda); }
+  ul.itens li:last-child { border-bottom: 0; }
+  .nome { font-weight: 600; }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 6px; margin-top: 4px; font-size: .86rem; color: var(--texto-suave); }
+  .selo { display: inline-block; font-size: .78rem; padding: 1px 8px; border-radius: 999px; background: var(--neutro-fundo); color: var(--texto); }
+  .selo.sugerido { background: var(--atencao-fundo); color: var(--atencao); }
+  .selo.agora { background: var(--alerta-fundo); color: var(--alerta); font-weight: 600; }
+  .selo.ok { background: var(--ok-fundo); color: var(--ok); }
+  .carga { display: grid; gap: 12px; }
+  .carga-linha { display: grid; gap: 6px; }
+  .carga-topo { display: flex; justify-content: space-between; gap: 8px; }
+  .trilho { display: flex; height: 14px; border-radius: 4px; overflow: hidden; background: var(--neutro-fundo); }
+  .trilho i { display: block; height: 100%; }
+  .trilho i.s { background: var(--atencao); }
+  .trilho i.c { background: var(--barra); }
+  .trilho i.a { background: var(--ok); }
+  .trilho i.t { background: var(--destaque); opacity: .55; }
+  .legenda { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .82rem; color: var(--texto-suave); }
+  .legenda b { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+  .barras { display: grid; gap: 8px; }
+  .barra { display: grid; grid-template-columns: minmax(70px, 30%) 1fr auto; gap: 8px; align-items: center; font-size: .9rem; }
+  .barra .trilho i { background: var(--barra); }
+  .suave { color: var(--texto-suave); }
+  .vazio { color: var(--texto-suave); font-style: italic; margin: 0; }
+  .avisos { color: var(--atencao); }
+  footer { margin-top: 24px; color: var(--texto-suave); font-size: .85rem; }
+  @media (max-width: 480px) {
+    main { padding: 16px 16px 40px; }
+    header h1 { font-size: 1.25rem; }
+    .numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .numero strong { font-size: 1.35rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="titulo">Painel da controladoria</h1>
+    <p id="subtitulo"></p>
+  </header>
+  <div class="faixa interno" id="faixa-interna">Uso interno do escritório. Não compartilhar com cliente.</div>
+  <div class="faixa treino" id="faixa-destaque" hidden></div>
+  <div class="numeros" id="numeros"></div>
+  <div class="grade">
+    <section class="largo"><h2>Prazos da semana por responsável</h2><div id="semana"></div></section>
+    <section><h2>Carga por responsável</h2><div class="carga" id="carga"></div></section>
+    <section><h2>Risco</h2><div id="risco"></div></section>
+    <section><h2>Publicações por fonte</h2><div class="barras" id="fontes"></div><p class="suave" id="triagens"></p><div id="sem-caso"></div></section>
+    <section><h2>Audiências e perícias</h2><div id="atos"></div></section>
+    <section class="largo" id="sec-avisos" hidden><h2>Avisos de preenchimento</h2><ul class="avisos" id="avisos"></ul></section>
+  </div>
+  <footer id="rodape">Gerado pelo script do painel a partir dos registros da controladoria. Prazo sugerido ainda não vale: só depois da dupla conferência.</footer>
+</main>
+<script id="dados" type="application/json">__DADOS_DO_PAINEL__</script>
+<script>
+(function () {
+  var d;
+  try { d = JSON.parse(document.getElementById("dados").textContent); }
+  catch (e) {
+    document.getElementById("subtitulo").textContent = "Modelo sem dados. Rode o script do painel com --html para preencher.";
+    return;
+  }
+  function el(tag, texto, classe) {
+    var n = document.createElement(tag);
+    if (texto !== undefined && texto !== null) n.textContent = texto;
+    if (classe) n.className = classe;
+    return n;
+  }
+  function selo(texto, classe) { return el("span", texto, "selo" + (classe ? " " + classe : "")); }
+  function nome(i) { return [i.id, i.cliente, i.codigo].filter(Boolean).join(" · "); }
+  function itens(alvo, lista, vazio) {
+    if (!lista.length) { alvo.appendChild(el("p", vazio, "vazio")); return; }
+    var ul = el("ul", null, "itens");
+    lista.forEach(function (i) {
+      var li = el("li");
+      li.appendChild(el("div", nome(i), "nome"));
+      var m = el("div", null, "meta");
+      m.appendChild(el("span", i.tribunal + " · " + i.providencia));
+      if (i.tipo === "audiencia" || i.tipo === "pericia" || i.tipo === "sessao") {
+        m.appendChild(selo(i.tipo + " em " + (i.fatal || "sem data")));
+      } else {
+        m.appendChild(selo((i.sugerido ? "segurança sugerida " : "segurança ") + (i.seguranca || "sem data")));
+        m.appendChild(selo((i.sugerido ? "fatal sugerida " : "fatal ") + (i.fatal || "sem data")));
+      }
+      m.appendChild(i.sugerido ? selo("sugerido · ainda não vale", "sugerido") : selo(i.status, i.status === "agendado" ? "ok" : ""));
+      if (i.agora) m.appendChild(selo("hoje ou próximo dia útil", "agora"));
+      if (i.observacao && (i.tipo === "audiencia" || i.tipo === "pericia" || i.tipo === "sessao")) m.appendChild(el("span", i.observacao));
+      li.appendChild(m);
+      ul.appendChild(li);
+    });
+    alvo.appendChild(ul);
+  }
+
+  document.getElementById("titulo").textContent = "Painel da controladoria" + (d.treino ? " (treino)" : "");
+  document.title = "Painel da controladoria " + d.hoje;
+  document.getElementById("subtitulo").textContent = (d.escritorio ? d.escritorio + " · " : "") + d.hoje + " (" + d.dia + ") · " + d.lidos;
+  if (d.treino) {
+    var f = document.getElementById("faixa-interna");
+    f.className = "faixa treino";
+    f.textContent = "Registros de treino, com casos fictícios. Uso interno do escritório.";
+  }
+  if (d.destaque.length) {
+    var fd = document.getElementById("faixa-destaque");
+    fd.hidden = false;
+    fd.textContent = d.destaque.join(" ");
+  }
+
+  var n = d.numeros;
+  [[n.abertos, "em aberto", ""],
+   [n.agora, "hoje ou no próximo dia útil", n.agora ? "alerta" : ""],
+   [n.semana, "na semana (" + d.semana_n + " dias úteis)", ""],
+   [n.sugeridos, "sugeridos, sem dupla conferência", n.sugeridos ? "atencao" : ""],
+   [n.risco, "em risco", n.risco ? "alerta" : ""],
+   [n.atos, "audiências e perícias em " + d.audiencias_n + " dias", ""],
+   [n.nao_triadas, "publicações não triadas", n.nao_triadas ? "atencao" : ""],
+   [n.sem_caso, "sem caso esperando decisão", n.sem_caso ? "atencao" : ""]
+  ].forEach(function (c) {
+    var box = el("div", null, "numero " + c[2]);
+    box.appendChild(el("strong", String(c[0])));
+    box.appendChild(el("span", c[1]));
+    document.getElementById("numeros").appendChild(box);
+  });
+
+  var sem = document.getElementById("semana");
+  if (!d.por_responsavel.length) sem.appendChild(el("p", "Nenhum prazo em aberto na semana.", "vazio"));
+  d.por_responsavel.forEach(function (g) {
+    sem.appendChild(el("h3", g.responsavel + " (" + g.itens.length + ")"));
+    itens(sem, g.itens, "");
+  });
+
+  var carga = document.getElementById("carga");
+  var maior = Math.max.apply(null, d.carga.map(function (c) { return c.total; }).concat([1]));
+  if (!d.carga.length) carga.appendChild(el("p", "Nenhum prazo em aberto.", "vazio"));
+  d.carga.forEach(function (c) {
+    var linha = el("div", null, "carga-linha");
+    var topo = el("div", null, "carga-topo");
+    topo.appendChild(el("span", c.responsavel, "nome"));
+    topo.appendChild(el("span", c.total + " em aberto · " + c.semana + " na semana", "suave"));
+    linha.appendChild(topo);
+    var trilho = el("div", null, "trilho");
+    [["s", c.sugerido], ["c", c.conferido], ["a", c.agendado], ["t", c.atos]].forEach(function (p) {
+      if (!p[1]) return;
+      var i = el("i", null, p[0]);
+      i.style.width = (p[1] / maior * 100) + "%";
+      trilho.appendChild(i);
+    });
+    linha.appendChild(trilho);
+    linha.appendChild(el("div", "sugeridos " + c.sugerido + " · conferidos " + c.conferido + " · agendados " + c.agendado + " · audiências e perícias " + c.atos, "suave"));
+    carga.appendChild(linha);
+  });
+  if (d.carga.length) {
+    var leg = el("div", null, "legenda");
+    [["var(--atencao)", "sugerido"], ["var(--barra)", "conferido"], ["var(--ok)", "agendado"], ["var(--destaque)", "audiência e perícia"]].forEach(function (x) {
+      var s = el("span"); var b = el("b"); b.style.background = x[0]; s.appendChild(b); s.appendChild(document.createTextNode(x[1])); leg.appendChild(s);
+    });
+    carga.appendChild(leg);
+  }
+
+  var risco = document.getElementById("risco");
+  var titulos = [["vencidos", "Fatal passou sem registro de cumprimento"],
+    ["perto", "Sugerido com a fatal em até " + (d.dias_seg + 1) + " dias úteis"],
+    ["sem_data", "Sem data calculada"],
+    ["sem_dupla", "Conferido ou agendado sem os dois nomes"],
+    ["sem_agenda", "Conferido sem agenda"],
+    ["sem_resp", "Sem responsável"]];
+  var algum = false;
+  titulos.forEach(function (t) {
+    var lista = d.risco[t[0]];
+    if (!lista.length) return;
+    algum = true;
+    risco.appendChild(el("h3", t[1] + " (" + lista.length + ")"));
+    itens(risco, lista, "");
+  });
+  if (!algum) risco.appendChild(el("p", "Nenhum prazo em risco pelos critérios do painel.", "vazio"));
+  risco.appendChild(el("p", "Dias de segurança: " + d.dias_seg + " (" + d.fonte_dias_seg + ").", "suave"));
+
+  var fontes = document.getElementById("fontes");
+  var mf = Math.max.apply(null, d.fontes.map(function (f) { return f.total; }).concat([1]));
+  if (!d.fontes.length) fontes.appendChild(el("p", "Publicações não lidas.", "vazio"));
+  d.fontes.forEach(function (f) {
+    var linha = el("div", null, "barra");
+    linha.appendChild(el("span", f.fonte));
+    var tr = el("div", null, "trilho"); var i = el("i"); i.style.width = (f.total / mf * 100) + "%"; tr.appendChild(i);
+    linha.appendChild(tr);
+    linha.appendChild(el("b", f.total + (f.nao_triadas ? " · " + f.nao_triadas + " não triadas" : "")));
+    fontes.appendChild(linha);
+  });
+  if (d.triagens.length) document.getElementById("triagens").textContent = "Por triagem: " + d.triagens.map(function (t) { return t[0] + " " + t[1]; }).join(", ") + ".";
+  var sc = document.getElementById("sem-caso");
+  if (d.sem_caso.length) {
+    sc.appendChild(el("h3", "Sem caso esperando decisão"));
+    var ul = el("ul", null, "itens");
+    d.sem_caso.forEach(function (u) { ul.appendChild(el("li", u.id + " · " + u.tribunal + " · " + u.orgao + " · disponibilizada " + u.disponibilizada)); });
+    sc.appendChild(ul);
+  }
+
+  itens(document.getElementById("atos"), d.atos, "Nenhuma audiência ou perícia nos próximos " + d.audiencias_n + " dias.");
+
+  if (d.avisos.length) {
+    document.getElementById("sec-avisos").hidden = false;
+    d.avisos.forEach(function (a) { document.getElementById("avisos").appendChild(el("li", a)); });
+  }
+  if (d.calendario.length) document.getElementById("rodape").textContent += " Calendário: " + d.calendario.join(", ") + ".";
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prancha das cenas</title>
+<style>
+/* Prancha das cenas do vídeo sem rosto (formato F13): a única página antes de montar. O advogado assiste à animação
+   inteira, confere o tempo de cada bloco, os fatos e as fontes, aprova ou pede ajuste em cada cena e copia para o Claude.
+   O motor grava a cópia com os dados do vídeo (montar_video.py cenas), com o endereço desta pasta como base. */
+:root{--bg:#0E1218;--painel:#151B24;--painel2:#1B2330;--linha:#273141;--tx:#E6EAF0;--mut:#8D98A8;--pen:#4A6FF0;--ambar:#F2B33D;--ok:#4CC38A;--ouro:#E9C478;
+  --ui:-apple-system,"Avenir Next","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 var(--ui)}
+header{padding:20px 16px 14px;border-bottom:1px solid var(--linha);background:var(--painel)}
+.in{max-width:1180px;margin:0 auto}
+h1{font-size:21px;margin:0 0 4px}
+.sub{color:var(--mut);margin:0;max-width:820px}
+main{padding:18px 16px 110px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
+@media (max-width:860px){main{grid-template-columns:1fr}}
+.lado{position:sticky;top:12px}
+@media (max-width:860px){.lado{position:static}}
+.tel{width:min(360px,calc(100vw - 32px));aspect-ratio:9/16;border-radius:24px;overflow:hidden;position:relative;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.5);margin:0 auto}
+.tel iframe{position:absolute;left:0;top:0;width:1080px;height:1920px;border:0;transform-origin:0 0;pointer-events:none;color-scheme:normal}
+.ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px;justify-content:center}
+button{font:600 14px var(--ui);color:#fff;background:var(--pen);border:0;border-radius:8px;padding:9px 14px;cursor:pointer;white-space:nowrap}
+button.sec{background:var(--painel2);border:1px solid var(--linha);color:var(--tx)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--pen);outline-offset:1px}
+#tempo{font-variant-numeric:tabular-nums;color:var(--mut);font-size:13px}
+input[type=range]{width:100%;accent-color:var(--ambar);margin:10px 0 4px}
+#linha{display:flex;height:26px;border:1px solid var(--linha);border-radius:7px;overflow:hidden}
+#linha div{display:flex;align-items:center;justify-content:center;font-size:11.5px;color:var(--mut);border-right:1px solid var(--linha);white-space:nowrap;overflow:hidden;cursor:pointer}
+#linha div.agora{background:rgba(242,179,61,.14);color:var(--ambar)}
+#marcas{position:relative;height:10px}
+#marcas i{position:absolute;top:2px;width:2px;height:7px;background:var(--mut);border-radius:1px}
+h2{font-size:17px;margin:0 0 6px}
+.dica{color:var(--mut);margin:0 0 14px;font-size:14px}
+section{margin:0 0 30px}
+.cena{background:var(--painel);border:2px solid var(--linha);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.cena.agora{border-color:var(--ambar)}
+.cena h3{margin:0 0 6px;font-size:15px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.cena h3 small{color:var(--mut);font-weight:500}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0 10px}
+td{padding:5px 6px;border-bottom:1px solid var(--linha);vertical-align:top}
+td.n{white-space:nowrap;color:var(--mut);font-variant-numeric:tabular-nums;text-align:right}
+tr.cl{cursor:pointer}tr.cl:hover td{background:var(--painel2)}
+.esc{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;font-weight:600}
+.esc label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.esc input{accent-color:var(--pen);width:16px;height:16px}
+textarea{width:100%;min-height:58px;margin-top:8px;font:14px var(--ui);color:var(--tx);background:var(--bg);border:1px solid var(--linha);border-radius:8px;padding:8px 10px}
+.fato{background:var(--painel);border:1px solid var(--linha);border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:14px}
+.fato .fonte{color:var(--ouro);font-size:13px;margin-top:3px}
+.aviso{background:rgba(242,179,61,.1);border:1px solid rgba(242,179,61,.4);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:8px}
+.oab{border-left:4px solid var(--ok);background:var(--painel);padding:10px 12px;border-radius:6px;font-size:14px}
+.oab.ajustar{border-left-color:var(--ambar)}.oab.bloqueado{border-left-color:#DE3430}
+.pedido{position:fixed;left:0;right:0;bottom:0;background:var(--painel);border-top:1px solid var(--linha);z-index:5}
+.pedido .in{padding:10px 16px;display:flex;gap:12px;align-items:center}
+#resumo{flex:1;font-size:13px;color:#C9D1DE;min-width:0}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <h1>Prancha das cenas <small id="nome" style="color:var(--mut);font-weight:500;font-size:15px"></small></h1>
+  <p class="sub">Assista ao vídeo inteiro, confira o tempo de cada bloco, os fatos e as fontes. Em cada cena, marque se aprova ou escreva o ajuste. No fim, copie para o Claude e cole na conversa. Nada é montado antes do seu "sim".</p>
+</div></header>
+<main class="in">
+  <div class="lado">
+    <div class="tel" id="tel"><iframe id="quadro" title="Prévia das cenas"></iframe></div>
+    <input type="range" id="barraT" min="0" step="0.01" value="0" aria-label="Tempo do vídeo">
+    <div id="linha"></div><div id="marcas"></div>
+    <div class="ctrl"><button id="tocar">Pausar</button><button class="sec" id="reini">Do começo</button><span id="tempo"></span></div>
+  </div>
+  <div>
+    <section id="s-avisos" style="display:none"><h2>O Claude pede atenção</h2><div id="avisos"></div></section>
+    <section><h2>Cenas</h2><p class="dica" id="ritmo"></p><div id="cenas"></div></section>
+    <section id="s-fatos"><h2>Fatos e fontes</h2><p class="dica">Toda lei, prazo e número do vídeo, com a fonte. Confira cada um: quem responde pelo que vai a público é você.</p><div id="fatos"></div></section>
+    <section id="s-oab" style="display:none"><h2>Trava OAB</h2><div id="oab"></div></section>
+    <section><h2>Algo mais?</h2><textarea id="geral" placeholder="Ex.: troque a cor de destaque; deixe a cena 3 mais curta; quero fundo na cor da marca."></textarea></section>
+  </div>
+</main>
+<div class="pedido"><div class="in"><div id="resumo">Nada marcado ainda.</div><button id="copiar">Copiar para o Claude</button></div></div>
+<script>
+// Aviso de página aberta pela metade (fora do navegador do computador, os arquivos ao lado não carregam)
+if (!window.PRANCHA_CENAS) {
+  const d = document.createElement('div'); d.setAttribute('role', 'alert');
+  d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99;background:#F2B33D;color:#14181F;font:600 15px/1.45 -apple-system,"Segoe UI",Arial,sans-serif;padding:14px 16px;text-align:center';
+  d.innerHTML = 'Esta página abriu pela metade: os dados do vídeo não carregaram aqui.<br><span style="font-weight:400">Ela precisa abrir no navegador do computador. Peça ao Claude: <b>abre a prancha das cenas no meu navegador</b>.</span>';
+  document.body.appendChild(d);
+}
+</script>
+<script>
+const I = window.PRANCHA_CENAS || { dados: { cenas: [] }, regua: { partes: [], cenas: [], total: 0 }, fatos: [] };
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fmt = s => (+s).toFixed(1).replace('.', ',') + ' s';
+const TIPO = { pergunta: 'A dúvida', lei: 'A regra', passos: 'Como funciona', cuidado: 'O cuidado', fecho: 'O fecho', peca: 'Peça do catálogo' };
+const NOME_PARTE = id => ({ texto: 'Texto', sugestoes: 'Sugestões', fica: 'Permanência', entrada: 'Entrada', destaque: 'Marca-texto', seta: 'Seta', explica: 'Explicação', titulo: 'Título', numero: 'Número', mito: 'Mito', risco: 'Risco', fato: 'Fato', chamada: 'Chamada', arroba: 'O @', identificacao: 'Nome e OAB', peca: 'Peça' }[id] || (/^l\d/.test(id) ? 'Linha ' + id.slice(1) : /^p\d/.test(id) ? 'Passo ' + id.slice(1) : id));
+const R = I.regua, TOTAL = I.total || R.total;
+// com voz, o tempo de cada parte vem da fala (marcas no tempo do vídeo editado)
+const EM = (I.dados.marcas && I.dados.marcas.length === R.partes.length) ? I.dados.marcas : R.partes.map(p => p.em);
+const CENAS = R.cenas.map((c, k) => ({ ...c, ini: EM[R.partes.findIndex(p => p.cena === k)] }));
+CENAS.forEach((c, k) => { c.fim = k < CENAS.length - 1 ? CENAS[k + 1].ini : TOTAL; });
+$('nome').textContent = I.nome ? '· ' + I.nome : '';
+$('ritmo').textContent = I.voz ? `Com a sua voz: cada bloco entra na palavra em que você fala dele. ${fmt(TOTAL)} no total.`
+  : `Sem voz: cada bloco fica na tela o tempo de alguém ler no celular (0,5 s para achar o bloco e 1 s a cada 14 letras). ${fmt(TOTAL)} no total.`;
+
+// prévia: a animação real, com o tempo mandado por esta página
+const quadro = $('quadro');
+quadro.src = '../animacoes/cenas.html?previa#' + encodeURIComponent(JSON.stringify(I.dados));
+const escala = () => { quadro.style.transform = `scale(${$('tel').clientWidth / 1080})`; };
+addEventListener('resize', escala); escala();
+let t = 0, tocando = true, ult = null;
+const barraT = $('barraT'); barraT.max = TOTAL.toFixed(2);
+function ir(nt) {
+  t = nt; quadro.contentWindow && quadro.contentWindow.postMessage({ mjT: t }, '*');
+  barraT.value = t; $('tempo').textContent = `${fmt(Math.min(t, TOTAL))} de ${fmt(TOTAL)}`;
+  const k = CENAS.findIndex(c => t >= c.ini - 0.01 && t < c.fim);
+  document.querySelectorAll('#linha div').forEach((d, i) => d.classList.toggle('agora', i === k));
+  document.querySelectorAll('.cena').forEach((d, i) => d.classList.toggle('agora', i === k));
+}
+function passo(agora) { if (tocando) { if (ult != null) { let nt = t + (agora - ult) / 1000; if (nt > TOTAL + 1) nt = 0; ir(nt); } ult = agora; } requestAnimationFrame(passo); }
+const pausa = () => { tocando = false; ult = null; $('tocar').textContent = 'Tocar'; };
+$('tocar').onclick = () => { tocando = !tocando; ult = null; $('tocar').textContent = tocando ? 'Pausar' : 'Tocar'; };
+$('reini').onclick = () => ir(0);
+barraT.oninput = () => { pausa(); ir(parseFloat(barraT.value)); };
+$('linha').innerHTML = CENAS.map((c, k) => `<div style="width:${(c.fim - c.ini + (k === 0 ? c.ini : 0)) / TOTAL * 100}%" data-t="${c.ini}" title="${esc(c.rotulo || TIPO[c.tipo] || '')}">${k + 1}</div>`).join('');
+$('linha').querySelectorAll('div').forEach(d => d.onclick = () => { pausa(); ir(+d.dataset.t + 0.4); });
+$('marcas').innerHTML = EM.map((e, i) => `<i style="left:${e / TOTAL * 100}%" title="${esc(NOME_PARTE(R.partes[i].id))}"></i>`).join('');
+
+// cenas: o texto, o tempo de cada bloco e a resposta
+const resp = CENAS.map(() => ({ resposta: '', ajuste: '' }));
+$('cenas').innerHTML = CENAS.map((c, k) => {
+  const ps = R.partes.map((p, i) => ({ ...p, i })).filter(p => p.cena === k);
+  return `<div class="cena" data-k="${k}"><h3>Cena ${k + 1} · ${esc(c.rotulo || TIPO[c.tipo] || c.tipo)} <small>${esc(TIPO[c.tipo] || '')} · ${fmt(c.fim - c.ini)}</small></h3>
+    <table>${ps.filter(p => p.texto || p.id === 'fica').map(p => `<tr class="cl" data-t="${EM[p.i]}"><td>${esc(NOME_PARTE(p.id))}</td><td>${esc(p.texto) || '<span style="color:var(--mut)">tempo para reler</span>'}</td><td class="n">${fmt(p.dur)}</td></tr>`).join('')}</table>
+    <div class="esc"><label><input type="radio" name="c${k}" value="aprovo"> Aprovo</label><label><input type="radio" name="c${k}" value="ajustar"> Ajustar</label></div>
+    <textarea data-k="${k}" placeholder="O que mudar nesta cena (texto, tempo, peça)"></textarea></div>`;
+}).join('');
+document.querySelectorAll('tr.cl').forEach(tr => tr.onclick = () => { pausa(); ir(+tr.dataset.t + 0.3); });
+document.addEventListener('change', e => { const m = /^c(\d+)$/.exec(e.target.name || ''); if (m) { resp[+m[1]].resposta = e.target.value; resumo(); } if (/^f\d+$/.test(e.target.name || '')) resumo(); });
+document.querySelectorAll('textarea[data-k]').forEach(x => x.oninput = () => { const k = +x.dataset.k; resp[k].ajuste = x.value; if (x.value && !resp[k].resposta) { resp[k].resposta = 'ajustar'; document.querySelector(`input[name=c${k}][value=ajustar]`).checked = true; } resumo(); });
+
+// fatos, avisos e parecer
+const F = I.fatos || [];
+$('fatos').innerHTML = F.length ? F.map((f, i) => `<div class="fato">${esc(f.texto)}<div class="fonte">Fonte: ${esc(f.fonte)}</div>
+  <div class="esc" style="margin-top:6px"><label><input type="radio" name="f${i}" value="confere"> Confere</label><label><input type="radio" name="f${i}" value="tirar"> Tirar do vídeo</label></div></div>`).join('') : '<p class="dica">Nenhum fato com fonte neste vídeo.</p>';
+if ((I.avisos || []).length) { $('s-avisos').style.display = ''; $('avisos').innerHTML = I.avisos.map(a => `<div class="aviso">${esc(a)}</div>`).join(''); }
+if (I.oab) { $('s-oab').style.display = ''; const p = String(I.oab.parecer || '').toLowerCase(); $('oab').innerHTML = `<div class="oab ${p === 'ajustar' ? 'ajustar' : p === 'bloqueado' ? 'bloqueado' : ''}"><b>${esc(I.oab.parecer || '')}</b> ${esc(I.oab.nota || '')}</div>`; }
+
+function resumo() {
+  const ok = resp.filter(r => r.resposta === 'aprovo').length, aj = resp.filter(r => r.resposta === 'ajustar').length;
+  const fc = F.filter((f, i) => document.querySelector(`input[name=f${i}]:checked`)).length;
+  $('resumo').innerHTML = `<b>${ok}</b> de ${CENAS.length} cenas aprovadas${aj ? ` · <b>${aj}</b> com ajuste` : ''}${F.length ? ` · ${fc} de ${F.length} fatos conferidos` : ''}`;
+}
+$('copiar').onclick = async () => {
+  const fatos = F.map((f, i) => { const r = document.querySelector(`input[name=f${i}]:checked`); return { i, resposta: r ? r.value : '' }; });
+  const todas = resp.every(r => r.resposta === 'aprovo') && fatos.every(f => f.resposta === 'confere') && !$('geral').value.trim();
+  const linhas = ['Prancha das cenas (vídeo sem rosto)' + (I.nome ? ': ' + I.nome : ''),
+    ...CENAS.map((c, k) => `Cena ${k + 1} (${c.rotulo || TIPO[c.tipo]}): ${resp[k].resposta === 'aprovo' ? 'aprovo' : resp[k].resposta === 'ajustar' ? 'ajustar: ' + (resp[k].ajuste || '(sem texto)') : 'sem resposta'}`),
+    ...fatos.filter(f => f.resposta).map(f => `Fato ${f.i + 1}: ${f.resposta === 'confere' ? 'confere' : 'tirar do vídeo'}`)];
+  if ($('geral').value.trim()) linhas.push('Pedido: ' + $('geral').value.trim());
+  linhas.push(todas ? 'Tudo aprovado: pode montar.' : 'Ajuste o que pedi e me mostre de novo antes de montar.');
+  const pacote = { pranchaCenas: 1, projeto: I.projeto, cenas: resp.map((r, k) => ({ cena: k + 1, ...r })), fatos, pedido: $('geral').value.trim(), aprovado: todas };
+  const txt = linhas.join('\n') + '\n\n```json\n' + JSON.stringify(pacote) + '\n```';
+  try { await navigator.clipboard.writeText(txt); } catch { const x = document.createElement('textarea'); x.value = txt; document.body.appendChild(x); x.select(); document.execCommand('copy'); x.remove(); }
+  const b = $('copiar'); b.textContent = 'Copiado: cole na conversa'; setTimeout(() => { b.textContent = 'Copiar para o Claude'; }, 2500);
+};
+resumo();
+quadro.addEventListener('load', () => { ir(0); requestAnimationFrame(passo); });
+</script>
+</body>
+</html>

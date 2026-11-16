@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitrine de famílias</title>
+<style>
+/* Página de comparação: três famílias visuais aplicadas aos mesmos momentos do vídeo de lançamento.
+   Cada tela é um quadro real (540 x 960) com a camada de texto em HTML; na família "Atrás de você",
+   o recorte da pessoa fica por cima do texto. Medidas em cqw: 1080 px do vídeo = 100cqw. */
+:root{
+  --fundo:#0E1218; --painel:#151B24; --linha:#273141; --tx:#E6EAF0; --mut:#8D98A8;
+  --ouro:#E9C478; --creme:#F6ECD6; --branco:#fff;
+  --cond:"Avenir Next Condensed","AvenirNextCondensed-Heavy","Arial Narrow",sans-serif;
+  --sans:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --serif:"Didot","Bodoni 72","Bodoni MT",Georgia,serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --fundo:#F3F1EC; --painel:#FFFFFF; --linha:#E1DDD4; --tx:#16181D; --mut:#5F6670; color-scheme:light } }
+:root[data-theme="light"]{ --fundo:#F3F1EC; --painel:#FFFFFF; --linha:#E1DDD4; --tx:#16181D; --mut:#5F6670; color-scheme:light }
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.5}
+header,section{max-width:1240px;margin:0 auto;padding:0 16px}
+header{padding-top:36px;padding-bottom:8px}
+h1{font-size:30px;line-height:1.15;margin:0 0 8px;font-weight:700;letter-spacing:-.01em}
+h2{font-size:20px;margin:40px 0 6px}
+.sub{color:var(--mut);max-width:760px;margin:0}
+.barra{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0 0}
+button{font:600 14px var(--sans);color:var(--tx);background:var(--painel);border:1px solid var(--linha);border-radius:10px;padding:9px 14px;cursor:pointer}
+button:hover{border-color:var(--mut)}
+button[aria-pressed="true"]{background:var(--tx);color:var(--fundo)}
+.dica{color:var(--mut);font-size:13px}
+
+/* famílias */
+.familias{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:14px}
+.fam{background:var(--painel);border:1px solid var(--linha);border-radius:14px;padding:16px}
+.fam b{font-size:16px}
+.fam dl{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13.5px}
+.fam dt{color:var(--mut)}
+.fam dd{margin:0}
+.amostra{font-size:30px;line-height:1.1;margin-top:8px}
+.amostra.a{font-family:var(--cond);font-weight:800;text-transform:none}
+.amostra.c{font-family:var(--serif);font-style:italic}
+
+/* grade de telas */
+.linha-momento{margin-top:30px}
+.linha-momento h3{font-size:15px;margin:0 0 2px}
+.linha-momento p{margin:0 0 10px;color:var(--mut);font-size:13.5px}
+.grade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grade.com-hoje{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:760px){
+  .familias{grid-template-columns:1fr}
+  .grade,.grade.com-hoje{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding-bottom:8px}
+  .grade>figure{flex:0 0 72%;scroll-snap-align:start}
+}
+figure{margin:0}
+figcaption{font-size:12.5px;color:var(--mut);margin-top:6px}
+figcaption b{color:var(--tx)}
+.tela{position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;container-type:inline-size;background:#222;border:1px solid var(--linha)}
+.tela>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.camada{position:absolute;inset:0;pointer-events:none}
+.pessoa{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rosto .zona{position:absolute;left:32%;right:32%;top:27%;height:24%;border:.5cqw dashed rgba(255,90,80,.9);border-radius:40%;display:block}
+.zona{display:none}
+.sombra{text-shadow:0 .35cqw 2.2cqw rgba(0,0,0,.5),0 0 .6cqw rgba(0,0,0,.25)}
+
+/* animação: tudo reinicia quando a classe "toca" volta ao body */
+.mask{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.06em}
+.mask>span{display:inline-block;transform:translateY(105%)}
+.toca .mask>span{animation:sobe .7s cubic-bezier(.2,.9,.25,1.04) forwards;animation-delay:var(--d,0s)}
+@keyframes sobe{to{transform:none}}
+.fade{opacity:0}
+.toca .fade{animation:aparece .6s ease-out forwards;animation-delay:var(--d,0s)}
+@keyframes aparece{from{opacity:0;transform:translateY(1.2cqw)}to{opacity:1;transform:none}}
+.fio{display:block;height:.5cqw;background:var(--ouro);width:0}
+.toca .fio{animation:fio .8s ease-out forwards;animation-delay:var(--d,0s)}
+@keyframes fio{to{width:var(--w,12cqw)}}
+.gigante{opacity:0;transform:scale(.92)}
+.toca .gigante{animation:gigante 1s cubic-bezier(.2,.9,.25,1) forwards;animation-delay:var(--d,0s)}
+@keyframes gigante{to{opacity:1;transform:none}}
+.marcador{position:relative;display:inline-block}
+.marcador::before{content:"";position:absolute;left:-2%;bottom:6%;height:38%;width:0;background:var(--ouro);z-index:-1;border-radius:.4cqw}
+.toca .marcador::before{animation:marca .5s ease-out forwards;animation-delay:var(--d,0s)}
+@keyframes marca{to{width:104%}}
+.sublinha{position:relative;display:inline-block}
+.sublinha::after{content:"";position:absolute;left:0;bottom:-.06em;height:.5cqw;width:0;background:var(--ouro)}
+.toca .sublinha::after{animation:marca .6s ease-out forwards;animation-delay:var(--d,0s)}
+@media (prefers-reduced-motion:reduce){.mask>span,.fade,.gigante{transform:none;opacity:1;animation:none!important}.fio{width:var(--w,12cqw)}.marcador::before,.sublinha::after{width:104%}}
+
+/* A · Editorial */
+.a .peq{position:absolute;left:7.4cqw;font:600 3.4cqw var(--sans);letter-spacing:.55cqw;text-transform:uppercase;color:#fff}
+.a .grande{position:absolute;left:6.6cqw;right:5cqw;font:800 17cqw/0.92 var(--cond);color:#fff;letter-spacing:-.02em}
+.a .ouro{color:var(--ouro)}
+.a .num{font:800 30cqw/0.85 var(--cond);color:var(--ouro)}
+.a .passos{display:flex;gap:1.6cqw;margin-top:2.4cqw}
+.a .passos i{display:block;width:11cqw;height:.9cqw;background:rgba(255,255,255,.35);border-radius:.5cqw}
+.a .passos i.on{background:var(--ouro)}
+.a .ass{position:absolute;left:7.4cqw;top:7cqw;font:600 3.1cqw var(--sans);color:#fff}
+.a .ass small{display:block;font-weight:500;opacity:.8;font-size:2.7cqw}
+
+/* B · Atrás de você */
+.b .gig{position:absolute;left:0;right:0;text-align:center;font:800 30cqw/0.85 var(--cond);color:var(--creme);letter-spacing:-.01em;white-space:nowrap}
+.b .peq{position:absolute;left:0;right:0;text-align:center;font:600 3.5cqw var(--sans);letter-spacing:.55cqw;text-transform:uppercase;color:#fff}
+.b .frente{position:absolute;left:0;right:0;text-align:center;font:800 7.5cqw var(--cond);color:#fff;text-transform:uppercase}
+
+/* C · Revista */
+.c .peq{position:absolute;left:7.6cqw;font:500 3.1cqw var(--sans);letter-spacing:.7cqw;text-transform:uppercase;color:#fff}
+.c .grande{position:absolute;left:7cqw;right:6cqw;font:italic 400 13.2cqw/1.02 var(--serif);color:#fff}
+.c .romano{font:400 12cqw/1 var(--serif);color:var(--ouro);font-style:normal;margin-right:2cqw}
+.c .apoio{position:absolute;left:7.6cqw;right:8cqw;font:500 3.6cqw/1.35 var(--sans);color:#fff;opacity:.92}
+.c .ass{position:absolute;left:7.6cqw;top:7cqw;font:italic 400 4.6cqw var(--serif);color:#fff}
+.c .ass small{display:block;font:500 2.6cqw var(--sans);letter-spacing:.5cqw;text-transform:uppercase;opacity:.85;margin-top:.6cqw}
+
+/* D · Celular: sem movimento, aparece em corte seco */
+.d .cel{position:absolute;left:8.3cqw;right:8cqw;font:800 6.1cqw/1.12 var(--sans);color:#fff;-webkit-text-stroke:.35cqw rgba(0,0,0,.6);paint-order:stroke fill;text-shadow:none}
+.d .cel small{display:block;font-size:.62em}
+.d .cel .ouro{color:var(--ouro)}
+.d .fundo{display:inline-block;background:#fff;color:#111;-webkit-text-stroke:0;padding:.5cqw 2cqw;border-radius:1.3cqw}
+.d .ok{color:#4CC38A}.d .nao{color:#DE3430}
+.d .leg{font:800 7cqw/1 var(--sans);color:#fff;-webkit-text-stroke:.6cqw #000;paint-order:stroke fill;text-shadow:none}
+.seco{opacity:0}
+.toca .seco{animation:seco 1ms steps(1) forwards;animation-delay:var(--d,0s)}
+@keyframes seco{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.seco{opacity:1;animation:none!important}}
+
+/* legenda de cada família (terço de baixo) */
+.leg{position:absolute;left:5cqw;right:5cqw;top:122cqw;text-align:center}
+.a .leg{font:800 7.6cqw/1.05 var(--cond);color:#fff}
+.a .leg em{font-style:normal;color:var(--ouro)}
+.b .leg{font:800 6.8cqw/1.05 var(--cond);color:#fff;text-transform:uppercase;letter-spacing:.02em}
+.c .leg{font:italic 400 7cqw/1.15 var(--serif);color:#fff;text-shadow:0 0 2.4cqw rgba(0,0,0,.85),0 .3cqw 1cqw rgba(0,0,0,.7)}
+.c .leg em{font-style:normal;font-family:var(--sans);font-weight:600;font-size:.82em;letter-spacing:.05em}
+
+/* checklist */
+.lista{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px;margin:12px 0 0;padding:0;list-style:none}
+@media (max-width:760px){.lista{grid-template-columns:1fr}}
+.lista li{background:var(--painel);border:1px solid var(--linha);border-radius:12px;padding:12px 14px;font-size:14px}
+.lista li b{display:block;margin-bottom:2px}
+footer{max-width:1240px;margin:40px auto 60px;padding:0 16px;color:var(--mut);font-size:13px}
+</style>
+</head>
+<body class="toca">
+
+<header>
+  <h1>Vitrine de famílias visuais</h1>
+  <p class="sub">Escolha o jeito dos textos que aparecem nos seus vídeos. Os exemplos usam o mesmo vídeo em todas as famílias, para você comparar só o estilo. O texto anima como vai entrar no seu vídeo.</p>
+  <div class="barra">
+    <button id="repetir">Repetir animações</button>
+    <button id="rosto" aria-pressed="false">Mostrar zona do rosto</button>
+    <span class="dica">A zona do rosto é a área onde o motor nunca põe texto (sai do recorte).</span>
+  </div>
+</header>
+
+<section>
+  <h2>Seus caminhos</h2>
+  <ol class="lista" style="list-style:none">
+    <li><b>1. Mande o vídeo</b>Coloque o vídeo em videos/crus e diga ao Claude: "edita esse vídeo". Não precisa configurar nada antes.</li>
+    <li><b>2. Escolha na prancha do vídeo</b>O Claude sugere um ponto de partida pelo que você falou (pauta quente, dica única, opinião...) e mostra, sobre o seu próprio quadro, a família, a legenda, as cores e uma peça para cada momento. Mude o que quiser. Se quiser comparar, peça uma versão B em outro formato.</li>
+    <li><b>3. Ajuste na Mesa de edição</b>O vídeo chega pronto, com a Mesa: troque textos e tempos, corte pelo texto e envie as alterações ao Claude.</li>
+    <li><b>4. Guarde o que deu certo</b>Gostou do jeito? Peça para guardar como favorito. Nos próximos vídeos ele aparece como ponto de partida, ao lado dos formatos.</li>
+    <li><b>5. Quer algo que não está aqui?</b>Mande um vídeo de referência ou peça um efeito do repertório de animações. Se você aprovar, ele vira uma peça ou um favorito seu.</li>
+    <li><b>6. As cores</b>As da sua marca, ou as do próprio vídeo: o Claude tira a paleta do cenário de cada gravação. Os exemplos usam um dourado provisório.</li>
+  </ol>
+  <h2>As famílias</h2>
+  <div class="familias">
+    <div class="fam a">
+      <b>A · Editorial</b>
+      <div class="amostra a">pelo <span style="color:var(--ouro)">Claude</span></div>
+      <dl><dt>Letra</dt><dd>condensada pesada + linha pequena espaçada</dd><dt>Caixa</dt><dd>nenhuma</dd><dt>Posição</dt><dd>à esquerda, acima da cabeça</dd><dt>Movimento</dt><dd>palavra sobe de uma máscara</dd><dt>Quando</dt><dd>vídeos de ritmo, tutoriais, pauta quente</dd></dl>
+    </div>
+    <div class="fam b">
+      <b>B · Atrás de você</b>
+      <div class="amostra a" style="color:var(--creme)">CLAUDE</div>
+      <dl><dt>Letra</dt><dd>uma palavra gigante, creme</dd><dt>Caixa</dt><dd>nenhuma; a pessoa fica na frente</dd><dt>Posição</dt><dd>centro, atrás da cabeça</dd><dt>Movimento</dt><dd>cresce devagar e assenta</dd><dt>Quando</dt><dd>gancho e frase principal; 1 ou 2 vezes por vídeo</dd></dl>
+    </div>
+    <div class="fam d">
+      <b>D · Celular</b>
+      <div class="amostra" style="font:800 30px var(--sans);color:#fff;-webkit-text-stroke:1.5px rgba(0,0,0,.6);paint-order:stroke fill">pelo <span style="color:var(--ouro)">Claude</span></div>
+      <dl><dt>Letra</dt><dd>forte, branca, com contorno fino</dd><dt>Caixa</dt><dd>só na frase principal, fundo branco</dd><dt>Posição</dt><dd>à esquerda, acima da cabeça, pequena</dd><dt>Movimento</dt><dd>nenhum: entra e sai em corte seco</dd><dt>Quando</dt><dd>bastidor, opinião rápida, fugir da "cara de IA"</dd></dl>
+    </div>
+    <div class="fam c">
+      <b>C · Revista</b>
+      <div class="amostra c">pelo Claude</div>
+      <dl><dt>Letra</dt><dd>serifa itálica + versalete com fio</dd><dt>Caixa</dt><dd>nenhuma</dd><dt>Posição</dt><dd>à esquerda, acima da cabeça</dd><dt>Movimento</dt><dd>fio que se desenha, texto que assenta</dd><dt>Quando</dt><dd>opinião, institucional, temas sérios</dd></dl>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="linha-momento">
+    <h3>1. Abertura: "esse vídeo foi editado inteiramente pelo Claude"</h3>
+    <p>Com a família Institucional (cartão) ao lado para comparar.</p>
+    <div class="grade com-hoje">
+      <figure><div class="tela"><img src="img/atual-1.jpg" alt="Quadro atual com cartão azul-marinho"></div><figcaption><b>Institucional</b> · cartão</figcaption></figure>
+      <figure><div class="tela a"><img src="img/gancho.jpg" alt=""><div class="camada sombra">
+        <div class="peq fade" style="top:12cqw;--d:.1s">Este vídeo foi editado</div>
+        <div class="grande" style="top:18cqw"><span class="mask"><span style="--d:.35s">pelo</span></span><br><span class="mask"><span class="ouro" style="--d:.5s">Claude</span></span></div>
+      </div><i class="zona"></i></div><figcaption><b>A</b> · Editorial</figcaption></figure>
+      <figure><div class="tela b"><img src="img/gancho.jpg" alt=""><div class="camada sombra">
+        <div class="gig gigante" style="top:22cqw;--d:.3s">CLAUDE</div></div>
+        <img class="pessoa" src="img/gancho-pessoa.webp" alt="">
+        <div class="camada sombra"><div class="peq fade" style="top:12cqw;--d:.1s">Este vídeo foi editado pelo</div></div><i class="zona"></i></div><figcaption><b>B</b> · Atrás de você</figcaption></figure>
+      <figure><div class="tela c"><img src="img/gancho.jpg" alt=""><div class="camada sombra">
+        <div class="peq fade" style="top:12cqw;--d:.1s">Este vídeo foi editado</div>
+        <span class="fio" style="position:absolute;left:7.8cqw;top:18cqw;--d:.3s;--w:12cqw"></span>
+        <div class="grande fade" style="top:20cqw;--d:.5s">pelo Claude</div>
+      </div><i class="zona"></i></div><figcaption><b>C</b> · Revista</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="linha-momento">
+    <h3>2. Definição: "o plugin é um pacote de habilidades"</h3>
+    <p>Quando o título fala, a legenda descansa e volta depois.</p>
+    <div class="grade com-hoje">
+      <figure><div class="tela"><img src="img/atual-2.jpg" alt="Quadro atual com cartão e legenda repetida"></div><figcaption><b>Institucional</b> · cartão (evite repetir o título na legenda)</figcaption></figure>
+      <figure><div class="tela a"><img src="img/pacote.jpg" alt=""><div class="camada sombra">
+        <div class="peq fade" style="top:10cqw;--d:.1s">O plugin é um</div>
+        <div class="grande" style="top:15.5cqw;font-size:14.5cqw"><span class="mask"><span style="--d:.3s">pacote de</span></span><br><span class="mask"><span class="ouro" style="--d:.45s">habilidades</span></span></div>
+      </div><i class="zona"></i></div><figcaption><b>A</b> · palavra-chave em ouro</figcaption></figure>
+      <figure><div class="tela b"><img src="img/pacote.jpg" alt=""><div class="camada sombra">
+        <div class="gig gigante" style="top:26cqw;font-size:21cqw;--d:.3s">HABILIDADES</div></div>
+        <img class="pessoa" src="img/pacote-pessoa.webp" alt="">
+        <div class="camada sombra"><div class="peq fade" style="top:16cqw;--d:.1s">Plugin: um pacote de</div></div><i class="zona"></i></div><figcaption><b>B</b> · palavra atrás da cabeça</figcaption></figure>
+      <figure><div class="tela c"><img src="img/pacote.jpg" alt=""><div class="camada sombra">
+        <div class="peq fade" style="top:10cqw;--d:.1s">Plugin</div>
+        <span class="fio" style="position:absolute;left:7.8cqw;top:15.4cqw;--d:.25s;--w:10cqw"></span>
+        <div class="grande fade" style="top:17cqw;font-size:10.5cqw;--d:.45s">pacote de habilidades</div>
+        <div class="apoio fade" style="top:41cqw;--d:.9s">instala uma vez e trabalha no seu padrão</div>
+      </div><i class="zona"></i></div><figcaption><b>C</b> · com linha de apoio</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="linha-momento">
+    <h3>3. Passos: "depois ele próprio vai conferir se tá dentro da regra da OAB"</h3>
+    <p>Substitui a trilha em painel. Cada família marca o passo atual do seu jeito.</p>
+    <div class="grade">
+      <figure><div class="tela a"><img src="img/passos.jpg" alt=""><div class="camada sombra">
+        <div style="position:absolute;left:6.6cqw;top:6cqw">
+          <span class="mask"><span class="num" style="--d:.1s;display:inline-block">03</span></span>
+          <div class="grande" style="position:static;font-size:11cqw;margin-top:-1cqw"><span class="mask"><span style="--d:.35s">Trava OAB</span></span></div>
+          <div class="passos fade" style="--d:.6s"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+        </div>
+      </div><i class="zona"></i></div><figcaption><b>A</b> · número grande + barra de progresso</figcaption></figure>
+      <figure><div class="tela b"><img src="img/passos.jpg" alt=""><div class="camada sombra">
+        <div class="gig gigante" style="top:24cqw;font-size:52cqw;--d:.2s">03</div></div>
+        <img class="pessoa" src="img/passos-pessoa.webp" alt="">
+        <div class="camada sombra"><div class="peq fade" style="top:6cqw;--d:.1s">Passo 3 de 6</div><div class="frente fade" style="top:10cqw;--d:.5s">Trava OAB</div></div><i class="zona"></i></div><figcaption><b>B</b> · o número atrás de você</figcaption></figure>
+      <figure><div class="tela c"><img src="img/passos.jpg" alt=""><div class="camada sombra">
+        <div class="peq fade" style="top:9cqw;--d:.1s">Terceiro de seis passos</div>
+        <div class="grande fade" style="top:14cqw;font-size:12cqw;--d:.35s"><span class="romano">III.</span>Trava OAB</div>
+        <span class="fio" style="position:absolute;left:7.8cqw;top:31cqw;--d:.6s;--w:42cqw"></span>
+        <span style="position:absolute;left:7.8cqw;top:31cqw;width:84cqw;height:.5cqw;background:rgba(255,255,255,.25)"></span>
+      </div><i class="zona"></i></div><figcaption><b>C</b> · numeral romano + fio de progresso</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="linha-momento">
+    <h3>4. Frase principal: "nada vai ao ar sem o seu sim"</h3>
+    <p>Substitui o carimbo "você só aprova".</p>
+    <div class="grade">
+      <figure><div class="tela a"><img src="img/sim.jpg" alt=""><div class="camada sombra" style="isolation:isolate">
+        <div class="peq fade" style="top:10cqw;--d:.1s">Nada vai ao ar</div>
+        <div class="grande" style="top:15.5cqw;font-size:15cqw"><span class="mask"><span style="--d:.3s">sem o seu</span></span><br><span class="marcador" style="--d:.9s;color:#14161A;text-shadow:none;padding:0 1cqw"><span class="mask"><span style="--d:.5s">sim.</span></span></span></div>
+      </div><i class="zona"></i></div><figcaption><b>A</b> · marca-texto na palavra</figcaption></figure>
+      <figure><div class="tela b"><img src="img/sim.jpg" alt=""><div class="camada sombra">
+        <div class="gig gigante" style="top:12cqw;font-size:62cqw;--d:.3s">SIM</div></div>
+        <img class="pessoa" src="img/sim-pessoa.webp" alt="">
+        <div class="camada sombra"><div class="peq fade" style="top:8cqw;--d:.1s">Nada vai ao ar sem o seu</div></div><i class="zona"></i></div><figcaption><b>B</b> · uma palavra que domina a tela</figcaption></figure>
+      <figure><div class="tela c"><img src="img/sim.jpg" alt=""><div class="camada sombra">
+        <div class="grande fade" style="top:11cqw;font-size:11.5cqw;--d:.2s">Nada vai ao ar sem o seu <span class="sublinha" style="--d:1s">sim.</span></div>
+      </div><i class="zona"></i></div><figcaption><b>C</b> · frase inteira, sublinhado no fim</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="linha-momento">
+    <h3>5. Chamada final: "comenta aqui abaixo o plugin"</h3>
+    <p>Com a identificação no alto, sem cartão de perfil.</p>
+    <div class="grade">
+      <figure><div class="tela a"><img src="img/chamada.jpg" alt=""><div class="camada sombra">
+        <div class="ass fade" style="--d:.1s">Raphael Cardoso<small>@raphaelcardoso.adv</small></div>
+        <div class="peq fade" style="top:118cqw;--d:.3s">Comente</div>
+        <div class="grande" style="top:123cqw;font-size:26cqw"><span class="mask"><span class="ouro" style="--d:.45s">P</span></span><span class="mask"><span class="ouro" style="--d:.52s">L</span></span><span class="mask"><span class="ouro" style="--d:.59s">U</span></span><span class="mask"><span class="ouro" style="--d:.66s">G</span></span><span class="mask"><span class="ouro" style="--d:.73s">I</span></span><span class="mask"><span class="ouro" style="--d:.8s">N</span></span></div>
+        <div class="peq fade" style="top:149cqw;--d:1.1s;letter-spacing:.2cqw;text-transform:none;font-size:4cqw">e receba no direct</div>
+      </div><i class="zona"></i></div><figcaption><b>A</b> · letra por letra, à esquerda</figcaption></figure>
+      <figure><div class="tela b"><img src="img/chamada.jpg" alt=""><div class="camada sombra">
+        <div class="gig gigante" style="top:36cqw;font-size:36cqw;--d:.3s">PLUGIN</div></div>
+        <img class="pessoa" src="img/chamada-pessoa.webp" alt="">
+        <div class="camada sombra"><div class="peq fade" style="top:28cqw;--d:.1s">Comente</div><div class="frente fade" style="top:128cqw;font-size:5.4cqw;--d:.8s">e receba no direct</div></div><i class="zona"></i></div><figcaption><b>B</b> · a palavra atrás de você</figcaption></figure>
+      <figure><div class="tela c"><img src="img/chamada.jpg" alt=""><div class="camada sombra">
+        <div class="ass fade" style="--d:.1s">Raphael Cardoso<small>@raphaelcardoso.adv</small></div>
+        <div class="peq fade" style="top:116cqw;--d:.3s">Comente</div>
+        <span class="fio" style="position:absolute;left:7.8cqw;top:121.5cqw;--d:.45s;--w:12cqw"></span>
+        <div class="grande fade" style="top:123cqw;font-size:17cqw;--d:.6s">plugin</div>
+        <div class="apoio fade" style="top:144cqw;--d:1s">e receba no direct</div>
+      </div><i class="zona"></i></div><figcaption><b>C</b> · palavra em itálico com fio</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="linha-momento">
+    <h3>Família D · Celular nos mesmos momentos</h3>
+    <p>Parece editado no aplicativo do próprio celular: nada anima, o texto aparece e some no corte, a legenda vem uma palavra por vez.</p>
+    <div class="grade com-hoje">
+      <figure><div class="tela d"><img src="img/gancho.jpg" alt=""><div class="camada">
+        <div class="cel seco" style="top:21.5cqw;--d:.2s"><small>Este vídeo foi editado</small>pelo <span class="ouro">Claude</span></div>
+        <div class="leg seco" style="--d:.2s">editado</div>
+      </div><i class="zona"></i></div><figcaption><b>D</b> · abertura</figcaption></figure>
+      <figure><div class="tela d"><img src="img/passos.jpg" alt=""><div class="camada">
+        <div class="cel" style="top:21.5cqw"><span class="seco" style="--d:.2s;display:block"><span class="ok">✓</span> Pautas</span><span class="seco" style="--d:.6s;display:block"><span class="ok">✓</span> Roteiro</span><span class="seco" style="--d:1s;display:block"><span class="ok">✓</span> Trava OAB</span></div>
+      </div><i class="zona"></i></div><figcaption><b>D</b> · lista com visto desenhado</figcaption></figure>
+      <figure><div class="tela d"><img src="img/sim.jpg" alt=""><div class="camada">
+        <div class="cel seco" style="top:22.4cqw;--d:.3s"><span class="fundo">Nada vai ao ar sem o seu sim</span></div>
+      </div><i class="zona"></i></div><figcaption><b>D</b> · frase principal com fundo branco</figcaption></figure>
+      <figure><div class="tela d"><img src="img/chamada.jpg" alt=""><div class="camada">
+        <div class="cel seco" style="top:21.5cqw;--d:.1s;font-size:3.7cqw">Raphael Cardoso<small>@raphaelcardoso.adv</small></div>
+        <div class="cel seco" style="top:109cqw;--d:.4s">Comente <span class="ouro">PLUGIN</span></div>
+      </div><i class="zona"></i></div><figcaption><b>D</b> · chamada final</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="linha-momento">
+    <h3>6. Legenda de cada família</h3>
+    <p>A legenda acompanha a família: mesma letra, mesma cor de destaque, sem caixa.</p>
+    <div class="grade">
+      <figure><div class="tela a"><img src="img/pacote.jpg" alt=""><div class="camada sombra"><div class="leg"><span class="mask"><span style="--d:.1s">trabalhar no seu</span></span> <span class="mask"><span style="--d:.25s"><em>padrão</em></span></span></div></div><i class="zona"></i></div><figcaption><b>A</b> · condensada, destaque em ouro</figcaption></figure>
+      <figure><div class="tela b"><img src="img/pacote.jpg" alt=""><div class="camada sombra"><div class="leg"><span class="mask"><span style="--d:.1s">no seu padrão</span></span></div></div><i class="zona"></i></div><figcaption><b>B</b> · caixa alta curta, sem cor</figcaption></figure>
+      <figure><div class="tela c"><img src="img/pacote.jpg" alt=""><div class="camada sombra"><div class="leg fade" style="--d:.1s">trabalhar no seu <em>PADRÃO</em></div></div><i class="zona"></i></div><figcaption><b>C</b> · serifa itálica, destaque em versalete</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>O que deixa um insert com cara de IA</h2>
+  <p class="sub">A lista que o Claude conferiria nos quadros antes de entregar, em qualquer família.</p>
+  <ul class="lista">
+    <li><b>Caixa em todo título</b>Cartão arredondado é componente de site. No vídeo, o texto vai direto na imagem; caixa só quando o fundo não deixa ler.</li>
+    <li><b>Linha pequena em cima, frase grande embaixo, centralizado</b>O modelo-padrão de página de internet. Alinhar à esquerda e variar a composição já muda tudo.</li>
+    <li><b>Mesmo formato repetido</b>Quatro cartões iguais no mesmo vídeo denunciam modelo pronto. Cada momento pede um gesto diferente dentro da família.</li>
+    <li><b>Cor genérica</b>Azul-marinho com dourado é o padrão "corporativo premium". A cor vem da marca do advogado.</li>
+    <li><b>Legenda repetindo o título</b>Quando o título fala, a legenda descansa.</li>
+    <li><b>Texto sobre o rosto ou sem contraste</b>O recorte define a zona do rosto; o motor mede o contraste do fundo antes de escolher a cor do texto.</li>
+  </ul>
+</section>
+
+<footer>Exemplos com o vídeo de lançamento do plugin, de Raphael Cardoso. Fontes do sistema (Avenir Next Condensed, Avenir Next, Didot); no seu vídeo entram as fontes da sua marca. A palavra atrás de você usa o recorte nativo do macOS.</footer>
+
+<script>
+  // palavra gigante nunca passa de 94% da largura da tela (o motor faz a mesma conta)
+  function caber(){
+    document.querySelectorAll('.gig').forEach(g => {
+      const w = g.closest('.tela').clientWidth * 0.94; g.style.fontSize = '';
+      let fs = parseFloat(getComputedStyle(g).fontSize); const s = document.createElement('span');
+      s.textContent = g.textContent; s.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:' + getComputedStyle(g).font;
+      document.body.appendChild(s);
+      while (s.offsetWidth > w && fs > 8) { fs -= 1; s.style.fontSize = fs + 'px'; }
+      g.style.fontSize = fs + 'px'; s.remove();
+    });
+  }
+  document.fonts.ready.then(caber); addEventListener('resize', caber);
+  // repete as animações recolocando a classe "toca" no body
+  const tocar = () => { document.body.classList.remove('toca'); void document.body.offsetWidth; document.body.classList.add('toca'); };
+  document.getElementById('repetir').onclick = tocar;
+  setInterval(tocar, 7000);
+  const br = document.getElementById('rosto');
+  br.onclick = () => { const on = br.getAttribute('aria-pressed') !== 'true'; br.setAttribute('aria-pressed', on); document.querySelectorAll('.tela').forEach(t => t.classList.toggle('rosto', on)); };
+</script>
+<script>
+// Aviso de página aberta pela metade: as imagens e as listas ficam em arquivos ao lado desta página, e o painel de
+// navegador do app (ou outro visualizador) não os carrega. Fica num script separado para aparecer mesmo se o resto falhar.
+function avisoAbertura() {
+  if (document.getElementById('aviso-abertura')) return;
+  var d = document.createElement('div');
+  d.id = 'aviso-abertura'; d.setAttribute('role', 'alert');
+  d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#F2B33D;color:#14181F;font:600 15px/1.45 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:14px 16px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.45)';
+  d.innerHTML = 'Esta página abriu pela metade: as imagens e as opções dela não carregaram aqui.<br><span style="font-weight:400">Ela precisa abrir no navegador do computador (Chrome, Safari ou Edge). Peça ao Claude na conversa: <b>abre esta página no meu navegador</b>.</span>';
+  (document.body || document.documentElement).appendChild(d);
+}
+(function () { var i = new Image(); i.onerror = avisoAbertura; i.src = 'img/pacote.jpg'; })();
+</script>
+</body>
+</html>

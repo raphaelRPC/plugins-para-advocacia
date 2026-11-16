@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prancha do vídeo</title>
+<style>
+/* Prancha do vídeo: a única página antes de montar. O advogado escolhe um ponto de partida (um formato ou um favorito),
+   ajusta o visual vendo o próprio quadro, pode pedir uma versão B, escolhe a peça de cada momento e confirma os fatos.
+   Nada é montado antes do "sim". Os dados vêm de prancha/dados.js, gravado pelo comando prancha do motor. */
+:root{
+  --bg:#0E1218; --painel:#151B24; --painel2:#1B2330; --linha:#273141; --tx:#E6EAF0; --mut:#8D98A8;
+  --pen:#4A6FF0; --ambar:#F2B33D; --corte:#E5534B; --ok:#4CC38A;
+  --ui:-apple-system, "Avenir Next", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --mono:Menlo, ui-monospace, Consolas, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 var(--ui)}
+header{padding:20px 16px 14px;border-bottom:1px solid var(--linha);background:var(--painel)}
+.in{max-width:1200px;margin:0 auto}
+h1{font-size:21px;margin:0 0 4px}
+.sub{color:var(--mut);margin:0;max-width:780px}
+.passos{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0;list-style:none}
+.passos a{display:flex;gap:8px;align-items:center;color:var(--tx);text-decoration:none;background:var(--bg);border:1px solid var(--linha);border-radius:999px;padding:6px 12px;font-size:13.5px}
+.passos b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--pen);font-size:12px}
+.contas{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.conta{background:var(--bg);border:1px solid var(--linha);border-radius:10px;padding:7px 12px;min-width:104px}
+.conta b{display:block;font-size:19px}.conta span{color:var(--mut);font-size:12px}
+main{padding:16px 16px 40px}
+section.etapa{margin:26px 0 40px}
+h2{font-size:19px;margin:0 0 4px;display:flex;gap:10px;align-items:center}
+h2 .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--pen);font-size:14px}
+h3{font-size:14px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin:24px 0 10px}
+.dica{color:var(--mut);margin:0 0 14px;max-width:780px}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.grade.larga{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.c{position:relative;background:var(--painel);border:2px solid var(--linha);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:7px;cursor:pointer}
+.c:has(input:checked){border-color:var(--pen)}
+.c:focus-within{outline:2px solid var(--pen);outline-offset:2px}
+.c input{position:absolute;opacity:0;pointer-events:none}
+.c b{font-size:14px}
+.c small{color:var(--mut);font-size:12.5px;line-height:1.35}
+.c ul{margin:0;padding-left:18px;color:var(--mut);font-size:12.5px}
+.cod{font:600 11px var(--mono);color:var(--mut);margin-left:6px;opacity:.8}
+.selo{align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#0E1218;background:var(--ok);border-radius:999px;padding:2px 8px}
+.selo.fav{background:var(--ambar)}
+.tela{position:relative;width:100%;aspect-ratio:9/16;border-radius:8px;overflow:hidden;background:#000}
+.tela img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tela iframe{position:absolute;left:0;top:0;width:1080px;height:1920px;border:0;transform-origin:0 0;pointer-events:none;color-scheme:normal;background:transparent}
+.tela .sem{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:14px;color:#fff;font-size:14px;background:rgba(0,0,0,.55)}
+.marca{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600}
+.marca i{flex:none;width:16px;height:16px;border-radius:50%;border:2px solid var(--mut);display:inline-block}
+.c:has(input:checked) .marca i{background:var(--pen);border-color:var(--pen)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative;background:var(--painel);border:2px solid var(--linha);border-radius:10px;padding:9px 14px;cursor:pointer;max-width:300px}
+.chip:has(input:checked){border-color:var(--pen);background:#1a2440}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip:focus-within{outline:2px solid var(--pen);outline-offset:2px}
+.chip b{display:block;font-size:14px}.chip small{color:var(--mut);font-size:12.5px}
+.amostras{display:flex;gap:6px}
+.amostras i{flex:1;height:30px;border-radius:6px;border:1px solid rgba(255,255,255,.15)}
+.contraste{font-size:12px;color:var(--mut)}
+.contraste .bom{color:var(--ok)}.contraste .ruim{color:var(--corte)}
+.linha-cor{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
+.linha-cor input[type=color]{width:52px;height:38px;border:1px solid var(--linha);border-radius:8px;background:var(--bg);padding:2px}
+.linha-cor input[type=text]{width:120px;font:14px var(--mono)}
+.fonte-vit{background:#202733;border-radius:8px;padding:14px 12px;min-height:112px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.fonte-tit{font-size:27px;line-height:1.05;color:#fff}.fonte-txt{font-size:14px;color:#C9D1DE}
+.variacao{background:var(--painel);border:1px dashed var(--linha);border-radius:12px;padding:12px 14px;margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.variacao small{color:var(--mut);flex-basis:100%}
+select,input[type=text],textarea{font:14px var(--ui);color:var(--tx);background:var(--bg);border:1px solid var(--linha);border-radius:8px;padding:8px 10px}
+input[type=text],textarea{width:100%}
+textarea{min-height:80px}
+.momento{background:var(--painel);border:1px solid var(--linha);border-radius:14px;padding:16px;margin-bottom:16px}
+.momento.fora{opacity:.5}
+.momento.fora .opcoes,.momento.fora .mudar,.momento.fora .fala{display:none}
+.cab{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.cab .mid{font-family:var(--mono);font-weight:700;color:var(--ambar)}
+.cab b{font-size:16px}
+.tipo{font-size:12px;color:var(--mut);border:1px solid var(--linha);border-radius:999px;padding:1px 9px}
+.tempo{font-family:var(--mono);color:var(--mut);font-size:13px;margin-left:auto}
+.aviso-fora{color:var(--mut);font-size:13px;margin-top:6px;display:none}
+.momento.fora .aviso-fora{display:block}
+.fala{margin:10px 0 14px;padding:8px 10px;border-left:3px solid var(--linha);color:#C9D1DE;font-style:italic}
+.opcoes{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.oab{color:#E9C478 !important}
+.prova{font-size:12px;color:var(--mut);border-top:1px solid var(--linha);padding-top:6px}
+.prova b{font-size:12px;color:var(--tx)}
+.parecer{font-weight:700}.parecer.APROVADO{color:var(--ok)}.parecer.AJUSTAR{color:var(--ambar)}.parecer.BLOQUEADO{color:var(--corte)}
+.mudar{margin-top:12px}
+.fato{background:var(--painel);border:1px solid var(--linha);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.fato .linha{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;align-items:center}
+.fato label{display:flex;gap:6px;align-items:center;background:var(--painel2);border:1px solid var(--linha);border-radius:8px;padding:5px 10px;cursor:pointer}
+.vazio{color:var(--mut)}
+.mais{background:none;border:0;color:var(--pen);font:600 14px var(--ui);cursor:pointer;padding:6px 0;margin-top:8px}
+.envio{position:sticky;bottom:0;background:var(--painel);border-top:1px solid var(--linha);padding:12px 16px;z-index:5}
+.envio .in{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+#resumo{flex:1;min-width:240px;color:#C9D1DE;font-size:13.5px}
+button.prim{font:600 15px var(--ui);color:#fff;background:var(--pen);border:0;border-radius:8px;padding:11px 18px;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--pen);outline-offset:1px}
+#estado{color:var(--mut);font-size:13px}
+.pedido-visual{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start}
+.pedido-visual ul{margin:8px 0 0;padding-left:18px;color:#C9D1DE}
+@media (max-width:600px){.pedido-visual{grid-template-columns:1fr}}
+@media (max-width:600px){.grade{grid-template-columns:repeat(2,1fr)}.opcoes{grid-template-columns:repeat(2,1fr)}.tempo{margin-left:0}}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <h1 id="titulo">Prancha do vídeo</h1>
+  <p class="sub">Tudo o que o vídeo vai ter, antes de montar. Comece por um ponto de partida: ele já preenche o visual. Mude o que quiser, escolha a peça de cada momento e copie para o Claude. Nada é montado antes do seu "sim".</p>
+  <ol class="passos">
+    <li><a href="#partida"><b>1</b>Ponto de partida</a></li>
+    <li><a href="#visual"><b>2</b>Visual</a></li>
+    <li><a href="#momentos-sec"><b>3</b>Momentos</a></li>
+    <li><a href="#fatos-sec"><b>4</b>Fatos e envio</a></li>
+  </ol>
+  <div class="contas" id="contas"></div>
+</div></header>
+<main class="in">
+  <section class="etapa" id="pedido-sec" style="display:none">
+    <h2><span class="n">1</span>Seu visual</h2>
+    <p class="dica">O jeito que você escolheu no Catálogo, já sobre o quadro do seu vídeo. Quer mudar alguma coisa? Escreva na observação geral, no fim da página, ou peça na conversa a prancha completa.</p>
+    <div class="pedido-visual"><div class="tela"><img id="pv-img" alt="O seu visual sobre o quadro do vídeo"></div><div id="pv-txt"></div></div>
+  </section>
+  <section class="etapa" id="partida">
+    <h2><span class="n">1</span>Ponto de partida</h2>
+    <p class="dica">Um formato é um referencial: traz a estrutura, a família, a legenda, a quantidade de peças e o ritmo de corte. Os favoritos são os jeitos que você guardou em vídeos anteriores. Cada vídeo pode ser um teste diferente.</p>
+    <div class="grade larga" id="g-partida"></div>
+    <div class="variacao">
+      <label><input type="checkbox" id="var-on"> Fazer também uma versão B para comparar, em</label>
+      <select id="var-sel" aria-label="Ponto de partida da versão B"></select>
+      <small>A versão B usa as mesmas peças, com o visual e o ritmo de corte do outro ponto de partida. A montagem leva o dobro do tempo.</small>
+    </div>
+  </section>
+
+  <section class="etapa" id="visual">
+    <h2><span class="n">2</span>Visual</h2>
+    <p class="dica">Já vem preenchido pelo ponto de partida. As imagens são o seu próprio vídeo.</p>
+    <h3>Família visual</h3><div class="grade" id="g-familia"></div>
+    <label class="chip" id="moldura-chip" style="margin-top:12px;display:none"><input type="checkbox" id="moldura"><b>Moldura fina</b><small>Um fio na cor de destaque em volta do quadro (família Revista).</small></label>
+    <h3>Legenda</h3><div class="grade" id="g-legenda"></div>
+    <h3>Altura da legenda</h3><p class="dica">Escolha a que fica logo abaixo do seu queixo, sem cobrir a boca.</p><div class="grade" id="g-altura"></div>
+    <h3>Cores dos textos</h3>
+    <div class="linha-cor"><label for="cor">Cor da sua marca</label><input type="color" id="cor"><input type="text" id="corTxt" aria-label="Cor da marca em hexadecimal" placeholder="#B8902E"><button class="mais" id="gerar" type="button">Gerar paletas com o contraste conferido</button></div>
+    <div class="grade larga" id="g-cores"></div>
+    <h3>Tom da imagem</h3><div class="grade" id="g-tom"></div>
+    <h3>Fontes</h3><p class="dica">A de cima é a dos títulos; a de baixo, a da legenda. Todas livres e com os acentos do português.</p>
+    <div class="grade larga" id="g-fontes"></div><button class="mais" id="mais-fontes" type="button">Ver todos os pares de fontes</button>
+    <h3>Quantidade de peças</h3><div class="chips" id="g-densidade"></div>
+    <h3>Ritmo de corte</h3><div class="chips" id="g-ritmo"></div>
+    <h3>Velocidade da fala</h3><div class="chips" id="g-velocidade"></div>
+  </section>
+
+  <section class="etapa" id="momentos-sec">
+    <h2><span class="n">3</span>Momentos</h2>
+    <p class="dica">Uma peça para cada momento, vista sobre o quadro do vídeo. A marcada em verde combina com as suas escolhas anteriores. As imagens estão no visual sugerido; as animadas acompanham o visual que você escolher acima.</p>
+    <div id="momentos"></div>
+  </section>
+
+  <section class="etapa" id="fatos-sec">
+    <h2><span class="n">4</span>Fatos e envio</h2>
+    <p class="dica">Todo número, data ou fato do vídeo, com a fonte. Confirme ou peça para tirar.</p>
+    <div id="fatos"></div>
+    <h3>Observação geral</h3>
+    <textarea id="geral" placeholder="Algo mais que eu deva mudar antes de montar?"></textarea>
+    <p class="dica" style="margin-top:14px" id="link-catalogo"></p>
+  </section>
+</main>
+<div class="envio"><div class="in">
+  <span id="resumo"></span>
+  <button class="prim" id="copiar">Copiar para o Claude</button>
+  <span id="estado">Depois, cole na conversa.</span>
+</div></div>
+<script src="prancha/dados.js"></script>
+<script>
+// Aviso de página aberta pela metade: as imagens e as listas ficam em arquivos ao lado desta página, e o painel de
+// navegador do app (ou outro visualizador) não os carrega. Fica num script separado para aparecer mesmo se o resto falhar.
+function avisoAbertura() {
+  if (document.getElementById('aviso-abertura')) return;
+  var d = document.createElement('div');
+  d.id = 'aviso-abertura'; d.setAttribute('role', 'alert');
+  d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#F2B33D;color:#14181F;font:600 15px/1.45 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:14px 16px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.45)';
+  d.innerHTML = 'Esta página abriu pela metade: as imagens e as opções dela não carregaram aqui.<br><span style="font-weight:400">Ela precisa abrir no navegador do computador (Chrome, Safari ou Edge). Peça ao Claude na conversa: <b>abre esta página no meu navegador</b>.</span>';
+  (document.body || document.documentElement).appendChild(d);
+}
+if (!window.PRANCHA) avisoAbertura();
+</script>
+<script>
+const S = window.PRANCHA || { partidas: [], familias: [], legendas: [], alturas: [], tons: [], momentos: [], fatos: [], urls: {} };
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const mmss = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
+const $ = id => document.getElementById(id);
+const carregar = src => new Promise(r => { const s = document.createElement('script'); s.src = src; s.onload = r; s.onerror = r; document.head.appendChild(s); });
+const DENS = [['poucas', 'Poucas', 'Só os momentos fortes.', 1], ['medias', 'Médias', 'Uma peça a cada trecho importante.', 2], ['cheia', 'Sem trecho vazio', 'Sempre algo na tela.', 3]];
+const RITMO = [['seco', 'Corte seco', 'Tira toda pausa entre as frases.'], ['respiro', 'Com respiro', 'Tira as pausas e deixa um respiro curto.'], ['pausas', 'Pausas mantidas', 'Só tira as pausas longas. Para fala calma.']];
+const VELOC = [[1.0, 'Normal', 'Como foi gravado.'], [1.1, 'Um pouco mais rápida', '1,1x, o padrão das redes.']];
+const PADRAO_CORES = { fundo: '#1E2A3A', destaque: '#E9C478', texto: '#FFFFFF', gigante: '#F6ECD6' };
+const est = { partida: null, v: {}, variacao: null };
+const NOME_FAM = Object.fromEntries((S.familias || []).map(f => [f.id, f.nome]));
+const NOME_LEG = Object.fromEntries((S.legendas || []).map(l => [l.id, l.nome]));
+
+// ---------- cores: paletas a partir da cor da marca, com contraste calculado ----------
+const hex2rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+const rgb2hex = c => '#' + c.map(v => Math.round(Math.max(0, Math.min(1, v)) * 255).toString(16).padStart(2, '0')).join('').toUpperCase();
+const rgb2hsl = ([r, g, b]) => { const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; if (mx === mn) return [0, 0, l]; const d = mx - mn, s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
+  const h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return [h / 6, s, l]; };
+const hsl2rgb = ([h, s, l]) => { if (!s) return [l, l, l]; const q = l < .5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q, f = t => { t = (t + 1) % 1; return t < 1 / 6 ? p + (q - p) * 6 * t : t < .5 ? q : t < 2 / 3 ? p + (q - p) * (2 / 3 - t) * 6 : p; }; return [f(h + 1 / 3), f(h), f(h - 1 / 3)]; };
+const lum = h => { const [r, g, b] = hex2rgb(h).map(v => v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4)); return .2126 * r + .7152 * g + .0722 * b; };
+const contraste = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); };
+function paletasDaMarca(marca) {
+  const [h, s, l] = rgb2hsl(hex2rgb(marca)), fundo = rgb2hex(hsl2rgb([h, Math.min(s, .35), .14]));
+  let dl = Math.max(l, .45), destaque = rgb2hex(hsl2rgb([h, Math.max(s, .45), dl]));
+  while (contraste(destaque, fundo) < 4.5 && dl < .9) { dl += .03; destaque = rgb2hex(hsl2rgb([h, Math.max(s, .45), dl])); }
+  const gigante = rgb2hex(hsl2rgb([h, Math.min(s, .3), .92]));
+  return [
+    { id: 'marca', nome: 'Da marca', cores: { fundo, destaque, texto: '#FFFFFF', gigante } },
+    { id: 'grafite', nome: 'Grafite com a cor da marca', cores: { fundo: rgb2hex(hsl2rgb([h, .06, .12])), destaque, texto: '#FFFFFF', gigante: '#F2F0EC' } },
+    { id: 'sobria', nome: 'Sóbria (azul-noite)', cores: { fundo: '#152238', destaque, texto: '#FFFFFF', gigante } }
+  ];
+}
+let PALETAS = [];
+const coresAtuais = () => est.v.cores === 'video' ? S.coresVideo : (est.v.cores && typeof est.v.cores === 'object' ? est.v.cores : PADRAO_CORES);
+
+// ---------- montagem ----------
+const cartao = (grupo, id, conteudo, marcado) => `<label class="c"><input type="radio" name="${grupo}" value="${esc(id)}" ${marcado ? 'checked' : ''}>${conteudo}</label>`;
+const tela = img => `<div class="tela"><img src="${esc(img)}" alt="" loading="lazy"></div>`;
+function montarPartidas() {
+  $('g-partida').innerHTML = S.partidas.map(p => cartao('partida', p.id, `${tela(p.imagem)}
+    ${p.sugerido ? '<span class="selo">Sugerido para este vídeo</span>' : p.tipo === 'favorito' ? '<span class="selo fav">Seu favorito</span>' : ''}
+    <span class="marca"><i></i>${esc(p.nome)}${p.cod ? `<span class="cod">${esc(p.cod)}</span>` : ''}</span>
+    ${p.porque ? `<small><b style="color:var(--tx)">Por quê:</b> ${esc(p.porque)}</small>` : ''}<small>${esc(p.quando)}</small>
+    ${(p.estrutura || []).length ? `<ul>${p.estrutura.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}`, p.id === est.partida)).join('');
+}
+function montarVariacao() {
+  const outras = S.partidas.filter(p => p.id !== est.partida);
+  const atual = $('var-sel').value;
+  $('var-sel').innerHTML = outras.map(p => `<option value="${esc(p.id)}">${esc(p.nome)}</option>`).join('');
+  if (outras.some(p => p.id === atual)) $('var-sel').value = atual;
+}
+function montarVisual() {
+  const v = est.v;
+  $('g-familia').innerHTML = S.familias.map(f => cartao('familia', f.id, `${tela(f.imagem)}<span class="marca"><i></i>${esc(f.nome)}</span><small>${esc(f.txt)}</small>`, v.familia === f.id)).join('');
+  $('moldura-chip').style.display = v.familia === 'revista' ? '' : 'none'; $('moldura').checked = !!v.moldura;
+  $('g-legenda').innerHTML = S.legendas.map(l => cartao('legenda', l.id, `${tela(l.imagem)}<span class="marca"><i></i>${esc(l.nome)}</span><small>${esc(l.uso)}</small>`, v.legenda === l.id)).join('');
+  $('g-altura').innerHTML = S.alturas.map(a => cartao('altura', a.id, `${tela(a.imagem)}<span class="marca"><i></i>${esc(a.nome)}</span>`, v.altura === a.id)).join('');
+  montarCores();
+  $('g-tom').innerHTML = S.tons.map(t => cartao('tom', t.id, `${tela(t.imagem)}<span class="marca"><i></i>${esc(t.nome)}</span><small>${esc(t.uso)}</small>`, (v.tom || 'natural') === t.id)).join('');
+  montarFontes();
+  const conta = n => S.momentos.filter(m => m.nivel <= n).length;
+  $('g-densidade').innerHTML = DENS.map(([id, n, t, k]) => `<label class="chip"><input type="radio" name="densidade" value="${id}" ${v.densidade === id ? 'checked' : ''}><b>${n}</b><small>${t} ${conta(k)} momento(s) com peça.</small></label>`).join('');
+  $('g-ritmo').innerHTML = RITMO.map(([id, n, t]) => `<label class="chip"><input type="radio" name="ritmo" value="${id}" ${v.ritmo === id ? 'checked' : ''}><b>${n}</b><small>${t}</small></label>`).join('');
+  $('g-velocidade').innerHTML = VELOC.map(([x, n, t]) => `<label class="chip"><input type="radio" name="velocidade" value="${x}" ${Number(v.velocidade) === x ? 'checked' : ''}><b>${n}</b><small>${t}</small></label>`).join('');
+}
+function cartaoCor(id, nome, c, extra) {
+  const c1 = contraste(c.texto || '#FFFFFF', c.fundo), c2 = contraste(c.destaque, c.fundo);
+  return cartao('cores', id, `<div class="amostras">${['fundo', 'destaque', 'texto', 'gigante'].map(k => c[k] ? `<i style="background:${c[k]}" title="${k} ${c[k]}"></i>` : '').join('')}</div>
+    <span class="marca"><i></i>${esc(nome)}</span>${extra ? `<small>${esc(extra)}</small>` : ''}
+    <span class="contraste">texto <span class="${c1 >= 4.5 ? 'bom' : 'ruim'}">${c1.toFixed(1)}:1</span> · destaque <span class="${c2 >= 4.5 ? 'bom' : 'ruim'}">${c2.toFixed(1)}:1</span> sobre o fundo</span>`, est.v.paleta === id);
+}
+function montarCores() {
+  let h = cartaoCor('video', 'Cores do próprio vídeo', S.coresVideo, 'Tiradas do cenário desta gravação, sem a pele.') + cartaoCor('padrao', 'Padrão do plugin', PADRAO_CORES, 'Azul-noite e dourado.');
+  h += PALETAS.map(p => cartaoCor(p.id, p.nome, p.cores)).join('');
+  if (est.v.paleta && !['video', 'padrao', ...PALETAS.map(p => p.id)].includes(est.v.paleta) && typeof est.v.cores === 'object') h += cartaoCor(est.v.paleta, 'Do seu favorito', est.v.cores);
+  $('g-cores').innerHTML = h;
+}
+let todasFontes = false;
+function montarFontes() {
+  const pares = window.PARES_FONTES || [], sug = (S.fontesDaFamilia || {})[est.v.familia] || [];
+  const lista = todasFontes ? pares : pares.filter(p => sug.includes(p.id) || p.id === est.v.fontes);
+  $('g-fontes').innerHTML = cartao('fontes', '', `<div class="fonte-vit"><div class="fonte-tit" style="font-family:'Avenir Next','Segoe UI',sans-serif;font-weight:800">A casa não passa sozinha</div><div class="fonte-txt">o prazo é de dois meses</div></div><span class="marca"><i></i>Fontes do sistema</span><small>As que já vêm no computador.</small>`, !est.v.fontes) +
+    lista.map(p => cartao('fontes', p.id, `<div class="fonte-vit"><div class="fonte-tit" style="font-family:'${p.titulo.familia}',serif;font-weight:${p.titulo.peso};font-style:${p.titulo.italico ? 'italic' : 'normal'}">A casa não passa sozinha</div>
+      <div class="fonte-txt" style="font-family:'${p.texto.familia}',sans-serif;font-weight:${p.texto.peso}">o prazo é de dois meses, ação, ênfase</div></div>
+      <span class="marca"><i></i>${esc(p.nome)}</span><small>${esc(p.clima)}.${sug.includes(p.id) ? ' Combina com a família escolhida.' : ''}</small>`, est.v.fontes === p.id)).join('');
+  $('mais-fontes').textContent = todasFontes ? 'Mostrar só as sugeridas para a família' : 'Ver todos os pares de fontes';
+}
+function montarMomentos() {
+  $('momentos').innerHTML = S.momentos.length ? S.momentos.map(m => `
+  <section class="momento" data-m="${esc(m.id)}" data-nivel="${m.nivel}">
+    <div class="cab"><span class="mid">${esc(m.id)}</span><b>${esc(m.titulo)}</b>${m.tipoNome ? `<span class="tipo">${esc(m.tipoNome)}</span>` : ''}<span class="tempo">${mmss(m.inicio)} a ${mmss(m.fim)}</span></div>
+    <div class="aviso-fora">Com a quantidade de peças escolhida, este momento fica sem peça.</div>
+    <div class="fala">"${esc(m.fala) || '(sem fala neste trecho)'}"</div>
+    <div class="opcoes">${m.opcoes.map(o => `
+      <label class="c"><input type="radio" name="m-${esc(m.id)}" value="${esc(o.id)}" ${o.id === m.recomendada ? 'checked' : ''}>
+        <div class="tela">${o.imagem ? `<img src="${esc(o.imagem)}" alt="${esc(o.nome)}" loading="lazy">` : `<img src="${esc(m.quadro)}" alt=""><iframe title="${esc(o.nome)}" data-m="${esc(m.id)}" data-o="${esc(o.id)}"></iframe>`}</div>
+        ${o.id === m.recomendada ? '<span class="selo">Recomendada</span>' : ''}
+        <span class="marca"><i></i>${esc(o.nome)}${o.cod ? `<span class="cod">${esc(o.cod)}</span>` : ''}</span>
+        <small>${esc(o.desc)}</small>${o.cuidado ? `<small class="oab">OAB: ${esc(o.cuidado)}</small>` : ''}
+        ${o.fonte || o.prova || o.naoProva || (o.oab && o.oab.parecer) ? `<div class="prova">${o.fonte ? `<b>Fonte:</b> ${esc(o.fonte)}<br>` : ''}${o.prova ? `<b>Pode mostrar:</b> ${esc(o.prova)}<br>` : ''}${o.naoProva ? `<b>Não prova:</b> ${esc(o.naoProva)}<br>` : ''}${o.oab && o.oab.parecer ? `<b>Trava OAB:</b> <span class="parecer ${esc(o.oab.parecer)}">${esc(o.oab.parecer)}</span> ${esc(o.oab.nota || '')}` : ''}</div>` : ''}
+      </label>`).join('')}
+      <label class="c"><input type="radio" name="m-${esc(m.id)}" value="-"><div class="tela"><img src="${esc(m.quadro)}" alt="" loading="lazy"><div class="sem">Sem peça: só você e a legenda</div></div><span class="marca"><i></i>Sem peça aqui</span></label>
+    </div>
+    <div class="mudar"><input type="text" placeholder="Quer mudar algo neste momento? Escreva aqui." aria-label="O que mudar em ${esc(m.id)}"></div>
+  </section>`).join('') : '<p class="vazio">Este vídeo não tem momentos com peça. Ele sai só com o visual escolhido e a legenda.</p>';
+}
+function montarFatos() {
+  $('fatos').innerHTML = (S.fatos || []).length ? S.fatos.map((f, i) => `<div class="fato" data-f="F${i + 1}">
+    <b>F${i + 1}</b> · ${esc(f.texto)} <span style="color:var(--mut)">(fonte: ${esc(f.fonte || 'sem fonte ainda')})</span>
+    <div class="linha"><label><input type="radio" name="f-${i}" value="confere" ${f.status === 'conferido' ? 'checked' : ''}> Confere</label><label><input type="radio" name="f-${i}" value="tirar"> Tirar do vídeo</label>
+    <input type="text" placeholder="Correção ou fonte" style="flex:1;min-width:180px" aria-label="Correção do fato F${i + 1}"></div></div>`).join('') : '<p class="vazio">Nenhum número, data ou fato a confirmar.</p>';
+}
+
+// ---------- prévias animadas: carregam quando aparecem, já no visual escolhido ----------
+function dadosPrevia(o) {
+  const d = JSON.parse(JSON.stringify(o.previa.dados));
+  d.familia = est.v.familia; d.cores = Object.assign({}, d.cores || {}, coresAtuais());
+  const par = (window.PARES_FONTES || []).find(x => x.id === est.v.fontes);
+  if (par) { const pil = f => `"${f.familia}", "Avenir Next", sans-serif`; d.fontes = { titulo: pil(par.titulo), texto: pil(par.texto), serifa: pil(par.serifa || par.titulo) }; d.googleFontes = 'https://fonts.googleapis.com/css2?' + par.google + '&display=swap'; }
+  else if (!est.v.fontes) { delete d.fontes; delete d.googleFontes; }
+  return d;
+}
+const opcao = f => S.momentos.find(m => m.id === f.dataset.m).opcoes.find(o => o.id === f.dataset.o);
+let obs;
+function observar() {
+  if (obs) obs.disconnect();
+  obs = new IntersectionObserver(es => es.forEach(e => {
+    const f = e.target, o = opcao(f);
+    if (e.isIntersecting && !f.src) f.src = o.previa.modelo + '?previa#' + encodeURIComponent(JSON.stringify(dadosPrevia(o)));
+    if (!e.isIntersecting && f.src) f.removeAttribute('src');
+  }), { rootMargin: '200px' });
+  document.querySelectorAll('.tela iframe').forEach(f => obs.observe(f)); escala();
+}
+const escala = () => document.querySelectorAll('.tela iframe').forEach(f => { f.style.transform = `scale(${f.parentElement.clientWidth / 1080})`; });
+addEventListener('resize', escala);
+let tPrev;
+const recarregarPrevias = () => { clearTimeout(tPrev); tPrev = setTimeout(() => { document.querySelectorAll('.tela iframe[src]').forEach(f => f.removeAttribute('src')); observar(); }, 250); };
+
+// ---------- estado ----------
+function nivelAtual() { return (DENS.find(d => d[0] === est.v.densidade) || DENS[2])[3]; }
+function marcarDensidade() { document.querySelectorAll('.momento').forEach(s => s.classList.toggle('fora', Number(s.dataset.nivel) > nivelAtual())); }
+function escolherPartida(id) {
+  const p = S.partidas.find(x => x.id === id); if (!p) return;
+  est.partida = id; est.v = JSON.parse(JSON.stringify(p.visual));
+  if (est.v.cores === 'video') est.v.paleta = 'video'; else if (!est.v.cores || est.v.cores === 'padrao') { est.v.cores = 'padrao'; est.v.paleta = 'padrao'; }
+  montarVisual(); montarVariacao(); marcarDensidade(); recarregarPrevias(); resumo();
+}
+function resumo() {
+  const p = S.partidas.find(x => x.id === est.partida) || {}, v = est.v;
+  const n = S.momentos.filter(m => m.nivel <= nivelAtual() && (document.querySelector(`input[name="m-${CSS.escape(m.id)}"]:checked`) || {}).value !== '-').length;
+  const partes = [p.nome, NOME_FAM[v.familia], 'legenda ' + (NOME_LEG[v.legenda] || v.legenda), `${n} momento(s) com peça`, (RITMO.find(r => r[0] === v.ritmo) || [, ''])[1].toLowerCase()];
+  if ($('var-on').checked) partes.push('+ versão B em ' + (S.partidas.find(x => x.id === $('var-sel').value) || {}).nome);
+  $('resumo').textContent = partes.filter(Boolean).join(' · ');
+}
+document.addEventListener('change', ev => {
+  const t = ev.target, v = est.v;
+  if (t.name === 'partida') return escolherPartida(t.value);
+  if (t.name === 'familia') { v.familia = t.value; montarFontes(); $('moldura-chip').style.display = v.familia === 'revista' ? '' : 'none'; recarregarPrevias(); }
+  if (t.id === 'moldura') v.moldura = t.checked;
+  if (t.name === 'legenda') v.legenda = t.value;
+  if (t.name === 'altura') v.altura = t.value;
+  if (t.name === 'tom') v.tom = t.value;
+  if (t.name === 'cores') {
+    v.paleta = t.value;
+    v.cores = t.value === 'video' ? 'video' : t.value === 'padrao' ? 'padrao' : ((PALETAS.find(p => p.id === t.value) || {}).cores || v.cores);
+    recarregarPrevias();
+  }
+  if (t.name === 'fontes') { v.fontes = t.value; recarregarPrevias(); }
+  if (t.name === 'densidade') { v.densidade = t.value; marcarDensidade(); }
+  if (t.name === 'ritmo') v.ritmo = t.value;
+  if (t.name === 'velocidade') v.velocidade = Number(t.value);
+  resumo();
+});
+const sinc = x => { if (/^#[0-9a-f]{6}$/i.test(x)) { $('cor').value = x; $('corTxt').value = x.toUpperCase(); } };
+$('cor').addEventListener('input', e => sinc(e.target.value));
+$('corTxt').addEventListener('input', e => sinc(e.target.value));
+$('gerar').onclick = () => { const c = $('corTxt').value; if (!/^#[0-9a-f]{6}$/i.test(c)) { $('corTxt').focus(); return; } PALETAS = paletasDaMarca(c); montarCores(); };
+$('mais-fontes').onclick = () => { todasFontes = !todasFontes; montarFontes(); };
+$('var-on').onchange = resumo; $('var-sel').onchange = resumo;
+
+$('copiar').onclick = async () => {
+  const v = JSON.parse(JSON.stringify(est.v));
+  if (v.cores === 'padrao') v.cores = null;
+  const pa = S.partidas.find(x => x.id === est.partida) || {};
+  const r = { prancha: 1, projeto: S.projeto, partida: est.partida, formato: pa.formato || est.partida, visual: v, variacao: null, escolhas: {}, mudar: [], fatos: [], geral: $('geral').value.trim() };
+  if (S.corMarca || /^#[0-9a-f]{6}$/i.test($('corTxt').value)) r.corMarca = $('corTxt').value || S.corMarca;
+  if ($('var-on').checked) {
+    const b = S.partidas.find(x => x.id === $('var-sel').value);
+    if (b) { const vb = JSON.parse(JSON.stringify(b.visual)); if (vb.cores === 'padrao') vb.cores = null; r.variacao = { partida: b.id, formato: b.formato || b.id, visual: vb }; }
+  }
+  document.querySelectorAll('.momento').forEach(s => {
+    const x = s.querySelector('input[type=radio]:checked'), nota = s.querySelector('.mudar input').value.trim();
+    r.escolhas[s.dataset.m] = s.classList.contains('fora') ? '-' : (x ? x.value : '-');
+    if (nota && !s.classList.contains('fora')) r.mudar.push({ id: s.dataset.m, nota });
+  });
+  document.querySelectorAll('[data-f]').forEach(s => { const x = s.querySelector('input[type=radio]:checked'); r.fatos.push({ id: s.dataset.f, resposta: x ? x.value : 'sem resposta', nota: s.querySelector('input[type=text]').value.trim() }); });
+  const pecas = Object.entries(r.escolhas).filter(([, o]) => o !== '-').map(([m, o]) => `${m} ${o}`).join(', ');
+  const txt = `Prancha revisada (${S.nome || S.projeto}): ${$('resumo').textContent}. Peças: ${pecas || 'nenhuma'}${r.mudar.length ? '; mudar ' + r.mudar.map(x => x.id).join(', ') : ''}.\n\n\`\`\`json\n${JSON.stringify(r, null, 1)}\n\`\`\``;
+  try { await navigator.clipboard.writeText(txt); } catch { const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+  $('estado').textContent = 'Copiado. Cole na conversa com o Claude.';
+};
+
+// ---------- início ----------
+$('titulo').textContent = 'Prancha do vídeo · ' + (S.nome || S.projeto || '');
+$('contas').innerHTML = [[S.duracao ? S.duracao + ' s' : '–', 'duração depois dos cortes'], [S.momentos.length, 'momentos'], [(S.fatos || []).filter(f => f.status !== 'conferido').length, 'fatos a confirmar']]
+  .map(([n, t]) => `<div class="conta"><b>${n}</b><span>${t}</span></div>`).join('');
+if (S.corMarca) { sinc(S.corMarca); PALETAS = paletasDaMarca(S.corMarca); } else { $('cor').value = '#B8902E'; }
+if (S.urls.catalogo) $('link-catalogo').innerHTML = `Quer ver tudo o que o Claude sabe fazer, peça por peça? Abra o <a href="${esc(S.urls.catalogo)}" style="color:var(--pen)">Catálogo da Ilha de edição</a> e diga o nome da peça na conversa.`;
+carregar(S.urls.fontesJs).then(() => {
+  const pares = window.PARES_FONTES || [];
+  if (pares.length) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?' + pares.map(p => p.google).join('&') + '&display=swap'; document.head.appendChild(l); }
+  const ini = (S.partidas.find(p => p.sugerido) || S.partidas[0] || {}).id;
+  est.partida = ini; montarPartidas(); montarMomentos(); montarFatos();
+  if (S.travado) {                                   // visual escolhido no Catálogo: prancha curta, só momentos e fatos
+    const p = S.partidas[0] || {}, v = p.visual || {};
+    ['partida', 'visual'].forEach(id => { $(id).style.display = 'none'; });
+    document.querySelectorAll('.passos li').forEach((li, i) => { if (i < 2) li.style.display = 'none'; else li.querySelector('b').textContent = i; });
+    $('pedido-sec').style.display = ''; $('pv-img').src = p.imagem || '';
+    const ped = (S.pecasPedidas || []).length ? `<li>${S.pecasPedidas.length} peça(s) que você marcou no Catálogo aparecem primeiro nos momentos</li>` : '';
+    $('pv-txt').innerHTML = `<b>${esc(p.nome)}</b><ul><li>Família ${esc(NOME_FAM[v.familia] || v.familia)}</li><li>Legenda ${esc(NOME_LEG[v.legenda] || v.legenda)}</li><li>${esc((RITMO.find(r => r[0] === v.ritmo) || [, 'Com respiro'])[1])}</li>${ped}</ul>`;
+    document.querySelector('#momentos-sec .dica').textContent = 'Uma peça para cada momento, vista sobre o quadro do vídeo e já no seu visual. A marcada como recomendada vem das peças que você marcou no Catálogo ou das suas escolhas anteriores.';
+    document.querySelector('#momentos-sec .n').textContent = '2'; document.querySelector('#fatos-sec .n').textContent = '3';
+    document.querySelector('.sub').textContent = 'O visual já veio do Catálogo. Falta só escolher a peça de cada momento e confirmar os fatos. Nada é montado antes do seu "sim".';
+  }
+  if (ini) escolherPartida(ini); else observar();
+});
+</script>
+</body>
+</html>

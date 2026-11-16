@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Citação com aspas</title>
+<!-- Citação com aspas: as aspas grandes se desenham e o texto literal entra linha a linha; a fonte fica embaixo.
+     Para súmula, artigo de lei ou frase de jurista. Texto sempre literal; trecho omitido marcado com "[…]".
+     DADOS: texto, fonte (ex.: "Súmula 377 do STJ"), marcas [texto], topo (padrão 232), fim, familia, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#c{position:absolute;left:72px;width:936px}
+#aspas{position:absolute;left:-6px;top:-70px;font:400 300px/1 Georgia,"New York",serif;color:var(--c-destaque);transform-origin:20% 60%;text-shadow:0 4px 20px rgba(0,0,0,.35)}
+#txt{position:relative;padding-top:120px;font:var(--titulo-estilo) var(--titulo-peso) 74px/1.12 var(--t-titulo);color:var(--c-texto);text-shadow:0 3px 18px rgba(0,0,0,.55)}
+.inst #txt,.cel #txt{font-family:var(--t-serifa);font-style:italic;font-weight:400}
+#txt span{display:inline-block;white-space:pre}
+#fonte{margin-top:26px;font:600 32px var(--t-texto);letter-spacing:.12em;text-transform:uppercase;color:var(--c-texto);text-shadow:0 2px 12px rgba(0,0,0,.6)}
+#fonte i{display:inline-block;width:70px;height:4px;background:var(--c-destaque);vertical-align:middle;margin-right:18px}
+.inst #c{background:var(--c-fundo);border-radius:28px;padding:34px 40px 40px;box-sizing:border-box}
+.inst #txt,.inst #fonte{text-shadow:none}
+.inst #aspas{left:30px;top:-40px;text-shadow:none}
+</style></head><body>
+<div id="c"><div id="aspas">“</div>
+<div id="txt"></div><div id="fonte"><i></i><span></span></div></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, c = document.getElementById('c'), txt = document.getElementById('txt');
+if (FAMILIA === 'institucional') document.body.classList.add('inst');
+if (FAMILIA === 'celular') document.body.classList.add('cel');
+c.style.top = (D.topo ?? 232) + 'px';
+document.querySelector('#fonte span').textContent = D.fonte || '';
+if (!D.fonte) document.getElementById('fonte').style.display = 'none';
+// palavras em spans; as linhas saem da posição de cada palavra depois que o navegador quebra o texto
+const pal = (D.texto || '').split(/\s+/).filter(Boolean).map((w, i, a) => { const s = document.createElement('span'); s.textContent = w + (i < a.length - 1 ? ' ' : ''); txt.appendChild(s); return s; });
+let linhas = [];
+const aspas = document.getElementById('aspas');
+const [mk] = U.marcas(1, FIM);
+window.AREA = { x: 0, y: Math.max(0, (D.topo ?? 232) - 70), w: 1080, h: 900 };
+window.desenhar = t => {
+  const al = U.janela(t, FIM, 0.3, 0.35); c.style.opacity = al;
+  const pa = U.mola(t - 0.05, 0.55); aspas.style.opacity = U.clamp(pa * 1.5); aspas.style.transform = `scale(${0.6 + 0.4 * pa}) rotate(${(1 - pa) * -8}deg)`;
+  linhas.forEach((ln, i) => {
+    const p = U.mola(t - mk - i * 0.22, 0.5);
+    ln.forEach(s => { s.style.opacity = U.clamp(p * 1.4); s.style.transform = `translateY(${(1 - p) * 28}px)`; });
+  });
+  document.getElementById('fonte').style.opacity = U.eo(U.pr(t, mk + linhas.length * 0.22 + 0.3, mk + linhas.length * 0.22 + 0.8));
+};
+document.fonts.ready.then(() => {
+  const tops = [...new Set(pal.map(s => s.offsetTop))];
+  linhas = tops.map(y => pal.filter(s => s.offsetTop === y));
+  const h = c.getBoundingClientRect().bottom; window.AREA.h = Math.min(1920 - window.AREA.y, Math.ceil(h - window.AREA.y + 40));
+  window.PRONTO = true;
+});
+</script>
+</body></html>

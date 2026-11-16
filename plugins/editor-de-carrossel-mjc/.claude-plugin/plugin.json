@@ -1,0 +1,18 @@
+{
+  "name": "editor-de-carrossel-mjc",
+  "version": "1.1.2",
+  "description": "Editor de Carrossel do curso Marketing Jurídico com Claude (RPC Educação). Lê a base PICO, constrói o texto com o orquestrador de copy e a Trava OAB, e monta a arte a partir de um modelo da biblioteca do curso no Canva, com a identidade do advogado. Sem Canva, usa motor próprio com seis estilos. Inclui Linha editorial, Protocolo, Informativo e rotinas.",
+  "author": {
+    "name": "Raphael Cardoso"
+  },
+  "keywords": [
+    "marketing jurídico",
+    "advocacia",
+    "OAB",
+    "carrossel",
+    "Instagram",
+    "PICO",
+    "Canva",
+    "copywriting"
+  ]
+}

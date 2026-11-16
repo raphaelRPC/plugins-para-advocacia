@@ -1,0 +1,47 @@
+{
+ "codigo": "C06",
+ "nome": "Pasta",
+ "resumo": "Folha creme dentro de uma pasta com aba, sobre fundo colorido, como um processo físico: título grotesco em caixa alta, rótulos entre colchetes e numeração com fio.",
+ "serve": [
+  "lista de documentos",
+  "checklist antes de um ato",
+  "regra com a lei literal",
+  "passo a passo"
+ ],
+ "evite": [
+  "capa só com foto"
+ ],
+ "fontes": {
+  "titulo": "Archivo",
+  "texto": "Archivo",
+  "detalhe": "Archivo"
+ },
+ "google_fonts": [
+  "https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&display=block"
+ ],
+ "cores": {
+  "fundo": "#FFF9DA",
+  "texto": "#352B25",
+  "destaque": "#5A3E33",
+  "apoio": "#C7DAE3",
+  "suave": "#6F635A",
+  "linha": "#D9CFAE",
+  "papel2": "#F4EFE6"
+ },
+ "usa_da_marca": [
+  "destaque",
+  "apoio"
+ ],
+ "foto_modos": {
+  "capa": "moldura",
+  "texto": "moldura",
+  "numero": "recorte",
+  "citacao": "moldura",
+  "convite": "recorte"
+ },
+ "tratamento": "saturate(.88) sepia(.06) contrast(1.02)",
+ "foto_modos_permitidos": [
+  "moldura",
+  "recorte"
+ ]
+}

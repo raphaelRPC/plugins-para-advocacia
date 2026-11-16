@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Antes e depois com cortina</title>
+<!-- Antes e depois com cortina: o quadro mostra o antes; na marca, uma cortina desliza e revela o depois.
+     Para regra antiga × regra nova, jeito errado × jeito certo. Nunca antes e depois de cliente ou de caso.
+     DADOS: antes {rotulo, texto, imagem?}, depois {rotulo, texto, imagem?}, fonte, marcas [quadro, cortina], fim, familia, cores,
+            topo (padrão 236), largura (padrão 720), altura (padrão 250). O cartão fica no alto, centralizado, acima da cabeça. -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#c{position:absolute;left:180px;top:236px;width:720px;height:250px;border-radius:24px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.lado{position:absolute;inset:0;padding:28px 40px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center}
+.lado img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lado .r{position:relative;font:700 24px var(--t-texto);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+.lado .t{position:relative;font:var(--titulo-estilo) var(--titulo-peso) 60px/1.08 var(--t-titulo)}
+#antes{background:#2a2d33;color:rgba(255,255,255,.75)}
+#antes .r{color:var(--c-alerta)}
+#depois{background:var(--c-fundo);color:#fff}
+#depois .r{color:var(--c-destaque)}
+#barra{position:absolute;top:0;bottom:0;width:8px;margin-left:-4px;background:var(--c-destaque);box-shadow:0 0 24px rgba(0,0,0,.4)}
+#barra i{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--c-destaque)}
+#fonte{position:absolute;left:180px;top:506px;font:600 24px var(--t-texto);letter-spacing:.12em;text-transform:uppercase;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+</style></head><body>
+<div id="c"><div class="lado" id="antes"></div><div class="lado" id="depois"></div><div id="barra"><i></i></div></div><div id="fonte"></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, el = id => document.getElementById(id);
+for (const [id, v] of [['antes', D.antes || {}], ['depois', D.depois || {}]]) {
+  el(id).innerHTML = (v.imagem ? `<img src="${U.midia(v.imagem)}" alt="">` : '') + `<div class="r"></div><div class="t"></div>`;
+  el(id).querySelector('.r').textContent = v.rotulo || (id === 'antes' ? 'Antes' : 'Depois');
+  el(id).querySelector('.t').textContent = v.texto || '';
+}
+el('fonte').textContent = D.fonte ? 'Fonte: ' + D.fonte : '';
+const LARG = D.largura || 720, ALT = D.altura || 250, TOPO = D.topo ?? 236, ESQ = Math.round((1080 - LARG) / 2);
+Object.assign(el('c').style, { left: ESQ + 'px', top: TOPO + 'px', width: LARG + 'px', height: ALT + 'px' });
+Object.assign(el('fonte').style, { left: ESQ + 'px', top: TOPO + ALT + 20 + 'px' });
+const [m0, m1] = U.marcas(2, FIM);
+window.AREA = { x: 0, y: TOPO - 40, w: 1080, h: ALT + 120 };
+window.desenhar = t => {
+  const al = U.janela(t, FIM, 0.3, 0.35), e = U.mola(t - m0, 0.5);
+  el('c').style.opacity = al; el('c').style.transform = `translateY(${(1 - e) * 40}px)`; el('fonte').style.opacity = al * U.pr(t, m1 + 0.6, m1 + 1);
+  const p = SECO ? (t >= m1 ? 1 : 0) : U.eio(U.pr(t, m1, m1 + 0.9)), x = LARG * (1 - p);
+  el('depois').style.clipPath = `inset(0 0 0 ${x}px)`; el('barra').style.left = x + 'px'; el('barra').style.opacity = p > 0 && p < 1 ? 1 : 0;
+};
+document.fonts.ready.then(() => { window.PRONTO = true; });
+</script>
+</body></html>

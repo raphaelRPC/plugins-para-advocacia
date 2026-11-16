@@ -1,0 +1,12 @@
+codigo,entrada,canal,origem,nome_curto,tipo,area,assunto,urgencia,etapa,responsavel,proximo_passo,data_proximo_passo,primeira_resposta,valor_proposta,motivo_perda,perdido_na_etapa,pediu_para_parar,atualizado_em
+C-2026-0001,2026-03-09 21:14,whatsapp,indicacao,Marta,novo,previdenciario,auxílio-doença cortado; sem condição de trabalhar,alta,triado,secretaria,retorno 1 de 3,2026-03-12,2026-03-10 09:05,,,,nao,2026-03-10
+C-2026-0002,2026-03-10 09:40,whatsapp,instagram,Paulo,novo,trabalhista,demissão sem justa causa; verbas não pagas,normal,triado,secretaria,retorno 1 de 3,2026-03-12,2026-03-10 10:02,,,,nao,2026-03-10
+C-2026-0003,2026-03-10 10:15,whatsapp,indicacao,Joana,novo,familia,pensão atrasada; ameaça envolvendo crianças,alta,triado,advogada,pessoa agora: advogada liga,2026-03-10,2026-03-10 10:40,,,,nao,2026-03-10
+C-2026-0004,2026-03-10 14:05,whatsapp,google,Lúcia,novo,fora-da-area,criminal; filho preso,alta,triado,advogada,pessoa agora: enviar encaminhamento,2026-03-10,2026-03-10 14:15,,,,nao,2026-03-10
+C-2026-0005,2026-03-11 07:12,whatsapp,instagram,Renata,novo,familia,divórcio consensual; pergunta prazo,normal,triado,secretaria,retorno 1 de 3,2026-03-13,2026-03-11 09:10,,,,nao,2026-03-11
+C-2026-0006,2026-03-11 10:00,whatsapp,outro,Sérgio,antigo,a-confirmar,achou caro; comparou com outro escritório,normal,negociando,advogada,responder objeção,2026-03-11,2026-03-11 10:30,,,,nao,2026-03-11
+C-2026-0007,2026-03-11 13:22,whatsapp,indicacao,Helena,novo,previdenciario,BPC negado; mãe idosa sem renda,alta,triado,advogada,pessoa liga: vulnerabilidade,2026-03-11,2026-03-11 13:50,,,,nao,2026-03-11
+C-2026-0008,2026-03-11 18:40,whatsapp,instagram,Bruno,novo,trabalhista,remarcar consulta,normal,consulta-agendada,secretaria,remarcar consulta (era 2026-03-12),2026-03-12,2026-03-12 09:00,,,,nao,2026-03-12
+C-2026-0009,2026-03-12 09:05,whatsapp,outro,Antônio,antigo,a-confirmar,pediu para não receber mensagens,baixa,triado,secretaria,nenhum,,2026-03-12 09:20,,,,sim,2026-03-12
+C-2026-0010,2026-03-12 11:30,whatsapp,google,Camila,novo,trabalhista,quer saber preço de ação trabalhista,normal,triado,secretaria,retorno 1 de 3,2026-03-14,2026-03-12 11:50,,,,nao,2026-03-12
+C-2026-0011,2026-03-12 15:48,whatsapp,instagram,Diego,novo,previdenciario,revisão do benefício; trouxe resposta de IA,normal,triado,secretaria,retorno 1 de 3,2026-03-14,,,,,nao,2026-03-12

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Frase com destaque</title>
+<!-- Frase com destaque: a frase entra e o termo principal ganha um gesto na hora em que é dito.
+     modo "marcatexto": faixa de marca-texto passa atrás do termo;
+     modo "colchetes": colchetes chegam dos lados e fecham o termo;
+     modo "riscado": o termo errado é riscado e o certo cai por cima (troca);
+     modo "embaralha": as letras do termo sorteiam e travam na palavra certa (revelar um termo técnico).
+     DADOS: texto, destaque (trecho exato do texto), modo, troca (só no riscado), marcas [frase, gesto], topo, fim, familia, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#c{position:absolute;left:84px;width:912px}
+#txt{position:relative;font:var(--titulo-estilo) var(--titulo-peso) 100px/1.08 var(--t-titulo);color:var(--c-texto);text-shadow:0 3px 18px rgba(0,0,0,.55)}
+.cond #txt{text-transform:uppercase;font-size:118px;line-height:.98}
+#txt>span{display:inline-block;white-space:pre;position:relative}
+.alvo{z-index:1}
+.alvo b{font-weight:inherit;position:relative;z-index:2}
+.mt{position:absolute;left:-.04em;right:-.06em;top:.2em;bottom:.04em;background:var(--c-destaque);transform-origin:left center;z-index:1;border-radius:.06em}
+.col{position:absolute;top:-.04em;font-weight:700;font-style:normal;color:var(--c-destaque);z-index:3;font-size:1.08em}
+.risco{position:absolute;left:-.06em;right:-.06em;top:52%;height:.09em;background:var(--c-alerta);transform-origin:left center;z-index:3;border-radius:.05em}
+.troca{display:table;margin-top:.18em;white-space:nowrap;color:var(--c-destaque);z-index:4;text-shadow:0 3px 18px rgba(0,0,0,.55)}
+.inst #c{background:var(--c-fundo);border-radius:28px;padding:36px 44px;box-sizing:border-box}
+.inst #txt{text-shadow:none;font-size:84px}
+</style></head><body>
+<div id="c"><div id="txt"></div></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, c = document.getElementById('c'), txt = document.getElementById('txt');
+if (FAMILIA === 'institucional') document.body.classList.add('inst');
+if (FAMILIA === 'editorial' || FAMILIA === 'atras') document.body.classList.add('cond');
+const modo = D.modo || 'marcatexto';
+c.style.top = (D.topo ?? (modo === 'riscado' ? 300 : 248)) + 'px';   // folga para o acento das maiúsculas (À, É)
+// monta a frase: o trecho de destaque vira um bloco só, com as camadas do gesto
+const texto = D.texto || '', alvoTxt = D.destaque || '';
+const i0 = alvoTxt ? texto.toLowerCase().indexOf(alvoTxt.toLowerCase()) : -1;
+const partes = i0 < 0 ? [[texto, false]] : [[texto.slice(0, i0), false], [texto.slice(i0, i0 + alvoTxt.length), true], [texto.slice(i0 + alvoTxt.length), false]];
+const blocos = []; let alvo = null;
+for (const [p, eh] of partes) {
+  if (eh) { const s = document.createElement('span'); s.className = 'alvo'; s.innerHTML = '<b></b>'; s.querySelector('b').textContent = p; txt.appendChild(s); blocos.push(s); alvo = s; continue; }
+  for (const w of p.split(/(\s+)/).filter(x => x.trim())) { const s = document.createElement('span'); s.textContent = w + ' '; txt.appendChild(s); blocos.push(s); }
+}
+if (alvo && alvo.nextSibling) alvo.querySelector('b').textContent += ' ';
+let mt, ce, cd, risco, troca;
+if (alvo) {
+  if (modo === 'marcatexto') { mt = document.createElement('i'); mt.className = 'mt'; alvo.prepend(mt); }
+  if (modo === 'colchetes') { ce = document.createElement('i'); ce.className = 'col'; ce.textContent = '['; cd = document.createElement('i'); cd.className = 'col'; cd.textContent = ']'; alvo.append(ce, cd); }
+  // a palavra certa entra numa linha própria, logo abaixo da frase, com uma seta (não briga com as outras linhas)
+  if (modo === 'riscado') { risco = document.createElement('i'); risco.className = 'risco'; alvo.append(risco); troca = document.createElement('div'); troca.className = 'troca'; troca.textContent = '→ ' + (D.troca || ''); txt.appendChild(troca); }
+}
+const [mf, mg] = U.marcas(2, FIM);
+const final = alvo ? alvo.querySelector('b').textContent : '';
+window.AREA = { x: 0, y: 120, w: 1080, h: 900 };
+window.desenhar = t => {
+  c.style.opacity = U.janela(t, FIM, 0.3, 0.35);
+  blocos.forEach((s, i) => { const p = U.mola(t - mf - i * 0.06, 0.45); s.style.opacity = U.clamp(p * 1.4); s.style.transform = `translateY(${(1 - p) * 30}px)`; });
+  if (!alvo) return;
+  const b = alvo.querySelector('b'), g = U.eo(U.pr(t, mg, mg + 0.45));
+  if (modo === 'marcatexto') { mt.style.transform = `scaleX(${g})`; b.style.color = g > 0.5 ? '#141414' : ''; b.style.textShadow = g > 0.5 ? 'none' : ''; }
+  if (modo === 'colchetes') {
+    const w = alvo.offsetWidth, p = U.mola(t - mg, 0.5);
+    ce.style.left = `${-0.42 * 100 - (1 - p) * 120}px`; cd.style.left = `${w - 0.1 * 100 + (1 - p) * 120}px`;
+    ce.style.opacity = cd.style.opacity = U.clamp(p * 1.5); b.style.color = p > 0.6 ? 'var(--c-destaque)' : '';
+  }
+  if (modo === 'riscado') {
+    risco.style.transform = `scaleX(${g})`; b.style.opacity = 1 - 0.5 * g;
+    const q = U.mola(t - mg - 0.5, 0.5); troca.style.opacity = U.clamp(q * 1.5); troca.style.transform = `translateY(${(1 - q) * -40}px)`;
+  }
+  if (modo === 'embaralha') {
+    b.textContent = t < mg ? U.embaralhar(final.toUpperCase(), 0, t) : U.embaralhar(final, U.pr(t, mg, mg + 0.7), t);
+    b.style.color = t >= mg + 0.7 ? 'var(--c-destaque)' : '';
+  }
+};
+document.fonts.ready.then(() => {
+  // termo longo ("inteligência artificial"): a letra diminui até tudo caber na largura
+  let tam = parseFloat(getComputedStyle(txt).fontSize);
+  const passa = () => blocos.some(s => s.getBoundingClientRect().right > 1008);
+  while (tam > 52 && (passa() || (troca && troca.getBoundingClientRect().right > 985))) { tam -= 6; txt.style.fontSize = tam + 'px'; }
+  // colchete no começo da linha: o termo anda um pouco para a direita, para o colchete não sair da zona segura
+  if (modo === 'colchetes' && alvo && alvo.getBoundingClientRect().left - 46 < 72) alvo.style.marginLeft = (118 - alvo.getBoundingClientRect().left) + 'px';
+  const r = c.getBoundingClientRect(); window.AREA = { x: 0, y: Math.max(0, Math.floor(r.top) - 120), w: 1080, h: Math.ceil(r.height) + 200 };
+  window.PRONTO = true;
+});
+</script>
+</body></html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Palavra revelada</title>
+<!-- Palavra revelada: a caixa cresce e as letras sobem de uma máscara, uma a uma; etiqueta pequena em cima.
+     DADOS: rotulo (ex.: "Comente"), palavra (ex.: "PLUGIN"), apoio (opcional), marcas [palavra], topo, fim, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden;font-family:"Avenir Next",Helvetica,Arial,sans-serif}
+#w{position:absolute;left:0;width:1080px;display:flex;flex-direction:column;align-items:center;gap:14px}
+#rot{background:var(--f);color:#fff;font-weight:600;font-size:42px;padding:10px 26px;border-radius:12px}
+#cx{position:relative;background:#fff;border-radius:20px;padding:6px 44px;box-shadow:0 18px 50px rgba(0,0,0,.3);transform-origin:center}
+#pal{display:flex;font-weight:800;font-size:150px;line-height:1.15;color:var(--f);letter-spacing:.02em}
+#pal span{display:inline-block;overflow:hidden;height:1.15em}
+#pal b{display:inline-block;font-weight:800}
+#apoio{font-weight:600;font-size:38px;color:#fff;text-shadow:0 3px 14px rgba(0,0,0,.6)}
+</style></head><body>
+<div id="w"><div id="rot"></div><div id="cx"><div id="pal"></div></div><div id="apoio"></div></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, A = { x: 0, y: D.topo ?? 1150, w: 1080, h: 430 };
+window.AREA = A;
+const w = document.getElementById('w'); w.style.top = (A.y + 20) + 'px';
+w.style.setProperty('--f', COR.fundo);
+document.getElementById('rot').textContent = D.rotulo || ''; if (!D.rotulo) document.getElementById('rot').style.display = 'none';
+document.getElementById('apoio').textContent = D.apoio || '';
+const pal = document.getElementById('pal');
+const letras = [...(D.palavra || '')].map(ch => { const s = document.createElement('span'); const b = document.createElement('b'); b.textContent = ch === ' ' ? ' ' : ch; s.appendChild(b); pal.appendChild(s); return b; });
+const [mk] = U.marcas(1, FIM);
+window.desenhar = t => {
+  const al = U.janela(t, FIM, 0.25, 0.35);
+  w.style.opacity = al;
+  const er = U.mola(t, 0.4);
+  document.getElementById('rot').style.transform = `translateY(${(1 - er) * 30}px)`;
+  document.getElementById('rot').style.opacity = U.clamp(er);
+  const cx = U.mola(t - Math.max(0, mk - 0.35), 0.45);
+  document.getElementById('cx').style.transform = `scaleX(${0.2 + 0.8 * cx})`;
+  document.getElementById('cx').style.opacity = U.clamp(cx * 2);
+  letras.forEach((b, i) => {                                   // cada letra sobe da linha de baixo da máscara
+    const p = U.mola(t - mk - i * 0.07, 0.42);
+    b.style.transform = `translateY(${(1 - p) * 110}%)`;
+  });
+  document.getElementById('apoio').style.opacity = U.eo(U.pr(t, mk + letras.length * 0.07 + 0.2, mk + letras.length * 0.07 + 0.6));
+};
+document.fonts.ready.then(() => {
+  // palavra longa: a letra diminui até a caixa caber na zona segura, longe dos botões da rede (até 760 px)
+  let tam = 150; while (tam > 60 && document.getElementById('cx').offsetWidth > 760) { tam -= 8; pal.style.fontSize = tam + 'px'; }
+  window.PRONTO = true;
+});
+</script>
+</body></html>

@@ -1,0 +1,16 @@
+{
+  "name": "marketing-juridico-claude",
+  "version": "1.0.2",
+  "description": "Marketing Jurídico com Claude (RPC Educação), plugin de vídeo. Rito PICO para montar a base, roteiro de vídeo, edição pelo Catálogo, prancha do vídeo, Mesa de edição e vídeo sem rosto, registro de uso do plano e Trava OAB em toda entrega. A base é a mesma do plugin de carrossel.",
+  "author": {
+    "name": "Raphael Cardoso"
+  },
+  "keywords": [
+    "marketing jurídico",
+    "advocacia",
+    "OAB",
+    "vídeo",
+    "Reels",
+    "PICO"
+  ]
+}

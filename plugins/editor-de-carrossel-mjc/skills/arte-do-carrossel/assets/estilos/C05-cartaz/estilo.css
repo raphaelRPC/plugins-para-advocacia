@@ -1,0 +1,90 @@
+/* C05 · Cartaz. Grafite, feixe de luz, caixa alta larga, itálico fino, tachado com seta. */
+:root{--preencher:.6}
+body{font-family:var(--f-texto);color:var(--texto)}
+.l{background:var(--fundo);padding:70px 92px 62px}
+.textura{background:
+  linear-gradient(118deg,transparent 30%,rgba(255,255,255,.10) 44%,rgba(255,255,255,.02) 56%,transparent 66%),
+  radial-gradient(800px 600px at 0% 0%,rgba(0,0,0,.45),transparent 70%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+.par .textura{background:
+  linear-gradient(62deg,transparent 34%,rgba(255,255,255,.08) 48%,transparent 64%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+.topo,.rodape{display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--suave)}
+.rodape{margin-top:20px;gap:20px}
+.rodape .esq{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arraste{width:80px;height:24px;display:flex}.seta{width:80px;height:24px}.seta path{stroke:var(--suave);stroke-width:3}
+.traco path,.traco ellipse{stroke:var(--destaque);stroke-width:5}
+.corpo{justify-content:center}
+
+.titulo{font-family:var(--f-titulo);font-weight:900;font-stretch:118%;text-transform:uppercase;font-size:86px;line-height:.98;letter-spacing:.005em;max-width:900px}
+.titulo em,.mito em,.numero em{font-style:normal;color:var(--destaque);font-weight:900}
+.texto{font-style:italic;font-size:32px;line-height:1.45;color:var(--suave);max-width:760px;margin-top:30px}
+.texto b{font-style:normal;font-weight:600;color:var(--texto)}
+.rotulo{font-size:19px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--suave);margin-bottom:24px}
+mark{background:none;color:var(--texto);font-style:normal;font-weight:600;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px}
+.fonte{margin-top:30px;font-size:19px;letter-spacing:.06em;color:var(--suave)}
+
+/* capa à direita, como cartaz */
+.t-capa .corpo{align-items:flex-end;text-align:right}
+.t-capa .ante{font-size:19px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--suave);margin-bottom:26px}
+.t-capa .titulo{font-size:120px;line-height:.94}
+.t-capa .sub{font-style:italic;font-size:32px;line-height:1.4;color:var(--suave);max-width:640px;margin-top:30px}
+.foto-sangrada .veu{background:linear-gradient(180deg,rgba(20,20,20,.55),rgba(20,20,20,.85))}
+
+/* lâmina clara para virar o jogo */
+.f-claro,.t-comparacao{background:var(--apoio);color:#2E2E2E}
+.f-claro .textura,.t-comparacao .textura{background:linear-gradient(118deg,transparent 30%,rgba(0,0,0,.035) 46%,transparent 62%)}
+.f-claro .topo,.f-claro .rodape,.f-claro .texto,.f-claro .fonte,.f-claro .rotulo,
+.t-comparacao .topo,.t-comparacao .rodape,.t-comparacao .rotulo{color:#6A6A6A}
+.f-claro .seta path,.t-comparacao .seta path{stroke:#6A6A6A}
+.f-claro .titulo em,.t-comparacao .titulo em{color:#2E2E2E;text-decoration:underline;text-decoration-thickness:6px;text-underline-offset:10px}
+
+/* print e foto */
+.print,.t-texto .foto{margin-top:36px;flex:1;min-height:240px;width:100%;border-radius:10px;overflow:hidden}
+.print .quadro{border-radius:10px;background:#fff}
+.print .falta{border:2px dashed var(--linha);border-radius:10px;color:var(--suave)}
+.falta .r{font-size:20px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--texto);margin-bottom:12px}
+.falta .d{font-size:26px;line-height:1.4;max-width:640px}
+.t-texto .foto img{filter:grayscale(1)}
+
+/* lista com tachado e seta */
+.itens{list-style:none;margin-top:40px;font-size:38px;max-width:900px;border-top:1px solid var(--linha);padding-top:14px}
+.itens li{display:flex;gap:22px;align-items:baseline;padding:14px 0}
+.itens .num{font-size:.52em;font-weight:600;letter-spacing:.06em;color:var(--suave);flex:none;width:2.4em}
+.itens .item{font-family:var(--f-titulo);font-weight:700;font-stretch:110%;text-transform:uppercase;line-height:1.08;font-size:.86em}
+.itens .det{display:block;font-style:italic;font-size:.66em;line-height:1.4;color:var(--suave);margin-top:6px;text-transform:none}
+
+/* mito e fato */
+.mito{font-family:var(--f-titulo);font-weight:900;font-stretch:118%;text-transform:uppercase;font-size:78px;line-height:1;color:var(--suave)}
+.fato-r{margin-top:60px;color:var(--texto)}
+.fato{font-family:var(--f-titulo);font-weight:800;font-stretch:112%;font-size:50px;line-height:1.1}
+.fato em{font-style:italic;font-weight:800}
+.risco-t path{stroke-width:6}
+
+/* número */
+.t-numero .numero{font-family:var(--f-titulo);font-weight:900;font-stretch:125%;font-size:330px;line-height:.86;letter-spacing:-.02em}
+.t-numero .texto{font-size:38px;color:var(--texto)}
+
+/* regra e citação */
+.aspas{font-family:var(--f-titulo);font-weight:900;font-size:260px;line-height:.66;height:140px;color:var(--suave)}
+.trecho{font-size:40px;line-height:1.4;margin-top:36px;max-width:880px;font-weight:500}
+.t-citacao .trecho{font-family:var(--f-titulo);font-weight:800;font-stretch:110%;text-transform:uppercase;font-size:60px;line-height:1.04}
+.refs{list-style:none;margin-top:40px;font-size:36px;max-width:900px}
+.refs li{display:flex;justify-content:space-between;gap:24px;padding:22px 0;border-top:1px solid var(--linha)}
+.refs .ref{font-size:19px;font-weight:600;letter-spacing:.08em;color:var(--suave);white-space:nowrap;padding-top:10px}
+.autor{margin-top:30px;font-size:19px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--suave)}
+
+/* comparação: lâmina clara, coluna de cima tachada */
+.cols{display:flex;flex-direction:column;gap:0;margin-top:46px;font-size:36px;border-top:2px solid #2E2E2E}
+.col{padding:30px 0;border-bottom:2px solid #2E2E2E}
+.col-t{font-size:18px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#6A6A6A;margin-bottom:10px}
+.col-x{font-family:var(--f-titulo);font-weight:900;font-stretch:118%;text-transform:uppercase;font-size:1.5em;line-height:1}
+.col-antes .col-x{color:#8C8C8C;font-style:italic;font-weight:500;text-transform:none;font-size:1em;font-family:var(--f-texto)}
+
+/* convite */
+.t-convite .corpo{align-items:flex-start}
+.cta{display:flex;align-items:center;gap:28px;margin-top:48px}
+.retrato{width:150px;height:150px;border-radius:50%;overflow:hidden;flex:none;filter:grayscale(1)}
+.chamada{display:inline-block;border:3px solid var(--texto);padding:14px 30px 12px;font-family:var(--f-titulo);font-weight:900;font-stretch:125%;font-size:52px;text-transform:uppercase;letter-spacing:.04em}
+.detalhe{font-style:italic;font-size:26px;color:var(--suave);margin-top:14px}
+.assinatura{margin-top:44px;font-size:19px;font-weight:600;letter-spacing:.12em;line-height:1.6;color:var(--suave);text-transform:uppercase}

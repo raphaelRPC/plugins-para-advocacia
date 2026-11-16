@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Leque de artes em 3D</title>
+<!-- Leque de artes em 3D: as imagens saem empilhadas e se abrem em arco, com giro lento.
+     DADOS: imagens [arquivos em pastaMidia], selo (opcional), topo, fim, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden;font-family:"Avenir Next",Helvetica,Arial,sans-serif}
+#c{position:absolute;left:0}
+#selo{position:absolute;left:50%;display:flex;align-items:center;gap:14px;padding:16px 30px;border-radius:999px;background:#fff;color:#14243F;font-weight:800;font-size:34px;letter-spacing:.06em;box-shadow:0 14px 40px rgba(0,0,0,.28)}
+#selo i{width:16px;height:16px;border-radius:50%;background:var(--d)}
+#selo.limpo{background:transparent;box-shadow:none;color:#fff;font-weight:600;font-size:30px;letter-spacing:.2em;text-shadow:0 2px 12px rgba(0,0,0,.65)}
+#selo.limpo i{width:46px;height:4px;border-radius:2px}
+</style>
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+</head><body><canvas id="c"></canvas><div id="selo"><i></i><span></span></div>
+<script src="base.js"></script>
+<script type="module">
+import * as THREE from 'three';
+const D = DADOS, A = { x: 0, y: D.topo ?? 230, w: 1080, h: 860 };
+window.AREA = A;
+const canvas = document.getElementById('c'); canvas.style.top = A.y + 'px';
+const r = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
+r.setPixelRatio(1); r.setSize(A.w, A.h); r.setClearColor(0x000000, 0); r.outputColorSpace = THREE.SRGBColorSpace;
+const cena = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(30, A.w / A.h, 0.1, 100); cam.position.set(0, 0.2, 11.5); cam.lookAt(0, 0, 0);
+const grupo = new THREE.Group(); cena.add(grupo);
+const imgs = D.imagens || [], N = imgs.length, cartas = [];
+const loader = new THREE.TextureLoader(); let carregadas = 0;
+imgs.forEach((arq, i) => {
+  const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false, side: THREE.DoubleSide, depthTest: false });
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 2.5), mat);
+  const borda = new THREE.Mesh(new THREE.PlaneGeometry(2.08, 2.58), new THREE.MeshBasicMaterial({ color: 0x0b0d10, transparent: true, opacity: .3, depthTest: false }));
+  borda.position.z = -0.01; m.add(borda);
+  const ordem = 2 * (N - Math.abs(i - (N - 1) / 2) * 2); m.renderOrder = ordem + 1; borda.renderOrder = ordem;   // a do meio fica por cima
+  grupo.add(m); cartas.push(m);
+  loader.load('/midia/' + arq, tx => { tx.colorSpace = THREE.SRGBColorSpace; mat.map = tx; mat.needsUpdate = true;
+    const asp = tx.image.width / tx.image.height; m.scale.x = asp / 0.8; if (++carregadas === N) window.PRONTO = true; },
+    undefined, () => { if (++carregadas === N) window.PRONTO = true; });
+});
+if (!N) window.PRONTO = true;
+const selo = document.getElementById('selo');
+selo.style.top = (A.y + A.h - 120) + 'px'; selo.style.setProperty('--d', COR.destaque);
+if (FAMILIA !== 'institucional') selo.classList.add('limpo');
+selo.querySelector('span').textContent = D.selo || ''; if (!D.selo) selo.style.display = 'none';
+
+window.desenhar = t => {
+  const al = U.janela(t, FIM, 0.25, 0.35), abre = U.mola(t - 0.15, 0.9);
+  cartas.forEach((m, i) => {
+    const k = i - (N - 1) / 2, ang = k * 0.19 * abre;
+    const R = 7;
+    m.position.set(Math.sin(ang) * R, -Math.abs(k) * 0.12 * abre + (1 - U.clamp(abre)) * -0.4, (Math.cos(ang) - 1) * R + i * 0.002);
+    m.rotation.set(0, ang * 1.8, -k * 0.04 * abre);
+  });
+  grupo.rotation.y = 0.18 * Math.sin(t * 0.7);
+  grupo.scale.setScalar(0.7 + 0.3 * U.mola(t, 0.6));
+  canvas.style.opacity = al; r.render(cena, cam);
+  const ps = U.mola(t - 0.9, 0.5);
+  selo.style.opacity = U.clamp(ps) * al; selo.style.transform = `translateX(-50%) scale(${0.7 + 0.3 * ps})`;
+};
+</script>
+</body></html>

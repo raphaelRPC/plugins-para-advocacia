@@ -1,0 +1,17 @@
+{
+ "tema": "Como eu faço carrossel no Claude sem cara de IA",
+ "tipo": "tutorial com print",
+ "estilo": "C01",
+ "exemplo": true,
+ "marca": {"arroba": "@seuperfil.adv", "nome": "Seu Nome", "oab": "OAB/UF 00.000"},
+ "rodape": "Tutorial",
+ "laminas": [
+  {"tipo": "capa", "antetitulo": "Tutorial · Claude", "titulo": "Como eu faço *carrossel* no Claude", "subtitulo": "__sem cara de IA__"},
+  {"tipo": "passo", "numero": 1, "titulo": "Crie um *projeto*", "texto": "Em Projetos, crie um só para o seu conteúdo. O que você subir ali vale para todo carrossel.", "print": "fotos/prints/print-2.png", "grifos": [[73, 82, 25, 15]]},
+  {"tipo": "passo", "numero": 2, "titulo": "Ensine quem *você é*", "texto": "Suba o seu público e legendas suas de verdade. É daqui que sai a sua voz.", "print": "fotos/prints/print-3.png", "grifos": [[0, 30, 46, 68]]},
+  {"tipo": "lista", "rotulo": "Passo 3", "titulo": "Proíba os *vícios*", "riscar": true, "numerada": false, "itens": ["travessão", "emoji no título", "frase de efeito no fim", "promessa de resultado"]},
+  {"tipo": "passo", "numero": 4, "titulo": "Peça com tema *e público*", "texto": "Carrossel sobre [tema] para [quem você atende], com 3 opções de capa e a fonte de cada regra.", "print": "fotos/prints/print-6.png", "grifos": [[0, 37, 84, 58]]},
+  {"tipo": "regra", "titulo": "Antes de postar, *a OAB*", "itens": [{"texto": "captação de clientela", "ref": "art. 3º"}, {"texto": "promessa de resultado", "ref": "art. 6º"}], "fonte": "Provimento CFOAB 205/2021"},
+  {"tipo": "convite", "titulo": "Salve para fazer o seu *hoje*", "texto": "E mande para o colega que ainda posta no improviso.", "chamada": "Salve"}
+ ]
+}

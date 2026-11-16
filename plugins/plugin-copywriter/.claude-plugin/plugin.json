@@ -1,0 +1,9 @@
+{
+  "name": "plugin-copywriter",
+  "version": "1.0.1",
+  "description": "Sistema completo de copywriting em portugues para redes sociais. Rege sete habilidades que criam, humanizam e lapidam conteudo de marketing para qualquer nicho, do briefing ao texto final: repertorio textual, gatilhos mentais, arquitetura de gancho e fecho, polimento, humanizacao e figuras de linguagem, coordenadas por um orquestrador.",
+  "author": {
+    "name": "Filipe"
+  },
+  "keywords": ["copywriting", "marketing", "redes-sociais", "portugues", "conteudo", "carrossel"]
+}

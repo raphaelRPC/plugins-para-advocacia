@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Prazo no calendário</title>
+<!-- Prazo no calendário: a partir do dia de início, os dias contados acendem um a um; sábado, domingo e feriado
+     ficam apagados quando a contagem é em dias úteis; o último dia ganha um círculo e o rótulo "prazo final".
+     A contagem segue a regra informada (CPC, arts. 219 e 224: dias úteis, exclui o dia do começo e inclui o do vencimento).
+     Confira a data final antes de publicar: a peça ilustra a regra, quem responde pela conta é o advogado.
+     DADOS: inicio ("AAAA-MM-DD"), dias (ex.: 15), uteis (true), feriados ["AAAA-MM-DD"], rotuloInicio (ex.: "Intimação"),
+            fonte (ex.: "CPC, arts. 219 e 224"), topo, fim, familia, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#c{position:absolute;left:110px;width:860px}
+#fundo{position:absolute;left:-30px;right:-30px;top:-26px;bottom:-24px;background:rgba(10,12,16,.72);border-radius:28px}
+.inst #fundo{background:var(--c-fundo)}
+#topo{position:relative;display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px}
+#mes{font:var(--titulo-estilo) 800 54px var(--t-titulo);color:var(--c-texto)}
+#cont{font:700 40px var(--t-texto);color:var(--c-destaque);font-variant-numeric:tabular-nums}
+#sem,#grade{position:relative;display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+#sem div{font:600 24px var(--t-texto);color:rgba(255,255,255,.6);text-align:center;letter-spacing:.08em}
+#grade div{position:relative;height:76px;border-radius:14px;display:flex;align-items:center;justify-content:center;font:700 34px var(--t-texto);color:rgba(255,255,255,.85);background:rgba(255,255,255,.07)}
+#grade div.fds{color:rgba(255,255,255,.28);background:transparent}
+#grade div.ini{outline:3px solid rgba(255,255,255,.75)}
+#grade div.on{background:var(--c-destaque);color:#141414}
+#grade div.fim::after{content:"";position:absolute;inset:-9px;border:5px solid var(--c-alerta);border-radius:50%}
+#grade div small{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);font:700 20px var(--t-texto);white-space:nowrap;color:var(--c-texto);letter-spacing:.06em;text-transform:uppercase}
+#fonte{position:relative;margin-top:40px;font:600 24px var(--t-texto);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+</style></head><body>
+<div id="c"><div id="fundo"></div><div id="topo"><div id="mes"></div><div id="cont"></div></div>
+<div id="sem"><div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div></div><div id="grade"></div><div id="fonte"></div></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, c = document.getElementById('c');
+if (FAMILIA === 'institucional') document.body.classList.add('inst');
+c.style.top = (D.topo ?? 250) + 'px';
+const dia = s => { const [a, m, d] = s.split('-').map(Number); return new Date(Date.UTC(a, m - 1, d)); };
+const iso = d => d.toISOString().slice(0, 10), fer = new Set(D.feriados || []), uteis = D.uteis !== false;
+const ini = dia(D.inicio || '2026-10-14'), N = D.dias ?? 15;
+// contagem: exclui o dia do começo, conta só dia útil quando "uteis"
+const contados = []; let d = new Date(ini);
+while (contados.length < N) { d = new Date(d.getTime() + 864e5); const sd = d.getUTCDay(); if (!uteis || (sd !== 0 && sd !== 6 && !fer.has(iso(d)))) contados.push(iso(d)); }
+const primeiro = new Date(ini.getTime() - ini.getUTCDay() * 864e5), ultimo = dia(contados[contados.length - 1]);
+const fimGrade = new Date(ultimo.getTime() + (6 - ultimo.getUTCDay()) * 864e5);
+const grade = document.getElementById('grade'), cel = {};
+for (let x = new Date(primeiro); x <= fimGrade; x = new Date(x.getTime() + 864e5)) {
+  const e = document.createElement('div'), k = iso(x), sd = x.getUTCDay(); e.textContent = x.getUTCDate();
+  if (uteis && (sd === 0 || sd === 6 || fer.has(k))) e.classList.add('fds');
+  if (k === iso(ini)) { e.classList.add('ini'); e.innerHTML += `<small>${D.rotuloInicio || 'início'}</small>`; }
+  grade.appendChild(e); cel[k] = e;
+}
+const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const m1 = meses[ini.getUTCMonth()], m2 = meses[ultimo.getUTCMonth()];
+const mesTxt = m1 === m2 ? m1 : `${m1} e ${m2}`; document.getElementById('mes').textContent = mesTxt[0].toUpperCase() + mesTxt.slice(1);
+document.getElementById('fonte').textContent = D.fonte ? 'Fonte: ' + D.fonte : '';
+window.AREA = { x: 0, y: (D.topo ?? 250) - 40, w: 1080, h: 900 };
+window.desenhar = t => {
+  c.style.opacity = U.janela(t, FIM, 0.3, 0.35);
+  const t0 = 0.6, t1 = Math.max(t0 + 1, FIM - 1.4), k = Math.floor(U.pr(t, t0, t1) * N + (t >= t1 ? 0 : 0));
+  const acesos = t >= t1 ? N : k;
+  contados.forEach((s, i) => { cel[s].classList.toggle('on', i < acesos); cel[s].classList.toggle('fim', i === N - 1 && t >= t1 + 0.15); });
+  const f = cel[contados[N - 1]]; if (t >= t1 + 0.15 && !f.querySelector('small')) f.innerHTML += '<small>prazo final</small>';
+  if (t < t1 + 0.15 && f.querySelector('small')) f.querySelector('small').remove();
+  document.getElementById('cont').textContent = acesos ? `${acesos} de ${N} dias${uteis ? ' úteis' : ''}` : '';
+  document.getElementById('fonte').style.opacity = U.eo(U.pr(t, t1, t1 + 0.5));
+};
+document.fonts.ready.then(() => {
+  const r = c.getBoundingClientRect(); window.AREA = { x: 0, y: Math.max(0, Math.floor(r.top) - 40), w: 1080, h: Math.ceil(r.height) + 90 };
+  window.PRONTO = true;
+});
+</script>
+</body></html>

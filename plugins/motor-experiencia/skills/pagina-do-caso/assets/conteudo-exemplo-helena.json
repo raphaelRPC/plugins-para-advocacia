@@ -1,0 +1,63 @@
+{
+  "_nota": "Exemplo fictício (casos-ficticios.md, C-2026-0007). A filha Helena fala pela mãe, com autorização registrada. Conteúdo interno do caso: o código fica aqui e não vai para a página. Os números de telefone são de exemplo e não existem.",
+  "escritorio": {
+    "nome": "Escritório Modelo",
+    "canal_oficial": "WhatsApp oficial do escritório",
+    "telefone_oficial": "(31) 0000-0000",
+    "whatsapp_oficial": "(31) 90000-0000",
+    "horario": "dias úteis, das 9h às 18h",
+    "assinatura": "Equipe Escritório Modelo"
+  },
+  "identidade_visual": {
+    "cor_principal": "#2c4a3e",
+    "cor_destaque": "#c58b3b",
+    "fonte_titulos": "Lora",
+    "fonte_texto": "Inter",
+    "logo": "",
+    "tamanho_do_texto": "normal"
+  },
+  "cliente": { "primeiro_nome": "Helena" },
+  "caso": { "tipo": "BPC da sua mãe", "area": "Previdenciário", "codigo": "C-2026-0007" },
+  "atualizado_em": "2026-04-10",
+  "proxima_atualizacao": "2026-05-05",
+  "o_que_ja_fizemos": [
+    "Registramos a sua autorização para falar pela sua mãe.",
+    "Conferimos com você o cadastro da família e a renda da casa.",
+    "Escrevemos o pedido e entramos com a ação na Justiça.",
+    "Acompanhamos o processo e avisamos você do próximo passo."
+  ],
+  "fase": {
+    "titulo": "O pedido está com o juiz",
+    "explicacao": "A ação já foi entregue na Justiça. Agora o processo está concluso para despacho: isso quer dizer que ele foi para o juiz, que vai dizer qual é o próximo passo.\n\nNão há como saber quando o juiz olha, e essa espera faz parte do processo. Quando houver novidade, a gente avisa."
+  },
+  "etapas": [
+    { "estado": "feito", "nome": "Contrato e documentos" },
+    { "estado": "feito", "nome": "Ação na Justiça" },
+    { "estado": "atual", "nome": "Análise do juiz" },
+    { "estado": "depois", "nome": "Avaliação social" },
+    { "estado": "depois", "nome": "Decisão" }
+  ],
+  "linha_do_tempo": [
+    { "data": "2026-02-20", "origem": "escritorio", "titulo": "Começamos o caso", "texto": "Assinamos o contrato e registramos a sua autorização para falar pela sua mãe.", "aparece_no_processo": "nao" },
+    { "data": "2026-02-26", "origem": "escritorio", "titulo": "Conferimos o cadastro da família", "texto": "Conferimos com você o cadastro da família nos programas do governo e a renda da casa, que é o que o juiz vai olhar.", "aparece_no_processo": "nao" },
+    { "data": "2026-03-06", "origem": "escritorio", "titulo": "Escrevemos o pedido", "texto": "Montamos a petição inicial com a explicação do caso e os documentos da sua mãe.", "aparece_no_processo": "nao" },
+    { "data": "2026-03-20", "origem": "processo", "titulo": "Entramos com a ação", "texto": "O pedido foi entregue na Justiça e o processo foi distribuído para uma vara.", "aparece_no_processo": "sim" },
+    { "data": "2026-03-28", "origem": "escritorio", "titulo": "Ligamos para você", "texto": "Contamos que o processo começou e qual seria o próximo passo.", "aparece_no_processo": "nao" },
+    { "data": "2026-04-06", "origem": "processo", "titulo": "O processo foi para o juiz", "texto": "Apareceu no site como concluso para despacho.", "aparece_no_processo": "sim" }
+  ],
+  "proximos_passos": [
+    { "quando": "a seguir", "texto": "O juiz diz o próximo passo. Nesse tipo de caso, costuma ser marcar a avaliação social na casa da família." },
+    { "quando": "a seguir", "texto": "Quando a avaliação for marcada, a gente te avisa com a data e explica como funciona." }
+  ],
+  "depende_de_voce": [
+    { "ate": "", "texto": "Avisar a gente se a renda da casa ou quem mora com a sua mãe mudar." }
+  ],
+  "glossario": [
+    { "termo": "BPC", "explicacao": "Benefício de Prestação Continuada: um salário mínimo por mês, pago pelo INSS, para quem cumpre os requisitos da lei e tem renda familiar baixa." },
+    { "termo": "Concluso para despacho", "explicacao": "O processo foi para o juiz para ele decidir o próximo passo. Não quer dizer que o juiz já vai decidir o pedido." },
+    { "termo": "Petição inicial", "explicacao": "O primeiro pedido escrito que o escritório entrega ao juiz." },
+    { "termo": "Distribuído", "explicacao": "O processo foi enviado para uma vara, onde um juiz vai cuidar dele." },
+    { "termo": "Avaliação social", "explicacao": "A visita de uma assistente social para conhecer a casa e a renda da família." }
+  ],
+  "voltamos_a_falar": "Assim que o juiz der o próximo passo, a gente avisa. Se nada acontecer, você tem notícia nossa até 27/04, e todo dia 5 chega o resumo do mês."
+}

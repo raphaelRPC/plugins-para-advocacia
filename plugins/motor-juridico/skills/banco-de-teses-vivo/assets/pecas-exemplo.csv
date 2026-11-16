@@ -1,0 +1,13 @@
+id,codigo_caso,cliente_curto,area,peca,origem,prazo_interno,etapa,responsavel,tese,habilidade_usada,citacoes,dados,protocolo_sistema,protocolo_numero,protocolo_data,atualizado_em
+P-2025-0101,C-2025-0201,A.,previdenciario,peticao-inicial-restabelecimento,advogado,2025-03-10,protocolada,estagiario,restabelecimento-incapacidade,minutar-peca,verde,ok,PJe,[PROCESSO],2025-03-08 10:00,2025-03-08
+P-2025-0102,C-2025-0202,B.,previdenciario,peticao-inicial-restabelecimento,advogado,2025-04-02,protocolada,estagiario,restabelecimento-incapacidade,minutar-peca,verde,ok,PJe,[PROCESSO],2025-04-01 15:20,2025-04-01
+P-2025-0103,C-2025-0203,C.,previdenciario,peticao-inicial-restabelecimento,advogado,2025-05-12,protocolada,estagiario,restabelecimento-incapacidade,minutar-peca,verde,ok,PJe,[PROCESSO],2025-05-09 11:00,2025-05-09
+P-2025-0104,C-2025-0204,D.,previdenciario,peticao-inicial-restabelecimento,advogado,2025-06-20,protocolada,estagiario,restabelecimento-incapacidade,minutar-peca,verde,ok,PJe,[PROCESSO],2025-06-18 09:40,2025-06-18
+P-2025-0105,C-2025-0205,E.,previdenciario,peticao-inicial-restabelecimento,advogado,2025-08-01,protocolada,estagiario,restabelecimento-incapacidade,minutar-peca,verde,ok,PJe,[PROCESSO],2025-07-30 16:10,2025-07-30
+P-2025-0106,C-2025-0206,F.,previdenciario,peticao-inicial-restabelecimento,advogado,2025-09-15,protocolada,estagiario,restabelecimento-incapacidade,minutar-peca,verde,ok,PJe,[PROCESSO],2025-09-12 14:00,2025-09-12
+P-2025-0107,C-2025-0207,G.,previdenciario,peticao-inicial-restabelecimento,advogado,2025-10-10,protocolada,estagiario,restabelecimento-incapacidade,minutar-peca,verde,ok,PJe,[PROCESSO],2025-10-08 10:30,2025-10-08
+P-2025-0108,C-2025-0208,H.,previdenciario,peticao-inicial-restabelecimento,advogado,2025-09-01,protocolada,estagiario,restabelecimento-incapacidade,minutar-peca,verde,ok,PJe,[PROCESSO],2025-08-29 09:00,2025-08-29
+P-2025-0109,C-2025-0101,J.,trabalhista,reclamacao-trabalhista,consulta,2025-09-20,protocolada,advogada,rescisao-divida-reconhecida,minutar-peca,verde,ok,PJe,[PROCESSO],2025-09-18 11:00,2025-09-18
+P-2026-0001,C-2026-0001,Marta,previdenciario,peticao-inicial-restabelecimento,passagem,2026-04-20,minuta,estagiario,restabelecimento-incapacidade,minutar-peca,nao-conferidas,com-alerta,,,,2026-04-14
+P-2026-0002,C-2026-0002,Paulo,trabalhista,reclamacao-trabalhista,passagem,2026-04-25,em-analise,advogada,,,,,,,,2026-04-14
+P-2026-0003,C-2026-0005,Renata,familia,divorcio-consensual,passagem,2026-04-28,minuta,estagiario,partilha-consensual,minutar-peca,nao-conferidas,nao-conferidos,,,,2026-04-15

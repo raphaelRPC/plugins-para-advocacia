@@ -1,0 +1,42 @@
+{
+ "codigo": "C05",
+ "nome": "Cartaz",
+ "resumo": "Grafite com feixe de luz, caixa alta larga e pesada, itálico fino para a explicação e tachado com seta para corrigir a ideia errada.",
+ "serve": [
+  "mito e fato",
+  "comparação",
+  "como se fala e como a lei chama",
+  "lista de erros"
+ ],
+ "evite": [
+  "tema delicado que pede acolhimento (use C02 ou C03)"
+ ],
+ "fontes": {
+  "titulo": "Archivo",
+  "texto": "Montserrat",
+  "detalhe": "Montserrat"
+ },
+ "google_fonts": [
+  "https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Montserrat:ital,wght@0,400;0,500;0,600;1,400;1,500&display=block"
+ ],
+ "cores": {
+  "fundo": "#2E2E2E",
+  "texto": "#EDEDED",
+  "destaque": "#FFFFFF",
+  "apoio": "#ECECEC",
+  "suave": "#A9A9A9",
+  "linha": "#5A5A5A"
+ },
+ "usa_da_marca": [
+  "destaque"
+ ],
+ "foto_modos": {
+  "capa": "sangrada",
+  "texto": "metade",
+  "numero": "sangrada",
+  "citacao": "sangrada",
+  "lista": "metade",
+  "convite": "recorte"
+ },
+ "tratamento": "grayscale(1) contrast(1.12)"
+}

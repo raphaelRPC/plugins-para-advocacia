@@ -1,0 +1,9 @@
+codigo,nome_curto,area,tipo_de_caso,responsavel,inicio,fase,ultimo_contato,ultimo_contato_tipo,proximo_contato,motivo_proximo_contato,proximo_compromisso,data_compromisso,documentos_pendentes,humor,reclamacao_aberta,resumo_mensal,pagina_do_caso,satisfacao,pediu_para_nao_receber,encerrado_em,atualizado_em
+C-2026-0001,Marta,previdenciario,restabelecimento de auxílio,advogada,2026-01-20,aguardando,2026-03-05,mensagem,2026-04-04,maximo-sem-noticia,pericia,2026-04-14,0,ansioso,nao,sim,pdf,,nao,,2026-03-05
+C-2026-0002,Paulo,trabalhista,verbas rescisórias,advogada,2026-02-02,audiencia-pericia,2026-04-08,mensagem,2026-04-10,compromisso,audiencia,2026-04-13,0,tranquilo,nao,sim,pdf,,nao,,2026-04-08
+C-2026-0005,Renata,familia,divórcio consensual,secretaria,2026-03-25,documentos,2026-04-01,mensagem,2026-04-04,documento,,,2,tranquilo,nao,sim,pdf,,nao,,2026-04-01
+C-2026-0007,Helena (pela mãe),previdenciario,BPC idoso,secretaria,2026-02-10,protocolado,2026-03-28,mensagem,2026-04-27,maximo-sem-noticia,,,0,ansioso,nao,sim,pdf,,nao,,2026-03-28
+C-2026-0010,Camila,trabalhista,horas extras,advogada,2025-09-15,decisao,2026-04-09,mensagem,2026-05-09,maximo-sem-noticia,,,0,a-confirmar,nao,sim,pdf,,nao,,2026-04-09
+C-2025-0088,Jorge,previdenciario,aposentadoria por idade,advogada,2025-06-12,cumprimento,2026-02-20,mensagem,2026-03-22,maximo-sem-noticia,,,0,insatisfeito,nao,sim,pdf,,nao,,2026-02-20
+C-2025-0091,Sueli,familia,alimentos,advogada,2025-08-04,encerramento,2026-04-03,ligacao,2026-04-10,retorno-combinado,,,0,tranquilo,nao,sim,pdf,,nao,,2026-04-03
+C-2025-0040,Ivan,trabalhista,acidente de trabalho,advogada,2025-03-18,aguardando,2026-03-25,ligacao,2026-04-24,maximo-sem-noticia,,,0,tranquilo,nao,sim,pdf,,nao,,2026-03-25

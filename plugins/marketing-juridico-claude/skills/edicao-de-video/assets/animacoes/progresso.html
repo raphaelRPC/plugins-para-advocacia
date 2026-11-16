@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Barra de capítulos</title>
+<!-- Barra de capítulos: uma barra fina no alto, dividida nas partes do vídeo; cada parte enche enquanto é falada
+     e o nome da parte atual aparece embaixo. Prende quem assiste até o fim. Use num insert longo (o vídeo todo ou quase).
+     DADOS: partes [nomes], marcas [início de cada parte, relativo à entrada], fim, familia, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+#c{position:absolute;left:84px;right:84px;top:236px}
+#barra{display:flex;gap:10px}
+.seg{flex:1;height:10px;border-radius:5px;background:rgba(255,255,255,.28);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.seg i{display:block;height:100%;width:0;background:var(--c-destaque)}
+#nome{margin-top:18px;font:600 34px var(--t-texto);letter-spacing:.14em;text-transform:uppercase;color:var(--c-texto);text-shadow:0 2px 12px rgba(0,0,0,.6);white-space:nowrap}
+#nome b{color:var(--c-destaque);font-weight:700;margin-right:14px}
+</style></head><body>
+<div id="c"><div id="barra"></div><div id="nome"><b></b><span></span></div></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, partes = D.partes || ['Parte 1', 'Parte 2', 'Parte 3'], n = partes.length;
+const MK = (D.marcas && D.marcas.length >= n) ? D.marcas.slice(0, n) : partes.map((_, i) => i * FIM / n);
+const barra = document.getElementById('barra');
+const segs = partes.map(() => { const s = document.createElement('div'); s.className = 'seg'; s.innerHTML = '<i></i>'; barra.appendChild(s); return s.firstChild; });
+window.AREA = { x: 0, y: 220, w: 1080, h: 110 };
+let atual = -1;
+window.desenhar = t => {
+  document.getElementById('c').style.opacity = U.janela(t, FIM, 0.4, 0.4);
+  let k = 0; MK.forEach((m, i) => { if (t >= m) k = i; });
+  segs.forEach((s, i) => { const fimP = i + 1 < n ? MK[i + 1] : FIM; s.style.width = (i < k ? 100 : i > k ? 0 : 100 * U.pr(t, MK[i], fimP)) + '%'; });
+  if (k !== atual) { atual = k; document.querySelector('#nome b').textContent = `${k + 1}/${n}`; document.querySelector('#nome span').textContent = partes[k]; }
+  const tr = U.mola(t - MK[k], 0.4); document.getElementById('nome').style.opacity = U.clamp(tr * 1.4);
+  document.getElementById('nome').style.transform = `translateY(${(1 - tr) * 12}px)`;
+};
+document.fonts.ready.then(() => { window.PRONTO = true; });
+</script>
+</body></html>

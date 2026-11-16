@@ -1,0 +1,5 @@
+# Fonte de treino: Lei 8.213/1991, art. 59, caput
+# Copiado do texto compilado no portal da legislação federal: https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
+# Consultado em 2026-11-15. Serve só para o treino da conferência de aspas.
+# Em peça real, abra o texto compilado de novo e salve com a data da consulta: a redação pode ter mudado.
+Art. 59. O auxílio-doença será devido ao segurado que, havendo cumprido, quando for o caso, o período de carência exigido nesta Lei, ficar incapacitado para o seu trabalho ou para a sua atividade habitual por mais de 15 (quinze) dias consecutivos.

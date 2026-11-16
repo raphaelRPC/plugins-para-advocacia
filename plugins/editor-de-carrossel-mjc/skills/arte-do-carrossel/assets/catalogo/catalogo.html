@@ -1,0 +1,103 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catálogo de estilos</title><style>
+:root{--fundo:#F4F2EE;--cartao:#FFFFFF;--tinta:#1D1B18;--suave:#6B655C;--linha:#E0D9CD;--acento:#8E1B2B;--sobre:#FFFFFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--fundo:#191816;--cartao:#24221F;--tinta:#EEEAE3;--suave:#A7A095;--linha:#36332E;--acento:#E39AA6;--sobre:#191816}}
+:root[data-theme="dark"]{--fundo:#191816;--cartao:#24221F;--tinta:#EEEAE3;--suave:#A7A095;--linha:#36332E;--acento:#E39AA6;--sobre:#191816}
+*{box-sizing:border-box}body{margin:0;background:var(--fundo);color:var(--tinta);font:16px/1.55 system-ui,-apple-system,sans-serif}
+main{max-width:1200px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:30px;margin:0 0 6px;letter-spacing:-.01em}.intro{color:var(--suave);max-width:760px;margin:0 0 10px}
+.caminhos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 30px}
+.caminhos div{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;padding:14px 16px}
+.caminhos b{display:block;margin-bottom:4px}
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:22px}
+.est{background:var(--cartao);border:1px solid var(--linha);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.est header{display:flex;align-items:baseline;gap:12px}.est h2{margin:0;font-size:22px}
+.cod{font:600 13px ui-monospace,monospace;background:var(--acento);color:var(--sobre);padding:3px 8px;border-radius:6px}
+.res{margin:0;color:var(--suave)}.est img{width:100%;height:auto;border-radius:8px;display:block}
+.meta p{margin:2px 0;font-size:15px}
+button{align-self:flex-start;background:var(--acento);color:var(--sobre);border:0;border-radius:8px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+.aviso{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--tinta);color:var(--fundo);padding:10px 16px;border-radius:8px;opacity:0;transition:opacity .2s}
+.aviso.on{opacity:1}
+</style></head><body><main>
+<h1>Catálogo de estilos do carrossel</h1>
+<p class="intro">O mesmo carrossel de exemplo montado em cada estilo. As suas cores, fontes e fotos entram por cima de qualquer um. Escolha um, clique em "Copiar pedido" e cole na conversa com o Claude.</p>
+<div class="caminhos">
+<div><b>Já sei o que quero</b>Diga o estilo ou um favorito seu: "monta no Ensaio".</div>
+<div><b>Me mostra</b>Esta página: compare e copie o pedido do estilo que combinar.</div>
+<div><b>Sugere para mim</b>O Claude escolhe pelo tipo de carrossel e pela sua base, e oferece uma alternativa.</div>
+</div>
+<div class="grade">
+<article class="est" id="C01">
+  <header><span class="cod">C01</span><h2>Caderno</h2></header>
+  <p class="res">Papel claro com textura, título condensado em caixa alta, palavra-chave na cor de destaque e marcas de caneta (grifo, risco, círculo) sobre o print.</p>
+  <img src="img/C01.jpg" alt="Carrossel de exemplo no estilo Caderno" loading="lazy">
+  <div class="meta">
+    <p><b>Bom para:</b> tutorial com print, lista de erros, mito e fato, explicativo</p>
+    <p><b>Evite:</b> tema delicado (luto, violência), em que a caneta parece leve demais</p>
+    <p><b>Fontes:</b> Archivo · Inter · JetBrains Mono</p>
+  </div>
+  <button data-pedido="Monta o carrossel no estilo C01 Caderno.">Copiar pedido</button>
+</article>
+<article class="est" id="C02">
+  <header><span class="cod">C02</span><h2>Ensaio</h2></header>
+  <p class="res">Papel claro, serifa condensada enorme com itálico na palavra-chave, texto curto ao lado e lados que alternam a cada lâmina, como páginas de revista.</p>
+  <img src="img/C02.jpg" alt="Carrossel de exemplo no estilo Ensaio" loading="lazy">
+  <div class="meta">
+    <p><b>Bom para:</b> explicativo, uma ideia por lâmina, mito e fato, regra com a lei literal</p>
+    <p><b>Evite:</b> tutorial com muitos prints</p>
+    <p><b>Fontes:</b> Instrument Serif · Jost</p>
+  </div>
+  <button data-pedido="Monta o carrossel no estilo C02 Ensaio.">Copiar pedido</button>
+</article>
+<article class="est" id="C03">
+  <header><span class="cod">C03</span><h2>Gabinete</h2></header>
+  <p class="res">Fundo escuro e quente com luz difusa no canto, serifa leve, rótulo do passo circulado à mão e bolinhas que mostram em que lâmina o leitor está.</p>
+  <img src="img/C03.jpg" alt="Carrossel de exemplo no estilo Gabinete" loading="lazy">
+  <div class="meta">
+    <p><b>Bom para:</b> passo a passo, checklist antes de um ato, explicativo em tópicos, tutorial com print</p>
+    <p><b>Evite:</b> marca com fundo claro obrigatório</p>
+    <p><b>Fontes:</b> Playfair Display · Inter</p>
+  </div>
+  <button data-pedido="Monta o carrossel no estilo C03 Gabinete.">Copiar pedido</button>
+</article>
+<article class="est" id="C04">
+  <header><span class="cod">C04</span><h2>Retrato</h2></header>
+  <p class="res">Foto real sangrada com véu escuro e grão, título em serifa condensada na cor de destaque, palavra-chave em itálico e detalhes datilografados. Sem foto, vira fundo escuro com grão.</p>
+  <img src="img/C04.jpg" alt="Carrossel de exemplo no estilo Retrato" loading="lazy">
+  <div class="meta">
+    <p><b>Bom para:</b> capa forte, bastidor da rotina, número com fonte, explicativo curto, convite</p>
+    <p><b>Evite:</b> quem não tem foto própria (use C02 ou C05), lista longa</p>
+    <p><b>Fontes:</b> Instrument Serif · Inter · Courier Prime</p>
+  </div>
+  <button data-pedido="Monta o carrossel no estilo C04 Retrato.">Copiar pedido</button>
+</article>
+<article class="est" id="C05">
+  <header><span class="cod">C05</span><h2>Cartaz</h2></header>
+  <p class="res">Grafite com feixe de luz, caixa alta larga e pesada, itálico fino para a explicação e tachado com seta para corrigir a ideia errada.</p>
+  <img src="img/C05.jpg" alt="Carrossel de exemplo no estilo Cartaz" loading="lazy">
+  <div class="meta">
+    <p><b>Bom para:</b> mito e fato, comparação, como se fala e como a lei chama, lista de erros</p>
+    <p><b>Evite:</b> tema delicado que pede acolhimento (use C02 ou C03)</p>
+    <p><b>Fontes:</b> Archivo · Montserrat</p>
+  </div>
+  <button data-pedido="Monta o carrossel no estilo C05 Cartaz.">Copiar pedido</button>
+</article>
+<article class="est" id="C06">
+  <header><span class="cod">C06</span><h2>Pasta</h2></header>
+  <p class="res">Folha creme dentro de uma pasta com aba, sobre fundo colorido, como um processo físico: título grotesco em caixa alta, rótulos entre colchetes e numeração com fio.</p>
+  <img src="img/C06.jpg" alt="Carrossel de exemplo no estilo Pasta" loading="lazy">
+  <div class="meta">
+    <p><b>Bom para:</b> lista de documentos, checklist antes de um ato, regra com a lei literal, passo a passo</p>
+    <p><b>Evite:</b> capa só com foto</p>
+    <p><b>Fontes:</b> Archivo</p>
+  </div>
+  <button data-pedido="Monta o carrossel no estilo C06 Pasta.">Copiar pedido</button>
+</article></div>
+</main><div class="aviso" id="aviso">Pedido copiado. Cole na conversa.</div>
+<script>
+document.querySelectorAll('button[data-pedido]').forEach(function(b){b.onclick=function(){
+  var t=b.getAttribute('data-pedido'), a=document.getElementById('aviso');
+  function ok(){a.classList.add('on');setTimeout(function(){a.classList.remove('on');},1800);}
+  try{navigator.clipboard.writeText(t).then(ok,function(){prompt('Copie o pedido:',t);});}catch(e){prompt('Copie o pedido:',t);}
+};});
+</script></body></html>

@@ -1,0 +1,425 @@
+<!doctype html>
+<!-- MODELO DA PÁGINA DO CASO · preenchido por scripts/gerar_pagina.py.
+     Cada {{CAMPO}} é trocado por texto já escapado. Não edite os nomes dos campos.
+     {{TAMANHO_DO_TEXTO}} é "normal" ou "grande" (letra maior desde a abertura, para público com pouca leitura).
+     {{BOTAO_TEXTO_SINAL}}, {{BOTAO_TEXTO_ROTULO}} e {{BOTAO_TEXTO_ATIVO}} são o botão da letra já certo para esse
+     tamanho ("A+ letra maior" no normal, "A- letra normal" no grande); o script da página troca os dois a cada toque.
+     {{TELEFONE_OFICIAL}}, {{WHATSAPP_OFICIAL}} e {{WHATSAPP_LINK}} podem vir vazios: a linha some sozinha.
+     Sem dependência externa além das fontes do Google Fonts (se a ficha pedir).
+     Este comentário sai da página gerada. -->
+<html lang="pt-BR" data-texto="{{TAMANHO_DO_TEXTO}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{{TITULO_ABA}}</title>
+<meta name="description" content="{{DESCRICAO}}">
+{{FONTES_LINK}}
+<style>
+  :root {
+    --marca: {{COR_MARCA}};
+    --marca-texto: {{COR_MARCA_TEXTO}};
+    --destaque: {{COR_DESTAQUE}};
+    --fundo: #f6f5f2;
+    --cartao: #ffffff;
+    --texto: #1d2330;
+    --texto-suave: #4f5869;
+    --linha: #dcdfe5;
+    --feito: #2f7d5b;
+    --depois: #9aa1ad;
+    --ponto-processo: {{COR_MARCA}};
+    --sombra: 0 1px 2px rgba(20, 25, 35, .06), 0 4px 14px rgba(20, 25, 35, .05);
+    --fonte-titulos: {{FONTE_TITULOS}};
+    --fonte-texto: {{FONTE_TEXTO}};
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --marca: {{COR_MARCA_ESCURO}};
+      --marca-texto: {{COR_MARCA_TEXTO_ESCURO}};
+      --destaque: {{COR_DESTAQUE_ESCURO}};
+      --fundo: #12151b;
+      --cartao: #1b1f27;
+      --texto: #e9ebef;
+      --texto-suave: #b3b9c4;
+      --linha: #2e3440;
+      --feito: #5cc394;
+      --depois: #6b7280;
+      --ponto-processo: #9fb0c8;
+      --sombra: none;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --marca: {{COR_MARCA_ESCURO}};
+    --marca-texto: {{COR_MARCA_TEXTO_ESCURO}};
+    --destaque: {{COR_DESTAQUE_ESCURO}};
+    --fundo: #12151b;
+    --cartao: #1b1f27;
+    --texto: #e9ebef;
+    --texto-suave: #b3b9c4;
+    --linha: #2e3440;
+    --feito: #5cc394;
+    --depois: #6b7280;
+    --ponto-processo: #9fb0c8;
+    --sombra: none;
+    color-scheme: dark;
+  }
+
+  /* Tamanho do texto: tudo em rem; "grande" aumenta a página inteira de uma vez. */
+  html { font-size: 100%; -webkit-text-size-adjust: 100%; }
+  :root[data-texto="grande"] { font-size: 118.75%; }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: var(--fonte-texto);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  :root[data-texto="grande"] body { line-height: 1.7; }
+  h1, h2, h3 { font-family: var(--fonte-titulos); line-height: 1.25; margin: 0; }
+  p { margin: 0 0 .6em; }
+  p:last-child { margin-bottom: 0; }
+  a { color: inherit; }
+
+  .faixa { background: var(--marca); color: var(--marca-texto); }
+  .faixa .conteudo { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
+  .nome-escritorio { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 1rem; min-width: 0; }
+  .nome-escritorio img { height: 36px; width: auto; max-width: 140px; object-fit: contain; display: block; }
+  .monograma { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid currentColor; font-family: var(--fonte-titulos); font-size: .9375rem; flex: none; }
+  .acoes { display: flex; gap: 8px; flex: none; flex-wrap: wrap; justify-content: flex-end; }
+  .acoes button {
+    font: inherit; font-size: .875rem; color: inherit; background: transparent;
+    border: 1px solid currentColor; border-radius: 999px; padding: 4px 12px; cursor: pointer; opacity: .9; position: relative;
+  }
+  .acoes button[data-ativo="sim"] { background: var(--marca-texto); color: var(--marca); opacity: 1; }
+  .acoes button:hover, .acoes button:focus-visible { opacity: 1; outline: 2px solid currentColor; outline-offset: 2px; }
+
+  .conteudo { width: 100%; max-width: 760px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+  main.conteudo { padding-top: 20px; padding-bottom: 40px; }
+
+  .abertura { margin-bottom: 18px; }
+  .abertura .ola { font-size: 1.875rem; font-weight: 600; }
+  .abertura .caso { color: var(--texto-suave); margin-top: 4px; }
+  .datas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .datas span { display: inline-block; font-size: .875rem; color: var(--texto-suave); border: 1px solid var(--linha); border-radius: 999px; padding: 2px 12px; }
+  .datas strong { color: var(--texto); font-weight: 600; }
+
+  section.cartao {
+    background: var(--cartao); border: 1px solid var(--linha); border-radius: 14px;
+    padding: 20px; margin-bottom: 16px; box-shadow: var(--sombra);
+  }
+  section.cartao > h2 { font-size: 1.3125rem; margin-bottom: 12px; display: flex; align-items: baseline; gap: 10px; }
+  section.cartao > h2::before { content: ""; width: 6px; height: 18px; border-radius: 3px; background: var(--destaque); flex: none; align-self: center; }
+  .suave { color: var(--texto-suave); font-size: .9375rem; }
+
+  /* O que já fizemos por você */
+  section.fizemos { border-left: 5px solid var(--destaque); }
+  .lista-fizemos { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .lista-fizemos li { position: relative; padding-left: 30px; }
+  .lista-fizemos li::before {
+    content: ""; position: absolute; left: 2px; top: .3em; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--feito);
+  }
+  .lista-fizemos li::after {
+    content: ""; position: absolute; left: 8px; top: calc(.3em + 4px); width: 5px; height: 9px;
+    border: solid #ffffff; border-width: 0 2px 2px 0; transform: rotate(45deg);
+  }
+
+  /* Onde estamos */
+  .fase-titulo { font-family: var(--fonte-titulos); font-size: 1.375rem; font-weight: 600; color: var(--marca); margin-bottom: 6px; }
+  :root[data-theme="dark"] .fase-titulo { color: var(--destaque); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .fase-titulo { color: var(--destaque); } }
+  .etapas { list-style: none; margin: 18px 0 6px; padding: 0; display: flex; gap: 0; }
+  .etapas li { flex: 1 1 0; position: relative; text-align: center; font-size: .84375rem; line-height: 1.3; padding: 0 4px; color: var(--texto-suave); }
+  .etapas li::before {
+    content: ""; display: block; width: 18px; height: 18px; margin: 0 auto 8px; border-radius: 50%;
+    background: var(--cartao); border: 3px solid var(--depois); position: relative; z-index: 1;
+  }
+  .etapas li::after { content: ""; position: absolute; top: 8px; left: calc(-50% + 12px); right: calc(50% + 12px); height: 3px; background: var(--depois); }
+  .etapas li:first-child::after { display: none; }
+  .etapas li.feito { color: var(--texto); }
+  .etapas li.feito::before { background: var(--feito); border-color: var(--feito); }
+  .etapas li.feito::after, .etapas li.atual::after { background: var(--feito); }
+  .etapas li.atual { color: var(--texto); font-weight: 700; }
+  .etapas li.atual::before { border-color: var(--destaque); background: var(--destaque); box-shadow: 0 0 0 5px color-mix(in srgb, var(--destaque) 25%, transparent); }
+  .etapa-estado { display: block; font-weight: 400; font-size: .75rem; color: var(--texto-suave); margin-top: 2px; }
+
+  /* Linha do tempo */
+  .tempo { list-style: none; margin: 0; padding: 0; }
+  .tempo li { position: relative; padding: 0 0 18px 26px; }
+  .tempo li:last-child { padding-bottom: 0; }
+  .tempo li::before { content: ""; position: absolute; left: 5px; top: 8px; width: 11px; height: 11px; border-radius: 50%; background: var(--ponto-processo); }
+  .tempo li.escritorio::before { background: var(--destaque); }
+  .tempo li::after { content: ""; position: absolute; left: 10px; top: 22px; bottom: 0; width: 1.5px; background: var(--linha); }
+  .tempo li:last-child::after { display: none; }
+  .tempo .quando { font-size: .875rem; color: var(--texto-suave); }
+  .tempo h3 { font-size: 1.0625rem; font-family: var(--fonte-texto); font-weight: 700; margin: 2px 0 4px; }
+  .selo { display: inline-block; font-size: .75rem; line-height: 1.4; border-radius: 999px; padding: 1px 9px; margin-left: 6px; border: 1px solid var(--linha); color: var(--texto-suave); white-space: nowrap; }
+  .selo.escritorio { border-color: var(--destaque); color: var(--texto); }
+  .nota-oculto { font-size: .875rem; color: var(--texto-suave); font-style: italic; }
+
+  /* Listas */
+  .passos, .pendencias { list-style: none; margin: 0; padding: 0; }
+  .passos li, .pendencias li { padding: 10px 0; border-top: 1px solid var(--linha); display: grid; grid-template-columns: 7rem 1fr; gap: 4px 14px; }
+  .passos li:first-child, .pendencias li:first-child { border-top: 0; padding-top: 0; }
+  .passos .quando, .pendencias .ate { font-size: .875rem; color: var(--texto-suave); padding-top: 2px; }
+  .pendencias li { grid-template-columns: 28px 1fr; }
+  .caixa { width: 18px; height: 18px; border: 2px solid var(--destaque); border-radius: 5px; margin-top: 4px; }
+  .vazio { color: var(--texto-suave); }
+
+  /* Glossário */
+  dl.glossario { margin: 0; }
+  dl.glossario dt { font-weight: 700; margin-top: 10px; }
+  dl.glossario dt:first-child { margin-top: 0; }
+  dl.glossario dd { margin: 2px 0 0; color: var(--texto-suave); }
+
+  /* Contato */
+  .contato { display: grid; gap: 12px; }
+  .contato .linha { display: grid; grid-template-columns: 9rem 1fr; gap: 4px 14px; align-items: start; }
+  .contato .rotulo { font-size: .875rem; color: var(--texto-suave); padding-top: 2px; }
+  .contato .linha.vazia { display: none; }
+  .numero { font-size: 1.1875rem; font-weight: 700; letter-spacing: .01em; user-select: all; -webkit-user-select: all; }
+  .acoes-contato { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .acoes-contato button, .acoes-contato a {
+    font: inherit; font-size: .875rem; color: var(--texto); background: transparent; text-decoration: none;
+    border: 1px solid var(--linha); border-radius: 999px; padding: 4px 12px; cursor: pointer;
+  }
+  .acoes-contato button:hover, .acoes-contato a:hover,
+  .acoes-contato button:focus-visible, .acoes-contato a:focus-visible { border-color: var(--destaque); outline: none; }
+  .acoes-contato a[href=""] { display: none; }
+  .copiado { font-size: .875rem; color: var(--feito); min-height: 1.2em; }
+  .aviso-golpe { margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--destaque) 12%, transparent); font-size: .9375rem; }
+
+  footer.conteudo { padding-bottom: 32px; font-size: .875rem; color: var(--texto-suave); }
+  footer p { margin-bottom: .5em; }
+  .assinatura { color: var(--texto); font-weight: 600; }
+
+  @media (max-width: 600px) {
+    body { font-size: 1rem; }
+    .abertura .ola { font-size: 1.625rem; }
+    section.cartao { padding: 16px; border-radius: 12px; }
+    .etapas { flex-direction: column; gap: 0; margin-top: 12px; }
+    .etapas li { text-align: left; padding: 0 0 14px 30px; font-size: .9375rem; }
+    .etapas li::before { position: absolute; left: 0; top: 1px; margin: 0; }
+    .etapas li::after { display: block; top: 20px; bottom: 0; left: 8px; right: auto; width: 3px; height: auto; background: var(--depois); }
+    .etapas li:first-child::after { display: block; }
+    .etapas li:last-child::after { display: none; }
+    .etapas li.feito::after { background: var(--feito); }
+    .etapas li.atual::after { background: var(--depois); }
+    .etapa-estado { display: inline; margin-left: 6px; }
+    .passos li, .contato .linha { grid-template-columns: 1fr; }
+    .acoes .rotulo-longo { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  }
+
+  @media print {
+    :root, :root[data-theme="dark"] {
+      --fundo: #ffffff; --cartao: #ffffff; --texto: #111111; --texto-suave: #444444; --linha: #cccccc; --sombra: none;
+      color-scheme: light;
+    }
+    body { font-size: 12pt; }
+    :root[data-texto="grande"] body { font-size: 14pt; }
+    .acoes, .acoes-contato button, .copiado { display: none; }
+    .faixa { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    section.cartao, .tempo li, .passos li { break-inside: avoid; }
+    main.conteudo { padding-top: 12px; }
+  }
+</style>
+</head>
+<body>
+<header class="faixa">
+  <div class="conteudo">
+    <div class="nome-escritorio">{{LOGO}}<span>{{ESCRITORIO}}</span></div>
+    <div class="acoes">
+      <button type="button" id="texto" data-ativo="{{BOTAO_TEXTO_ATIVO}}"><span class="sinal">{{BOTAO_TEXTO_SINAL}}</span><span class="rotulo-longo">{{BOTAO_TEXTO_ROTULO}}</span></button>
+      <button type="button" id="tema" aria-label="Trocar entre modo claro e escuro">Tema</button>
+      <button type="button" id="imprimir" aria-label="Imprimir ou salvar em PDF"><span class="rotulo-longo">Salvar em </span>PDF</button>
+    </div>
+  </div>
+</header>
+
+<main class="conteudo">
+  <div class="abertura">
+    <h1 class="ola">Olá, {{PRIMEIRO_NOME}}</h1>
+    <p class="caso">{{TIPO_DE_CASO}}{{AREA}}</p>
+    <div class="datas">
+      <span>Página atualizada em <strong>{{ATUALIZADO_EM}}</strong></span>
+      <span>Próxima atualização: <strong>{{PROXIMA_ATUALIZACAO}}</strong></span>
+    </div>
+  </div>
+
+  <section class="cartao fizemos" aria-labelledby="t-fizemos">
+    <h2 id="t-fizemos">O que já fizemos por você</h2>
+    <ul class="lista-fizemos">
+{{O_QUE_JA_FIZEMOS}}
+    </ul>
+  </section>
+
+  <section class="cartao" aria-labelledby="t-onde">
+    <h2 id="t-onde">Onde estamos</h2>
+    <p class="fase-titulo">{{FASE_TITULO}}</p>
+    {{FASE_EXPLICACAO}}
+    <ol class="etapas" aria-label="{{ETAPA_ATUAL_TEXTO}}">
+{{ETAPAS}}
+    </ol>
+    <p class="suave">{{ETAPA_ATUAL_TEXTO}}</p>
+  </section>
+
+  <section class="cartao" aria-labelledby="t-tempo">
+    <h2 id="t-tempo">O que aconteceu e o que fizemos</h2>
+    <p class="suave">Do mais recente para o mais antigo. Parte do trabalho do escritório não aparece no site do tribunal: ela está aqui.</p>
+    <ol class="tempo">
+{{LINHA_DO_TEMPO}}
+    </ol>
+  </section>
+
+  <section class="cartao" aria-labelledby="t-proximos">
+    <h2 id="t-proximos">Próximos passos</h2>
+    <ul class="passos">
+{{PROXIMOS_PASSOS}}
+    </ul>
+  </section>
+
+  <section class="cartao" aria-labelledby="t-voce">
+    <h2 id="t-voce">O que depende de você</h2>
+    <ul class="pendencias">
+{{DEPENDE_DE_VOCE}}
+    </ul>
+  </section>
+
+  <section class="cartao" aria-labelledby="t-glossario">
+    <h2 id="t-glossario">Palavras desta página</h2>
+    <dl class="glossario">
+{{GLOSSARIO}}
+    </dl>
+  </section>
+
+  <section class="cartao" aria-labelledby="t-falar">
+    <h2 id="t-falar">Quando voltamos a falar e como falar com a gente</h2>
+    <div class="contato">
+      <div class="linha"><span class="rotulo">Próximo contato</span><div>{{VOLTAMOS_A_FALAR}}</div></div>
+      <div class="linha"><span class="rotulo">Próxima atualização desta página</span><div>{{PROXIMA_ATUALIZACAO}}</div></div>
+      <div class="linha"><span class="rotulo">Canal oficial</span><div>{{CANAL_OFICIAL}}</div></div>
+      <div class="linha" data-some-se-vazio>
+        <span class="rotulo">Telefone</span>
+        <div>
+          <span class="numero" id="numero-telefone">{{TELEFONE_OFICIAL}}</span>
+          <div class="acoes-contato"><button type="button" data-copiar="numero-telefone">Copiar o número</button></div>
+        </div>
+      </div>
+      <div class="linha" data-some-se-vazio>
+        <span class="rotulo">WhatsApp</span>
+        <div>
+          <span class="numero" id="numero-whatsapp">{{WHATSAPP_OFICIAL}}</span>
+          <div class="acoes-contato">
+            <button type="button" data-copiar="numero-whatsapp">Copiar o número</button>
+            <a href="{{WHATSAPP_LINK}}" rel="noopener">Abrir no WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="linha"><span class="rotulo">Horário</span><div>{{HORARIO}}</div></div>
+      <p class="copiado" id="copiado" role="status" aria-live="polite"></p>
+    </div>
+    <p class="aviso-golpe">O contato oficial do escritório é só este. Se alguém pedir dinheiro, senha ou código em nosso nome, não responda: fale com a gente por um dos contatos desta página.</p>
+  </section>
+</main>
+
+<footer class="conteudo">
+  <p>Esta página explica o seu caso em linguagem simples. Ela não traz previsão de data de decisão nem de resultado, porque isso não depende do escritório. Qualquer dúvida, fale com a gente pelo canal oficial.</p>
+  <p>Esta página é sua. Se ela chegou por link, quem tiver o endereço consegue abrir: por isso, não repasse o link nem o arquivo.</p>
+  <p class="assinatura">{{ASSINATURA}}</p>
+</footer>
+
+<script>
+  (function () {
+    var raiz = document.documentElement;
+    var botaoTema = document.getElementById("tema");
+    var botaoPdf = document.getElementById("imprimir");
+    var botaoTexto = document.getElementById("texto");
+    var avisoCopiado = document.getElementById("copiado");
+
+    function guardar(chave, valor) { try { window.localStorage.setItem(chave, valor); } catch (e) {} }
+    function ler(chave) { try { return window.localStorage.getItem(chave); } catch (e) { return null; } }
+
+    /* Linhas de contato sem número somem. */
+    var linhas = document.querySelectorAll("[data-some-se-vazio]");
+    for (var i = 0; i < linhas.length; i++) {
+      var numero = linhas[i].querySelector(".numero");
+      if (!numero || !numero.textContent.replace(/\s+/g, "")) { linhas[i].classList.add("vazia"); }
+    }
+
+    /* Tema claro e escuro. */
+    function escuroAgora() {
+      var t = raiz.getAttribute("data-theme");
+      if (t) { return t === "dark"; }
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    var temaSalvo = ler("pagina-do-caso-tema");
+    if (temaSalvo === "dark" || temaSalvo === "light") { raiz.setAttribute("data-theme", temaSalvo); }
+    if (botaoTema) {
+      botaoTema.addEventListener("click", function () {
+        var novo = escuroAgora() ? "light" : "dark";
+        raiz.setAttribute("data-theme", novo);
+        guardar("pagina-do-caso-tema", novo);
+      });
+    }
+
+    /* Letra maior: o escritório escolhe o padrão; quem lê pode trocar. */
+    if (raiz.getAttribute("data-texto") !== "grande") { raiz.setAttribute("data-texto", "normal"); }
+    var textoSalvo = ler("pagina-do-caso-texto");
+    if (textoSalvo === "grande" || textoSalvo === "normal") { raiz.setAttribute("data-texto", textoSalvo); }
+    /* O rótulo diz o que o toque faz: no tamanho normal, "A+ letra maior"; no grande, "A- letra normal". */
+    function marcarBotaoTexto() {
+      if (!botaoTexto) { return; }
+      var grande = raiz.getAttribute("data-texto") === "grande";
+      var sinal = botaoTexto.querySelector(".sinal");
+      var rotulo = botaoTexto.querySelector(".rotulo-longo");
+      if (sinal) { sinal.textContent = grande ? "A-" : "A+"; }
+      if (rotulo) { rotulo.textContent = grande ? " letra normal" : " letra maior"; }
+      botaoTexto.setAttribute("data-ativo", grande ? "sim" : "nao");
+      botaoTexto.setAttribute("title", grande ? "Voltar a letra ao tamanho normal" : "Deixar a letra maior");
+    }
+    marcarBotaoTexto();
+    if (botaoTexto) {
+      botaoTexto.addEventListener("click", function () {
+        var novo = raiz.getAttribute("data-texto") === "grande" ? "normal" : "grande";
+        raiz.setAttribute("data-texto", novo);
+        guardar("pagina-do-caso-texto", novo);
+        marcarBotaoTexto();
+      });
+    }
+
+    /* Copiar o número: o texto também pode ser selecionado e copiado à mão. */
+    function avisar(msg) { if (avisoCopiado) { avisoCopiado.textContent = msg; } }
+    var botoesCopiar = document.querySelectorAll("[data-copiar]");
+    for (var j = 0; j < botoesCopiar.length; j++) {
+      botoesCopiar[j].addEventListener("click", function (ev) {
+        var alvo = document.getElementById(ev.currentTarget.getAttribute("data-copiar"));
+        if (!alvo) { return; }
+        var texto = alvo.textContent.trim();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(texto).then(function () { avisar("Número copiado: " + texto); },
+            function () { selecionar(alvo); });
+        } else { selecionar(alvo); }
+      });
+    }
+    function selecionar(el) {
+      try {
+        var faixa = document.createRange();
+        faixa.selectNodeContents(el);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(faixa);
+        avisar("Número selecionado. Toque em copiar no seu celular.");
+      } catch (e) {}
+    }
+
+    if (botaoPdf) { botaoPdf.addEventListener("click", function () { window.print(); }); }
+  })();
+</script>
+</body>
+</html>

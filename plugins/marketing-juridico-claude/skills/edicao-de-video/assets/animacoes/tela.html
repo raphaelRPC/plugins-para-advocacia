@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Tela genérica</title>
+<!-- Tela genérica: uma interface simples, sem marca, acima da cabeça.
+     tipo "busca": a dúvida sendo digitada e as sugestões descendo (pergunta frequente);
+     tipo "prompt": o pedido feito à IA e a resposta aparecendo (tutorial de IA);
+     tipo "comando": um comando digitado e as linhas de conferência (✓);
+     tipo "notificacao": um aviso desce do topo ("Nova intimação");
+     tipo "celular": um celular com a imagem rolando e o toque no fim (imagem em midia/).
+     Nada de marca real, conversa de cliente ou dado de processo identificável.
+     DADOS: tipo, texto (o que é digitado), itens [sugestões ou linhas], resposta [linhas], app, titulo, imagem, lado, marcas, fim, familia, cores -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden;font-family:var(--t-texto)}
+#c{position:absolute;left:90px;width:900px;top:250px}
+.card{background:#fff;border-radius:30px;box-shadow:0 24px 60px rgba(0,0,0,.35);color:#1b2330;overflow:hidden}
+.busca{display:flex;align-items:center;gap:22px;padding:30px 34px;font:600 42px var(--t-texto)}
+.busca svg{width:46px;height:46px;flex:none}
+.cursor{display:inline-block;width:4px;height:1.05em;background:currentColor;vertical-align:-.15em;margin-left:3px}
+.sug{border-top:1px solid #e7e9ee;padding:22px 34px 22px 102px;font:500 36px var(--t-texto);color:#3d4655}
+.prompt{padding:30px}
+.bal{max-width:78%;padding:22px 28px;border-radius:26px;font:500 36px/1.3 var(--t-texto)}
+.eu{margin-left:auto;background:var(--c-fundo);color:#fff;border-bottom-right-radius:8px}
+.ia{margin-top:22px;background:#f1f3f7;border-bottom-left-radius:8px}
+.ia b{display:block;font:700 24px var(--t-texto);letter-spacing:.12em;color:#7a8396;margin-bottom:8px}
+.ia p{margin:0 0 8px}
+.term{background:#0e1218;color:#e6eaf0;border-radius:24px;padding:34px 36px;font:500 36px/1.5 var(--t-mono);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.term .ps{color:var(--c-destaque)}
+.term .ok{color:var(--c-ok)}
+.notif{display:flex;gap:24px;padding:26px 30px;align-items:center;background:rgba(245,246,248,.97)}
+.notif .ic{width:86px;height:86px;border-radius:22px;background:var(--c-fundo);flex:none;display:grid;place-items:center}
+.notif .ic svg{width:52px;height:52px}
+.notif .cab{display:flex;justify-content:space-between;font:600 26px var(--t-texto);color:#6b7383;letter-spacing:.04em;text-transform:uppercase}
+.notif .tt{font:700 38px var(--t-texto);margin:4px 0 2px}
+.notif .tx{font:500 32px/1.25 var(--t-texto);color:#3d4655}
+.cel{position:absolute;width:380px;height:760px;border-radius:56px;background:#0e1218;padding:16px;box-sizing:border-box;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.cel .tela{width:100%;height:100%;border-radius:42px;overflow:hidden;position:relative;background:#fff}
+.cel img{width:100%;display:block;position:absolute;top:0;left:0}
+.cel .toque{position:absolute;width:90px;height:90px;border-radius:50%;border:6px solid var(--c-destaque);margin:-45px 0 0 -45px;left:50%;top:70%}
+</style></head><body>
+<div id="c"></div>
+<script src="base.js"></script>
+<script>
+const D = DADOS, tipo = D.tipo || 'busca', c = document.getElementById('c'), MK = U.marcas(3, FIM);
+const lupa = '<svg viewBox="0 0 24 24" fill="none" stroke="#7a8396" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>';
+const balanca = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7a3.5 3.5 0 0 0 6 0zM19 7l-3 7a3.5 3.5 0 0 0 6 0z"/></svg>';
+let desenhaTipo = () => {}, altura = 400;
+const esc = s => String(s ?? '').replace(/[&<>]/g, x => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[x]));
+if (tipo === 'busca') {
+  c.innerHTML = `<div class="card"><div class="busca">${lupa}<span id="dig"></span><i class="cursor"></i></div>${(D.itens || []).slice(0, 4).map(x => `<div class="sug">${esc(x)}</div>`).join('')}</div>`;
+  const dig = c.querySelector('#dig'), cur = c.querySelector('.cursor'), sugs = [...c.querySelectorAll('.sug')];
+  desenhaTipo = t => {
+    dig.textContent = U.digitar(D.texto || '', U.pr(t, MK[0], MK[0] + 0.06 * (D.texto || '').length));
+    cur.style.opacity = Math.floor(t * 2.4) % 2 ? 0 : 1;
+    sugs.forEach((s, i) => { const p = U.mola(t - MK[1] - i * 0.12, 0.4); s.style.opacity = U.clamp(p * 1.4); s.style.transform = `translateY(${(1 - p) * -20}px)`; s.style.display = t < MK[1] + i * 0.12 ? 'none' : ''; });
+  };
+}
+if (tipo === 'prompt') {
+  c.innerHTML = `<div class="card prompt"><div class="bal eu"><span id="dig"></span><i class="cursor"></i></div><div class="bal ia"><b>${esc(D.app || 'Assistente de IA')}</b>${(D.resposta || []).map(x => `<p>${esc(x)}</p>`).join('')}</div></div>`;
+  const dig = c.querySelector('#dig'), cur = c.querySelector('.cursor'), ia = c.querySelector('.ia'), ps = [...ia.querySelectorAll('p')];
+  desenhaTipo = t => {
+    dig.textContent = U.digitar(D.texto || '', U.pr(t, MK[0], MK[0] + 0.045 * (D.texto || '').length));
+    cur.style.opacity = t > MK[1] ? 0 : (Math.floor(t * 2.4) % 2 ? 0 : 1);
+    const p = U.mola(t - MK[1], 0.45); ia.style.opacity = U.clamp(p * 1.4); ia.style.transform = `translateY(${(1 - p) * 24}px)`;
+    ps.forEach((x, i) => { x.style.opacity = U.clamp((t - MK[1] - 0.3 - i * 0.35) * 3); });
+  };
+}
+if (tipo === 'comando') {
+  c.innerHTML = `<div class="term"><div><span class="ps">&gt;</span> <span id="dig"></span><i class="cursor"></i></div>${(D.itens || []).map(x => `<div class="ok">✓ ${esc(x)}</div>`).join('')}</div>`;
+  const dig = c.querySelector('#dig'), cur = c.querySelector('.cursor'), ls = [...c.querySelectorAll('.ok')];
+  desenhaTipo = t => {
+    dig.textContent = U.digitar(D.texto || '', U.pr(t, MK[0], MK[0] + 0.05 * (D.texto || '').length));
+    cur.style.opacity = Math.floor(t * 2.4) % 2 ? 0 : 1;
+    ls.forEach((l, i) => { l.style.opacity = t >= MK[1] + i * 0.35 ? 1 : 0; });
+  };
+}
+if (tipo === 'notificacao') {
+  c.innerHTML = `<div class="card notif"><div class="ic">${balanca}</div><div style="flex:1"><div class="cab"><span>${esc(D.app || 'Tribunal')}</span><span>agora</span></div><div class="tt">${esc(D.titulo || 'Nova intimação')}</div><div class="tx">${esc(D.texto || '')}</div></div></div>`;
+  const card = c.firstChild;
+  desenhaTipo = t => { const p = U.mola(t - MK[0], 0.5); card.style.transform = `translateY(${(1 - p) * -260}px)`; };
+}
+if (tipo === 'celular') {
+  const dir = D.lado !== 'esquerda';
+  c.style.cssText = 'left:0;width:1080px;top:250px';
+  c.innerHTML = `<div class="cel" style="${dir ? 'right:80px' : 'left:80px'}"><div class="tela"><img alt=""><i class="toque"></i></div></div>`;
+  const img = c.querySelector('img'), toque = c.querySelector('.toque'); img.src = U.midia(D.imagem);
+  altura = 780;
+  desenhaTipo = t => {
+    const tela = c.querySelector('.tela'), extra = Math.max(0, img.offsetHeight - tela.offsetHeight);
+    img.style.transform = `translateY(${-extra * U.eio(U.pr(t, MK[0], MK[1]))}px)`;
+    const q = U.pr(t, MK[1] + 0.1, MK[1] + 0.6); toque.style.opacity = q > 0 && q < 1 ? 1 - q : 0; toque.style.transform = `scale(${0.4 + q})`;
+  };
+}
+window.AREA = { x: 0, y: 200, w: 1080, h: 900 };
+window.desenhar = t => {
+  const al = U.janela(t, FIM, 0.3, 0.35), e = U.mola(t, 0.5);
+  c.style.opacity = al; if (tipo !== 'notificacao') c.style.transform = `translateY(${(1 - e) * 40}px)`;
+  desenhaTipo(t);
+};
+const pronto = () => { const r = c.getBoundingClientRect(); window.AREA = { x: 0, y: Math.max(0, Math.floor(r.top) - 60), w: 1080, h: Math.ceil(Math.max(r.height, altura)) + 140 }; window.PRONTO = true; };
+document.fonts.ready.then(() => { const im = c.querySelector('img'); if (im && !im.complete) { im.onload = pronto; im.onerror = pronto; } else pronto(); });
+</script>
+</body></html>

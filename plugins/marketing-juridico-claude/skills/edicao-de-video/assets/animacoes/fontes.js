@@ -1,0 +1,48 @@
+// Pares de fontes livres para o padrão do advogado (Google Fonts, licença SIL OFL, com acentos do português).
+// titulo: títulos e palavra grande; texto: legenda, rótulos e apoio; serifa: citação de lei (opcional).
+// arquivo: caminho no repositório google/fonts; o motor baixa uma vez para ~/.marketing-juridico/ferramentas/fontes.
+// google: trecho do endereço do Google Fonts para as prévias nas páginas (precisa de internet).
+window.FONTES_BASE = 'https://raw.githubusercontent.com/google/fonts/main/';
+window.PARES_FONTES = [
+  { id: 'classica', nome: 'Clássica sóbria', clima: 'tradição, confiança, temas sérios',
+    titulo: { familia: 'Playfair Display', arquivo: 'ofl/playfairdisplay/PlayfairDisplay[wght].ttf', peso: 700 },
+    texto: { familia: 'Source Sans 3', arquivo: 'ofl/sourcesans3/SourceSans3[wght].ttf', peso: 600 },
+    google: 'family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600' },
+  { id: 'editorial', nome: 'Editorial', clima: 'opinião, análise, texto que se lê com calma',
+    titulo: { familia: 'Fraunces', arquivo: 'ofl/fraunces/Fraunces-Italic[SOFT,WONK,opsz,wght].ttf', peso: 600, italico: true },
+    texto: { familia: 'Inter', arquivo: 'ofl/inter/Inter[opsz,wght].ttf', peso: 600 },
+    google: 'family=Fraunces:ital,wght@1,600&family=Inter:wght@400;600' },
+  { id: 'condensada', nome: 'Condensada firme', clima: 'ritmo, pauta quente, dica rápida',
+    titulo: { familia: 'Barlow Condensed', arquivo: 'ofl/barlowcondensed/BarlowCondensed-ExtraBold.ttf', peso: 800 },
+    texto: { familia: 'Barlow', arquivo: 'ofl/barlow/Barlow-Medium.ttf', peso: 500 },
+    google: 'family=Barlow+Condensed:wght@800&family=Barlow:wght@500' },
+  { id: 'tradicao', nome: 'Tradição', clima: 'escritório estabelecido, família, sucessões',
+    titulo: { familia: 'Libre Baskerville', arquivo: 'ofl/librebaskerville/LibreBaskerville[wght].ttf', peso: 700 },
+    texto: { familia: 'Lato', arquivo: 'ofl/lato/Lato-Regular.ttf', peso: 400 },
+    google: 'family=Libre+Baskerville:wght@700&family=Lato:wght@400;700' },
+  { id: 'moderna', nome: 'Moderna limpa', clima: 'empresarial, tecnologia, direito digital',
+    titulo: { familia: 'Manrope', arquivo: 'ofl/manrope/Manrope[wght].ttf', peso: 800 },
+    texto: { familia: 'Manrope', arquivo: 'ofl/manrope/Manrope[wght].ttf', peso: 500 },
+    google: 'family=Manrope:wght@500;800' },
+  { id: 'revista', nome: 'Revista', clima: 'elegante e próxima, conteúdo de autoridade',
+    titulo: { familia: 'DM Serif Display', arquivo: 'ofl/dmserifdisplay/DMSerifDisplay-Regular.ttf', peso: 400 },
+    texto: { familia: 'DM Sans', arquivo: 'ofl/dmsans/DMSans[opsz,wght].ttf', peso: 500 },
+    google: 'family=DM+Serif+Display&family=DM+Sans:wght@500;700' },
+  { id: 'elegante', nome: 'Elegante', clima: 'patrimônio, planejamento, público exigente',
+    titulo: { familia: 'Cormorant Garamond', arquivo: 'ofl/cormorantgaramond/CormorantGaramond[wght].ttf', peso: 700 },
+    texto: { familia: 'Source Sans 3', arquivo: 'ofl/sourcesans3/SourceSans3[wght].ttf', peso: 600 },
+    google: 'family=Cormorant+Garamond:wght@700&family=Source+Sans+3:wght@400;600' },
+  { id: 'tecnica', nome: 'Técnica', clima: 'tributário, compliance, dados',
+    titulo: { familia: 'Space Grotesk', arquivo: 'ofl/spacegrotesk/SpaceGrotesk[wght].ttf', peso: 700 },
+    texto: { familia: 'IBM Plex Sans', arquivo: 'ofl/ibmplexsans/IBMPlexSans[wdth,wght].ttf', peso: 500 },
+    google: 'family=Space+Grotesk:wght@700&family=IBM+Plex+Sans:wght@500' },
+  { id: 'jornal', nome: 'Jornal', clima: 'notícia, decisão recente, informativo',
+    titulo: { familia: 'Libre Franklin', arquivo: 'ofl/librefranklin/LibreFranklin[wght].ttf', peso: 800 },
+    texto: { familia: 'Libre Franklin', arquivo: 'ofl/librefranklin/LibreFranklin[wght].ttf', peso: 500 },
+    serifa: { familia: 'Newsreader', arquivo: 'ofl/newsreader/Newsreader-Italic[opsz,wght].ttf', peso: 500, italico: true },
+    google: 'family=Libre+Franklin:wght@500;800&family=Newsreader:ital,wght@1,500' },
+  { id: 'impacto', nome: 'Impacto', clima: 'gancho forte, lista, ranking',
+    titulo: { familia: 'Oswald', arquivo: 'ofl/oswald/Oswald[wght].ttf', peso: 700 },
+    texto: { familia: 'Work Sans', arquivo: 'ofl/worksans/WorkSans[wght].ttf', peso: 500 },
+    google: 'family=Oswald:wght@700&family=Work+Sans:wght@500;600' }
+];

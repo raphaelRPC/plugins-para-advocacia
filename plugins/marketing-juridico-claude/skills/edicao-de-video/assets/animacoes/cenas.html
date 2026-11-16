@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Cenas do vídeo sem rosto</title>
+<!-- Sequenciador do vídeo sem rosto (formato F13): o vídeo inteiro é esta animação, sem ninguém na câmera.
+     As cenas ocupam a tela toda e passam de uma para a outra pela ponte: um elemento da cena que sai (o marca-texto,
+     o cartão, o último passo) muda de lugar, tamanho e cantos até virar a primeira peça da cena que entra.
+     Sem voz, o ritmo sai da régua de leitura (window.REGUA, lida pelo motor com animar.js --regua); com voz, das marcas.
+     DADOS: cenas [..], fundo ("papel" | "cor"), barra (true), marcas [uma por parte, opcional], fim, familia, cores, fontes.
+     Tipos de cena e partes (os ids servem para "na", a palavra da voz em que a parte entra):
+       pergunta {texto, modo: "busca" | "grande", sugestoes [..]}            partes: texto, sugestoes, fica
+       lei      {texto literal com "[…]", destaque, termo, explica, explicaFonte, fonte}
+                                                                            partes: entrada, l1..ln, destaque, seta, explica, fica
+       passos   {titulo, passos [{texto, ressalva}] (até 3), fonte}          partes: titulo, p1..pn, fica
+       cuidado  {titulo, texto, numero, numeroLegenda, fonte} ou {titulo, mito, fato, fonte}
+                                                                            partes: titulo, texto, numero (ou mito, risco, fato), fica
+       fecho    {rotulo, chamada, arroba, nome, oab}                         partes: chamada, arroba, identificacao, fica
+       peca     {modelo, dados, duracao}: uma peça do catálogo no palco      partes: peca
+     Toda cena aceita rotulo (aparece na barra), fonte (rodapé) e na {idDaParte: "palavra da fala"}. -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden}
+body{background:var(--papel);font-family:var(--t-texto);color:var(--tinta)}
+.abs{position:absolute}
+.cena{position:absolute;inset:0}
+#barra{left:96px;top:250px;width:888px;z-index:6}
+#barra .segs{display:flex;gap:10px}
+#barra .seg{flex:1;height:8px;border-radius:4px;background:var(--trilho);overflow:hidden}
+#barra .seg i{display:block;height:100%;width:0;background:var(--tinta)}
+#barra .rot{position:relative;height:44px;margin-top:20px}
+#barra .rot span{position:absolute;left:0;top:0;font:600 30px var(--t-texto);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+#ponte{z-index:5;display:none}
+.fonte{left:96px;top:1420px;font:600 28px var(--t-texto);letter-spacing:.12em;text-transform:uppercase;color:var(--cinza);white-space:nowrap;max-width:888px;overflow:hidden;text-overflow:ellipsis}
+.fonte i{display:inline-block;width:60px;height:4px;background:var(--acento);vertical-align:middle;margin-right:16px}
+.titulo{font-family:var(--t-titulo);font-style:var(--titulo-estilo);font-weight:var(--titulo-peso);letter-spacing:-.01em;line-height:1.02}
+/* pergunta */
+.card{left:90px;top:560px;width:900px;background:#fff;border-radius:30px;box-shadow:0 22px 60px rgba(0,0,0,.16);border:2px solid rgba(28,37,48,.08);color:#1b2330;overflow:hidden}
+.card .busca{display:flex;align-items:center;gap:24px;padding:34px 38px;font:600 50px var(--t-texto)}
+.card svg{width:52px;height:52px;flex:none}
+.card .sug{border-top:1px solid #e7e9ee;padding:24px 38px 24px 114px;font:500 40px var(--t-texto);color:#3d4655}
+.cursor{display:inline-block;width:5px;height:1.05em;background:currentColor;vertical-align:-.16em;margin-left:4px}
+.grande{left:96px;top:600px;width:888px;font-size:104px;color:var(--tinta)}
+.risca{height:12px;border-radius:6px;background:var(--acento);transform-origin:0 50%}
+/* lei */
+.aspas{left:84px;top:330px;font:400 300px/1 Georgia,"New York",serif;color:var(--acento)}
+.leitxt{left:96px;top:560px;width:888px;font-family:var(--t-lei);font-weight:400;line-height:1.16;color:var(--tinta);z-index:1}
+.lin{position:relative;overflow:hidden;padding-bottom:12px;margin-bottom:-12px}
+.lin>.li{display:inline-block;white-space:pre}
+.frase{white-space:nowrap}
+.mt{background:var(--acento)}
+.sub{height:6px;background:var(--tinta);border-radius:3px;transform-origin:0 50%}
+.nota{left:400px;max-width:584px;font:700 56px/1.1 var(--t-titulo);color:var(--tinta)}
+.nota small{display:block;font:500 30px var(--t-texto);color:var(--cinza);margin-top:12px}
+svg.seta{left:0;top:0;width:1080px;height:1920px;overflow:visible}
+/* passos */
+.fio{background:var(--acento);border-radius:6px;transform-origin:50% 0}
+.passo{left:110px;width:880px;display:flex;gap:34px;align-items:flex-start}
+.passo .c{flex:none;width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font:800 44px var(--t-texto);background:var(--papel);border:5px solid var(--tinta);color:var(--tinta);box-sizing:border-box}
+.passo .t{padding-top:10px;min-width:0}
+.passo .t b{display:block;font:700 56px/1.1 var(--t-texto);color:var(--tinta)}
+.passo .t small{display:block;font:500 38px/1.3 var(--t-texto);color:var(--cinza);margin-top:12px}
+.tit3{left:96px;top:380px;width:888px;font-size:80px;color:var(--tinta)}
+/* cuidado */
+.barra-v{left:96px;width:12px;border-radius:6px;background:var(--acento);transform-origin:50% 0}
+.cbloco{left:150px;width:834px}
+.cbloco .ct{font-size:76px;color:var(--tinta);margin-bottom:30px}
+.cbloco .cx{font:600 54px/1.22 var(--t-texto);color:var(--tinta)}
+.cbloco .cn{font:800 200px/1 var(--t-titulo);color:var(--acento-txt);margin-top:34px;letter-spacing:-.02em}
+.cbloco .cl{font:500 40px/1.25 var(--t-texto);color:var(--cinza);margin-top:8px}
+.cbloco .rot{font:700 30px var(--t-texto);letter-spacing:.16em;text-transform:uppercase;color:var(--cinza);margin:0 0 14px}
+.cbloco .rot.f{color:var(--acento-txt);margin-top:46px}
+.cbloco .mito{font:500 54px/1.22 var(--t-texto);color:var(--cinza)}
+.cbloco .mito span{position:relative}
+.cbloco .fato{font:700 58px/1.18 var(--t-texto);color:var(--tinta)}
+.strike{height:7px;border-radius:4px;background:var(--alerta);transform-origin:0 50%}
+/* fecho */
+.frot{left:96px;font:600 34px var(--t-texto);letter-spacing:.16em;text-transform:uppercase;color:var(--cinza)}
+.fcha{left:96px;color:var(--tinta);white-space:nowrap;z-index:1}
+.pill{border-radius:14px}
+.farr{left:96px;font:700 64px var(--t-texto);color:var(--tinta)}
+.fid{left:96px;font:500 36px var(--t-texto);color:var(--cinza)}
+/* peça no palco */
+.painel{background:var(--painel);border-radius:40px}
+.palco{left:0;top:0;width:1080px;height:1920px;border:0;transform-origin:0 0;background:transparent;color-scheme:normal}
+</style></head><body>
+<div id="barra" class="abs"><div class="segs"></div><div class="rot"></div></div>
+<div id="ponte" class="abs"></div>
+<script src="base.js"></script>
+<script>
+window.AREA = { x: 0, y: 0, w: 1080, h: 1920 };
+const D = DADOS, CENAS = D.cenas || [];
+// régua de leitura: o tempo que alguém leva para achar e ler cada bloco no celular
+const R = { achar: 0.5, cps: 14, marca: 0.4, fica: 0.8, ponte: 0.9, minimo: 2.5, digita: 0.055 };
+const ler = (txt, novo = true) => (novo ? R.achar : 0) + String(txt || '').length / R.cps;
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const nPal = s => String(s || '').split(/\s+/).filter(w => w && !/^[…\[\]·]+$/.test(w)).length;
+function el(tag, cls, pai, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; pai.appendChild(e); return e; }
+function caixa(e) { let x = 0, y = 0, n = e; while (n && n !== document.body) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; } return { x, y, w: e.offsetWidth, h: e.offsetHeight }; }
+
+// ---------- cores: papel claro (padrão) ou a cor de fundo da marca ----------
+const MODO = D.fundo === 'cor' ? 'cor' : 'papel';
+function escuro(hex) { const v = parseInt(hex.slice(1), 16), r = v >> 16 & 255, g = v >> 8 & 255, b = v & 255, m = Math.max(r, g, b) || 1, k = Math.min(1, 120 / m);
+  return '#' + [r, g, b].map(c => Math.round(c * k).toString(16).padStart(2, '0')).join(''); }
+const T = MODO === 'cor'
+  ? { papel: COR.fundo, tinta: '#FFFFFF', cinza: 'rgba(255,255,255,.74)', trilho: 'rgba(255,255,255,.2)', acento: COR.destaque, acentoTxt: COR.destaque, sobre: COR.fundo, mt: 1, painel: 'rgba(0,0,0,.22)' }
+  : { papel: '#F6F4EF', tinta: '#1C2530', cinza: '#5F666E', trilho: 'rgba(28,37,48,.14)', acento: COR.destaque, acentoTxt: escuro(COR.destaque), sobre: '#1C2530', mt: 0.55, painel: COR.fundo };
+(() => { const r = document.documentElement.style;
+  for (const [k, v] of Object.entries({ papel: T.papel, tinta: T.tinta, cinza: T.cinza, trilho: T.trilho, acento: T.acento, 'acento-txt': T.acentoTxt, painel: T.painel, alerta: COR.alerta }))
+    r.setProperty('--' + k, v);
+  r.setProperty('--t-lei', (D.fontes && D.fontes.serifa) || '"New York",Georgia,serif'); })();
+const hexRgb = h => { const v = parseInt(String(h).slice(1, 7), 16); return [v >> 16 & 255, v >> 8 & 255, v & 255]; };
+
+// ---------- movimentos ----------
+const entra = (e, t, a, dy = 40) => { const k = U.mola(t - a, 0.55); e.style.opacity = U.clamp((t - a) / 0.25); e.style.transform = `translateY(${(1 - k) * dy}px)`; };
+const fonteRodape = (c, raiz) => c.fonte ? el('div', 'abs fonte', raiz, '<i></i>' + esc(c.fonte)) : null;
+const fica = partes => { const soma = partes.reduce((s, p) => s + p.dur, 0); partes.push({ id: 'fica', texto: '', dur: Math.max(R.fica, R.minimo - soma) }); return partes; };
+const lupa = cor => `<svg viewBox="0 0 24 24" fill="none" stroke="${cor}" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>`;
+
+// ---------- tipos de cena ----------
+// cada tipo monta os elementos, mede depois que as fontes carregam (medir devolve as partes da régua)
+// e desenha a partir do tempo; entrada e saída são as âncoras da ponte ({x, y, w, h, r, cor, a})
+const TIPOS = {};
+
+TIPOS.pergunta = (c, raiz) => {
+  const grande = c.modo === 'grande', txt = String(c.texto || '');
+  let card, alvo, sugs = [], risca;
+  if (grande) {
+    alvo = el('div', 'abs grande titulo', raiz, '<span></span><i class="cursor"></i>');
+    risca = el('div', 'abs risca', raiz);
+  } else {
+    card = el('div', 'abs card', raiz, `<div class="busca">${lupa('#7a8396')}<span><span></span><i class="cursor"></i></span></div>`);
+    alvo = card;
+    sugs = (c.sugestoes || []).slice(0, 3).map(s => el('div', 'sug', card, esc(s)));
+  }
+  const vtxt = alvo.querySelector('span:not(:has(span))') || alvo.querySelector('span'), cur = alvo.querySelector('.cursor');
+  const o = { fonte: fonteRodape(c, raiz) };
+  o.medir = () => {
+    if (grande) { const b = caixa(alvo); vtxt.textContent = txt; const h = alvo.offsetHeight; vtxt.textContent = '';
+      Object.assign(risca.style, { left: '96px', top: (b.y + h + 24) + 'px', width: '260px' }); alvo.style.minHeight = h + 'px'; }
+    const dig = 0.35 + txt.length * R.digita;
+    o.dig = dig;
+    const partes = [{ id: 'texto', texto: txt, dur: Math.max(ler(txt), dig + 0.4) }];
+    if (sugs.length) partes.push({ id: 'sugestoes', texto: (c.sugestoes || []).join(' / '), dur: R.achar + Math.min(2.2, sugs.reduce((s, e) => s + e.textContent.length, 0) / 30) });
+    return fica(partes);
+  };
+  o.saida = () => grande ? Object.assign(caixa(risca), { r: 6, cor: T.acento, a: 1 }) : Object.assign(caixa(card), { r: 30, cor: '#FFFFFF', a: 1 });
+  o.elSaida = grande ? risca : card;
+  o.desenhar = (t, m) => {
+    const a = m.texto;
+    if (card) { const k = U.mola(t - a + 0.1, 0.55); card.style.opacity = U.clamp((t - a + 0.1) / 0.25); card.style.transform = `scale(${0.94 + 0.06 * k})`; }
+    else entra(alvo, t, a, 30);
+    const p = U.pr(t, a + 0.35, a + o.dig);
+    vtxt.textContent = U.digitar(txt, p);
+    cur.style.opacity = p < 1 || Math.floor(t * 2.2) % 2 === 0 ? 1 : 0;
+    sugs.forEach((s, i) => { const b = m.sugestoes + i * 0.18, k = U.mola(t - b, 0.45); s.style.opacity = U.clamp((t - b) / 0.2); s.style.transform = `translateY(${(1 - k) * -18}px)`; });
+    if (risca) risca.style.transform = `scaleX(${U.eio(U.pr(t, a + o.dig, a + o.dig + 0.4))})`;
+    if (o.fonte) entra(o.fonte, t, a);
+  };
+  return o;
+};
+
+TIPOS.lei = (c, raiz) => {
+  const texto = String(c.texto || ''), aspas = el('div', 'abs aspas', raiz, '“');
+  const mt = c.destaque ? el('div', 'abs mt', raiz) : null;
+  const box = el('div', 'abs leitxt', raiz);
+  const sub = c.termo && c.explica ? el('div', 'abs sub', raiz) : null;
+  const nota = c.explica ? el('div', 'abs nota', raiz, esc(c.explica) + (c.explicaFonte ? `<small>${esc(c.explicaFonte)}</small>` : '')) : null;
+  const sv = nota ? el('div', '', raiz, '<svg class="abs seta" viewBox="0 0 1080 1920"><path fill="none" stroke-width="7" stroke-linecap="round"/><path fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>').firstChild : null;
+  const [sp, sc] = sv ? sv.querySelectorAll('path') : [];
+  if (sv) [sp, sc].forEach(p => p.setAttribute('stroke', T.tinta));
+  // o texto vira palavras soltas; o destaque e o termo ficam inteiros (nunca quebram no meio)
+  const frases = [c.destaque, c.termo].filter(Boolean).sort((x, y) => texto.indexOf(x) - texto.indexOf(y));
+  let resto = texto; const pedacos = [];
+  for (const f of frases) { const i = resto.indexOf(f); if (i < 0) continue; pedacos.push([resto.slice(0, i), 0], [f, f === c.destaque ? 'd' : 't']); resto = resto.slice(i + f.length); }
+  pedacos.push([resto, 0]);
+  // pontuação colada ao destaque ("meses,") fica sem espaço antes
+  const fichas = [];
+  for (const [p, tipo] of pedacos) {
+    if (tipo) { fichas.push({ txt: p, tipo, cola: false }); continue; }
+    p.split(/\s+/).filter(Boolean).forEach((w, i) => fichas.push({ txt: w, tipo: 0, cola: i === 0 && fichas.length > 0 && !/^\s/.test(p) }));
+  }
+  const spans = fichas.map((f, i) => {
+    if (i > 0 && !f.cola) box.appendChild(document.createTextNode(' '));
+    const s = el('span', f.tipo ? 'frase' : '', box); s.textContent = f.txt; if (f.tipo) s.dataset.tipo = f.tipo; if (f.cola) s.dataset.cola = 1; return s;
+  });
+  const o = { fonte: fonteRodape(c, raiz), elSaida: mt };
+  let linhas = [], sD, sT, larg = 0;
+  o.medir = () => {
+    for (const tam of [76, 68, 60, 54]) { box.style.fontSize = tam + 'px'; const n = new Set(spans.map(s => s.offsetTop)).size; if (n <= 6 && box.offsetHeight <= 640) break; }
+    // agrupa as palavras por linha, do jeito que o navegador quebrou, e põe cada linha numa máscara
+    const grupos = []; let topo = null;
+    spans.forEach(s => { if (s.offsetTop !== topo) { grupos.push([]); topo = s.offsetTop; } grupos[grupos.length - 1].push(s); });
+    box.innerHTML = '';
+    linhas = grupos.map(g => { const l = el('div', 'lin', box), li = el('span', 'li', l); g.forEach((s, i) => { if (i > 0 && !s.dataset.cola) li.appendChild(document.createTextNode(' ')); li.appendChild(s); }); return li; });
+    sD = spans.find(s => s.dataset.tipo === 'd'); sT = spans.find(s => s.dataset.tipo === 't');
+    const fim = caixa(box).y + box.offsetHeight;
+    if (mt && sD) { const d = caixa(sD), h = d.h; o.gmt = { x: d.x - 14, y: d.y + h * 0.1, w: d.w + 28, h: h * 0.86, r: 10 }; larg = o.gmt.w;
+      Object.assign(mt.style, { left: o.gmt.x + 'px', top: o.gmt.y + 'px', height: o.gmt.h + 'px', borderRadius: '10px' }); }
+    if (nota && sT) {
+      const tt = caixa(sT); Object.assign(sub.style, { left: tt.x + 'px', top: (tt.y + tt.h + 2) + 'px', width: tt.w + 'px' });
+      const yN = Math.min(fim + 170, 1380 - nota.offsetHeight); nota.style.top = yN + 'px';
+      const a = { x: tt.x + Math.min(tt.w * 0.35, 260), y: tt.y + tt.h + 26 }, b = { x: 380, y: yN + 34 };
+      sp.setAttribute('d', `M${a.x} ${a.y} C ${a.x - 30} ${a.y + 110}, ${b.x - 150} ${b.y - 10}, ${b.x} ${b.y}`);
+      sc.setAttribute('d', `M${b.x - 34} ${b.y - 28} L${b.x} ${b.y} L${b.x - 38} ${b.y + 20}`);
+    }
+    const partes = [{ id: 'entrada', texto: '', dur: 0.6 }];
+    linhas.forEach((l, i) => partes.push({ id: 'l' + (i + 1), texto: l.textContent, dur: ler(l.textContent, i === 0) }));
+    if (mt && sD) partes.push({ id: 'destaque', texto: c.destaque, dur: R.marca + c.destaque.length / R.cps });
+    if (nota && sT) partes.push({ id: 'seta', texto: '', dur: R.marca }, { id: 'explica', texto: c.explica, dur: ler(c.explica) });
+    return fica(partes);
+  };
+  o.saida = () => o.gmt ? Object.assign({}, o.gmt, { cor: T.acento, a: T.mt }) : null;
+  o.desenhar = (t, m) => {
+    const ka = U.mola(t - m.entrada - 0.05, 0.6);
+    aspas.style.opacity = U.clamp((t - m.entrada) / 0.3); aspas.style.transform = `scale(${0.6 + 0.4 * ka})`;
+    linhas.forEach((s, i) => { const k = U.mola(t - m['l' + (i + 1)], 0.5); s.style.transform = `translateY(${(1 - k) * 110}%)`; });
+    if (mt && sD) { const p = U.eio(U.pr(t, m.destaque, m.destaque + 0.45)); mt.style.width = larg * p + 'px'; mt.style.opacity = p > 0 ? T.mt : 0; sD.style.color = p > 0.5 ? T.sobre : ''; }
+    if (nota && sT) {
+      sub.style.transform = `scaleX(${U.eio(U.pr(t, m.seta, m.seta + 0.3))})`;
+      U.traco(sp, U.eio(U.pr(t, m.seta, m.seta + 0.55))); U.traco(sc, U.eio(U.pr(t, m.seta + 0.45, m.seta + 0.7)));
+      entra(nota, t, m.explica, 30);
+    }
+    if (o.fonte) entra(o.fonte, t, m.l1);
+  };
+  return o;
+};
+
+TIPOS.passos = (c, raiz) => {
+  const lista = (c.passos || []).slice(0, 4);
+  const tit = c.titulo ? el('div', 'abs tit3 titulo', raiz, esc(c.titulo)) : null;
+  const fio = el('div', 'abs fio', raiz);
+  const els = lista.map((p, i) => el('div', 'abs passo', raiz, `<div class="c">${i + 1}</div><div class="t"><b>${esc(p.texto)}</b>${p.ressalva ? `<small>${esc(p.ressalva)}</small>` : ''}</div>`));
+  const o = { fonte: fonteRodape(c, raiz), elEntrada: fio };
+  let ys = [];
+  o.medir = () => {
+    const y0 = tit ? 380 + tit.offsetHeight + 80 : 440, hs = els.map(e => e.offsetHeight), soma = hs.reduce((s, h) => s + h, 0);
+    const vao = els.length > 1 ? Math.max(40, Math.min(150, (1340 - y0 - soma) / (els.length - 1))) : 0;
+    let y = y0; ys = els.map((e, i) => { const yy = y; e.style.top = yy + 'px'; y += hs[i] + vao; return yy; });
+    const c0 = ys[0] + 46, c1 = ys[ys.length - 1] + 46;
+    o.gfio = { x: 110 + 46 - 6, y: c0 - 26, w: 12, h: c1 - c0 + 52, r: 6 };
+    Object.assign(fio.style, { left: o.gfio.x + 'px', top: o.gfio.y + 'px', width: '12px', height: o.gfio.h + 'px' });
+    const partes = [];
+    if (tit) partes.push({ id: 'titulo', texto: c.titulo, dur: ler(c.titulo) });
+    lista.forEach((p, i) => partes.push({ id: 'p' + (i + 1), texto: p.texto, extra: p.ressalva || '', dur: ler(p.texto + (p.ressalva || '')) }));
+    return fica(partes);
+  };
+  o.entrada = () => Object.assign({}, o.gfio, { cor: T.acento, a: 1 });
+  o.saida = () => ({ x: 110, y: ys[ys.length - 1], w: 92, h: 92, r: 46, cor: T.acento, a: 1 });
+  o.elSaida = () => els[els.length - 1].querySelector('.c');
+  o.desenhar = (t, m, ponte) => {
+    const ini = m[tit ? 'titulo' : 'p1'];
+    if (ponte) { fio.style.opacity = t >= ini ? 1 : 0; fio.style.transform = 'none'; }
+    else { fio.style.opacity = U.clamp((t - ini) / 0.2); fio.style.transform = `scaleY(${U.eio(U.pr(t, ini, ini + 0.7))})`; }
+    if (tit) entra(tit, t, m.titulo);
+    els.forEach((e, i) => {
+      const a = m['p' + (i + 1)], k = U.mola(t - a, 0.5), cc = e.querySelector('.c'), tx = e.querySelector('.t');
+      e.style.opacity = U.clamp((t - a) / 0.2);
+      cc.style.transform = `scale(${0.3 + 0.7 * k})`;
+      const aceso = U.clamp((t - a - 0.15) / 0.25) > 0.5;
+      cc.style.background = aceso ? 'var(--acento)' : 'var(--papel)'; cc.style.borderColor = aceso ? 'var(--acento)' : 'var(--tinta)'; cc.style.color = aceso ? T.sobre : 'var(--tinta)';
+      tx.style.transform = `translateX(${(1 - U.mola(t - a - 0.08, 0.5)) * -40}px)`;
+    });
+    if (o.fonte) entra(o.fonte, t, ini);
+  };
+  return o;
+};
+
+TIPOS.cuidado = (c, raiz) => {
+  const barra = el('div', 'abs barra-v', raiz), bloco = el('div', 'abs cbloco', raiz);
+  const tit = c.titulo ? el('div', 'ct titulo', bloco, esc(c.titulo)) : null;
+  const mito = !!(c.mito && c.fato);
+  let tx, cn, cl, rm, mi, rf, fa, riscos = [];
+  if (mito) { rm = el('div', 'rot', bloco, 'Mito'); mi = el('div', 'mito', bloco, `<span>${esc(c.mito)}</span>`); rf = el('div', 'rot f', bloco, 'Fato'); fa = el('div', 'fato', bloco, esc(c.fato)); }
+  else {
+    tx = c.texto ? el('div', 'cx', bloco, esc(c.texto)) : null;
+    cn = c.numero ? el('div', 'cn', bloco, esc(c.numero)) : null;
+    cl = c.numero && c.numeroLegenda ? el('div', 'cl', bloco, esc(c.numeroLegenda)) : null;
+  }
+  const o = { fonte: fonteRodape(c, raiz), elEntrada: barra, elSaida: barra };
+  o.medir = () => {
+    const h = bloco.offsetHeight, y0 = Math.max(430, Math.min(560, 900 - h / 2));
+    bloco.style.top = y0 + 'px';
+    o.gbar = { x: 96, y: y0 + 6, w: 12, h: h - 12, r: 6 };
+    Object.assign(barra.style, { top: o.gbar.y + 'px', height: o.gbar.h + 'px' });
+    if (mito) {   // um traço por linha do mito, na altura do meio da letra
+      const base = caixa(bloco), sp = mi.querySelector('span');
+      riscos = [...sp.getClientRects()].map(r => { const d = el('div', 'abs strike', raiz); Object.assign(d.style, { left: (r.left - 6) + 'px', top: (r.top + r.height * 0.52) + 'px', width: (r.width + 12) + 'px' }); return d; });
+      void base;
+    }
+    const partes = [];
+    if (tit) partes.push({ id: 'titulo', texto: c.titulo, dur: ler(c.titulo) });
+    if (mito) partes.push({ id: 'mito', texto: c.mito, dur: ler(c.mito) }, { id: 'risco', texto: '', dur: R.marca }, { id: 'fato', texto: c.fato, dur: ler(c.fato) });
+    else {
+      if (tx) partes.push({ id: 'texto', texto: c.texto, dur: ler(c.texto) });
+      if (cn) partes.push({ id: 'numero', texto: c.numero, extra: c.numeroLegenda || '', dur: R.marca + (String(c.numero).length + String(c.numeroLegenda || '').length) / R.cps });
+    }
+    return fica(partes);
+  };
+  o.entrada = () => Object.assign({}, o.gbar, { cor: T.acento, a: 1 });
+  o.saida = o.entrada;
+  o.desenhar = (t, m, ponte) => {
+    const ini = Math.min(...Object.entries(m).filter(([k]) => k !== 'fica').map(([, v]) => v));
+    if (ponte) { barra.style.opacity = t >= ini ? 1 : 0; barra.style.transform = 'none'; }
+    else { barra.style.opacity = U.clamp((t - ini) / 0.2); barra.style.transform = `scaleY(${U.eio(U.pr(t, ini, ini + 0.6))})`; }
+    if (tit) entra(tit, t, m.titulo);
+    if (mito) {
+      entra(rm, t, m.mito); entra(mi, t, m.mito);
+      riscos.forEach((d, i) => { d.style.transform = `scaleX(${U.eio(U.pr(t, m.risco + i * 0.15, m.risco + 0.3 + i * 0.15))})`; });
+      entra(rf, t, m.fato); entra(fa, t, m.fato);
+    } else {
+      if (tx) entra(tx, t, m.texto);
+      if (cn) { entra(cn, t, m.numero, 60); if (cl) entra(cl, t, m.numero + 0.2); }
+    }
+    if (o.fonte) entra(o.fonte, t, ini);
+  };
+  return o;
+};
+
+TIPOS.fecho = (c, raiz) => {
+  const rot = c.rotulo ? el('div', 'abs frot', raiz, esc(c.rotulo)) : null;
+  const pill = el('div', 'abs mt pill', raiz), cha = el('div', 'abs fcha titulo', raiz, esc(c.chamada || 'Salve este vídeo'));
+  const arr = c.arroba ? el('div', 'abs farr', raiz, esc(c.arroba)) : null;
+  const ident = [c.nome, c.oab].filter(Boolean).join(' · ');
+  const idn = ident ? el('div', 'abs fid', raiz, esc(ident)) : null;
+  const o = { elEntrada: pill };
+  o.medir = () => {
+    for (const tam of [110, 96, 84, 72, 62]) { cha.style.fontSize = tam + 'px'; if (cha.offsetWidth <= 860) break; }
+    let y = 720;
+    if (rot) { rot.style.top = y + 'px'; y += rot.offsetHeight + 34; }
+    cha.style.top = (y + 10) + 'px';
+    const b = caixa(cha); o.gpill = { x: 96 - 18, y: b.y - 4, w: b.w + 36, h: b.h + 14, r: 14 };
+    Object.assign(pill.style, { left: o.gpill.x + 'px', top: o.gpill.y + 'px', width: o.gpill.w + 'px', height: o.gpill.h + 'px' });
+    y = b.y + b.h + 80;
+    if (arr) { arr.style.top = y + 'px'; y += arr.offsetHeight + 18; }
+    if (idn) idn.style.top = y + 'px';
+    const partes = [{ id: 'chamada', texto: [c.rotulo, c.chamada].filter(Boolean).join(' '), dur: ler([c.rotulo, c.chamada].filter(Boolean).join(' ')) }];
+    if (arr) partes.push({ id: 'arroba', texto: c.arroba, dur: ler(c.arroba) });
+    if (idn) partes.push({ id: 'identificacao', texto: ident, dur: ler(ident) });
+    return fica(partes);
+  };
+  o.entrada = () => Object.assign({}, o.gpill, { cor: T.acento, a: T.mt });
+  o.desenhar = (t, m, ponte) => {
+    const a = m.chamada;
+    if (ponte) { pill.style.opacity = t >= a ? T.mt : 0; pill.style.width = o.gpill.w + 'px'; }
+    else { const p = U.eio(U.pr(t, a + 0.3, a + 0.75)); pill.style.opacity = p > 0 ? T.mt : 0; pill.style.width = o.gpill.w * p + 'px'; }
+    if (rot) entra(rot, t, a);
+    entra(cha, t, a, 30);
+    cha.style.color = (ponte ? t >= a : t >= a + 0.55) ? T.sobre : '';
+    if (arr) entra(arr, t, m.arroba);
+    if (idn) entra(idn, t, m.identificacao);
+  };
+  return o;
+};
+
+// peça do catálogo no palco: a peça abre num quadro interno e é ampliada para o espaço da cena; nenhuma peça muda
+TIPOS.peca = (c, raiz) => {
+  const dur = c.duracao || 4, painel = el('div', 'abs painel', raiz);
+  const dados = Object.assign({}, c.dados || {}, { familia: FAMILIA, cores: D.cores, fontes: D.fontes, fim: Math.max(1, dur - 0.4) });
+  const ifr = el('iframe', 'abs palco', raiz); ifr.setAttribute('scrolling', 'no');
+  const o = { direto: false, area: null };
+  o.pronto = new Promise(ok => {
+    const fim = setTimeout(ok, 15000);
+    const pergunta = () => {
+      try { const w = ifr.contentWindow; if (w.document && w.PRONTO) { o.direto = true; o.area = w.AREA || AREA; clearTimeout(fim); return ok(); } }
+      catch (e) { ifr.contentWindow.postMessage({ mjPergunta: 1 }, '*'); }
+      setTimeout(pergunta, 80);
+    };
+    addEventListener('message', e => { if (e.source === ifr.contentWindow && e.data && e.data.mjPronto) { o.area = e.data.area || AREA; clearTimeout(fim); ok(); } });
+    ifr.addEventListener('load', pergunta);
+  });
+  ifr.src = `${c.modelo}.html#${encodeURIComponent(JSON.stringify(dados))}`;
+  o.medir = () => {
+    const a = o.area || AREA, s = Math.min(900 / a.w, 900 / a.h, 1.4), w = a.w * s, h = a.h * s;
+    const x = 90 + (900 - w) / 2, y = 440 + (900 - h) / 2;
+    ifr.style.transform = `translate(${x - a.x * s}px, ${y - a.y * s}px) scale(${s})`;
+    if (MODO === 'papel') Object.assign(painel.style, { left: (x - 36) + 'px', top: (y - 36) + 'px', width: (w + 72) + 'px', height: (h + 72) + 'px' });
+    else painel.style.display = 'none';
+    return [{ id: 'peca', texto: c.rotulo || c.modelo, dur }];
+  };
+  o.desenhar = (t, m) => {
+    const tl = Math.max(0, t - m.peca), op = U.clamp((t - m.peca) / 0.3);
+    painel.style.opacity = op; ifr.style.opacity = op;
+    if (o.direto) { const w = ifr.contentWindow; if (w.desenhar) w.desenhar(tl); }
+    else ifr.contentWindow.postMessage({ mjT: tl }, '*');
+  };
+  return o;
+};
+
+// ---------- montagem, régua e linha do tempo ----------
+const barra = document.getElementById('barra'), ponteEl = document.getElementById('ponte');
+const CS = CENAS.map(c => { const raiz = el('div', 'cena', document.body); const b = (TIPOS[c.tipo] || TIPOS.cuidado)(c, raiz); return Object.assign(b, { c, raiz }); });
+if (D.barra === false) barra.style.display = 'none';
+CS.forEach(() => el('div', 'seg', barra.querySelector('.segs'), '<i></i>'));
+const rotulos = CS.map((b, k) => el('span', '', barra.querySelector('.rot'), esc(`${k + 1} de ${CS.length}` + (b.c.rotulo ? ' · ' + b.c.rotulo : ''))));
+const PARTES = [], AVISOS = [];
+let TOTAL = 0;
+(async () => {
+  await document.fonts.ready;
+  await Promise.all(CS.map(b => b.pronto || Promise.resolve()));
+  let t = 0;
+  CS.forEach((b, k) => {
+    if (k > 0) t += R.ponte;
+    b.partes = b.medir();
+    b.partes.forEach(p => { PARTES.push(Object.assign(p, { cena: k, em: t, na: (b.c.na || {})[p.id] || '' })); t += p.dur; });
+  });
+  // com voz (ou ajuste na Mesa), as marcas vêm de fora, uma por parte
+  const MK = D.marcas || [];
+  if (MK.length === PARTES.length) PARTES.forEach((p, i) => { p.em = MK[i]; });
+  const ult = PARTES[PARTES.length - 1];
+  TOTAL = ult ? Math.max(ult.em + ult.dur, MK.length === PARTES.length ? (D.fim || 0) : 0) : 0;
+  window.FIM = TOTAL;
+  CS.forEach((b, k) => {
+    b.m = Object.fromEntries(PARTES.filter(p => p.cena === k).map(p => [p.id, p.em]));
+    b.ini = Math.min(...PARTES.filter(p => p.cena === k).map(p => p.em));
+    b.fimConteudo = TOTAL;
+  });
+  CS.forEach((b, k) => {
+    if (k > 0) CS[k - 1].fimConteudo = b.ini - R.ponte;
+    // ponte: da saída da cena anterior para a entrada desta; sem saída, nasce no lugar da entrada; sem entrada, vira o fundo
+    const ant = k > 0 ? CS[k - 1] : null, sa = ant && ant.saida ? ant.saida() : null, en = b.entrada ? b.entrada() : null;
+    b.ponte = null;
+    if (ant && (sa || en)) {
+      const fundo = { x: 0, y: 0, w: 1080, h: 1920, r: 0, cor: T.papel, a: 1 };
+      const dst = en || fundo, src = sa || Object.assign({}, dst, { x: dst.x + dst.w / 2, y: dst.y + dst.h / 2, w: 0, h: 0, a: 0 });
+      b.ponte = { src, dst, viraFundo: !en };
+    }
+  });
+  // avisos para o Claude conferir antes da prancha
+  PARTES.forEach(p => { if (p.texto && !/^l\d+$|^sugestoes$|^peca$/.test(p.id) && nPal(p.texto) > 7) AVISOS.push(`cena ${p.cena + 1}, ${p.id}: ${nPal(p.texto)} palavras num bloco (até 7 por vez)`); });
+  CS.forEach((b, k) => {
+    const c = b.c;
+    if (c.tipo === 'lei' && !c.fonte) AVISOS.push(`cena ${k + 1}: lei sem fonte no rodapé`);
+    if (c.tipo === 'cuidado' && c.numero && !c.fonte) AVISOS.push(`cena ${k + 1}: número sem fonte`);
+    if (c.tipo === 'passos' && (c.passos || []).length > 3) AVISOS.push(`cena ${k + 1}: ${(c.passos || []).length} passos (o formato pede até 3)`);
+    if (!TIPOS[c.tipo]) AVISOS.push(`cena ${k + 1}: tipo "${c.tipo}" desconhecido, desenhado como cuidado`);
+  });
+  if (TOTAL > 45) AVISOS.push(`vídeo com ${TOTAL.toFixed(1)} s: passa de 45 s; encurte o texto ou divida em dois vídeos`);
+  window.REGUA = {
+    total: +TOTAL.toFixed(3), ponte: R.ponte, avisos: AVISOS,
+    partes: PARTES.map(p => ({ cena: p.cena, id: p.id, texto: p.texto + (p.extra ? ' / ' + p.extra : ''), dur: +p.dur.toFixed(3), em: +p.em.toFixed(3), na: p.na })),
+    cenas: CS.map((b, k) => ({ tipo: b.c.tipo, rotulo: b.c.rotulo || '', ini: +b.ini.toFixed(3), fim: +(k < CS.length - 1 ? CS[k + 1].ini : TOTAL).toFixed(3) }))
+  };
+  window.PRONTO = true;
+})();
+
+const fill = () => [...barra.querySelectorAll('.seg i')];
+function ret(e, g) {
+  const c = hexRgb(g.cor);
+  Object.assign(e.style, { left: g.x + 'px', top: g.y + 'px', width: Math.max(0, g.w) + 'px', height: Math.max(0, g.h) + 'px', borderRadius: g.r + 'px', background: `rgba(${c.join(',')},${U.clamp(g.a)})` });
+}
+const misturar = (a, b, p) => { const x = hexRgb(a), y = hexRgb(b); return '#' + x.map((v, i) => Math.round(U.lerp(v, y[i], p)).toString(16).padStart(2, '0')).join(''); };
+const esconde = (e, sim) => { if (!e) return; const n = typeof e === 'function' ? e() : e; if (n) n.style.visibility = sim ? 'hidden' : ''; };
+
+window.desenhar = t => {
+  if (!window.PRONTO) return;
+  const segs = fill();
+  let ponteAtiva = null;
+  CS.forEach((b, k) => {
+    const prox = CS[k + 1], saiEm = prox ? prox.ini - R.ponte : Infinity;
+    const vis = (k === 0 || t >= b.ini - R.ponte) && t < saiEm + 0.55;
+    b.raiz.style.visibility = vis ? '' : 'hidden';
+    if (!vis) return;
+    const fora = U.eio(U.pr(t, saiEm, saiEm + 0.5));
+    b.raiz.style.opacity = 1 - fora; b.raiz.style.filter = fora > 0 ? `blur(${fora * 7}px)` : ''; b.raiz.style.transform = fora > 0 ? `translateY(${-50 * fora}px)` : '';
+    b.desenhar(t, b.m, !!b.ponte);
+    esconde(b.elSaida, !!(prox && prox.ponte && prox.ponte.src.a > 0 && t >= saiEm));    // a ponte assume o lugar da peça que sai
+    if (b.ponte && b.elEntrada && t < b.ini) esconde(b.elEntrada, true); else esconde(b.elEntrada, false);
+    if (b.ponte && t >= b.ini - R.ponte && t < b.ini) ponteAtiva = b;
+  });
+  if (ponteAtiva) {
+    const { src, dst, viraFundo } = ponteAtiva.ponte, p = U.eio(U.pr(t, ponteAtiva.ini - R.ponte + 0.05, ponteAtiva.ini));
+    ponteEl.style.display = 'block';
+    ret(ponteEl, { x: U.lerp(src.x, dst.x, p), y: U.lerp(src.y, dst.y, p), w: U.lerp(src.w, dst.w, p), h: U.lerp(src.h, dst.h, p),
+      r: U.lerp(src.r, dst.r, p), cor: misturar(src.cor, dst.cor, viraFundo ? p : Math.min(1, p * 1.4)), a: U.lerp(src.a, dst.a, p) });
+  } else ponteEl.style.display = 'none';
+  // barra das partes e rótulo da cena (troca com desfoque curto na ponte)
+  CS.forEach((b, k) => {
+    segs[k].style.width = U.clamp((t - b.ini) / Math.max(0.1, b.fimConteudo - b.ini)) * 100 + '%';
+    const ent = k === 0 ? -1 : b.ini - R.ponte + 0.2, sai = CS[k + 1] ? CS[k + 1].ini - R.ponte + 0.2 : Infinity;
+    const op = (k === 0 ? 1 : U.eio(U.pr(t, ent, ent + 0.4))) * (1 - U.eio(U.pr(t, sai, sai + 0.4)));
+    Object.assign(rotulos[k].style, { opacity: op, filter: `blur(${(1 - op) * 8}px)` });
+  });
+  barra.style.opacity = U.clamp(t / 0.3);
+};
+</script>
+</body></html>

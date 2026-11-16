@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Logo em 3D</title>
+<!-- Logo em 3D: uma ou duas logos em 3D, girando com uma pausa de frente (dá para ler).
+     Logo em vetor (.svg) vira volume extrudado; logo em imagem (.png, .jpg) vira um ícone grosso com a imagem na frente.
+     DADOS: logos [{arquivo (em midia/), cor (frente do vetor), corLado (borda), tamanho (px)}], modo, fim, marcas, topo, altura
+       modo "flutuar" (padrão): cada logo parada em posicoes [[x, y]] do quadro, entrando na sua marca
+       modo "maos": cada logo segue a mão: trilhas [[[x, topo da mão], ...], ...], uma por logo, com os tempos de todas as
+                    trilhas em marcas, na mesma ordem (scripts/rastrear_maos.py gera os dois); sobe (px acima da mão)
+       modo "cartao": a primeira logo num cartão acima da cabeça com rotulo, titulo e sub
+       modo "duelo": a primeira logo avança na marca e a segunda se desfaz em pedaços; selo (texto do vencedor)
+     Nunca: logo de cliente, de parte ou de órgão público em uso promocional; marca de terceiro só para citar ou comparar,
+     sem sugerir parceria. -->
+<style>
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden;font-family:var(--t-texto)}
+#c{position:absolute;left:0}
+.card{position:absolute;left:90px;right:90px;border-radius:34px;background:rgba(18,16,14,.72);box-shadow:0 18px 50px rgba(0,0,0,.35);display:none}
+.nome{position:absolute;left:330px;right:110px;color:#fff;display:none}
+.nome small{display:block;font:600 26px var(--t-texto);letter-spacing:.24em;color:var(--c-destaque);text-transform:uppercase}
+.nome b{display:block;font:800 78px/1 var(--t-cond);margin-top:10px}
+.nome span{display:block;font:500 28px var(--t-texto);color:rgba(255,255,255,.78);margin-top:12px}
+#vs{position:absolute;left:0;width:1080px;text-align:center;font:800 76px var(--t-cond);color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.55);display:none}
+#anel{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:10px solid #fff;display:none}
+#selo{position:absolute;left:0;width:1080px;text-align:center;display:none}
+#selo span{display:inline-block;padding:12px 30px;border-radius:999px;background:var(--c-destaque);color:#1d1408;font:800 34px var(--t-texto);letter-spacing:.16em;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+</style>
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+</head><body><div class="card" id="card"></div><canvas id="c"></canvas><div class="nome" id="nome"></div><div id="vs">×</div><div id="anel"></div><div id="selo"><span></span></div>
+<script src="base.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const D = DADOS, modo = D.modo || 'flutuar', MK = D.marcas || [];
+const LOGOS = (D.logos || [{ arquivo: 'midia/logo.svg' }]).slice(0, 2);
+const url = a => '/midia/' + String(a).replace(/^\//, '');           // arquivos ficam em midia/ da pasta da Mesa
+
+// área gravada: só a faixa onde as logos passam (menos quadros grandes para gravar)
+let A;
+if (modo === 'cartao' || modo === 'duelo') A = { x: 0, y: D.topo ?? 210, w: 1080, h: D.altura ?? 380 };
+else {
+  const ys = modo === 'maos' ? (D.trilhas || []).flat().map(p => p[1] - (D.sobe ?? 125)) : (D.posicoes || [[540, 420]]).map(p => p[1]);
+  const meia = Math.max(...LOGOS.map(l => l.tamanho ?? 250)) * 0.75 + 30;
+  const y0 = Math.max(0, Math.floor(Math.min(...ys) - meia - 20)), y1 = Math.min(1920, Math.ceil(Math.max(...ys) + meia + 20));
+  A = { x: 0, y: D.topo ?? y0, w: 1080, h: D.altura ?? (y1 - y0) };
+}
+window.AREA = A;
+const canvas = document.getElementById('c'); canvas.style.top = A.y + 'px';
+const r = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
+r.setPixelRatio(1); r.setSize(A.w, A.h); r.setClearColor(0x000000, 0); r.outputColorSpace = THREE.SRGBColorSpace;
+const cena = new THREE.Scene();
+cena.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.04).texture;
+const FOV = 30, DIST = 12, cam = new THREE.PerspectiveCamera(FOV, A.w / A.h, 0.1, 100); cam.position.set(0, 0, DIST);
+const luz = new THREE.DirectionalLight(0xffffff, 1.1); luz.position.set(2, 4, 6); cena.add(luz);
+cena.add(new THREE.AmbientLight(0xffffff, 0.55));
+const K = 2 * DIST * Math.tan(FOV / 2 * Math.PI / 180) / A.h;          // mundo por pixel no plano z = 0
+const pos = (o, px, py) => o.position.set((px - A.w / 2) * K, -(py - A.y - A.h / 2) * K, 0);   // px, py no quadro 1080 x 1920
+// reflexo do ambiente quase zero: com mais que isso a cor da marca desbota
+const mat = (cor, rough = 0.45, proprio = 0.2, map = null) => new THREE.MeshStandardMaterial({ color: map ? 0xffffff : cor, map, emissive: map ? 0x000000 : cor, emissiveIntensity: proprio, roughness: rough, metalness: 0, envMapIntensity: 0.04, transparent: true });
+// giro com pausa de frente: para um instante virada para a câmera e dá a volta rápido
+const giro = (t, periodo = 2.2) => { const n = Math.floor(t / periodo), f = t / periodo - n; return 2 * Math.PI * (n + U.eio(U.pr(f, 0.35, 1))); };
+
+async function vetor(l) {
+  const txt = await (await fetch(url(l.arquivo))).text(), svg = new SVGLoader().parse(txt);
+  const formas = []; for (const p of svg.paths) for (const s of SVGLoader.createShapes(p)) formas.push(s);
+  const vb = (txt.match(/viewBox="([^"]+)"/) || [0, '0 0 100 100'])[1].trim().split(/[ ,]+/).map(Number), tam = Math.max(vb[2], vb[3]);
+  const g = new THREE.ExtrudeGeometry(formas, { depth: tam * 0.16, bevelEnabled: true, bevelThickness: tam * 0.035, bevelSize: tam * 0.022, bevelSegments: 4, curveSegments: 14 });
+  g.computeBoundingBox(); const c = new THREE.Vector3(); g.boundingBox.getCenter(c); g.translate(-c.x, -c.y, -c.z);
+  g.scale(1 / tam, -1 / tam, 1 / tam);
+  const cor = new THREE.Color(l.cor || COR.destaque), lado = l.corLado ? new THREE.Color(l.corLado) : cor.clone().multiplyScalar(0.62);
+  return new THREE.Mesh(g, [mat(cor, 0.45, 0.18), mat(lado, 0.55, 0.08)]);
+}
+async function imagem(l) {
+  const tx = await new THREE.TextureLoader().loadAsync(url(l.arquivo)); tx.colorSpace = THREE.SRGBColorSpace; tx.anisotropy = 8;
+  const asp = tx.image.width / tx.image.height, w = asp >= 1 ? 1 : asp, h = asp >= 1 ? 1 / asp : 1, rr = Math.min(w, h) * 0.22;
+  const s = new THREE.Shape();                                           // ícone de cantos arredondados, de 0 a w por 0 a h
+  s.moveTo(rr, 0); s.lineTo(w - rr, 0); s.quadraticCurveTo(w, 0, w, rr); s.lineTo(w, h - rr); s.quadraticCurveTo(w, h, w - rr, h);
+  s.lineTo(rr, h); s.quadraticCurveTo(0, h, 0, h - rr); s.lineTo(0, rr); s.quadraticCurveTo(0, 0, rr, 0);
+  const g = new THREE.ExtrudeGeometry(s, { depth: 0.12, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.02, bevelSegments: 4, curveSegments: 12 });
+  const uv = g.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / w, uv.getY(i) / h);   // a imagem cobre a frente
+  g.translate(-w / 2, -h / 2, -0.06);
+  return new THREE.Mesh(g, [mat(0xffffff, 0.35, 0, tx), mat(new THREE.Color(l.corLado || '#d9d9d9'), 0.5, 0.05)]);
+}
+async function logo(l) {
+  const m = /\.svg$/i.test(l.arquivo) ? await vetor(l) : await imagem(l);
+  const g = new THREE.Group(); g.add(m); cena.add(g); return g;
+}
+function brilho(cor) {                                                    // halo suave atrás (só sobre o vídeo, fora do cartão)
+  const cv = document.createElement('canvas'); cv.width = cv.height = 256; const x = cv.getContext('2d');
+  const rg = x.createRadialGradient(128, 128, 0, 128, 128, 128); rg.addColorStop(0, cor); rg.addColorStop(1, 'rgba(0,0,0,0)');
+  x.fillStyle = rg; x.fillRect(0, 0, 256, 256);
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, depthWrite: false })); cena.add(s); return s;
+}
+function trilha(pts, ts) {
+  return t => {
+    if (t <= ts[0]) return pts[0];
+    for (let i = 1; i < ts.length; i++) if (t <= ts[i]) {
+      const u = (t - ts[i - 1]) / Math.max(1e-3, ts[i] - ts[i - 1]), e = u * u * (3 - 2 * u);
+      return [U.lerp(pts[i - 1][0], pts[i][0], e), U.lerp(pts[i - 1][1], pts[i][1], e)];
+    }
+    return pts[pts.length - 1];
+  };
+}
+const objs = []; for (const l of LOGOS) objs.push(await logo(l));
+
+if (modo === 'flutuar' || modo === 'maos') {
+  const segue = [];
+  if (modo === 'maos') {
+    let k = 0;
+    for (const tr of D.trilhas || []) { const ts = MK.slice(k, k + tr.length); k += tr.length; segue.push({ f: trilha(tr, ts), t0: ts[0] ?? 0 }); }
+  } else (D.posicoes || [[540, 420], [540, 420]]).forEach((p, i) => segue.push({ f: () => p, t0: MK[i] ?? 0.15 + i * 0.6 }));
+  const halos = objs.map(() => brilho('rgba(255,255,255,.45)')), sobe = modo === 'maos' ? (D.sobe ?? 125) : 0;
+  window.desenhar = t => {
+    objs.forEach((o, i) => {
+      const s = segue[i] || segue[0], S = (LOGOS[i].tamanho ?? 250) * K, fase = i * 1.1;
+      const ent = U.mola(t - s.t0 + 0.05, 0.55), sai = 1 - U.eo(U.pr(t, FIM - 0.05, FIM + 0.3)), k = Math.max(0.0001, ent * sai);
+      const [x, y] = s.f(t);
+      pos(o, x, y - sobe + Math.sin(t * 3.2 + fase) * 10); o.scale.setScalar(S * k);
+      o.rotation.y = giro(Math.max(0, t - s.t0) + fase * 0.5) + (1 - ent) * 3; o.rotation.x = 0.18 + 0.06 * Math.sin(t * 1.7 + fase); o.rotation.z = -0.06;
+      halos[i].position.copy(o.position); halos[i].position.z = -0.6; halos[i].scale.setScalar(S * 1.7 * k); halos[i].material.opacity = 0.6 * k;
+    });
+    r.render(cena, cam);
+  };
+}
+
+if (modo === 'cartao') {
+  objs.slice(1).forEach(o => (o.visible = false));
+  const card = document.getElementById('card'), nome = document.getElementById('nome'), o = objs[0];
+  card.style.top = (A.y + 40) + 'px'; card.style.height = (A.h - 80) + 'px'; nome.style.top = (A.y + 78) + 'px';
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  nome.innerHTML = `<small>${esc(D.rotulo)}</small><b>${esc(D.titulo)}</b><span>${esc(D.sub)}</span>`;
+  card.style.display = nome.style.display = 'block';
+  window.desenhar = t => {
+    const al = U.janela(t, FIM, 0.3, 0.3), ent = U.mola(t, 0.6);
+    card.style.opacity = al; card.style.transform = `translateY(${(1 - ent) * -30}px) scale(${0.94 + 0.06 * ent})`;
+    const pn = U.mola(t - 0.25, 0.5); nome.style.opacity = al * U.clamp(pn); nome.style.transform = `translateX(${(1 - pn) * 40}px)`;
+    pos(o, 215, A.y + A.h / 2); o.scale.setScalar(200 * K * Math.max(0.0001, ent * al));
+    o.rotation.y = giro(t, 2.4); o.rotation.x = 0.15;
+    r.render(cena, cam);
+  };
+}
+
+if (modo === 'duelo') {
+  const [vence, perde] = objs;
+  const vs = document.getElementById('vs'), anel = document.getElementById('anel'), selo = document.getElementById('selo');
+  vs.style.display = anel.style.display = selo.style.display = 'block';
+  vs.style.top = (A.y + A.h / 2 - 60) + 'px'; selo.style.top = (A.y + A.h - 74) + 'px';
+  selo.querySelector('span').textContent = D.selo || '';
+  if (!D.selo) selo.style.display = 'none';
+  const th = (MK[0] ?? 1.2) + 0.28, yc = A.y + A.h / 2 - 20, S = (D.tamanho ?? 215) * K;
+  // pedaços da logo que perde: direção, giro e tamanho sorteados uma vez (o mesmo t sempre dá o mesmo quadro)
+  const rnd = U.semente(11), pedacos = [], corP = new THREE.Color((LOGOS[1] || {}).cor || '#f2f2f2');
+  const mp = [new THREE.MeshStandardMaterial({ color: corP, roughness: 0.35, transparent: true }), new THREE.MeshStandardMaterial({ color: 0x1b1b1b, roughness: 0.4, transparent: true })];
+  for (let i = 0; i < 46; i++) {
+    const m = new THREE.Mesh(new THREE.TetrahedronGeometry(0.06 + rnd() * 0.11), mp[i % 4 ? 0 : 1]); cena.add(m); m.visible = false;
+    const ang = (rnd() - 0.35) * Math.PI * 1.2;
+    pedacos.push({ m, vx: Math.cos(ang) * (2.5 + rnd() * 4.5), vy: Math.sin(ang) * (2 + rnd() * 4) + 2.2, vz: (rnd() - 0.5) * 4, rx: rnd() * 9, ry: rnd() * 9, ox: (rnd() - 0.5) * 1.1, oy: (rnd() - 0.5) * 0.9 });
+  }
+  window.desenhar = t => {
+    const al = U.janela(t, FIM, 0.3, 0.3), ent = U.mola(t, 0.55);
+    const avanco = U.eio(U.pr(t, th - 0.28, th)), volta = U.eo(U.pr(t, th + 0.05, th + 0.7));
+    const xv = U.lerp(U.lerp(320, 650, avanco), 540, volta), cresce = 1 + 0.32 * U.mola(t - th - 0.1, 0.6);
+    pos(vence, xv, yc); vence.scale.setScalar(S * cresce * Math.max(0.0001, ent * al));
+    vence.rotation.y = giro(t, 2.2) + avanco * 4; vence.rotation.x = 0.15; vence.rotation.z = -0.25 * avanco * (1 - volta);
+    if (perde) {
+      perde.visible = t < th;
+      if (perde.visible) { pos(perde, 760 + U.pr(t, th - 0.12, th) * 10, yc); perde.scale.setScalar(S * Math.max(0.0001, ent * al)); perde.rotation.y = -giro(t, 2.2); perde.rotation.x = 0.15; }
+    }
+    const dt = t - th;
+    for (const p of pedacos) {
+      p.m.visible = !!perde && dt > 0 && al > 0.01; if (!p.m.visible) continue;
+      const bx = (760 - A.w / 2) * K + p.ox * S, by = -(yc - A.y - A.h / 2) * K + p.oy * S;
+      p.m.position.set(bx + p.vx * dt, by + p.vy * dt - 4.8 * dt * dt, p.vz * dt); p.m.rotation.set(p.rx * dt, p.ry * dt, 0);
+      p.m.material.opacity = (1 - U.pr(dt, 0.7, 1.3)) * al;
+    }
+    vs.style.opacity = perde ? al * U.clamp(ent) * (1 - U.pr(t, th - 0.3, th - 0.1)) : 0; vs.style.transform = `scale(${0.6 + 0.4 * U.clamp(ent)})`;
+    const pa = U.pr(dt, 0, 0.45);
+    anel.style.opacity = perde && dt > 0 ? (1 - pa) * al : 0; anel.style.left = '705px'; anel.style.top = yc + 'px';
+    anel.style.transform = `scale(${1 + pa * 9})`; anel.style.borderWidth = (10 * (1 - pa) + 1) + 'px';
+    const ps = U.mola(dt - 0.45, 0.5); selo.style.opacity = U.clamp(ps) * al; selo.style.transform = `translateY(${(1 - ps) * 20}px) scale(${0.8 + 0.2 * U.clamp(ps)})`;
+    r.render(cena, cam);
+  };
+}
+window.PRONTO = true;
+</script>
+</body></html>

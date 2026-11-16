@@ -1,0 +1,2387 @@
+{
+ "nome": "Árvore de Links · Biblioteca de carrosséis do Marketing Jurídico com Claude",
+ "versao": "2026.10.29",
+ "atualizado_em": "2026-10-29",
+ "total": 61,
+ "regras": [
+  "Do modelo se copia só o layout. Cores, fontes, ênfase, tratamento de foto e assinatura vêm sempre da identidade do advogado.",
+  "Copie sempre pelo link_modelo (link de modelo do Canva, que cria uma cópia na conta do advogado). view_url serve apenas para olhar o modelo.",
+  "Troque todo texto, nome fictício, @ e site de exemplo. Nada do texto original fica.",
+  "Respeite riscos_oab: nada de depoimento, promessa de resultado, preço para captar, ostentação ou caso concreto.",
+  "Foto sempre real do advogado; sem foto, fundo liso e texto. Nunca imagem gerada por IA.",
+  "Português do Brasil, sem travessão e sem a construção 'não é X, é Y'."
+ ],
+ "categorias": [
+  {
+   "id": "Elegante",
+   "resumo": "Sofisticação editorial: foto em destaque, serifa refinada, paleta neutra e muito respiro.",
+   "quando_escolher": "Escolha a categoria Elegante para o advogado que quer ser percebido como sofisticado, seguro e de alto padrão, com uma presença próxima de revista de moda ou de arquitetura. Funciona melhor para quem tem um ensaio fotográfico de qualidade, porque a maioria dos modelos vive da foto em tela cheia. Combina com advocacia de família de alto padrão, sucessões e planejamento patrimonial, empresarial para sócios e executivos, imobiliário e consultoria personalizada. O tom vai do sóbrio ao próximo (A e B). Para o iniciante sem fotos, só os modelos marcados como foto opcional ou sem foto servem."
+  },
+  {
+   "id": "Criativo",
+   "resumo": "Personalidade e proximidade: colagens, recortes, notas, marca-texto e elementos feitos à mão.",
+   "quando_escolher": "Escolha a categoria Criativo para o advogado que quer humanizar o perfil, mostrar rotina e bastidor e falar de igual para igual com o público. Os modelos usam colagem, scrapbook, post-its, anotações manuscritas e cores mais vivas, então pedem fotos variadas (retrato, espontânea, bastidor, detalhe). Combina com advocacia para empreendedores, startups, criadores de conteúdo, consumidor, trabalhista do lado do empregado e famílias jovens. O tom vai do próximo ao descontraído (B e C). Evite em temas pesados, como penal, violência e luto, e para perfis que precisam parecer muito formais."
+  },
+  {
+   "id": "Clássico",
+   "resumo": "Clareza e estrutura: grade organizada, tipografia forte, cartões, listas numeradas e cara institucional.",
+   "quando_escolher": "Escolha a categoria Clássico quando o conteúdo é o protagonista: explicativos, listas, checklists, passo a passo, mito e fato e perguntas frequentes. Os modelos têm grade limpa e hierarquia clara, e vários funcionam só com fundo e texto, o que serve bem ao iniciante sem ensaio fotográfico. Combina com temas técnicos e com escritórios que querem transmitir organização e confiabilidade: tributário, empresarial, previdenciário, trabalhista, contratos e direito público. O tom vai do sóbrio ao próximo (A e B). É a categoria mais segura para o primeiro carrossel de quem ainda não tem identidade visual."
+  }
+ ],
+ "modelos": [
+  {
+   "codigo": "EL-16",
+   "categoria": "Elegante",
+   "design_id": "DAHYwsFxumg",
+   "titulo_original": "Bege Marrom e Cinza Moderno Sobre Empreender Carrossel Post Para Instagram",
+   "view_url": "https://www.canva.com/d/g6dKOg0L6_Ph8Lm",
+   "paginas": 4,
+   "nome": "Retrato executivo em marrom",
+   "visual": "Degradê de bege para marrom café, com retrato posado de blazer escuro na capa e foto de mesa com café e notebook no fecho. Títulos em serifa com itálico e negrito misturados, apoio em sans arredondada, palavra-chave gigante e translúcida ao fundo de cada lâmina, cartão marrom com cantos arredondados e botão 'arraste para o lado'. A sensação é executiva, sofisticada e acolhedora.",
+   "estrutura": "capa com retrato à direita, frase de tese à esquerda, botão de arrastar e assinatura; lâmina com cartão marrom e retrato parcial ao lado; lâmina de texto com caixa contornada e parágrafo em negrito parcial; fecho com foto de bastidor, conclusão em duas frases e assinatura",
+   "quando_escolher": "Transmite um posicionamento sofisticado e firme, de advogado com autoridade que explica um conceito com profundidade e calma. Combina com advocacia empresarial, consultoria, compliance, sucessões, família e qualquer serviço consultivo para público que valoriza seriedade. Pede um retrato posado de meio corpo, com roupa formal e fundo limpo para a capa, e uma foto de bastidor ou detalhe da mesa de trabalho para o fecho. É ideal para carrossel explicativo de um conceito em duas partes (por exemplo, direito e dever, guarda e convivência), reflexão e opinião fundamentada. As lâminas aguentam um título de três linhas e um parágrafo médio. O tom é sóbrio com proximidade. Serve ao intermediário e ao avançado, com pelo menos um bom retrato profissional, e se adapta bem a identidades em tons terrosos.",
+   "quando_evitar": "Evite em listas longas, checklists de muitos itens ou temas descontraídos. Também perde força sem um retrato profissional na capa.",
+   "tipos_carrossel": [
+    "explicativo",
+    "reflexão",
+    "apresentação"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "bastidor",
+    "detalhe"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Nome fictício 'Mariana Napolitani' na assinatura a substituir. Palavras gigantes translúcidas ao fundo (autonomia, responsabilidade, liberdade) precisam ser trocadas junto com o tema.",
+   "link_modelo": "https://canva.link/nvohc09bbym73nj",
+   "na_arvore": "Elegante 01",
+   "nome_na_arvore": "Retrato com serifa itálica em bege"
+  },
+  {
+   "codigo": "EL-01",
+   "categoria": "Elegante",
+   "design_id": "DAHY2zkDz1E",
+   "titulo_original": "Beige Minimalist Client Feedback Testimonials Instagram Post",
+   "view_url": "https://www.canva.com/d/1qDladMap4c2whA",
+   "paginas": 5,
+   "nome": "Cartão creme sobre textura",
+   "visual": "Fundo creme liso alternado com fotos de textura neutra (pedra, linho amassado) cobertas por um cartão off-white centralizado. Tipografia serifada fina em caixa alta para títulos, serifa clássica no corpo e uma sans pequena para rótulos, tudo em cinza grafite. A sensação é de calma, silêncio e refinamento discreto, com muito respiro.",
+   "estrutura": "capa com cartão central sobre textura (rótulo, título e subtítulo); lâmina de texto corrido com nome e avatar redondo à direita; lâmina de frase em destaque dentro do cartão sobre tecido, com assinatura; lâmina de texto corrido com avatar à esquerda; fecho com retrato de costas em tom areia, chamada central e ícones de compartilhar e salvar",
+   "quando_escolher": "Transmite um posicionamento sofisticado e sereno, de advogado que fala pouco e com precisão, muito adequado a quem atende pessoas físicas em temas sensíveis como família, sucessões, planejamento patrimonial ou consultoria preventiva. Combina com ofertas de atendimento consultivo e personalizado, em que a confiança vem da clareza e da discrição. Funciona quase todo sem foto: as texturas neutras fazem o papel de imagem, e o avatar redondo pode receber o próprio retrato do advogado; a última lâmina pede um retrato posado ou espontâneo em ambiente claro, de preferência de costas ou de perfil. Serve bem para carrosséis de reflexão, explicação de um conceito jurídico, pergunta frequente com resposta, ou citação de artigo de lei seguida do comentário do advogado. As lâminas de texto corrido aguentam um parágrafo médio a longo, e a lâmina de cartão aguenta uma frase forte de até três linhas. O tom é sóbrio ou próximo, nunca descontraído. Atende bem o advogado iniciante, porque depende pouco de foto e de identidade pronta, e também o intermediário que já tem paleta neutra definida.",
+   "quando_evitar": "Evite em temas urgentes ou combativos (penal, trabalhista de massa, alertas de golpe), em que a calma do layout tira força da mensagem. Também não combina com advogado de identidade vibrante ou colorida, nem com copy de listas curtas e numeradas.",
+   "tipos_carrossel": [
+    "reflexão",
+    "explicativo",
+    "perguntas frequentes",
+    "citação de lei",
+    "apresentação"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "retrato posado",
+    "retrato espontâneo",
+    "detalhe"
+   ],
+   "densidade": "longa",
+   "aguenta_longa": true,
+   "riscos_oab": "O layout foi feito para depoimentos de clientes, o que é vedado ao advogado. Reaproveite as lâminas com avatar e nome como lâminas de pergunta frequente (a pergunta no lugar do nome, a resposta no texto corrido) ou como citação de lei, doutrina ou súmula, com a fonte no lugar do nome. O fecho com 'link na bio' para curso ou serviço deve virar convite informativo, sem oferta de preço nem promessa de transformação.",
+   "observacoes": "Nomes fictícios (Reese Miller, Olivia Wilson, Jonathan Patterson) e @reallygreatsite a substituir; textos em inglês e lorem ipsum. Os avatares redondos são fotos de banco a trocar ou remover.",
+   "link_modelo": "https://canva.link/ki75idbihuhqfg3",
+   "na_arvore": "Elegante 02",
+   "nome_na_arvore": "Cartão de depoimentos sobre textura"
+  },
+  {
+   "codigo": "EL-05",
+   "categoria": "Elegante",
+   "design_id": "DAHY284A8sM",
+   "titulo_original": "Black and Green Modern Why Do People Actually Buy Instagram Carousel Post",
+   "view_url": "https://www.canva.com/d/_U5ci04QrEtCsgT",
+   "paginas": 5,
+   "nome": "Preto com verde-limão editorial",
+   "visual": "Fundo preto com fotos escurecidas em sangria ou recortadas em retângulo central, texto em verde-limão neon. Títulos em sans grotesca leve misturada com negrito e itálico, cabeçalho com nome da marca e data, paginação '( 01\\05 )' e botão de seta em cápsula. A sensação é moderna, de revista de negócios, contemporânea e enxuta.",
+   "estrutura": "capa com título quebrado em volta de uma foto recortada; duas lâminas de tópicos alinhados à direita com marcadores de brilho; lâmina de destaque com frase grande; fecho com pergunta, foto recortada e seta para baixo",
+   "quando_escolher": "Transmite um posicionamento moderno, direto e analítico, de advogado que lê o mercado e fala com empresários. Combina com direito empresarial, tributário, startups, propriedade intelectual, direito digital e consultoria para negócios. Usa fotos escurecidas de ambiente como pano de fundo, que podem ser bastidores do escritório, reuniões ou cenas de trabalho, sem precisar do rosto do advogado. Funciona para carrosséis explicativos curtos, lista de três fatores, etapas de um processo e pergunta para engajar no final. Cada lâmina aguenta um título de três linhas e três tópicos curtos. O tom é sóbrio com energia, ou próximo e direto. Atende o intermediário ou avançado com identidade que suporte cor de destaque forte; para o iniciante, basta trocar o verde por uma cor da marca.",
+   "quando_evitar": "Evite em temas sensíveis e de acolhimento (família, luto, saúde), em que o contraste neon fica agressivo. Também não comporta parágrafos longos.",
+   "tipos_carrossel": [
+    "explicativo",
+    "lista",
+    "passo a passo",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "ambiente",
+    "bastidor"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina 'Case Spotlight' foi feita para caso de sucesso com número de resultado, vedado ao advogado. Use-a para uma mudança de lei, um dado público de fonte oficial ou um entendimento de tribunal. Não cite prova social nem depoimentos.",
+   "observacoes": "Nome de marca fictício (Hanover and Tyke), data e reallygreatsite.com no cabeçalho e rodapé a substituir.",
+   "link_modelo": "https://canva.link/efsdua7zlkjukgs",
+   "na_arvore": "Elegante 03",
+   "nome_na_arvore": "Preto com título verde-limão"
+  },
+  {
+   "codigo": "EL-12",
+   "categoria": "Elegante",
+   "design_id": "DAHY2fPrH2U",
+   "titulo_original": "Black Minimalist Real Estate Tips Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/khtO0Ba0fu8WBON",
+   "paginas": 6,
+   "nome": "Lista numerada em foto escura",
+   "visual": "Fotos de arquitetura em sangria total com degradê escuro na parte de baixo, cabeçalho com @, ícone central em círculo e cargo à direita. Títulos em serifa clássica branca, destaque em itálico amarelo claro, apoio em sans de caixa alta espaçada, número da dica em itálico amarelo e indicador de páginas com bolinhas. A sensação é premium, institucional e organizada.",
+   "estrutura": "capa com título em três linhas, frase de apoio e botão de seta; cinco lâminas de dica numeradas de 01 a 05, cada uma com título, explicação de três linhas e bolinhas de progresso; última com ícone de salvar",
+   "quando_escolher": "Transmite um posicionamento técnico e institucional, de advogado de confiança que orienta antes de uma decisão importante. Combina com direito imobiliário, contratos, condomínio, sucessões, empresarial e consultoria preventiva em geral. Pede fotos de ambiente em todas as lâminas, que podem ser imóveis, fachada do escritório, sala de reunião ou detalhes do espaço de trabalho, sem rosto do advogado. É o modelo certo para lista de dicas, checklist antes de assinar, cinco cuidados ou cinco erros comuns. Cada lâmina aguenta um título de duas linhas e uma explicação de três linhas. O tom é sóbrio. Serve ao iniciante com fotos de banco coerentes e ao intermediário com fotos do próprio escritório; o ícone e o cargo do cabeçalho viram a área de atuação do advogado.",
+   "quando_evitar": "Evite em apresentação pessoal, reflexão ou bastidor, porque o layout é impessoal. Também não comporta explicações longas.",
+   "tipos_carrossel": [
+    "lista",
+    "dicas",
+    "checklist",
+    "explicativo"
+   ],
+   "tom": [
+    "A"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Cabeçalho com @reallygreatsite e 'Real Estate Agent' a substituir pelo @ e a área do advogado; o ícone de casa pode virar ícone da área.",
+   "link_modelo": "https://canva.link/btszh8axctw16vu",
+   "na_arvore": "Elegante 04",
+   "nome_na_arvore": "Fachada escura com serifa clara"
+  },
+  {
+   "codigo": "EL-06",
+   "categoria": "Elegante",
+   "design_id": "DAHY21yA_NA",
+   "titulo_original": "Black White Bold Minimalist Content Creator Business Tips Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/XXIRi2cGggUcWC6",
+   "paginas": 5,
+   "nome": "Monocromático de impacto",
+   "visual": "Preto, grafite e cinza claro, com gradientes de luz granulados na capa e no fecho e fundos lisos no miolo. Títulos em sans larga e pesada em caixa alta, apoio em sans itálica, texto riscado, aspas grandes e setas finas. A sensação é firme, direta e confiante, sem nenhuma foto.",
+   "estrutura": "capa com afirmação forte, frase de virada e chamada para arrastar; lâmina de 'armadilha' com frase riscada; lâmina de comparação entre dois perfis separados por linha; lâmina de três trocas numeradas com palavra riscada e seta para a nova; fecho com conclusão e convite para salvar e compartilhar",
+   "quando_escolher": "Passa um posicionamento técnico, firme e moderno, de advogado que corrige ideias erradas com segurança. Combina com qualquer área, em especial empresarial, trabalhista patronal, tributário e contratos, e com serviços de consultoria preventiva. Não usa foto, então funciona só com fundo e texto e é excelente para quem ainda não tem ensaio. É o modelo certo para mito e fato, comparação entre dois conceitos (por exemplo, rescisão indireta e pedido de demissão), erros comuns e 'o que você acha que é e o que a lei diz'. Cada lâmina aguenta um título curto e uma a duas frases, ou uma lista de três trocas. O tom é sóbrio e direto, podendo ser provocativo sem perder a elegância. Serve muito bem ao iniciante sem identidade, porque a paleta neutra aceita qualquer fonte e cor de destaque, e também ao avançado que quer um formato de opinião.",
+   "quando_evitar": "Evite em temas de acolhimento e luto, em que o peso tipográfico soa duro. Também não serve para textos longos nem para apresentação pessoal.",
+   "tipos_carrossel": [
+    "mito e fato",
+    "explicativo",
+    "lista",
+    "dicas",
+    "reflexão"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "nao_usa",
+   "fotos_tipo": [],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "@reallygreatsite no cabeçalho a substituir.",
+   "link_modelo": "https://canva.link/u8fzfqf3q9ik29o",
+   "na_arvore": "Elegante 05",
+   "nome_na_arvore": "Preto e branco com título em caixa-alta"
+  },
+  {
+   "codigo": "EL-02",
+   "categoria": "Elegante",
+   "design_id": "DAHY29neY68",
+   "titulo_original": "Blue and Gray Modern Self-Care Instagram Post",
+   "view_url": "https://www.canva.com/d/WqfRpQbvOcprYsH",
+   "paginas": 10,
+   "nome": "Editorial urbano em foto cheia",
+   "visual": "Todas as lâminas usam foto em sangria total de uma mesma pessoa em cenário urbano (rua, escada rolante, faixa de pedestre), com tratamento frio e dessaturado em azul e cinza. O texto entra em amarelo manteiga, com serifa condensada para títulos, uma letra cursiva caligráfica de acento e uma sans simples para frases de apoio. A sensação é de revista de moda, cinematográfica e confiante.",
+   "estrutura": "capa com título em serifa e palavra-chave em cursiva sobre foto aérea, com subtítulo no rodapé; lâmina dividida em duas fotos (antes e depois de um pensamento); lâminas de frase curta sobre retrato; lâmina de lista com travessões curtos e linhas finas; lâminas de frase de impacto centralizada; fecho com frase grande e palavra final em cursiva",
+   "quando_escolher": "Passa um posicionamento sofisticado, moderno e autoral, de advogado com presença pessoal forte que aparece como protagonista da própria comunicação. Combina com advocacia consultiva para empresários, direito digital, empresarial, ou com advogados que vendem a própria visão de mundo profissional e querem gerar identificação. Exige fotos: são muitas lâminas com retrato em ambiente, idealmente um ensaio inteiro do advogado em cenários urbanos, com variação de enquadramento (de cima, de perfil, caminhando, olhando para o lado). Funciona para carrosséis de reflexão, crenças da profissão, antes e depois de um pensamento, mito e verdade e lista curta de princípios. Cada lâmina aguenta só uma ou duas frases curtas, porque o texto disputa espaço com a foto. O tom fica entre sóbrio e próximo, com um leve toque de inspiração. É indicado para o advogado avançado, com ensaio fotográfico profissional e estilo próprio já definido; sem fotos de qualidade o modelo perde todo o efeito.",
+   "quando_evitar": "Evite para conteúdo técnico denso, prazos, passo a passo ou explicações de lei, porque o layout não comporta texto. Também não serve para quem não tem ensaio fotográfico ou não quer aparecer.",
+   "tipos_carrossel": [
+    "reflexão",
+    "mito e fato",
+    "lista",
+    "bastidor",
+    "apresentação"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "retrato posado",
+    "ambiente"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "Cuidado para que o ensaio e as frases sobre sucesso e luxo não soem como ostentação. Prefira cenários de trabalho e frases sobre conduta profissional.",
+   "observacoes": "10 páginas; a lâmina 2 usa duas fotos empilhadas. Para a sequência inteira são necessárias de 8 a 10 fotos diferentes do advogado.",
+   "link_modelo": "https://canva.link/ddwoveyl0hndpt9",
+   "na_arvore": "Elegante 06",
+   "nome_na_arvore": "Foto azul com letreiro amarelo"
+  },
+  {
+   "codigo": "EL-19",
+   "categoria": "Elegante",
+   "design_id": "DAHYwQIiwlI",
+   "titulo_original": "Carrossel aesthetic Moderno Relaxamento Post para Instagram",
+   "view_url": "https://www.canva.com/d/XDODxAzzC3rfFIa",
+   "paginas": 6,
+   "nome": "Reflexão poética em foto cheia",
+   "visual": "Fotos em sangria total com clima de cinema, algumas em preto e branco, outras quentes e desbotadas. Títulos misturando serifa itálica fina e sans negrito pesada, palavra de impacto em caixa alta, número da lâmina em serifa no canto e assinatura no topo direito. A sensação é editorial, sensível e provocativa.",
+   "estrutura": "capa com título grande em duas fontes sobre retrato e assinatura no rodapé; quatro lâminas que constroem um raciocínio em sequência (frase comum, pergunta, virada, conclusão), cada uma com uma ou duas frases; fecho com chamada final",
+   "quando_escolher": "Transmite um advogado reflexivo e autoral, que questiona crenças comuns e gera conversa. Combina com marca pessoal forte, advocacia trabalhista do lado do trabalhador, saúde mental no trabalho, direito de família e temas de comportamento ligados à lei. Exige uma foto forte por lâmina, de preferência ensaio com clima artístico ou imagens de banco muito bem escolhidas e coerentes entre si. Funciona para carrossel de reflexão e de quebra de crença, em que cada lâmina avança uma ideia, com uma a duas frases curtas por lâmina. O tom é próximo ou descontraído, com momentos provocativos. É para o avançado com estilo próprio e repertório visual; o iniciante teria dificuldade de manter a coerência das imagens.",
+   "quando_evitar": "Evite em conteúdo técnico, institucional ou de orientação prática. Também não combina com advogado de posicionamento muito formal.",
+   "tipos_carrossel": [
+    "reflexão",
+    "mito e fato"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "ambiente",
+    "detalhe"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Nome fictício 'Ariel Lima' e @grandesite a substituir. A lâmina final original mostra vinho à beira da piscina; troque por imagem coerente com a advocacia.",
+   "link_modelo": "https://canva.link/ok81s62r687bipd",
+   "na_arvore": "Elegante 07",
+   "nome_na_arvore": "Campo dourado com título sobreposto"
+  },
+  {
+   "codigo": "EL-18",
+   "categoria": "Elegante",
+   "design_id": "DAHYwfPKX7I",
+   "titulo_original": "Carrossel instagram post cinco fatos dobre mim moderno",
+   "view_url": "https://www.canva.com/d/cv7j3f5pYC97kiz",
+   "paginas": 6,
+   "nome": "Cinco fatos em foto cheia",
+   "visual": "Fotos em sangria total com véu escuro suave, alternando retratos espontâneos e cenas de estilo de vida. Capa com 'C' caligráfico gigante, sans fina e divisória vertical; miolo com uma frase numerada em serifa branca pequena, em posições diferentes a cada lâmina. A sensação é íntima, elegante e de revista de estilo.",
+   "estrutura": "capa com título 'cinco fatos sobre mim' e subtítulo entre colchetes; cinco lâminas de foto com um fato numerado cada",
+   "quando_escolher": "Transmite um advogado próximo e com personalidade, que quer gerar conexão mostrando quem é além da toga. Combina com apresentação pessoal, marcos de seguidores e posicionamento de marca pessoal em qualquer área. Exige seis fotos, de preferência um ensaio espontâneo do próprio advogado em situações variadas (lendo, no escritório, em um café, em evento), mais detalhes da rotina. Funciona para carrossel de apresentação no formato 'cinco fatos', 'cinco coisas que você não sabe sobre mim' ou 'cinco crenças sobre a advocacia', com uma frase de até três linhas por lâmina. O tom é próximo ou descontraído. É para o intermediário ou avançado com fotos próprias e disposição para se expor.",
+   "quando_evitar": "Evite para conteúdo técnico ou explicativo e para advogado que prefere imagem reservada. Não use fotos de lazer que possam soar como exibição de padrão de vida.",
+   "tipos_carrossel": [
+    "apresentação",
+    "lista",
+    "bastidor"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "bastidor",
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "As fotos originais de lazer (piscina, vinho, restaurante) podem ser lidas como ostentação; prefira cenas de trabalho e estudo.",
+   "observacoes": "A capa usa a letra 'C' caligráfica separada do resto da palavra 'inco'; ao trocar o número, a letra inicial também precisa ser trocada.",
+   "link_modelo": "https://canva.link/xzg53g6tz3hv09q",
+   "na_arvore": "Elegante 08",
+   "nome_na_arvore": "Cinco fatos sobre mim, com foto"
+  },
+  {
+   "codigo": "EL-03",
+   "categoria": "Elegante",
+   "design_id": "DAHY26SZg5M",
+   "titulo_original": "Green Beige Illustrated Relaxation Instagram Post",
+   "view_url": "https://www.canva.com/d/GSxbn1NO8e7YXh1",
+   "paginas": 10,
+   "nome": "Revista solar em foto cheia",
+   "visual": "Fotos em sangria total com tons de verde-água, areia e pele dourada, levemente desbotadas. Texto em amarelo claro com serifa condensada de revista, palavras em itálico de destaque, um selo oval com o tema e uma moldura polaroide em uma das lâminas. A sensação é de leveza, verão e editorial de estilo de vida.",
+   "estrutura": "capa com selo oval, título grande em três linhas com palavra em itálico e linha fina embaixo; lâmina de palavra gigante com frase de apoio; lâmina de checklist com quadradinhos; lâmina com foto emoldurada tipo polaroide e citação entre aspas; lâminas de frase centralizada; fecho com frase grande sobre foto",
+   "quando_escolher": "Transmite um advogado próximo, acolhedor e humano, que fala de forma leve sobre temas da vida das pessoas. Combina com direito de família, previdenciário, consumidor e saúde, ou com advogados que querem mostrar equilíbrio e qualidade de vida na rotina do escritório. Exige fotos em todas as lâminas, de preferência imagens de ambiente e detalhe com luz natural, podendo mesclar retratos espontâneos do advogado com fotos de cenário. Funciona para carrosséis de checklist curto, reflexão, lembretes e frases de apoio, com até quatro itens de lista por lâmina. O texto deve ser curto, uma frase ou uma lista enxuta. O tom vai de próximo a levemente descontraído. É indicado para o intermediário ou avançado que já tem banco de fotos próprias; o iniciante precisaria de imagens de banco bem escolhidas e coerentes entre si.",
+   "quando_evitar": "Evite em temas pesados, criminais ou empresariais formais, em que a estética de lazer à beira da piscina destoa. Não serve para explicações longas nem para quem quer imagem institucional.",
+   "tipos_carrossel": [
+    "checklist",
+    "reflexão",
+    "lista",
+    "dicas"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe",
+    "retrato espontâneo"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina de citação entre aspas ('you seem calmer now') sugere fala de cliente; troque por pergunta comum que o advogado escuta, sem identificar ninguém, ou por trecho de lei. Evite imagens de lazer que soem como ostentação.",
+   "observacoes": "10 páginas; uma lâmina tem moldura polaroide que recebe uma segunda foto. Fotos originais são de piscina e verão, a substituir.",
+   "link_modelo": "https://canva.link/ppwq8l473sdv14z",
+   "na_arvore": "Elegante 09",
+   "nome_na_arvore": "Foto verde-água com itálico amarelo"
+  },
+  {
+   "codigo": "EL-08",
+   "categoria": "Elegante",
+   "design_id": "DAHY2vTliAA",
+   "titulo_original": "Green Yellow and White Simple Small Habits Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/wGPtyL9HWy5PNmw",
+   "paginas": 6,
+   "nome": "Ensaio tipográfico oliva",
+   "visual": "Capa e fecho com foto desfocada de flor sobre fundo verde musgo, miolo em papel off-white com textura. Títulos gigantes em serifa condensada (amarela na capa, verde oliva no miolo), corpo justificado pequeno e linhas finas formando molduras abertas nos cantos. A sensação é de livro de arte, elegante, calma e intelectual.",
+   "estrutura": "capa com título enorme em quatro linhas e subtítulo; quatro lâminas de tópico com título grande de três linhas e parágrafo explicativo; fecho com título, parágrafo e convite para salvar",
+   "quando_escolher": "Transmite um posicionamento sofisticado e intelectual, de advogado que escreve bem e gosta de explicar com profundidade. Combina com consultoria, direito de família, sucessões, saúde, direito médico e áreas em que o cliente precisa entender antes de decidir. Usa só duas fotos e de forma atmosférica (detalhe desfocado, textura, natureza), então funciona sem retrato do advogado. Serve para carrosséis explicativos, princípios, orientações e reflexões com fundamento, em que cada lâmina é um tópico com título de impacto e explicação. Aguenta um parágrafo de quatro a seis linhas por lâmina, mais o título. O tom é sóbrio ou próximo. É ótimo para o iniciante, que não precisa de fotos, e para o intermediário com fonte serifada na identidade.",
+   "quando_evitar": "Evite em listas rápidas, checklists e conteúdos de urgência. Também não combina com identidade muito colorida ou com estética jovem e descontraída.",
+   "tipos_carrossel": [
+    "explicativo",
+    "dicas",
+    "reflexão",
+    "lista"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "longa",
+   "aguenta_longa": true,
+   "riscos_oab": "",
+   "observacoes": "@reallygreatsite a substituir; há erro de digitação no original ('nedss'), sem efeito após a troca do texto.",
+   "link_modelo": "https://canva.link/vgcg066oe3vpovb",
+   "na_arvore": "Elegante 10",
+   "nome_na_arvore": "Verde-oliva com título amarelo"
+  },
+  {
+   "codigo": "EL-14",
+   "categoria": "Elegante",
+   "design_id": "DAHYxK2Dccs",
+   "titulo_original": "Instagram Post Quem Sou Moderno Verde e Branco",
+   "view_url": "https://www.canva.com/d/UaXXpxhUOuf1Vsq",
+   "paginas": 1,
+   "nome": "Quem sou com balões verdes",
+   "visual": "Retrato espontâneo em sangria total, em sala clara com luz de janela e tons de verde e bege. Etiquetas retangulares verde oliva com texto branco espalhadas em volta da pessoa, título 'Quem sou eu' repetido em cápsulas com efeito de eco e nome em serifa sobre faixa de papel claro. A sensação é acolhedora, leve e pessoal.",
+   "estrutura": "post único: título em cápsula no topo, cinco etiquetas curtas com fatos sobre a pessoa em volta do retrato e nome em destaque no rodapé",
+   "quando_escolher": "Transmite um advogado próximo, acolhedor e acessível, que quer ser conhecido como pessoa. Combina com o post fixado de apresentação, com a chegada de novos seguidores e com qualquer área de atendimento a pessoas físicas. Exige um retrato espontâneo do advogado, de preferência em ambiente aconchegante, sorrindo ou em momento natural, com espaço livre em volta para as etiquetas. Funciona como apresentação 'quem sou', com cinco frases curtas: formação, área, valores, um hábito e uma crença sobre a profissão. Cada etiqueta aguenta no máximo duas linhas curtas. O tom é próximo ou descontraído. Serve bem ao iniciante e ao intermediário que precisam de um post de apresentação simples; depende de uma única boa foto.",
+   "quando_evitar": "Evite para conteúdos técnicos ou para advogado que quer imagem formal e distante. Não funciona com foto de fundo muito cheia, que esconde as etiquetas.",
+   "tipos_carrossel": [
+    "apresentação"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Tem 1 página só: é post único, não carrossel. Nome fictício 'Carla Dias' a substituir.",
+   "link_modelo": "https://canva.link/bjyaxgksa2i5sym",
+   "na_arvore": "Elegante 11",
+   "nome_na_arvore": "Quem sou eu, verde com balões"
+  },
+  {
+   "codigo": "EL-10",
+   "categoria": "Elegante",
+   "design_id": "DAHY2oK5lts",
+   "titulo_original": "Neutral Modern Elegant Online Sale Seamless Instagram Carousel",
+   "view_url": "https://www.canva.com/d/gSvIqj4bzHJTExl",
+   "paginas": 5,
+   "nome": "Moda editorial contínuo",
+   "visual": "Capa com retrato em sangria e título em serifa didone fina com palavra em cursiva entrelaçada; miolo alterna fundo marrom café e cinza claro, com fotos recortadas em retângulos que atravessam de uma lâmina para a próxima (carrossel contínuo). Títulos em serifa estreita de caixa alta, corpo em sans simples. A sensação é de catálogo de moda, refinado e sofisticado.",
+   "estrutura": "capa com retrato, título grande e legenda curta; duas lâminas de texto com foto lateral que continua na lâmina seguinte; lâmina de texto centralizado; fecho com colagem de quatro fotos e título central",
+   "quando_escolher": "Passa um posicionamento sofisticado e de alto padrão, de advogado com imagem cuidada e estética apurada. Combina com advocacia para clientes de alta renda, planejamento patrimonial, direito de família premium, direito da moda e propriedade intelectual. Exige várias fotos: um retrato posado forte na capa e outros retratos ou detalhes do ambiente no miolo, de preferência de um ensaio profissional com figurino coerente. Funciona para carrosséis de bastidor, apresentação do escritório, história da sua trajetória e explicação com contexto. As lâminas de texto aguentam um título e dois parágrafos médios. O tom é sóbrio e elegante. É para o advogado avançado com ensaio e identidade prontos; sem fotos boas, o layout fica vazio.",
+   "quando_evitar": "Evite para advogado iniciante sem ensaio, conteúdo técnico rápido ou listas. Também não combina com público popular ou temas de massa.",
+   "tipos_carrossel": [
+    "bastidor",
+    "apresentação",
+    "explicativo"
+   ],
+   "tom": [
+    "A"
+   ],
+   "publico": [
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O original é de venda com fecho 'order today'. No uso jurídico, o fecho vira convite informativo (por exemplo, 'conheça o escritório' ou 'salve este conteúdo'), sem oferta, preço ou urgência. Cuidado para o visual de luxo não virar ostentação.",
+   "observacoes": "Carrossel contínuo: as fotos atravessam a divisa entre lâminas, então a troca de imagem precisa respeitar o encaixe. @reallygreatsite a substituir.",
+   "link_modelo": "https://canva.link/6gss9l56bykst2s",
+   "na_arvore": "Elegante 12",
+   "nome_na_arvore": "Tons neutros em carrossel contínuo"
+  },
+  {
+   "codigo": "EL-04",
+   "categoria": "Elegante",
+   "design_id": "DAHY29Q5i4k",
+   "titulo_original": "Neutral Simple Instagram Services Instagram Post",
+   "view_url": "https://www.canva.com/d/zTkdVtJBRUxfCZ-",
+   "paginas": 7,
+   "nome": "Passo a passo em oliva escuro",
+   "visual": "Capa e fecho com foto de ambiente quente (mesa de trabalho, luz de janela) e miolo em fundo oliva escuro granulado com uma grande estrela de brilho desfocada em amarelo. Títulos em serifa elegante branca, corpo em sans limpa, um selo 'Step' contornado por traço oval manuscrito e ícones de curtir, comentar e enviar no rodapé. A sensação é acolhedora, organizada e didática.",
+   "estrutura": "capa com foto de mesa de trabalho, título grande e subtítulo; cinco lâminas numeradas em fundo liso com selo de etapa, título de duas linhas e três linhas de explicação ou lista com marcadores; fecho com retrato, considerações finais e convite para comentar",
+   "quando_escolher": "Transmite um advogado didático, organizado e acessível, que explica processos com método. Combina com ofertas de consultoria, regularização, inventário extrajudicial, planejamento previdenciário, abertura de empresa e qualquer serviço que tem etapas claras. Usa pouca foto: só capa e fecho pedem imagem, de preferência ambiente do escritório, detalhe da mesa de trabalho ou retrato espontâneo em luz natural; o miolo funciona só com fundo e texto. É o modelo ideal para carrossel passo a passo, como funciona um procedimento, o que levar à primeira consulta e checklists por etapa. Cada lâmina aguenta título de duas linhas mais três frases curtas ou uma lista de três itens. O tom é próximo, claro e calmo, com abertura para o sóbrio. Serve muito bem ao iniciante sem identidade pronta, porque o miolo é simples de adaptar à paleta de qualquer advogado, e também ao intermediário.",
+   "quando_evitar": "Evite em conteúdos de opinião, reflexão ou bastidor, que não têm etapas. Também não é a melhor escolha para quem quer protagonismo da própria imagem em todas as lâminas.",
+   "tipos_carrossel": [
+    "passo a passo",
+    "explicativo",
+    "checklist",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe",
+    "retrato espontâneo"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O original ensina a vender serviços e termina com chamada para ação comercial. No uso jurídico, mantenha o passo a passo informativo (como funciona um procedimento) e troque o fecho por convite a salvar ou tirar dúvidas, sem prometer resultado.",
+   "observacoes": "7 páginas; @reallygreatsite a substituir; ícones de interação do Instagram desenhados no rodapé de todas as lâminas.",
+   "link_modelo": "https://canva.link/6pmfrf1yf1vz3bf",
+   "na_arvore": "Elegante 13",
+   "nome_na_arvore": "Escritório em tons terrosos"
+  },
+  {
+   "codigo": "EL-15",
+   "categoria": "Elegante",
+   "design_id": "DAHYxEnqZXI",
+   "titulo_original": "Post instagram quem sou eu arquiteta moderno preto e branco",
+   "view_url": "https://www.canva.com/d/vA4g9RGMSpVRcoK",
+   "paginas": 1,
+   "nome": "Quem sou com setas manuscritas",
+   "visual": "Retrato posado em estúdio com fundo cinza e roupa preta, em sangria total. Título em serifa itálica grande branca, faixa clara com 'prazer, nome', seis frases curtas em sans branca com palavras em negrito e pequenas setas desenhadas à mão apontando para a pessoa. A sensação é elegante, profissional e simpática.",
+   "estrutura": "post único: título no topo, faixa com nome, seis fatos curtos distribuídos dos dois lados do rosto com setas, @ no rodapé",
+   "quando_escolher": "Transmite um posicionamento sofisticado e próximo ao mesmo tempo, de advogado com imagem profissional cuidada que se apresenta com leveza. Combina com o post fixado de apresentação em qualquer área, em especial para quem atende clientes que valorizam imagem (empresarial, família, imobiliário). Exige um retrato posado de estúdio, de busto, com fundo neutro e espaço dos dois lados do rosto. Funciona como 'quem sou' com seis frases curtas, misturando formação, área de atuação, valores e gostos pessoais. Cada frase aguenta duas ou três linhas curtas. O tom é próximo, com base sóbria. Serve ao intermediário e ao avançado com ensaio profissional; o iniciante pode usar se tiver ao menos um bom retrato de estúdio.",
+   "quando_evitar": "Evite com foto espontânea ou de fundo carregado, porque o layout depende do fundo liso. Não serve para conteúdo informativo.",
+   "tipos_carrossel": [
+    "apresentação"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Tem 1 página só: é post único, não carrossel. Nome fictício 'Ana Silva' e @grandesite a substituir.",
+   "link_modelo": "https://canva.link/gjpxz16cvnw0uxm",
+   "na_arvore": "Elegante 14",
+   "nome_na_arvore": "Quem sou eu, retrato com anotações"
+  },
+  {
+   "codigo": "EL-20",
+   "categoria": "Elegante",
+   "design_id": "DAHYMzeooGs",
+   "titulo_original": "Post para instagram Marrom Moderno Café",
+   "view_url": "https://www.canva.com/d/08Gk-FDNieQ6qs6",
+   "paginas": 3,
+   "nome": "Bastidor quente em três atos",
+   "visual": "Fotos de bastidor em sangria total, quentes e escuras, com mãos em ação e ambientes. Títulos em serifa de alto contraste com itálico e minúsculas grandes, apoio em sans negrito e regular, um grafismo de linha fina translúcido no canto e @ no topo. A sensação é artesanal, sofisticada e de bastidor real.",
+   "estrutura": "capa com frase provocativa em três linhas sobre foto de mãos trabalhando e textos menores nos cantos; lâmina de processo com título e dois blocos de texto; fecho com título e dois blocos de texto",
+   "quando_escolher": "Transmite um advogado próximo e cuidadoso, que mostra como trabalha por trás do resultado. Combina com bastidor do atendimento, como preparamos uma petição, como é a primeira reunião, como analisamos um contrato, e com escritórios que valorizam o cuidado artesanal no serviço. Exige três fotos de bastidor, de preferência com mãos em ação (folheando processo, assinando, organizando documentos) e ambientes do escritório. Funciona para carrossel curto de bastidor ou passo a passo em três atos, com título e dois blocos de texto de três a quatro linhas por lâmina. O tom é próximo, com toque provocativo na capa. Serve ao intermediário e ao avançado com fotos do próprio trabalho; é um bom formato para quem não gosta de mostrar o rosto.",
+   "quando_evitar": "Evite em listas longas ou conteúdos com muitas etapas, porque só tem três lâminas. Também não serve sem fotos de bastidor reais.",
+   "tipos_carrossel": [
+    "bastidor",
+    "passo a passo",
+    "mito e fato"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "bastidor",
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "Ao mostrar bastidor, não exiba documentos, nomes ou processos de clientes que permitam identificação.",
+   "observacoes": "@grandesite a substituir. Texto de apoio original está justificado com espaços largos; vale alinhar à esquerda ao editar.",
+   "link_modelo": "https://canva.link/6ox54nqqiocmeix",
+   "na_arvore": "Elegante 15",
+   "nome_na_arvore": "Foto quente em tons de café"
+  },
+  {
+   "codigo": "EL-11",
+   "categoria": "Elegante",
+   "design_id": "DAHY2g06KtE",
+   "titulo_original": "Self Love Carousel Instagram Post in Cream Minimal Style",
+   "view_url": "https://www.canva.com/d/HfASR_BlTVh7bJF",
+   "paginas": 5,
+   "nome": "Foto cheia com legenda mínima",
+   "visual": "Cada lâmina é uma foto em sangria total, com tratamento suave e analógico, e apenas uma legenda curta em serifa clássica branca no centro. A capa tem título de três linhas e um botão de seta contornado. A sensação é poética, íntima e silenciosa.",
+   "estrutura": "capa com título central e seta; quatro lâminas de foto com uma legenda de duas ou três palavras cada",
+   "quando_escolher": "Transmite um advogado próximo e humano, que mostra quem é além do trabalho. Combina com apresentação pessoal, valores, rotina de cuidado e hábitos de quem trabalha com Direito, ou com séries leves como 'o que me ajuda a manter o foco'. Exige uma foto forte por lâmina, de preferência retratos espontâneos, bastidor e detalhes da rotina do próprio advogado (mesa, livros, caminhada, café). Funciona para carrossel de lista visual, apresentação e bastidor, com legenda de no máximo uma linha curta por lâmina; o texto principal fica na legenda do post. O tom é próximo ou descontraído. Serve ao intermediário ou avançado que tem fotos próprias de qualidade; depende pouco de identidade visual, mas muito da curadoria das imagens.",
+   "quando_evitar": "Evite para qualquer conteúdo explicativo ou técnico, porque não há espaço para texto. Não use com fotos de banco genéricas, que deixam o post sem sentido.",
+   "tipos_carrossel": [
+    "apresentação",
+    "bastidor",
+    "lista",
+    "reflexão"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "bastidor",
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "O original tem 5 páginas, mas só 4 legendas no texto; uma lâmina do miolo pode estar sem legenda. Lâminas 3 e 4 não foram vistas em miniatura, mas seguem o mesmo padrão pelo texto.",
+   "link_modelo": "https://canva.link/vxhl0295xn5hhhx",
+   "na_arvore": "Elegante 16",
+   "nome_na_arvore": "Paisagem verde com serifa branca"
+  },
+  {
+   "codigo": "EL-17",
+   "categoria": "Elegante",
+   "design_id": "DAHYwWNtr5s",
+   "titulo_original": "Verde e Bege Moderno Cafeteria História Carrossel Instagram",
+   "view_url": "https://www.canva.com/d/MVNOUcE3JNb_0wh",
+   "paginas": 5,
+   "nome": "História em serifa sobre ambiente",
+   "visual": "Fotos de ambiente em sangria total com véu escuro ou verde musgo, títulos em serifa elegante branca com segunda linha em itálico negrito, frase de apoio dentro de cápsula contornada, cabeçalho com @, linha fina e ícone, e seta longa no rodapé. A sensação é acolhedora, sofisticada e de narrativa.",
+   "estrutura": "capa com título em duas linhas e frase em cápsula; três lâminas de capítulo da história, cada uma com título, frase curta em cápsula e foto (uma delas com foto recortada em arco na metade de baixo); fecho com agradecimento",
+   "quando_escolher": "Transmite um advogado próximo e institucional ao mesmo tempo, que conta a história do escritório e seus valores. Combina com aniversário de escritório, inauguração de sede, apresentação da equipe, missão e valores, e com escritórios familiares ou de tradição local. Exige fotos de ambiente e bastidor em todas as lâminas: fachada, recepção, sala de reunião, biblioteca, equipe trabalhando, podendo incluir o advogado de forma espontânea. Funciona para carrossel de bastidor, apresentação institucional e narrativa em capítulos, com título curto e uma frase de até duas linhas por lâmina. O tom é próximo e caloroso, com base sóbria. É para o intermediário ou avançado com fotos do próprio espaço; sem elas o modelo perde sentido.",
+   "quando_evitar": "Evite para conteúdo técnico ou explicativo, que não cabe nas cápsulas curtas. Também não serve para quem não tem escritório físico ou fotos do ambiente.",
+   "tipos_carrossel": [
+    "bastidor",
+    "apresentação",
+    "reflexão"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "bastidor",
+    "detalhe"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina 'nossa maior inspiração são as pessoas' mostra clientes no original. No uso jurídico, mostre a equipe ou o ambiente, nunca clientes identificáveis, e não cite casos atendidos.",
+   "observacoes": "@grandesite no cabeçalho a substituir.",
+   "link_modelo": "https://canva.link/scjskf96kaaoa9s",
+   "na_arvore": "Elegante 17",
+   "nome_na_arvore": "Ambiente noturno com serifa itálica"
+  },
+  {
+   "codigo": "EL-13",
+   "categoria": "Elegante",
+   "design_id": "DAHY2RDl_-4",
+   "titulo_original": "Yellow and White Minimalist Professional Informational Instagram Carousel Post",
+   "view_url": "https://www.canva.com/d/aXJCPGTSvZFvkYu",
+   "paginas": 6,
+   "nome": "Guia com retrato e serifa dourada",
+   "visual": "Fotos em sangria total de uma mesma pessoa em cenário urbano com plantas e tijolo, luz natural e tons quentes. Títulos em serifa clássica amarelo mostarda, grandes e empilhados, e parágrafo justificado pequeno em branco sobre a foto. A sensação é de guia ou e-book, acolhedor e com ar de estilo de vida.",
+   "estrutura": "capa com título grande em quatro linhas, marca no topo e rodapé com @ e site; quatro lâminas de tópico com título de três linhas e um parágrafo; fecho com título de conclusão e parágrafo",
+   "quando_escolher": "Transmite um advogado próximo e didático, com imagem pessoal presente e calorosa. Combina com guias para iniciantes no assunto, como 'guia para quem vai se divorciar', 'primeiros passos para abrir sua empresa' ou 'o básico do INSS', e com ofertas de consultoria de orientação. Exige fotos em todas as lâminas, de preferência um ensaio espontâneo do advogado em ambiente externo, com variação de pose e enquadramento. Funciona para carrossel explicativo e dicas em formato de guia, com um tópico por lâmina. Aguenta um parágrafo de quatro a cinco linhas, mas o texto pequeno sobre foto exige imagens com área calma para leitura. O tom é próximo. É para o intermediário ou avançado com ensaio próprio.",
+   "quando_evitar": "Evite em temas formais e institucionais e para quem não tem fotos próprias. Também não serve para listas rápidas nem para fundos muito movimentados, que prejudicam a leitura do parágrafo.",
+   "tipos_carrossel": [
+    "explicativo",
+    "dicas",
+    "passo a passo"
+   ],
+   "tom": [
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "ambiente"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Marca fictícia 'Vivid Design', @reallygreatsite e reallygreatsite.com a substituir. Lâminas 3 a 5 seguem o mesmo padrão das vistas.",
+   "link_modelo": "https://canva.link/2nn85qcfgfyqzfm",
+   "na_arvore": "Elegante 18",
+   "nome_na_arvore": "Foto clara com título amarelo serifado"
+  },
+  {
+   "codigo": "EL-07",
+   "categoria": "Elegante",
+   "design_id": "DAHY2ryYqIc",
+   "titulo_original": "Yellow Minimalist Creator Business Recap Instagram Carousel",
+   "view_url": "https://www.canva.com/d/dbjqYLUu1jsmv-l",
+   "paginas": 5,
+   "nome": "Retrato cinematográfico com máquina de escrever",
+   "visual": "Fotos em sangria total, escuras e com granulação de cinema, de uma mesma pessoa em cenas cotidianas. Títulos em amarelo mostarda com serifa condensada e itálico misturados, texto de apoio em fonte de máquina de escrever, rodapé com mês e tema em monoespaçada. A sensação é de diário pessoal, autoral e cinematográfico.",
+   "estrutura": "capa com título em três linhas sobre retrato de perfil; três lâminas de conquista ou aprendizado com título grande e parágrafo curto em fonte de máquina de escrever; fecho com frase de encerramento em quatro linhas",
+   "quando_escolher": "Transmite um advogado próximo, autêntico e com voz pessoal, que compartilha a rotina e os aprendizados da profissão. Combina com quem constrói marca pessoal forte, advogados autônomos, sócios de escritórios pequenos ou quem vende consultoria e mentoria para colegas. Exige fotos em todas as lâminas, de preferência retratos espontâneos ou de bastidor do próprio advogado em situações reais (deslocamento, café, escritório, audiência fora do fórum). Funciona para carrosséis de bastidor, balanço do mês, aprendizados da carreira e reflexão. Cada lâmina aguenta um título curto e um parágrafo de três a cinco linhas. O tom é próximo ou levemente descontraído. É para o intermediário ou avançado, com fotos próprias e disposição para se expor; depende pouco de identidade visual pronta, mas muito de imagem.",
+   "quando_evitar": "Evite em conteúdo técnico, explicativo ou institucional, e para advogados que preferem não aparecer. Não use para falar de números de clientes ou de faturamento.",
+   "tipos_carrossel": [
+    "bastidor",
+    "reflexão",
+    "lista",
+    "apresentação"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "bastidor"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O original celebra números de seguidores e dinheiro. No uso jurídico, evite resultados financeiros, quantidade de clientes ou casos ganhos; troque por aprendizados, rotina e estudo.",
+   "observacoes": "Rodapé com 'September' e 'Creator economy' a substituir. A paginação pula de 03/05 para 05/05 no original.",
+   "link_modelo": "https://canva.link/xcj4e4fclj0nmno",
+   "na_arvore": "Elegante 19",
+   "nome_na_arvore": "Retrato em penumbra com itálico amarelo"
+  },
+  {
+   "codigo": "EL-09",
+   "categoria": "Elegante",
+   "design_id": "DAHY2iRGCgM",
+   "titulo_original": "Yellow Vintage Cafe & Restaurant Local Gem Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/pPK_1x_GrRGLLH7",
+   "paginas": 5,
+   "nome": "Guia vintage de lugares",
+   "visual": "Fotos de ambiente em sangria total, quentes e escuras, com título em serifa itálica de alto contraste em creme dourado. Selo de edição no topo, cápsula com @, rabiscos manuscritos (sorriso, seta curva) e, em uma das lâminas, duas fotos menores com cantos arredondados. A sensação é de guia de revista, aconchegante e um pouco retrô.",
+   "estrutura": "capa com título grande, selo de edição e texto curto; três lâminas de item (um lugar por lâmina) com nome em destaque, texto de duas linhas e às vezes fotos extras; fecho com convite para seguir a próxima edição",
+   "quando_escolher": "Transmite um advogado próximo e culto, que faz curadoria e recomenda. Combina com séries editoriais recorrentes, como 'leituras do mês', 'filmes que todo estudante de Direito deveria ver', 'lugares de Vitória da Conquista onde a história jurídica aconteceu' ou bastidores de eventos e congressos. Exige fotos de ambiente em todas as lâminas, que podem ser do escritório, de bibliotecas, de fóruns históricos ou de eventos, sem precisar do rosto do advogado. Funciona para carrossel de lista e curadoria, com um item por lâmina e texto de até três linhas. O tom é próximo e levemente descontraído. É mais indicado para o intermediário ou avançado, que já tem repertório e fotos próprias de ambiente.",
+   "quando_evitar": "Evite para conteúdo técnico, explicações de lei ou temas sérios, em que o ar de revista de lazer enfraquece a mensagem. Não use para recomendar serviços de terceiros com vínculo comercial.",
+   "tipos_carrossel": [
+    "lista",
+    "bastidor",
+    "dicas"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe",
+    "bastidor"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Nomes fictícios de lugares (Borcelle Place, Lake Coffee, Salford) e @reallygreatsite a substituir. A lâmina 2 tem duas fotos extras em cartões arredondados.",
+   "link_modelo": "https://canva.link/q0c59g46rsbxprh",
+   "na_arvore": "Elegante 20",
+   "nome_na_arvore": "Ambiente vintage com título amarelo"
+  },
+  {
+   "codigo": "CR-06",
+   "categoria": "Criativo",
+   "design_id": "DAHY2WS8IbI",
+   "titulo_original": "Beige Aesthetic Collage Social Media Growth Tips Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/UJFFbi6AW0SnWZo",
+   "paginas": 7,
+   "nome": "Editorial bege com recortes",
+   "visual": "Fundo bege claro liso com muito respiro, título em serifa display grande e elegante, e texto de apoio em sans pequena em caixa alta bem espaçada. Objetos recortados (xícara, óculos, fone) e retratos recortados de corpo inteiro aparecem soltos nas lâminas. Cabeçalho com @ e contador de páginas e rodapé com ícones de compartilhar e salvar dão ar de revista.",
+   "estrutura": "Capa com título serifado em três linhas, seta e colagem de retrato recortado com objetos; 5 lâminas de dica com título serifado, parágrafo curto em caixa alta e um objeto ou retrato recortado; fecho com pergunta, chamada para seguir e comentar e retrato recortado sentado.",
+   "quando_escolher": "Transmite um advogado sofisticado e contemporâneo, com estética de marca pessoal bem cuidada e linguagem leve. Combina com advocacia para empreendedores, marcas, criadores de conteúdo, direito digital, contratos e planejamento patrimonial para público jovem. Pede 2 ou 3 retratos do advogado com fundo removível, de corpo inteiro e em poses naturais, e alguns objetos ou detalhes recortados (caneta, livro, café, óculos). Combina com carrossel de dicas, lista, mito e fato e explicativo curto, uma ideia por lâmina. Cada lâmina aguenta título de até 5 palavras e um parágrafo de 3 a 4 linhas. O tom é B, elegante e conversado. Serve para advogado intermediário ou avançado com retratos de boa qualidade e identidade em tons neutros; o modelo depende de bons recortes para não parecer vazio.",
+   "quando_evitar": "Evite em conteúdos densos, com muitos passos ou referências legais longas, e em perfis que querem visual institucional de escritório. Sem retratos recortáveis o modelo perde o charme.",
+   "tipos_carrossel": [
+    "dicas",
+    "lista",
+    "mito e fato",
+    "explicativo"
+   ],
+   "tom": [
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "retrato espontâneo",
+    "detalhe"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "O original fala em crescimento rápido e renda; não prometa resultado ao trocar a copy, use dicas informativas.",
+   "observacoes": "Tem 7 páginas; contador 1/7 e @reallygreatsite no topo de todas as lâminas a ajustar.",
+   "link_modelo": "https://canva.link/nrtx7t62k6wgr5s",
+   "na_arvore": "Criativo 21",
+   "nome_na_arvore": "Colagem com recortes em bege"
+  },
+  {
+   "codigo": "CR-05",
+   "categoria": "Criativo",
+   "design_id": "DAHY2QoWDUg",
+   "titulo_original": "Beige Blue and Orange Modern Scrapbook Business Instagram Carousel",
+   "view_url": "https://www.canva.com/d/-ArBKLu_eE0qn9L",
+   "paginas": 6,
+   "nome": "Scrapbook de papel e notas",
+   "visual": "Fundo de papel branco amassado com recortes colados: retrato da pessoa recortado, objetos, fitas adesivas, papéis rasgados com letra manuscrita azul, estrelinhas douradas e rabiscos. A tipografia é uma serifa editorial com trechos em itálico e palavras destacadas com sublinhado ou círculo de caneta marrom. Cartões que imitam o app de Notas guardam os textos maiores; a sensação é calorosa, artesanal e cheia de detalhes.",
+   "estrutura": "Capa com título serifado em três linhas, @ em pílula, frase manuscrita em papel rasgado e retrato recortado; lâmina com título e cartão de nota com checklist de 3 itens; lâmina com título, foto polaroide com fita e cartão de nota com dois parágrafos; lâmina de frase com dois papéis rasgados manuscritos; lâmina com título longo, retrato recortado e cartão de nota com parágrafo; fecho de agradecimento com retrato, @ e chamada manuscrita.",
+   "quando_escolher": "Transmite um advogado acolhedor, humano e criativo, que valoriza o cuidado no atendimento. Combina com escritório pequeno ou boutique que quer apresentar o próprio jeito de trabalhar, e com áreas de contato próximo como família, sucessões, saúde, consumidor e direito de pessoas com deficiência. Pede 2 ou 3 retratos do advogado com fundo removível (sorrindo, sentado, com notebook) e algumas fotos de detalhe ou ambiente para as polaroides. Combina com apresentação do escritório, 'como trabalhamos', valores do atendimento, checklist e reflexão. O cartão de nota aguenta texto médio a longo, até 5 ou 6 linhas, e as lâminas de frase pedem texto curto. O tom é B, próximo e afetivo, podendo chegar a C. Serve para advogado intermediário ou avançado que já tem fotos recortáveis e um estilo próprio, pois a colagem exige cuidado na montagem.",
+   "quando_evitar": "Evite em perfis muito sóbrios, áreas como penal empresarial, tributário de grandes empresas ou compliance, e copys técnicas com dados e prazos. Fica carregado se a copy já for longa em todas as lâminas.",
+   "tipos_carrossel": [
+    "apresentação",
+    "bastidor",
+    "checklist",
+    "reflexão"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "retrato espontâneo",
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "media",
+   "aguenta_longa": true,
+   "riscos_oab": "O original fala de comunidade de clientes e agradece por fazerem parte do negócio; troque por agradecimento a quem acompanha o perfil e evite citar clientes, relatos ou casos atendidos.",
+   "observacoes": "Exige retratos com fundo removido; elementos manuscritos em inglês precisam ser reescritos em português com fonte manuscrita parecida.",
+   "link_modelo": "https://canva.link/chxiirlm0x1gdcs",
+   "na_arvore": "Criativo 22",
+   "nome_na_arvore": "Scrapbook com foto recortada"
+  },
+  {
+   "codigo": "CR-18",
+   "categoria": "Criativo",
+   "design_id": "DAHYMeMlxzo",
+   "titulo_original": "Beige Green and Black Modern Clean Minimalist Informational Instagram Post",
+   "view_url": "https://www.canva.com/d/FjldxrZ01qRk8j7",
+   "paginas": 6,
+   "nome": "Post-its e marca-texto",
+   "visual": "Fundo bege claro com texto em sans grotesca preta, mesclando peso fino e bold, e palavras destacadas com marca-texto verde-limão. Post-its verdes presos com fita adesiva, uma foto em faixa inferior e uma ilustração de traço preto no fecho são os únicos elementos visuais. Um ícone de estrela em círculo preto no canto e o número de página completam um layout limpo, leve e didático.",
+   "estrutura": "Capa só com título em escada e palavra grifada; lâmina com frase de gancho e dois post-its com palavras-chave; lâmina com título, parágrafo curto e foto em faixa inferior; lâmina de frase de virada centralizada com grifo; lâmina com fórmula curta grifada e frase de apoio; fecho com ilustração em traço, chamada para salvar e site.",
+   "quando_escolher": "Transmite um advogado didático, moderno e acessível, que simplifica um problema do dia a dia. Combina com consumidor, trabalhista, família, previdenciário, direito digital e qualquer área em que o público confunde conceitos. Funciona quase sem fotos: só uma imagem de detalhe ou objeto em uma lâmina, que pode ser foto do advogado escrevendo ou de um documento. Combina com explicativo em ritmo de conversa, mito e fato, 'o problema e a solução' e reflexão curta. Cada lâmina aguenta pouco texto, de uma frase a um parágrafo de 3 linhas, e a força está no ritmo entre as lâminas. O tom é B. Serve muito bem para iniciante sem fotos e sem identidade, porque é simples de adaptar; o verde do marca-texto vira a cor de destaque do advogado.",
+   "quando_evitar": "Evite quando a copy pede muitos detalhes, listas grandes ou fundamento legal extenso. Também não combina com perfil que quer passar sofisticação de alto padrão.",
+   "tipos_carrossel": [
+    "explicativo",
+    "mito e fato",
+    "reflexão",
+    "dicas"
+   ],
+   "tom": [
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "detalhe"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Site reallygreatsite.com na capa e no fecho a substituir; ilustração em traço do fecho pode ser mantida ou trocada por outra do mesmo estilo.",
+   "link_modelo": "https://canva.link/swlta3yqoxeyic6",
+   "na_arvore": "Criativo 23",
+   "nome_na_arvore": "Bege com marca-texto verde"
+  },
+  {
+   "codigo": "CR-17",
+   "categoria": "Criativo",
+   "design_id": "DAHYMi4zhOI",
+   "titulo_original": "Black and Orange Minimalist Content Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/VIE_UhlLvSuFWRO",
+   "paginas": 5,
+   "nome": "Contraste laranja e preto",
+   "visual": "Alterna lâminas off-white, laranja vibrante e preto, todas só com tipografia em sans geométrica bold grande. Destaques vêm em círculos de caneta laranja ao redor de palavras, pílulas pretas com ícones, asterisco laranja e uma seta curva com 'next page'. O visual é limpo, enérgico e muito direto, sem fotos.",
+   "estrutura": "Capa com asterisco, título grande com palavra circulada, frase de apoio e botão 'arraste'; lâmina laranja com título, frase e equação visual em pílulas; lâmina preta com título alinhado à direita, parágrafo e destaque colorido; lâmina off-white com título circulado, frase, citação em pílula e conclusão; fecho laranja com cartão branco, título, frase e barra de busca com chamada para mensagem.",
+   "quando_escolher": "Transmite um advogado moderno, objetivo e confiante, com comunicação de impacto e sem rodeios. Combina com direito digital, startups, empresarial, consumidor e qualquer área em que o público precise entender rápido uma regra ou um conceito. Funciona só com fundo e texto, sem fotos, o que facilita a produção semanal. Combina com explicativo, mito e fato, 'por que isso importa', dicas e equação simples (causa e consequência). Cada lâmina aguenta título de até 8 palavras e 2 a 3 linhas de apoio. O tom é B ou C. Serve para iniciante sem fotos e para intermediário com cor de destaque forte na identidade; a cor laranja deve virar a cor principal do advogado.",
+   "quando_evitar": "Evite em perfis muito tradicionais, sóbrios ou de alto padrão, e em temas delicados que pedem acolhimento. Não comporta textos longos nem citações legais extensas.",
+   "tipos_carrossel": [
+    "explicativo",
+    "mito e fato",
+    "dicas",
+    "lista"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "nao_usa",
+   "fotos_tipo": [],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "A equação 'mais tempo = mais alcance = mais resultados' não deve virar promessa de resultado jurídico; use para relações informativas (ex.: 'prazo perdido = direito perdido').",
+   "observacoes": "Logo fictícia 'Rimberio' e ano '2040' a substituir; o fecho chama para mensagem direta, manter de forma informativa.",
+   "link_modelo": "https://canva.link/p4b3b7749h90c1y",
+   "na_arvore": "Criativo 24",
+   "nome_na_arvore": "Branco tipográfico, preto e laranja"
+  },
+  {
+   "codigo": "CR-19",
+   "categoria": "Criativo",
+   "design_id": "DAHYMRLltAQ",
+   "titulo_original": "Black and White Professional Minimalist Informational Tips Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/ma1UGAx7uMukbg-",
+   "paginas": 6,
+   "nome": "Papel branco serifa itálica",
+   "visual": "Fundo de papel branco com textura leve e muito espaço vazio, com títulos em serifa display alternando regular e itálico bold, e textos em sans preta com primeira frase em negrito. Algumas lâminas dividem o espaço com uma foto lateral ou inferior; outras usam só um ícone de linha. Seta em círculo no canto e assinatura no rodapé dão um ar sofisticado e minimalista.",
+   "estrutura": "Capa só com título serifado centralizado e frase de apoio no rodapé; 2 lâminas de dica com frase em sans, ícone opcional e frase em serifa; lâmina dividida com texto à esquerda e foto vertical à direita; lâmina com texto em cima e foto em faixa inferior; fecho com pergunta em serifa itálica e chamada para seguir.",
+   "quando_escolher": "Transmite um advogado sóbrio, elegante e organizado, que compartilha método e rotina com discrição. Combina com qualquer área, em especial empresarial, tributário, planejamento patrimonial, contratos e advocacia consultiva, e com conteúdo sobre organização do trabalho do advogado. Funciona com poucas fotos, 1 ou 2 imagens de ambiente ou detalhe, e pode ficar só com texto. Combina com dicas, lista, passo a passo curto, reflexão e pergunta para engajar no fecho. Cada lâmina aguenta 2 frases curtas, uma de destaque e outra de complemento. O tom é A, podendo ir a B. Serve para iniciante e intermediário, porque não depende de identidade pronta e combina com qualquer paleta neutra.",
+   "quando_evitar": "Evite em conteúdos densos ou com muitos itens por lâmina, e em perfis que querem visual colorido e enérgico. Pode parecer vazio se a copy for fraca.",
+   "tipos_carrossel": [
+    "dicas",
+    "lista",
+    "reflexão",
+    "passo a passo"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina de celebração cita 'um cliente, um projeto'; troque por marcos pessoais de estudo ou de organização, sem mencionar clientes.",
+   "observacoes": "Nome fictício 'Studio Shodwe' e @reallygreatsite em todas as lâminas a substituir; a foto original de criança na lâmina 5 deve ser trocada.",
+   "link_modelo": "https://canva.link/2w3r2qelh1wi5hg",
+   "na_arvore": "Criativo 25",
+   "nome_na_arvore": "Branco editorial com serifa itálica"
+  },
+  {
+   "codigo": "CR-11",
+   "categoria": "Criativo",
+   "design_id": "DAHYxMRsJCk",
+   "titulo_original": "Black White and Yellow Modern Business Instagram Post",
+   "view_url": "https://www.canva.com/d/1nl4VVb1zUUt9kR",
+   "paginas": 8,
+   "nome": "Recorte P&B com formas vibrantes",
+   "visual": "Fundo branco, títulos em sans bold preta com subtítulo em cinza, e retratos em preto e branco recortados sobre formas orgânicas amarelas e laranja (arcos, ondas, curvas). Um balão que imita mensagem de celular, setas pretas e grifos amarelos completam o visual. A sensação é dinâmica, comercial e enérgica.",
+   "estrutura": "Capa com logo, título em duas cores, seta e retrato duplo sobre arco amarelo; lâmina com balão de mensagem, título grifado, texto grande e retrato recortado; lâminas de texto com subtítulo cinza, frase em bold e foto em faixa inferior; lâmina de cartão de mensagem com nome e data; fecho com 'Obrigado' gigante, parágrafo, retrato e logo sobre forma amarela.",
+   "quando_escolher": "Transmite um advogado moderno, enérgico e acessível, com comunicação de marca forte e chamativa. Combina com advocacia para negócios, consumidor, trabalhista e qualquer área de público amplo, em conteúdos de história do escritório e marcos da carreira. Pede 4 a 6 retratos do advogado ou da equipe com fundo removível, de preferência sorrindo e em ação, que serão convertidos para preto e branco. Combina com carrossel de bastidor, história do escritório, apresentação da equipe e perguntas frequentes. Cada lâmina aguenta um título e uma frase de 3 a 5 linhas em letra grande. O tom é B ou C. Serve para advogado intermediário ou avançado com logo e cor de destaque definidas, porque as formas coloridas carregam a identidade.",
+   "quando_evitar": "Evite em perfis sóbrios e tradicionais, e em conteúdos técnicos longos. Não use a estrutura original de 'primeiro cliente' sem adaptar.",
+   "tipos_carrossel": [
+    "bastidor",
+    "apresentação",
+    "explicativo"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "retrato espontâneo",
+    "bastidor"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O original conta a história do primeiro cliente, com mensagem de cliente identificada (nome e data), o que equivale a caso concreto e depoimento. Reaproveite o balão de mensagem como 'pergunta frequente que recebo' sem nome, e a história como marcos do escritório (fundação, áreas, formação), sem citar clientes.",
+   "observacoes": "Tem 8 páginas; nome fictício 'Laura Bennett' no balão e logo 'Variety Store' a substituir. Páginas 4, 6 e 7 não foram vistas em miniatura; pelo texto, incluem a lâmina 'One Customer Became Many' e um cartão de mensagem com data.",
+   "link_modelo": "https://canva.link/jumdmjgad9cdxng",
+   "na_arvore": "Criativo 26",
+   "nome_na_arvore": "Título em degradê com foto recortada"
+  },
+  {
+   "codigo": "CR-21",
+   "categoria": "Criativo",
+   "design_id": "DAHYMTdOcTs",
+   "titulo_original": "Black White Simple Tech Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/PA0Xf1WYoygKIHi",
+   "paginas": 4,
+   "nome": "Cartões em degradê tech",
+   "visual": "Capa com foto escura de notebook e título em sans caixa alta clara; o miolo tem fundo branco com manchas suaves em degradê. Cartões arredondados em degradê amarelo, verde e azul trazem títulos em caixa alta verde-oliva, texto justificado e um pequeno ícone de fechar no canto. Logo no topo, site e 'next slide' no rodapé dão um ar de tecnologia limpa e organizada.",
+   "estrutura": "Capa com logo, foto escura e título em duas linhas; lâmina de chamada com pergunta grande e botão de seta; lâmina com 3 cartões empilhados (título à esquerda, explicação à direita); lâmina com grade de 4 cartões em 2 colunas.",
+   "quando_escolher": "Transmite um advogado técnico, atualizado e organizado, ligado a temas de tecnologia e inovação. Combina com direito digital, LGPD, proteção de dados, contratos de tecnologia, propriedade intelectual de software, startups e uso de inteligência artificial no direito. Funciona com uma única foto na capa (notebook, tela, ambiente de trabalho) e o restante só com cartões de texto. Combina com passo a passo, etapas de um processo, explicativo técnico e 'como funciona'. É um dos poucos modelos que aguentam bastante texto, com 3 a 4 blocos por lâmina de até 4 linhas cada. O tom é A. Serve para iniciante e intermediário, sem depender de fotos pessoais; o degradê pode ser refeito nas cores do advogado.",
+   "quando_evitar": "Evite em conteúdos emocionais, de acolhimento ou de apresentação pessoal. Não combina com áreas tradicionais que pedem visual clássico, como sucessões ou família, a não ser que o tema seja tecnológico.",
+   "tipos_carrossel": [
+    "passo a passo",
+    "explicativo",
+    "lista",
+    "checklist"
+   ],
+   "tom": [
+    "A"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe"
+   ],
+   "densidade": "longa",
+   "aguenta_longa": true,
+   "riscos_oab": "",
+   "observacoes": "Tem só 4 páginas e não tem fecho com chamada; logo fictícia 'Brocelle Tech', 'Tech Company' e site reallygreatsite.com a substituir.",
+   "link_modelo": "https://canva.link/2t8pd0z6x4eh7wp",
+   "na_arvore": "Criativo 27",
+   "nome_na_arvore": "Preto e branco, estilo tech"
+  },
+  {
+   "codigo": "CR-03",
+   "categoria": "Criativo",
+   "design_id": "DAHY2yN-8WY",
+   "titulo_original": "Blue and Yellow Aesthetic Small Business Tips Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/v7OF8ArspJBBt5B",
+   "paginas": 5,
+   "nome": "Fichário de abas editorial",
+   "visual": "Capa e fecho mostram uma ficha amarela com abas coloridas de pasta sobre fundo azul acinzentado com textura de papel; o miolo usa folhas de caderno com espiral e papel creme envelhecido. A tipografia é uma sans grotesca bold em caixa alta, justificada, com textos corridos pequenos e colchetes como detalhe. As fotos são de objetos e detalhes, recortadas em retângulos, com ar de revista independente.",
+   "estrutura": "Capa em ficha de abas com título em caixa alta e foto de detalhe; lâmina numerada 01 em caderno espiral com título, rótulo entre colchetes, foto pequena e parágrafo; lâmina numerada 02 com parágrafo, foto grande e título embaixo; lâmina em caderno com título, parágrafo, lista de 3 tópicos e foto; fecho em ficha de abas com título, parágrafo, foto pequena e assinatura.",
+   "quando_escolher": "Transmite um advogado organizado, criativo e com repertório, que trata o direito como algo a ser explicado com método. Combina com consultoria empresarial, propriedade intelectual, registro de marca, contratos e advocacia para negócios criativos. A imagem pode vir de fotos de detalhe e objeto (documentos, caneta, código civil, mesa, mãos), sem exigir rosto; funciona com 3 a 5 fotos de detalhe ou ambiente. Combina com carrossel explicativo numerado, lições, passo a passo e lista de cuidados, com títulos curtos e um parágrafo por lâmina. Aguenta texto médio, com um parágrafo de 3 a 5 linhas e até 3 tópicos. O tom é A ou B, didático e direto. Serve para advogado intermediário ou avançado com gosto estético mais autoral; o visual de caderno combina com identidade já definida em tons terrosos ou pastéis.",
+   "quando_evitar": "Evite quando a copy pede emoção, acolhimento ou retrato do advogado em destaque. Também não combina com quem quer visual corporativo clássico, nem com copys muito longas.",
+   "tipos_carrossel": [
+    "explicativo",
+    "lista",
+    "passo a passo",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina de 'experiência do cliente' fala de clientes que voltam e indicações; reaproveite como lâmina de 'como funciona o atendimento' ou de direitos do consumidor do serviço jurídico, sem citar clientes.",
+   "observacoes": "Rodapé com @reallygreatsite e 'Creative Studio + Lab' a substituir pelo @ e nome do escritório.",
+   "link_modelo": "https://canva.link/9080pegaqvknp44",
+   "na_arvore": "Criativo 28",
+   "nome_na_arvore": "Bilhete amarelo sobre fundo azul"
+  },
+  {
+   "codigo": "CR-09",
+   "categoria": "Criativo",
+   "design_id": "DAHYxMq_9zw",
+   "titulo_original": "Brown and Cream Modern Minimalist Life Lessons Collage Instagram Post",
+   "view_url": "https://www.canva.com/d/95227CmdSlPu5sl",
+   "paginas": 5,
+   "nome": "Frases poéticas com flores",
+   "visual": "Fotos em tela cheia com clima afetivo e cinematográfico, algumas emolduradas por uma borda azul royal. A frase principal vem em serifa condensada creme, às vezes em escada, acompanhada de uma frase menor em letra cursiva. Florzinhas desenhadas em creme espalhadas e uma lâmina com curva creme separando duas fotos dão um ar romântico e artístico.",
+   "estrutura": "Capa com título serifado em três linhas, frase cursiva e foto de ambiente; 4 lâminas de frase, cada uma com uma frase de impacto e uma frase cursiva de apoio, sobre foto inteira, foto emoldurada em azul ou duas fotos com curva creme.",
+   "quando_escolher": "Transmite um advogado sensível, humano e próximo, que fala de emoções e fases da vida. Combina com direito de família, divórcio, guarda, sucessões, direito da mulher e previdenciário, em conteúdos de acolhimento. Pede uma foto forte por lâmina, de clima emocional (ambiente, detalhe, retrato espontâneo), que pode ser do advogado ou de banco de imagens com cuidado estético. Combina com reflexão, lista de frases, aprendizados e mensagens de apoio. Aguenta pouquíssimo texto: uma frase curta e uma linha de apoio por lâmina. O tom é B, delicado. Serve para advogado intermediário ou avançado com senso estético apurado; o modelo depende de fotos bonitas e de uma identidade que aceite a letra cursiva.",
+   "quando_evitar": "Evite em conteúdo explicativo, passo a passo, checklist ou qualquer copy que precise de mais de duas linhas. Não combina com perfil técnico, empresarial ou muito formal.",
+   "tipos_carrossel": [
+    "reflexão",
+    "lista"
+   ],
+   "tom": [
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe",
+    "retrato espontâneo"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "Fotos originais mostram bebida alcoólica e festa; escolha imagens discretas para não sugerir ostentação ou informalidade excessiva.",
+   "observacoes": "Sem fecho com chamada; vale acrescentar uma lâmina final com @ do advogado.",
+   "link_modelo": "https://canva.link/9fql3it6ps8ds8k",
+   "na_arvore": "Criativo 29",
+   "nome_na_arvore": "Colagem marrom com estrelas"
+  },
+  {
+   "codigo": "CR-10",
+   "categoria": "Criativo",
+   "design_id": "DAHYxB1nF4o",
+   "titulo_original": "Brown White and Black Modern Business Advice Instagram Post",
+   "view_url": "https://www.canva.com/d/KhIRuEk2Zr7Zjc0",
+   "paginas": 6,
+   "nome": "Caderno creme com volumes",
+   "visual": "Capa com foto escura de mesa de trabalho vista de cima, título em sans bold creme e rótulo entre colchetes em fonte de máquina de escrever. O miolo usa fundo creme amarelado, números entre colchetes em fonte monoespaçada, títulos grandes em sans bold marrom e textos justificados curtos. Fotos pequenas com legenda que imita nome de arquivo e a marca 'vol 01' no canto dão um ar de dossiê moderno.",
+   "estrutura": "Capa com rótulo, título grande, parágrafo curto e marca de volume; 4 lâminas numeradas [01] a [04] com título grande, parágrafo de 3 a 4 linhas e foto pequena com legenda, variando a posição de foto e número; fecho com frase em duas partes (máquina de escrever e sans bold) e colagem de 2 fotos.",
+   "quando_escolher": "Transmite um advogado moderno, estratégico e direto, que fala com objetividade e autoridade sem ser formal demais. Combina com advocacia empresarial, contratos, societário, trabalhista para empregadores, startups e consultoria para quem vai abrir um negócio. Usa fotos pequenas de detalhe e ambiente (mesa, documentos, notebook, mãos), 4 a 6 no total, sem exigir rosto do advogado. Combina com lista numerada de alertas, 'o que saber antes de', mito e fato e explicativo. Cada lâmina aguenta título de até 7 palavras e um parágrafo médio. O tom é A ou B. Serve para iniciante e intermediário, porque é fácil de manter e a ideia de 'volume' permite criar uma série de carrosséis.",
+   "quando_evitar": "Evite em conteúdos emocionais, de acolhimento ou de apresentação pessoal com retrato em destaque. Também não comporta listas longas dentro da mesma lâmina.",
+   "tipos_carrossel": [
+    "lista",
+    "dicas",
+    "explicativo",
+    "mito e fato"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "detalhe",
+    "ambiente",
+    "bastidor"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina sobre 'clientes errados' pode soar como crítica a clientes; adapte para alertas ao público sobre como escolher um advogado ou cuidados em contratos.",
+   "observacoes": "Legendas de arquivo '.jpeg' e @reallygreatsite a substituir; a marca 'vol 01' pode virar número da série de conteúdos.",
+   "link_modelo": "https://canva.link/u8a648vwi0nk10p",
+   "na_arvore": "Criativo 30",
+   "nome_na_arvore": "Mesa escura com título amarelo"
+  },
+  {
+   "codigo": "CR-13",
+   "categoria": "Criativo",
+   "design_id": "DAHYwUksxJE",
+   "titulo_original": "Carrossel reflexão e planejamento 2026 moderno marrom",
+   "view_url": "https://www.canva.com/d/IYJ4Gye_8IF2acf",
+   "paginas": 4,
+   "nome": "Perguntas sobre fundo escuro",
+   "visual": "Fundo marrom quase preto com perguntas em serifa condensada creme e uma linha de apoio em letra cursiva pequena. A capa divide a lâmina entre retrato à esquerda e área escura com o título à direita. As fotos aparecem em retângulos alternados em zigue-zague, com clima intimista e reflexivo.",
+   "estrutura": "Capa com retrato em meia lâmina, título serifado e chamada para arrastar; lâmina com duas perguntas e duas fotos em zigue-zague; lâmina com pergunta central e foto em faixa inferior; lâmina com duas perguntas e duas fotos em zigue-zague.",
+   "quando_escolher": "Transmite um advogado reflexivo, maduro e sofisticado, que provoca o público a pensar antes de agir. Combina com planejamento sucessório, patrimonial, previdenciário, empresarial e qualquer área em que a decisão certa começa com boas perguntas. Pede um retrato do advogado para a capa, de preferência pensativo ou trabalhando, e 4 ou 5 fotos de detalhe ou ambiente para as lâminas internas. Combina com carrossel de perguntas, reflexão, checklist em forma de pergunta e fim de ano. Cada lâmina aguenta 1 ou 2 perguntas curtas com uma linha de apoio. O tom é A ou B. Serve para advogado intermediário ou avançado; fica melhor com identidade em tons escuros ou terrosos.",
+   "quando_evitar": "Evite em dicas práticas com explicação, passo a passo ou conteúdo alegre e descontraído. Também não combina com copys longas.",
+   "tipos_carrossel": [
+    "reflexão",
+    "checklist",
+    "lista"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Já está em português; tem só 4 páginas e não tem lâmina de fecho com chamada, vale acrescentar uma. Rótulos '2025' e 'clareza' no topo a ajustar.",
+   "link_modelo": "https://canva.link/rvu824nwwxisjm0",
+   "na_arvore": "Criativo 31",
+   "nome_na_arvore": "Retrato com serifa sobre marrom"
+  },
+  {
+   "codigo": "CR-12",
+   "categoria": "Criativo",
+   "design_id": "DAHYwXXPLic",
+   "titulo_original": "Marrom e Bege Minimalista História de Café Carrossel para Instagram",
+   "view_url": "https://www.canva.com/d/ogk8i65W4qVu0uR",
+   "paginas": 5,
+   "nome": "Linha do tempo bege terracota",
+   "visual": "Fundo bege claro, títulos em serifa display escura, destaques em itálico terracota e números gigantes ocupando a lâmina. Fotos retangulares com borda tracejada terracota, rótulos pequenos em caixa alta com traço antes, paginação 01/05 e pontinhos de progresso no rodapé. A sensação é acolhedora, editorial e bem organizada.",
+   "estrutura": "Capa com rótulo, título, subtítulo em itálico e foto grande; lâmina com ano gigante, parágrafo e foto em faixa; lâmina dividida com foto vertical à esquerda e frase grande à direita com aspas decorativas; lâmina com número gigante em terracota, frase em itálico, parágrafo e foto; fecho com foto da equipe, rótulo, agradecimento e assinatura.",
+   "quando_escolher": "Transmite um advogado ou escritório institucional e próximo ao mesmo tempo, com orgulho da própria trajetória. Combina com apresentação do escritório, história da fundação, aniversário de atuação e marcos da carreira, em qualquer área. Pede 4 ou 5 fotos: ambiente do escritório, detalhes, bastidor e uma foto da equipe ou do advogado para o fecho. Combina com carrossel de apresentação, linha do tempo, bastidor e reflexão sobre a carreira. Cada lâmina aguenta uma frase forte ou um dado (ano, quantidade de anos de atuação) e um parágrafo curto. O tom é A ou B. Serve para advogado intermediário ou avançado com fotos do espaço e da equipe; o layout já vem em português e adapta bem a paletas terrosas.",
+   "quando_evitar": "Evite em conteúdo de dicas, explicação de lei ou passo a passo técnico. Não funciona para quem ainda não tem trajetória ou fotos do espaço de trabalho.",
+   "tipos_carrossel": [
+    "apresentação",
+    "bastidor",
+    "reflexão"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "bastidor",
+    "detalhe",
+    "retrato posado"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina de número gigante foi feita para quantidade de vendas e a lâmina 'o primeiro cliente virou dez' fala de clientela; use o número para anos de atuação, áreas ou formação, nunca para casos ganhos ou quantidade de clientes.",
+   "observacoes": "Já está em português; nome fictício '[Grão e Torra]', endereço 'Rua Alegre, 123' e @grandesite a substituir.",
+   "link_modelo": "https://canva.link/z0w4kaa2mh5a01a",
+   "na_arvore": "Criativo 32",
+   "nome_na_arvore": "Bege com foto emoldurada"
+  },
+  {
+   "codigo": "CR-08",
+   "categoria": "Criativo",
+   "design_id": "DAHYxH3IJ1k",
+   "titulo_original": "Neutral Aesthetic Storytelling Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/cWp21aEIfaHzW3g",
+   "paginas": 5,
+   "nome": "Relato com anotações manuscritas",
+   "visual": "Capa e fecho com foto inteira em tons frios e título enorme em sans condensada branca em caixa alta. O miolo tem fundo cinza claro de papel, título em sans marrom, numeração entre parênteses e texto curto, com fotos retangulares e anotações manuscritas marrons com setas e círculos. Cabeçalho e rodapé discretos com marca, autor e paginação dão um ar de revista pessoal.",
+   "estrutura": "Capa com rótulo entre parênteses, título grande sobre foto e anotação manuscrita com seta; 3 lâminas numeradas (01, 02, 03) com título, parágrafo curto, uma ou duas fotos e uma anotação manuscrita; fecho com chamada para seguir sobre foto e assinatura manuscrita em moldura.",
+   "quando_escolher": "Transmite um advogado reflexivo, autêntico e próximo, que usa a própria história para criar vínculo. Combina com conteúdo de posicionamento e marca pessoal: por que escolheu a área, o que aprendeu em um momento da carreira, como pensa a advocacia. Pede de 4 a 6 fotos do advogado em clima espontâneo, com tratamento parecido (mesma luz, mesma paleta), além de fotos de ambiente para capa e fecho. Combina com carrossel de reflexão, bastidor, apresentação e relato pessoal em capítulos. Cada lâmina do miolo aguenta título curto e um parágrafo de 3 a 6 linhas. O tom é B, sensível e pessoal. Serve para advogado intermediário ou avançado que já tem um ensaio coerente; depende de fotos com estética parecida para funcionar.",
+   "quando_evitar": "Evite em conteúdo técnico, explicação de lei ou dicas práticas em lista. Também não combina com perfil que não gosta de falar de si ou que não tem fotos pessoais.",
+   "tipos_carrossel": [
+    "reflexão",
+    "bastidor",
+    "apresentação"
+   ],
+   "tom": [
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "ambiente",
+    "bastidor"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "Ao contar a própria história, não relate casos de clientes nem resultados obtidos em processos.",
+   "observacoes": "Nomes fictícios 'larana studio', 'by shawn' e @reallygreatsite no cabeçalho e rodapé de todas as lâminas; anotações manuscritas precisam ser reescritas.",
+   "link_modelo": "https://canva.link/c3oodjabb8swztg",
+   "na_arvore": "Criativo 33",
+   "nome_na_arvore": "Foto acinzentada com título condensado"
+  },
+  {
+   "codigo": "CR-07",
+   "categoria": "Criativo",
+   "design_id": "DAHY2Z9rCV8",
+   "titulo_original": "Pastel Colorful Branding Tips Instagram Post",
+   "view_url": "https://www.canva.com/d/8nYQnezTdEnLbFF",
+   "paginas": 6,
+   "nome": "Pílulas pastel sobre foto",
+   "visual": "Fotos de ambiente ocupam três quartos de cada lâmina, com o título em serifa condensada escrito dentro de pílulas arredondadas em tons pastel (rosa, azul, verde, amarelo). Abaixo, uma faixa de cor pastel traz um marcador triangular e uma frase em sans. Um selo circular com texto girando aparece na capa; a sensação é alegre, colorida e acessível.",
+   "estrutura": "Capa com foto inteira, título em quatro pílulas coloridas, cabeçalho com nome e tema e selo circular; 4 lâminas de dica com foto em cima, título em duas pílulas e faixa colorida com uma frase; fecho com foto de fundo, título em pílula, cartão branco com frase e cartão amarelo com chamada e site.",
+   "quando_escolher": "Transmite um advogado leve, acessível e moderno, que descomplica o direito para o público leigo. Combina com advocacia de consumidor, família, previdenciário, direito da mulher, direito digital e orientação para pequenos negócios. Pede uma foto por lâmina, 5 ou 6 no total, de preferência retratos espontâneos do advogado trabalhando, em atendimento ou no escritório, e fotos de ambiente com bastante cor. Combina com carrossel de dicas, lista de direitos, cuidados antes de assinar algo e explicativo bem curto. Cada lâmina aguenta só um título de 4 a 6 palavras e uma frase de até 3 linhas. O tom é B ou C, simpático. Serve para iniciante ou intermediário, porque a estrutura é repetitiva e fácil de preencher, e as pílulas assumem as cores da identidade do advogado.",
+   "quando_evitar": "Evite em temas graves (penal, violência, morte) e em perfis que precisam passar seriedade e autoridade técnica. Não comporta explicação longa nem fundamento legal detalhado.",
+   "tipos_carrossel": [
+    "dicas",
+    "lista",
+    "explicativo"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "bastidor",
+    "ambiente"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Nome fictício 'Studio Shodwe' e site reallygreatsite.com a substituir; selo circular com texto em inglês a reescrever.",
+   "link_modelo": "https://canva.link/vmp90ardea71sc2",
+   "na_arvore": "Criativo 34",
+   "nome_na_arvore": "Etiquetas pastel sobre foto"
+  },
+  {
+   "codigo": "CR-15",
+   "categoria": "Criativo",
+   "design_id": "DAHYMo2d36s",
+   "titulo_original": "Post instagram carossel Coisas que eu acho chique trend moderno amarelo",
+   "view_url": "https://www.canva.com/d/mrftyzAbjgj-OLD",
+   "paginas": 4,
+   "nome": "Trend com ensaio e frase",
+   "visual": "Cada lâmina é uma foto do mesmo ensaio em tela cheia, com uma frase em sans arredondada bold amarelo creme e brilhos de quatro pontas. A capa tem título grande e uma pílula branca com subtítulo; nas demais, um rodapé discreto repete o tema. A sensação é de tendência de Instagram, leve e pessoal.",
+   "estrutura": "Capa com retrato, título grande em quatro linhas e pílula de subtítulo; 3 lâminas com uma frase curta cada, sobre retratos diferentes do mesmo ensaio, e rótulo do tema no topo ou no rodapé.",
+   "quando_escolher": "Transmite um advogado moderno, confiante e com personalidade, que participa de tendências sem perder a postura profissional. Combina com marca pessoal e posicionamento, em temas como 'coisas que eu valorizo na advocacia', 'o que eu considero atendimento de qualidade' ou 'hábitos de um bom contrato'. Pede de 4 a 6 fotos do mesmo ensaio do advogado, em ambiente de trabalho, com poses variadas e espontâneas. Combina com carrossel de lista curta, trend, reflexão e apresentação. Cada lâmina aguenta só uma frase de até 12 palavras. O tom é B ou C. Serve para advogado intermediário ou avançado que já fez ensaio profissional; sem ensaio o modelo não se sustenta.",
+   "quando_evitar": "Evite em conteúdo explicativo, técnico ou que precise de argumentação. Não combina com advogado que não quer aparecer ou que tem perfil muito formal.",
+   "tipos_carrossel": [
+    "lista",
+    "reflexão",
+    "apresentação"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "retrato espontâneo",
+    "ambiente"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "A trend original fala de liberdade e escolher com quem trabalhar, com taça de vinho nas fotos; evite frases e imagens que soem como ostentação e prefira valores do exercício profissional.",
+   "observacoes": "Já está em português; tem só 4 páginas e não tem fecho com chamada.",
+   "link_modelo": "https://canva.link/s5rumnvat9obsdi",
+   "na_arvore": "Criativo 35",
+   "nome_na_arvore": "Trend com foto e amarelo"
+  },
+  {
+   "codigo": "CR-14",
+   "categoria": "Criativo",
+   "design_id": "DAHYM4IeRHE",
+   "titulo_original": "Post Instagram Carrossel Conteúdo Psicologia Moderno Bege",
+   "view_url": "https://www.canva.com/d/CygsZTNyZYUYX48",
+   "paginas": 5,
+   "nome": "Terracota com palavra de fundo",
+   "visual": "Alterna fundo terracota liso e fundo off-white, com títulos em sans fina e palavras-chave em bold. A capa repete o nome da profissão em letra cursiva gigante e translúcida ao fundo, atrás de um retrato posado recortado; arcos de linha fina laranja decoram os cantos. Imagens ilustrativas (nuvem, lâmpada) e foto em cartão arredondado com borda laranja completam o visual quente e acolhedor.",
+   "estrutura": "Capa com retrato recortado, pergunta 'como posso ajudar' e palavra repetida ao fundo; lâmina com frase, foto em cartão arredondado e complemento em caixa alta; lâmina com imagem ilustrativa e palavras-chave soltas sobre ela, mais parágrafo em caixa alta; lâmina com título, imagem de objeto e parágrafo, com faixa lateral terracota; fecho com pergunta e cartão de contato (telefone e e-mail).",
+   "quando_escolher": "Transmite um advogado acolhedor, próximo e profissional, que se apresenta explicando como pode ajudar. Combina com qualquer área de atendimento à pessoa física, como família, previdenciário, saúde, consumidor e trabalhista, e funciona muito bem como carrossel de apresentação dos serviços. Pede um retrato posado do advogado com fundo removível para a capa e 1 ou 2 fotos de atendimento ou ambiente; as lâminas internas usam imagens ilustrativas que podem vir de banco. Combina com apresentação, explicativo de área de atuação, lista de situações atendidas e 'quando procurar um advogado'. Aguenta texto curto a médio por lâmina. O tom é A ou B. Serve para iniciante e intermediário, porque organiza a apresentação de forma clara e funciona com poucas fotos.",
+   "quando_evitar": "Evite em conteúdo técnico com fundamento legal longo ou em listas extensas. Também não combina com perfil que quer visual frio, corporativo ou de alto padrão.",
+   "tipos_carrossel": [
+    "apresentação",
+    "explicativo",
+    "lista"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "ambiente",
+    "detalhe"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O fecho chama para agendar um horário; mantenha os contatos de forma informativa (telefone, e-mail, endereço), sem oferta de consulta gratuita, preço ou urgência.",
+   "observacoes": "Já está em português; palavra 'psicóloga' repetida ao fundo deve virar a área ou o nome do advogado; telefone e e-mail fictícios a substituir.",
+   "link_modelo": "https://canva.link/et9k9uj1hbu35x9",
+   "na_arvore": "Criativo 36",
+   "nome_na_arvore": "Foto em tons terrosos"
+  },
+  {
+   "codigo": "CR-16",
+   "categoria": "Criativo",
+   "design_id": "DAHYMm49KeY",
+   "titulo_original": "Post para Instagram Carrossel Vendas Moderno Elegante Marrom e Branco",
+   "view_url": "https://www.canva.com/d/guzr09yBJjBrv9f",
+   "paginas": 5,
+   "nome": "Marca-texto e palavra gigante",
+   "visual": "Capa e fecho com foto escurecida e frase em serifa condensada clara com trecho em itálico; o miolo usa fundo off-white com sombra suave na lateral. Títulos em sans bold marrom recebem marca-texto bege e sublinhado laranja, e uma palavra-chave gigante translúcida aparece ao fundo. Cabeçalho em fonte monoespaçada com função e nome, trio de fotos e um celular desenhado à mão dão um ar elegante e persuasivo.",
+   "estrutura": "Capa com foto escura, frase de gancho e botão de seta; lâmina com título grifado, frase de apoio sublinhada e palavra gigante ao fundo; lâmina com título, frase sublinhada e trio de fotos na base; lâmina com título grifado, parágrafo e ilustração de celular desenhada; fecho com foto escurecida, nome, frase de conclusão e chamada para comentar.",
+   "quando_escolher": "Transmite um advogado estratégico e elegante, que fala com clareza sobre erros comuns e corrige ideias equivocadas do público. Combina com advocacia para empresas, contratos, trabalhista para empregadores, tributário para pequenos negócios e direito do consumidor do ponto de vista do fornecedor. Pede 2 fotos de clima escuro para capa e fecho (detalhe ou retrato espontâneo) e 3 fotos de detalhe para o trio. Combina com mito e fato, erros comuns, 'por que isso acontece', explicativo curto e reflexão. Cada lâmina aguenta título de até 8 palavras e um parágrafo de 3 a 4 linhas. O tom é A ou B. Serve para advogado intermediário com identidade básica em tons terrosos, já que o cabeçalho com nome reforça a marca pessoal.",
+   "quando_evitar": "Evite usar com a copy original de vendas, promoções e escassez. Também não combina com conteúdo emocional de acolhimento ou listas longas.",
+   "tipos_carrossel": [
+    "mito e fato",
+    "explicativo",
+    "reflexão",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "detalhe",
+    "ambiente",
+    "retrato espontâneo"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O original fala de vender todos os dias, promoção, desconto e escassez, o que é vedado ao advogado. Reaproveite a estrutura para 'erros comuns' ou mito e fato; a lâmina do celular com 'desconto' vira celular com uma palavra-chave do tema (ex.: 'contrato', 'prazo'), e o fecho pede comentário sem oferta.",
+   "observacoes": "Já está em português; nome fictício 'Marcela Amaral' e 'mentora de sucesso' no cabeçalho de todas as lâminas a substituir pelo nome e pela área do advogado.",
+   "link_modelo": "https://canva.link/6uxymi5u3v14vx5",
+   "na_arvore": "Criativo 37",
+   "nome_na_arvore": "Foto escura em tom de mentoria"
+  },
+  {
+   "codigo": "CR-20",
+   "categoria": "Criativo",
+   "design_id": "DAHYMX8RV1Q",
+   "titulo_original": "Post para Instagram Orgânico Posicionamento Digital",
+   "view_url": "https://www.canva.com/d/lhGz8VxoBrBxksd",
+   "paginas": 5,
+   "nome": "Cartão chocolate sobre retrato",
+   "visual": "Retratos posados com estética de moda em tela cheia, cobertos por um cartão marrom chocolate sólido com texto branco centralizado em sans, com trechos em bold. Algumas lâminas dividem o espaço entre bloco de cor sólida e foto, e uma usa molduras tracejadas finas sobre a imagem. Uma etiqueta 'arraste para o lado' presa ao cartão e caixas brancas de lista completam um visual elegante e de impacto.",
+   "estrutura": "Capa com retrato e cartão central com a frase de gancho e etiqueta de arrastar; lâmina dividida com foto à direita e cartão inclinado com frase e etiqueta; lâmina dividida com foto à esquerda e bloco de cor com texto e lista de 3 caixas brancas; lâmina de frase sobre foto inteira com molduras tracejadas; fecho com retrato e cartão central com chamada para contato.",
+   "quando_escolher": "Transmite um advogado sofisticado, moderno e com imagem pessoal forte, que coloca o próprio retrato no centro da comunicação. Combina com marca pessoal e posicionamento, em temas de erro comum e solução, e com áreas de consultoria e atendimento próximo. Pede 2 ou 3 retratos posados do advogado, de bom nível, e 2 fotos de detalhe (mãos no teclado, mesa, ambiente). Combina com carrossel de problema e solução, mito e fato, reflexão e apresentação do serviço. Cada cartão aguenta 3 a 5 linhas de texto, e a lista aguenta 3 itens curtos. O tom é A ou B. Serve para advogado intermediário ou avançado com ensaio profissional; o cartão de cor sólida assume bem a cor principal da identidade.",
+   "quando_evitar": "Evite em conteúdos técnicos extensos e para quem não tem retratos profissionais. Não use a copy original de 'ímã de clientes' e 'postagens que convertem'.",
+   "tipos_carrossel": [
+    "mito e fato",
+    "reflexão",
+    "apresentação",
+    "explicativo"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "detalhe"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O original promete resultados, crescimento e clientes; ao adaptar, a lista de 3 caixas deve trazer o que o serviço envolve (etapas ou documentos), sem promessa de resultado, e o fecho fica como convite informativo ao contato.",
+   "observacoes": "Já está em português; retratos originais com estilo de moda chamativo, trocar por retratos do advogado com a mesma força de enquadramento.",
+   "link_modelo": "https://canva.link/fiy9qprn7tb3ucg",
+   "na_arvore": "Criativo 38",
+   "nome_na_arvore": "Foto com caixa de texto marrom"
+  },
+  {
+   "codigo": "CR-04",
+   "categoria": "Criativo",
+   "design_id": "DAHY2j4MBIE",
+   "titulo_original": "White and Brown Modern Daily Life Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/oFIZZ13em0_1-W3",
+   "paginas": 5,
+   "nome": "Foto escura com numeração",
+   "visual": "Todas as lâminas usam uma foto em tela cheia escurecida, com título enorme em sans bold branca e número grande no topo. O texto de apoio vem em serifa pequena com marcador, seguido de uma linha fina e uma seta em círculo branco que convida a arrastar. Um asterisco translúcido grande no canto dá o toque gráfico; a sensação é cinematográfica e intimista.",
+   "estrutura": "Capa com título grande, subtítulo em caixa alta e uma segunda foto em faixa; 3 lâminas numeradas (1, 2, 3) com título grande e um parágrafo curto sobre foto escurecida; lâmina final numerada 4 com título, parágrafo, pergunta para comentar e @ do perfil.",
+   "quando_escolher": "Transmite um advogado moderno e direto, com presença forte, que conduz o público por etapas claras. Combina com qualquer área que tenha um processo em fases, como divórcio, inventário, aposentadoria, abertura de empresa ou processo trabalhista. Pede uma foto por lâmina, 4 ou 5 no total, de preferência bastidor e ambiente (escritório, fórum, mesa, mãos assinando) ou retratos espontâneos do advogado; como a foto é escurecida, aceita imagens comuns de celular. Combina com passo a passo, etapas de um processo, rotina de trabalho e lista numerada. Cada lâmina aguenta só um título de até 4 palavras e um parágrafo de 3 a 4 linhas. O tom é A ou B, firme e próximo. Serve para iniciante ou intermediário, porque o layout é simples de adaptar e não depende de identidade visual pronta.",
+   "quando_evitar": "Evite em conteúdos com muitas informações por lâmina, tabelas, prazos detalhados ou comparações. Não funciona sem fotos, porque todo o impacto vem da imagem de fundo.",
+   "tipos_carrossel": [
+    "passo a passo",
+    "lista",
+    "bastidor",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "bastidor",
+    "ambiente",
+    "retrato espontâneo",
+    "detalhe"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Rodapé com @reallygreatsite na última lâmina a substituir.",
+   "link_modelo": "https://canva.link/o1s5g510bjv2ce6",
+   "na_arvore": "Criativo 39",
+   "nome_na_arvore": "Diário em marrom com foto de café"
+  },
+  {
+   "codigo": "CR-02",
+   "categoria": "Criativo",
+   "design_id": "DAHY2xvl_AI",
+   "titulo_original": "White and Pink Ios Core a Day in My Life Instagram Post",
+   "view_url": "https://www.canva.com/d/tx7WHCHen_O0E5_",
+   "paginas": 6,
+   "nome": "Rotina em bloco de notas",
+   "visual": "Cada lâmina tem foto clara de rotina como fundo, coberta por cartões brancos que imitam o app de Notas do celular, com cabeçalho, ícones e título marcado em rosa. A paleta original é branco, rosa claro e dourado, com estrelinhas brancas, balões de fala, pastinha rosa, clipe e anotações manuscritas com setas. A sensação é de diário digital, leve e íntimo.",
+   "estrutura": "Capa com duas fotos sobrepostas, título grande em branco e barra de busca com o subtítulo; lâmina de manhã com cartão de nota e checklist de tarefas; lâmina com cartão de calendário com foto e cartão de nota; lâmina repetindo o par nota e foto com horário; lâmina noturna com nota e pequenas fotos de detalhe; fecho em janela de post com chamada para salvar e seguir.",
+   "quando_escolher": "Transmite um advogado próximo, acessível e transparente, que abre a rotina de trabalho para gerar identificação. Combina com advocacia de atendimento recorrente e humano, como família, consumidor, previdenciário e trabalhista para empregados, e com advogados que querem mostrar como funciona um dia de audiência, de atendimento ou de estudo. Pede várias fotos de bastidor: mesa de trabalho, café, agenda, notebook, fórum, detalhes do escritório, de 5 a 8 imagens espontâneas. Funciona para carrossel de bastidor, 'um dia na minha rotina', passo a passo do atendimento e checklist de documentos. Cada lâmina aguenta texto curto a médio, dentro do cartão de nota, e o checklist aceita até 5 itens. O tom é B ou C, conversado. Serve para advogado intermediário, que já produz fotos do dia a dia; não depende de identidade visual pronta, já que as cores do cartão se adaptam fácil.",
+   "quando_evitar": "Evite em conteúdo técnico denso, explicação de lei com muitos detalhes ou perfis que precisam de imagem sóbria e institucional. Também perde sentido se o advogado não tiver fotos reais da rotina.",
+   "tipos_carrossel": [
+    "bastidor",
+    "passo a passo",
+    "checklist",
+    "apresentação"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "bastidor",
+    "detalhe",
+    "ambiente",
+    "retrato espontâneo"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "Ao mostrar a rotina, não exponha nomes de clientes, processos ou telas com dados; borre papéis e telas nas fotos de bastidor.",
+   "observacoes": "Muitos elementos decorativos (estrelas, balões, câmera, clipe) com texto em inglês a substituir; o rosa original deve virar a cor de destaque do advogado.",
+   "link_modelo": "https://canva.link/g69yu1zw7kos5q5",
+   "na_arvore": "Criativo 40",
+   "nome_na_arvore": "Colagem rosa com adesivos"
+  },
+  {
+   "codigo": "CR-01",
+   "categoria": "Criativo",
+   "design_id": "DAHY27bwrBE",
+   "titulo_original": "Yellow Brown Aesthetic Photo Collage Entrepreneur Lessons Instagram Carousel Post",
+   "view_url": "https://www.canva.com/d/BiIZm8SnztU9ywI",
+   "paginas": 5,
+   "nome": "Colagem urbana com pastas",
+   "visual": "Alterna lâminas de foto em tela cheia, feitas ao ar livre, com lâminas de fundo azul claro liso. O título mistura serifa fina e sans bold em amarelo creme, com palavras em tamanhos diferentes escalonadas, e pastinhas de arquivo amarelas soltas como enfeite. Fotos menores entram como polaroides com borda creme, dando uma sensação de diário visual moderno e descontraído.",
+   "estrutura": "Capa com retrato de corpo inteiro e título escalonado; lâmina de texto em fundo azul com frase serifada grande, dois parágrafos e uma polaroide no canto; lâmina de frase de impacto sobre foto de ambiente; lâmina de lista com 3 cartões amarelos (título curto e uma linha de explicação); fecho sobre o retrato da capa com chamada para compartilhar e colagem de 3 polaroides.",
+   "quando_escolher": "Transmite um advogado moderno, próximo e com personalidade, que mostra a própria rotina e fala de igual para igual com o público. Combina com ofertas de consultoria preventiva, advocacia para empreendedores, startups, criadores de conteúdo e pequenos negócios. Pede fotos: um retrato de corpo inteiro forte para capa e fecho, uma foto do advogado em ambiente externo ou no escritório e de 2 a 4 fotos espontâneas ou de bastidor para as polaroides. Funciona bem para carrossel de lições aprendidas na prática, dicas para quem está começando um negócio e listas curtas de cuidados jurídicos. Aguenta texto médio nas lâminas azuis e texto curto nas lâminas com foto, onde só cabe uma frase de impacto. O tom fica entre B e C, leve e conversado. Serve para advogado intermediário ou avançado que já tem um ensaio com fotos variadas; um iniciante sem fotos próprias vai perder a força do modelo.",
+   "quando_evitar": "Evite em temas pesados como direito penal, violência doméstica, luto ou sucessões delicadas, porque a estética é leve e despojada. Também não funciona para advogado sem fotos próprias ou que precisa de imagem muito formal e institucional.",
+   "tipos_carrossel": [
+    "lista",
+    "dicas",
+    "reflexão",
+    "bastidor"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "retrato espontâneo",
+    "bastidor",
+    "ambiente"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina de lições cita 'meu primeiro cliente'; troque por lições da prática sem mencionar cliente ou caso concreto.",
+   "observacoes": "Usa óculos escuros e roupas de moda nas fotos originais; ao trocar pelas fotos do advogado, manter enquadramento de corpo inteiro na capa e no fecho.",
+   "link_modelo": "https://canva.link/vrsq91qp39fp3xz",
+   "na_arvore": "Criativo 41",
+   "nome_na_arvore": "Colagem com notas adesivas amarelas"
+  },
+  {
+   "codigo": "CL-05",
+   "categoria": "Clássico",
+   "design_id": "DAHYw72_7oY",
+   "titulo_original": "Amarelo Preto Cinza Minimalista Moderno Tipográfico Lista Empreendedorismo Post Carrossel para Instagram",
+   "view_url": "https://www.canva.com/d/ekAUViH2WXEG9xu",
+   "paginas": 5,
+   "nome": "Palavra selecionada em destaque",
+   "visual": "A capa é um retrato em preto e branco escurecido com título em creme e uma palavra dentro de caixa amarela com alças, como se estivesse selecionada num editor. As lâminas internas alternam fundo creme claro e cinza médio, com título grande sem serifa em negrito e uma palavra destacada em caixa com pontos de seleção. A sensação é moderna, tipográfica e opinativa.",
+   "estrutura": "Capa com retrato e título; 4 lâminas de aprendizado alternando cor de fundo e posição (título no alto e texto embaixo, ou o inverso), cada uma com frase de impacto e parágrafo curto alinhado num canto.",
+   "quando_escolher": "Transmite um advogado moderno, direto e com opinião, que compartilha visão própria sobre a profissão e sobre os temas que atende. Combina com advocacia empresarial, trabalhista, para empreendedores e com conteúdo de mentalidade jurídica. Pede só 1 foto, um retrato posado na capa, que vai em preto e branco; as demais lâminas são tipográficas. Funciona para reflexão, 'o que aprendi na advocacia', quebra de crença e lista de lições, com um título de até 4 linhas e um parágrafo de 3 a 4 linhas. O tom ideal é próximo ou descontraído. Serve ao iniciante e ao intermediário, porque troca fácil as duas cores de fundo e a cor do destaque pela identidade.",
+   "quando_evitar": "Evite em conteúdo técnico com muitos itens ou citação de lei longa. Também não combina com posicionamento muito tradicional e formal, por causa do recurso de seleção de texto.",
+   "tipos_carrossel": [
+    "reflexão",
+    "lista",
+    "mito e fato",
+    "dicas"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Não tem lâmina de fecho com chamada: se precisar, duplicar uma lâmina interna e usar para o encerramento.",
+   "link_modelo": "https://canva.link/j3lqszgm9dv47nj",
+   "na_arvore": "Clássico 42",
+   "nome_na_arvore": "Foto em preto e branco com marca-texto amarelo"
+  },
+  {
+   "codigo": "CL-19",
+   "categoria": "Clássico",
+   "design_id": "DAHYMbBUyCU",
+   "titulo_original": "Beige Orange Contemporary Social Media Tips Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/Uybp86MqOGPtW6k",
+   "paginas": 6,
+   "nome": "Monocromático editorial bege",
+   "visual": "Fundo bege com textura de papel e todo o texto numa só cor forte (laranja avermelhado no original). Títulos em serifa alta e condensada que mistura caixa alta e itálico, itens em sem serifa negrito caixa alta separados por linhas finas, e cabeçalho com numeração entre parênteses, nome e ano. Não usa foto; a sensação é de revista, moderna e sofisticada.",
+   "estrutura": "Capa com etiqueta em pílula ('como') e título; 4 lâminas de tópico com título itálico e lista de 3 itens separados por linhas, mais 'próximo' com seta; fecho com chamada para seguir e rodapé de interação.",
+   "quando_escolher": "Transmite um advogado sofisticado e atual, com estética editorial marcante e organização clara. Combina com qualquer área em pautas de passo a passo e orientação estruturada, como 'como se preparar para a audiência' ou 'como organizar os documentos do inventário'. Funciona só com fundo e texto, sem fotos. Serve para passo a passo, checklist e explicativo em tópicos, com título de 2 linhas e 3 itens curtos de 1 a 2 linhas por lâmina. O tom ideal é sóbrio ou próximo. Serve melhor ao intermediário e ao avançado, que já têm uma cor de marca forte o bastante para sustentar o modelo monocromático.",
+   "quando_evitar": "Evite com paleta de cores claras ou fracas, porque tudo depende de uma única cor com bom contraste no bege. Também não combina com conteúdo de bastidor ou apresentação pessoal.",
+   "tipos_carrossel": [
+    "passo a passo",
+    "checklist",
+    "explicativo",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "nao_usa",
+   "fotos_tipo": [],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Nome fictício 'Studio Shodwe' e ano '(2023)' no cabeçalho a substituir. Textos originais em inglês.",
+   "link_modelo": "https://canva.link/knhpitgu6t99nzr",
+   "na_arvore": "Clássico 43",
+   "nome_na_arvore": "Bege contemporâneo com laranja"
+  },
+  {
+   "codigo": "CL-07",
+   "categoria": "Clássico",
+   "design_id": "DAHYwli160k",
+   "titulo_original": "Carrosel para Instagram de Psicóloga Moderno Verde",
+   "view_url": "https://www.canva.com/d/qT0miYJ1JF_Azwt",
+   "paginas": 5,
+   "nome": "Serifa clássica em verde",
+   "visual": "Capa e fecho em verde-escuro, lâminas internas em off-white rosado, com títulos em serifa de alto contraste e negrito e subtítulos em serifa itálica. Linhas finas com seta no topo e na base, e nome e profissão em letra pequena no cabeçalho. Não usa foto; a sensação é clássica, serena e confiável.",
+   "estrutura": "Capa com título grande, subtítulo itálico e linha de assinatura; 3 lâminas de motivo com título centralizado e pergunta ou frase em itálico; fecho com ícone em balão de fala, chamada, linha de convite e número de registro no rodapé.",
+   "quando_escolher": "Transmite um advogado sóbrio e acolhedor ao mesmo tempo, de postura tradicional, que inspira confiança e cuidado. Combina com família, sucessões, previdenciário, direito da saúde, direito do idoso e mediação. Funciona só com fundo e texto, sem fotos. Serve para lista do tipo '3 motivos', explicativo curto e perguntas frequentes, com título de até 2 linhas e uma frase de apoio de 2 a 3 linhas. O tom ideal é sóbrio ou próximo. É ótimo para o advogado iniciante sem identidade pronta, porque bastam duas cores e uma serifa elegante para ficar bonito, e também atende o intermediário.",
+   "quando_evitar": "Evite em conteúdo que pede parágrafos longos ou listas com muitos itens por lâmina. Também não combina com posicionamento moderno, tecnológico ou descontraído.",
+   "tipos_carrossel": [
+    "lista",
+    "explicativo",
+    "perguntas frequentes",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "nao_usa",
+   "fotos_tipo": [],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "O fecho foi feito para captação ('agende uma sessão'). No advogado, use convite discreto e informativo, como 'tem dúvidas sobre o tema? acompanhe o perfil'. A lista '3 motivos para contratar' deve virar '3 motivos para buscar orientação jurídica antes de agir', sem prometer resultado.",
+   "observacoes": "Nome fictício 'Cláudia Alvez', 'Psicóloga' e 'CRM 01/23456' a substituir por nome, 'Advogado(a)' e OAB/UF. Trocar o ícone de psicologia por símbolo do escritório ou ícone neutro.",
+   "link_modelo": "https://canva.link/x63p1m9v7j0jfnd",
+   "na_arvore": "Clássico 44",
+   "nome_na_arvore": "Verde-escuro com serifa clara"
+  },
+  {
+   "codigo": "CL-10",
+   "categoria": "Clássico",
+   "design_id": "DAHYM4ZmLLM",
+   "titulo_original": "Carrossel Empreendedora e Criadora de Conteúdo Dicas de Negócios Instagram post",
+   "view_url": "https://www.canva.com/d/bDgZYw3uBoIwVzD",
+   "paginas": 2,
+   "nome": "Capa editorial e lista única",
+   "visual": "Capa com foto de meio corpo cortada na altura do rosto, segurando caderno e copo, e título grande em serifa branca que mistura itálico negrito e regular; nome e profissão em caixa alta espaçada no topo e uma espiral de caderno decorativa no rodapé. A segunda lâmina é uma foto escurecida de mesa com 3 itens numerados em caixa alta. A sensação é editorial, de bastidor e rotina.",
+   "estrutura": "Capa com foto e título; 1 lâmina de lista com 3 itens numerados, cada um com frase principal e linha de explicação.",
+   "quando_escolher": "Transmite um advogado próximo e atual, que mostra a rotina e compartilha aprendizados de forma resumida. Combina com advocacia para empreendedores, empresarial, consultiva e com perfis que mostram bastidor do escritório. Pede 2 fotos: um retrato espontâneo ou de bastidor na capa (pode ser sem o rosto, com mãos, roupa e objetos de trabalho) e uma foto de ambiente da mesa para a lista. Funciona para 'o que aprendi este mês', resumo da semana, lista rápida de 3 pontos e bastidor, com frases curtas de 1 a 2 linhas por item. O tom ideal é próximo. Serve ao intermediário, que já tem fotos próprias de rotina.",
+   "quando_evitar": "Evite quando a pauta tem mais de 3 itens ou precisa de explicação, porque toda a lista cabe numa só lâmina. Também não serve para conteúdo técnico ou institucional.",
+   "tipos_carrossel": [
+    "lista",
+    "bastidor",
+    "reflexão"
+   ],
+   "tom": [
+    "B"
+   ],
+   "publico": [
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "bastidor",
+    "ambiente"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "Lista de aprendizados no escritório não pode citar caso concreto de cliente nem resultados obtidos. Fale de método de trabalho e organização.",
+   "observacoes": "Tem só 2 lâminas: funciona quase como post duplo; duplicar a lâmina de lista se precisar de mais conteúdo. Nome fictício 'Carolina Borges, Dona de loja' a substituir.",
+   "link_modelo": "https://canva.link/9rn25f09bcdx8y5",
+   "na_arvore": "Clássico 45",
+   "nome_na_arvore": "Foto escura com serifa itálica"
+  },
+  {
+   "codigo": "CL-18",
+   "categoria": "Clássico",
+   "design_id": "DAHYMjsx7zs",
+   "titulo_original": "Cream Black and Orange Simple Clean Informational Tips Instagram Carousel Post",
+   "view_url": "https://www.canva.com/d/7z2YNvceJWz2XIO",
+   "paginas": 6,
+   "nome": "Frases serifadas em creme",
+   "visual": "Fundo creme liso, títulos em serifa negrito preta e destaques na cor de apoio (laranja no original). Nome do escritório e site em letra pequena no topo, faixa fina colorida no rodapé das lâminas internas e botões em pílula na capa e no fecho. Não usa foto; a sensação é limpa, clara e segura.",
+   "estrutura": "Capa com pergunta-gancho e botão; 4 lâminas com uma frase principal e uma linha de apoio, algumas com destaque colorido; fecho com chamada de salvar e botão.",
+   "quando_escolher": "Transmite um advogado claro, objetivo e confiável, que vai direto ao ponto com frases de impacto. Combina com qualquer área em conteúdo de alerta e orientação rápida, como 'por que seu contrato ainda está desprotegido' ou 'o que ninguém te conta sobre o inventário'. Funciona só com fundo e texto, sem fotos. Serve para mito e fato, dicas rápidas e reflexão, com no máximo 2 frases curtas por lâmina. O tom ideal é sóbrio ou próximo. É ótimo para o advogado iniciante sem identidade pronta, porque bastam uma cor de fundo, uma de destaque e uma serifa.",
+   "quando_evitar": "Evite em conteúdo explicativo ou técnico que pede parágrafo, porque o layout é feito para frases curtas. Também não serve para apresentação pessoal ou bastidor.",
+   "tipos_carrossel": [
+    "mito e fato",
+    "dicas",
+    "reflexão",
+    "lista"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "nao_usa",
+   "fotos_tipo": [],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Nome fictício 'Paucek & Lage' e 'reallygreatsite.com' a substituir. Textos originais em inglês.",
+   "link_modelo": "https://canva.link/473bdmk40wca8ir",
+   "na_arvore": "Clássico 46",
+   "nome_na_arvore": "Creme com título serifado"
+  },
+  {
+   "codigo": "CL-17",
+   "categoria": "Clássico",
+   "design_id": "DAHYMkyeXd0",
+   "titulo_original": "Cream Black Minimalist Branding Instagram Post",
+   "view_url": "https://www.canva.com/d/v1JyjcaLyJgJtI8",
+   "paginas": 8,
+   "nome": "Passos editoriais em grafite",
+   "visual": "Fundo com textura de papel: capa e fecho em creme claro, lâminas de passo em grafite escuro com letra creme. Tipografia serifada condensada e elegante nos títulos, 'passo 1' em serifa itálica e texto em sem serifa centralizado; ícones de salvar e compartilhar no rodapé e pílula amarelo-clara na capa. O fecho tem um retrato pequeno em moldura oval.",
+   "estrutura": "Capa com título e subtítulo; 5 lâminas de passo numerado com título e parágrafo; lâmina de considerações finais; fecho com retrato oval, pergunta e convite para seguir.",
+   "quando_escolher": "Transmite um advogado sofisticado, didático e organizado, com estética editorial discreta. Combina com qualquer área em pautas de procedimento: passos de um inventário, etapas de um processo trabalhista, como registrar uma marca, como regularizar um imóvel. Funciona quase só com texto; a única foto é um retrato pequeno no fecho, que pode ser posado. Serve para passo a passo, dicas e explicativo, com título de 2 linhas e parágrafo de 3 a 4 linhas. O tom ideal é sóbrio. Atende do iniciante ao avançado, porque bastam duas cores e uma serifa para aplicar a identidade.",
+   "quando_evitar": "Evite em conteúdo de bastidor, apresentação pessoal ou tom descontraído, porque o modelo é contido e quase sem imagem. Também fica longo demais para pautas com só 2 ou 3 pontos.",
+   "tipos_carrossel": [
+    "passo a passo",
+    "dicas",
+    "explicativo",
+    "checklist"
+   ],
+   "tom": [
+    "A"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "retrato posado"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "8 lâminas. Textos originais em inglês. '@reallygreatsite' e 'REALLYGREATSITE.COM' a substituir.",
+   "link_modelo": "https://canva.link/clvdgqzr82zlt6g",
+   "na_arvore": "Clássico 47",
+   "nome_na_arvore": "Creme minimalista, só tipografia"
+  },
+  {
+   "codigo": "CL-01",
+   "categoria": "Clássico",
+   "design_id": "DAHY2dtTw9A",
+   "titulo_original": "Green and White Modern Lifestyle Tips Carousel Instagram Post",
+   "view_url": "https://www.canva.com/d/4Gsb1Z5X1AGUpl3",
+   "paginas": 6,
+   "nome": "Cartão claro sobre foto",
+   "visual": "Cada lâmina tem uma foto de ambiente em tela cheia e, por cima, um cartão claro de cantos arredondados com logo, hashtag, etiqueta de número, título grande sem serifa e texto curto. Embaixo do cartão há uma barra de progresso em segmentos e um botão em pílula verde-claro com seta. A sensação é organizada, limpa e calma, de guia prático.",
+   "estrutura": "Capa com título e subtítulo no cartão sobre foto; 4 lâminas de dica numerada, cada uma com foto de ambiente diferente e a barra de progresso avançando; fecho com cartão de conclusão, frase de síntese e botão de curtir e compartilhar, repetindo a foto da capa.",
+   "quando_escolher": "Transmite um advogado organizado, didático e acessível, que explica com calma e passa segurança sem formalidade excessiva. Combina com ofertas de orientação preventiva e consultiva: planejamento sucessório, contratos do dia a dia, direito do consumidor, direito imobiliário, regularização de documentos. Pede de 5 a 6 fotos, de preferência de ambiente e detalhe (mesa do escritório, documentos, estante, recepção), e a capa pode ter um retrato espontâneo de costas ou de perfil; o rosto não é obrigatório. Funciona muito bem para carrossel de dicas, passo a passo e checklist, com um título de até 4 linhas e um parágrafo de 2 a 3 linhas por lâmina. O tom ideal é sóbrio ou próximo. Serve para o advogado iniciante e para o intermediário, porque o cartão central recebe com facilidade a cor e a fonte da identidade, e só o logo precisa estar pronto.",
+   "quando_evitar": "Evite em conteúdo que exige muito texto por lâmina ou explicação técnica longa, porque o cartão é pequeno. Também perde força se o advogado não tiver fotos de ambiente com boa qualidade e luz parecida entre si.",
+   "tipos_carrossel": [
+    "dicas",
+    "passo a passo",
+    "checklist",
+    "lista",
+    "explicativo"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe",
+    "retrato espontâneo"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Marca fictícia 'Borcelle', hashtag '#dailytips' e site 'reallygreatsite.com' a substituir. A barra de progresso tem 6 segmentos: ajustar se mudar a quantidade de lâminas. Textos originais em inglês.",
+   "link_modelo": "https://canva.link/xhtnx5v6nyx84a2",
+   "na_arvore": "Clássico 48",
+   "nome_na_arvore": "Cartão verde-claro sobre foto"
+  },
+  {
+   "codigo": "CL-15",
+   "categoria": "Clássico",
+   "design_id": "DAHYMrfZCqQ",
+   "titulo_original": "Instagram post carrossel 3 estratégias de marketing moderno preto e branco",
+   "view_url": "https://www.canva.com/d/ay3BD5vMRTc2bH_",
+   "paginas": 5,
+   "nome": "Grafite com perfil verificado",
+   "visual": "Fundo grafite escuro, títulos em sem serifa negrito branca com uma palavra em itálico, numeral grande em cinza e texto corrido pequeno em dois parágrafos. A capa é uma foto escurecida de mesa com um numeral gigante em cinza atrás do título e um cabeçalho que imita perfil de rede social (avatar, nome, selo). O fecho é uma foto em preto e branco de reunião com um cartão escuro no mesmo estilo de publicação.",
+   "estrutura": "Capa com foto, perfil e título; 3 lâminas numeradas com título e dois parágrafos (a terceira com faixa de foto em preto e branco à direita); fecho com foto e cartão de mensagem.",
+   "quando_escolher": "Transmite um advogado moderno, técnico e direto, que entrega conteúdo denso com cara atual. Combina com empresarial, tributário, trabalhista patronal, direito digital e contratos. Pede 3 fotos: uma de ambiente ou detalhe na capa, uma faixa de bastidor na lâmina 4 e uma foto de reunião ou equipe no fecho, além do retrato pequeno do avatar. Funciona para explicativo e lista de estratégias ou cuidados, com título de 2 linhas e até dois parágrafos de 4 a 5 linhas. O tom ideal é sóbrio ou próximo. Serve ao intermediário, que tem fotos de escritório e identidade básica.",
+   "quando_evitar": "Evite para posicionamento acolhedor ou delicado, como família e sucessões, porque o grafite é frio. Também não combina com frases curtas de impacto, que ficam perdidas no espaço.",
+   "tipos_carrossel": [
+    "explicativo",
+    "lista",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "bastidor",
+    "detalhe",
+    "retrato posado"
+   ],
+   "densidade": "longa",
+   "aguenta_longa": true,
+   "riscos_oab": "O fecho original promete sucesso ('juntos podemos voar até o sucesso'), o que é promessa de resultado. No advogado, troque por convite informativo e neutro.",
+   "observacoes": "Formato quadrado (1:1). Nome fictício 'Luana Álvarez' e '@grandesite' a substituir. Manter o selo de verificado só se o perfil do advogado for verificado.",
+   "link_modelo": "https://canva.link/wbrotftjdubv9yx",
+   "na_arvore": "Clássico 49",
+   "nome_na_arvore": "Número gigante em fundo escuro"
+  },
+  {
+   "codigo": "CL-11",
+   "categoria": "Clássico",
+   "design_id": "DAHYM4CqzeQ",
+   "titulo_original": "Post carrossel instagram 4 hábitos de autocuidado minimalista moderno branco e preto",
+   "view_url": "https://www.canva.com/d/OrzZ8Xul4RCUcji",
+   "paginas": 6,
+   "nome": "Editorial cinza com itálico",
+   "visual": "Fundo cinza claro e fotos em preto e branco. A capa é uma foto esmaecida em tela cheia com título que mistura caixa alta sem serifa fina e serifa itálica grande; as internas têm título em serifa itálica no topo, foto retangular de cantos arredondados no meio e texto curto centralizado embaixo. A sensação é calma, elegante e de revista.",
+   "estrutura": "Capa com foto esmaecida, título e assinatura; 4 lâminas de hábito com título itálico, foto e frase de apoio; fecho só tipográfico com chamada e assinatura.",
+   "quando_escolher": "Transmite um advogado sofisticado e acolhedor, de comunicação serena e cuidadosa. Combina com família, sucessões, direito da saúde, previdenciário e advocacia preventiva para pessoas físicas. Pede 5 fotos em preto e branco: um retrato espontâneo na capa e 4 fotos de detalhe ou ambiente (mãos assinando, livros, café, mesa, sala). Funciona para dicas, hábitos, checklist e lista de cuidados, com título de 1 linha e frase de apoio de 2 a 3 linhas. O tom ideal é sóbrio ou próximo. Serve ao intermediário e ao avançado, que já têm fotos próprias e uma serifa itálica na identidade.",
+   "quando_evitar": "Evite em conteúdo técnico ou com muito texto, porque o espaço de texto é pequeno. Também não combina com posicionamento enérgico, moderno ou muito colorido.",
+   "tipos_carrossel": [
+    "dicas",
+    "lista",
+    "checklist",
+    "reflexão"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "O fecho original é de captação ('agende uma sessão'). No advogado, troque por convite informativo, como salvar o post ou acompanhar o perfil.",
+   "observacoes": "Nome fictício 'Raquel Guedes, Psicóloga' na capa e no fecho, a substituir por nome e OAB.",
+   "link_modelo": "https://canva.link/yapu2resp17il80",
+   "na_arvore": "Clássico 50",
+   "nome_na_arvore": "Foto clara em preto e branco"
+  },
+  {
+   "codigo": "CL-12",
+   "categoria": "Clássico",
+   "design_id": "DAHYM67udnc",
+   "titulo_original": "Post Carrossel para Instagram Inteligência Emocional Minimalista e Moderno",
+   "view_url": "https://www.canva.com/d/fi495XdZiq6C-Y4",
+   "paginas": 3,
+   "nome": "Capa conceitual e texto denso",
+   "visual": "A capa é uma foto conceitual em tela cheia, com desfoque de movimento, e título branco grande sem serifa, sobretítulo em caixa alta espaçada e seta em pílula. A lâmina central é branca, com título em cor escura, linhas divisórias e duas listas com marcadores. O fecho tem uma frase dentro de caixa com borda arredondada e o @ em pílula.",
+   "estrutura": "Capa com foto e título; 1 lâmina de conteúdo com título, bloco 'o problema' e bloco de pontos importantes em lista; fecho com frase de síntese em caixa e @.",
+   "quando_escolher": "Transmite um advogado técnico e didático, que explica um conceito de forma organizada. Combina com qualquer área quando a pauta é explicar um instituto jurídico, como 'o que é usucapião', 'o que é rescisão indireta' ou 'o que muda com a nova lei'. Pede só 1 foto na capa, que pode ser conceitual, de ambiente ou de banco de imagens coerente com a identidade. Funciona para explicativo, checklist e conceito, e a lâmina central aguenta bastante texto em lista. O tom ideal é sóbrio ou próximo. Serve ao iniciante e ao intermediário, porque o miolo é só texto e cores.",
+   "quando_evitar": "Evite em pautas com vários tópicos que pedem uma lâmina cada, porque o modelo concentra tudo numa só. Também não combina com conteúdo de bastidor ou apresentação pessoal.",
+   "tipos_carrossel": [
+    "explicativo",
+    "checklist",
+    "lista"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe"
+   ],
+   "densidade": "longa",
+   "aguenta_longa": true,
+   "riscos_oab": "",
+   "observacoes": "Tem só 3 lâminas e a central concentra muito texto: duplicar para dividir o conteúdo se preciso. O texto original do fecho usa travessão: reescrever. '@grandesite' a substituir.",
+   "link_modelo": "https://canva.link/qf6b4lde4168gcj",
+   "na_arvore": "Clássico 51",
+   "nome_na_arvore": "Foto azulada com título forte"
+  },
+  {
+   "codigo": "CL-08",
+   "categoria": "Clássico",
+   "design_id": "DAHYwrKGGPc",
+   "titulo_original": "Post Instagram Carrossel 3 motivos para contratar Consultoria azul marinho",
+   "view_url": "https://www.canva.com/d/uuGh0q7PfCp8UmD",
+   "paginas": 5,
+   "nome": "Institucional azul-marinho",
+   "visual": "Fundo azul-marinho liso em todas as lâminas, tipografia serifada clássica em branco, com numerais grandes. A capa tem um número gigante à esquerda e uma coluna de 3 fotos verticais arredondadas de arquitetura à direita, além de seta em retângulo. A sensação é corporativa, séria e institucional.",
+   "estrutura": "Capa com número grande, título e coluna de 3 fotos; 3 lâminas com numeral, título em negrito e parágrafo; fecho com logo e nome do escritório centralizados.",
+   "quando_escolher": "Transmite um escritório técnico, institucional e estruturado, com cara de sociedade de advogados consolidada. Combina com direito empresarial, tributário, societário, contratos, compliance e advocacia para empresas. Pede 3 fotos na capa, de preferência de ambiente e arquitetura (fachada, prédio, sala de reunião, detalhe do escritório), sem precisar de rosto; as demais lâminas são só texto. Funciona para lista de pontos, explicativo e apresentação das áreas de atuação, com título de 1 linha e parágrafo de 3 a 5 linhas. O tom ideal é sóbrio. Serve ao advogado intermediário ou avançado e a escritórios que já têm logomarca, porque o fecho depende dela.",
+   "quando_evitar": "Evite para advogados com posicionamento próximo, pessoal ou descontraído, porque o visual é frio e corporativo. Também não combina com conteúdo de bastidor ou apresentação pessoal.",
+   "tipos_carrossel": [
+    "lista",
+    "explicativo",
+    "apresentação",
+    "dicas"
+   ],
+   "tom": [
+    "A"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "opcional",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O layout original é '3 motivos para contratar' o escritório, com 'time altamente qualificado' e 'melhor solução', o que vira autopromoção e captação. No advogado, use para conteúdo informativo, como '3 cuidados antes de assinar o contrato social' ou apresentação neutra das áreas de atuação, sem superlativos.",
+   "observacoes": "Nome fictício 'Farias e Sampaio Consultoria' e logo a substituir. '@grandesite' a substituir.",
+   "link_modelo": "https://canva.link/x4v2ugxmnlcht0v",
+   "na_arvore": "Clássico 52",
+   "nome_na_arvore": "Azul-marinho com fotos de prédios"
+  },
+  {
+   "codigo": "CL-20",
+   "categoria": "Clássico",
+   "design_id": "DAHYMaiZ5B8",
+   "titulo_original": "Post Instagram carrossel sinais de closet detox tipográfico preto e branco",
+   "view_url": "https://www.canva.com/d/POIxn8Kh-OXBMg1",
+   "paginas": 5,
+   "nome": "Tipográfico preto contrastante",
+   "visual": "Fundo preto liso com tipografia de alto contraste: sem serifa extranegrito e condensada em caixa alta, combinada com serifa itálica fina para números e palavras de destaque. Nome e profissão no cabeçalho de todas as lâminas e texto de apoio em caixa alta pequena. Não usa foto; a sensação é firme, moderna e de autoridade.",
+   "estrutura": "Capa com título do tipo '03 sinais de que'; 3 lâminas de sinal numerado com composições diferentes (número ao lado, número no centro, título dividido); fecho com frase de síntese, pequeno losango, chamada e @.",
+   "quando_escolher": "Transmite um advogado moderno, firme e direto, com postura de autoridade sem perder clareza. Combina com qualquer área em pautas de alerta, como 'sinais de que você precisa revisar seu contrato', 'sinais de assédio no trabalho' ou 'sinais de que a empresa precisa de compliance'. Funciona só com fundo e texto, sem fotos. Serve para lista de sinais, checklist e mito e fato, com título de até 4 linhas e frase de apoio de 2 a 3 linhas. O tom ideal é sóbrio ou próximo. É ótimo para o iniciante sem identidade pronta e também para o intermediário, porque o preto com duas fontes contrastantes já resolve o visual.",
+   "quando_evitar": "Evite em posicionamento delicado ou acolhedor, porque o preto com letra pesada é intenso. Também não serve para conteúdo com parágrafos longos.",
+   "tipos_carrossel": [
+    "lista",
+    "checklist",
+    "mito e fato",
+    "dicas"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "nao_usa",
+   "fotos_tipo": [],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "O fecho 'Vamos conversar?' é convite de captação. No advogado, mantenha um convite informativo e discreto, sem oferta de consulta ou promessa de resultado.",
+   "observacoes": "Nome fictício 'Mariana Napolitani, Consultora de Imagem' no cabeçalho de todas as lâminas e '@grandesite' a substituir.",
+   "link_modelo": "https://canva.link/tfkld398qam5l79",
+   "na_arvore": "Clássico 53",
+   "nome_na_arvore": "Tipográfico preto e branco"
+  },
+  {
+   "codigo": "CL-06",
+   "categoria": "Clássico",
+   "design_id": "DAHYwpgSG_w",
+   "titulo_original": "Post para Instagram carrossel erros que aprendi moderno",
+   "view_url": "https://www.canva.com/d/50Izvx6APsNSN-7",
+   "paginas": 4,
+   "nome": "Retrato e lições em terracota",
+   "visual": "Capa com retrato posado de braços cruzados e degradê escuro à esquerda, onde fica o título branco grande sem serifa. As internas alternam fundo off-white com texto terracota e fundo terracota com texto branco, com etiqueta pequena em caixa alta, título em negrito e uma pílula preta de rótulo. O fecho é preto, com botão terracota.",
+   "estrutura": "Capa com retrato e título; 2 lâminas de erro com etiqueta numerada, título, rótulo 'o que eu aprendi' e parágrafo; fecho com frase de síntese, texto curto, botão de pergunta e @.",
+   "quando_escolher": "Transmite um advogado próximo, direto e com postura de mentor, que alerta sobre armadilhas comuns. Combina com conteúdo preventivo em qualquer área: erros na abertura de empresa, erros em contrato de aluguel, erros que atrapalham o processo trabalhista ou o inventário. Pede 1 retrato posado de boa qualidade na capa, com fundo que aceite o degradê escuro. Funciona para carrossel de erros comuns, mito e fato, lista e dicas, com título de até 3 linhas e parágrafo de 3 a 4 linhas. O tom ideal é próximo. Serve ao iniciante e ao intermediário, porque o esquema de duas cores aceita bem a paleta do advogado.",
+   "quando_evitar": "Evite quando a pauta pede mais de 4 ou 5 itens, porque o modelo tem só 2 lâminas de conteúdo e cada uma comporta um item. Também não combina com tom muito sóbrio e institucional.",
+   "tipos_carrossel": [
+    "lista",
+    "mito e fato",
+    "dicas",
+    "reflexão"
+   ],
+   "tom": [
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O gancho 'erros que me custaram caro' não pode virar relato de caso concreto de cliente. Use erros genéricos e hipotéticos, como 'erros comuns antes de assinar um contrato'.",
+   "observacoes": "Só 2 lâminas de conteúdo: duplicar para pautas com mais itens. '@grandesite' a substituir.",
+   "link_modelo": "https://canva.link/vyeknozf7fj57ft",
+   "na_arvore": "Clássico 54",
+   "nome_na_arvore": "Retrato com título em negrito"
+  },
+  {
+   "codigo": "CL-09",
+   "categoria": "Clássico",
+   "design_id": "DAHYwdbY9NY",
+   "titulo_original": "Post para Instagram Retrato Carrossel Dicas de Marketing Básico e Neutro",
+   "view_url": "https://www.canva.com/d/Ibd24wNfw9WFw_r",
+   "paginas": 6,
+   "nome": "Post de perfil neutro",
+   "visual": "Fundo branco acinzentado com sombra sutil de folhagem, tipografia geométrica leve e títulos sobre uma faixa de cor clara (lilás no original), como marca-texto. As internas trazem uma foto em preto e branco ocupando uma faixa lateral, o topo ou a base, alternando a posição. A capa imita uma publicação de rede social, com avatar redondo, nome e @.",
+   "estrutura": "Capa estilo publicação com avatar, nome, título destacado e texto; 4 lâminas de dica com foto em faixa (direita, esquerda, topo, base), título destacado e parágrafo; fecho com avatar grande, ícone de seguir e chamada.",
+   "quando_escolher": "Transmite um advogado próximo, didático e educador, que conversa com o seguidor como numa publicação pessoal. Combina com conteúdo de orientação em consumidor, trabalhista, previdenciário, imobiliário e direito para pequenos negócios. Pede 1 retrato para o avatar e 4 fotos de apoio em preto e branco, que podem ser bastidor, detalhe ou retrato espontâneo. Funciona para dicas, explicativo e passo a passo, com título de 1 a 2 linhas e parágrafo de 5 a 6 linhas. O tom ideal é próximo. Serve ao iniciante e ao intermediário, porque o fundo neutro aceita qualquer identidade e o destaque pede só uma cor.",
+   "quando_evitar": "Evite em posicionamento muito sofisticado ou institucional, porque a aparência de publicação de rede social deixa o conteúdo mais informal. Também perde força sem fotos de apoio.",
+   "tipos_carrossel": [
+    "dicas",
+    "explicativo",
+    "passo a passo",
+    "lista"
+   ],
+   "tom": [
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "bastidor",
+    "detalhe",
+    "retrato espontâneo"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "A lâmina 5 original fala de promoções e descontos e usa foto de cubos com símbolo de porcentagem, o que é proibido para advogado. Use essa lâmina para outro tópico informativo e troque a foto.",
+   "observacoes": "Nome fictício 'Carla Dias' e '@grandesite' a substituir; o fecho usa outro retrato no avatar, trocar pelo do advogado.",
+   "link_modelo": "https://canva.link/8nd3nwfzjeonem4",
+   "na_arvore": "Clássico 55",
+   "nome_na_arvore": "Estilo post de rede social, fundo branco"
+  },
+  {
+   "codigo": "CL-14",
+   "categoria": "Clássico",
+   "design_id": "DAHYMu9vyLg",
+   "titulo_original": "Preto Amarelo e Bege Minimalista Elegante Aprendizado Negócios Carrossel Instagram Post",
+   "view_url": "https://www.canva.com/d/YpIn1lnNx0Q1BvR",
+   "paginas": 5,
+   "nome": "Retrato escuro e páginas brancas",
+   "visual": "A capa é um retrato de estúdio em fundo preto, com título que mistura serifa itálica branca e sem serifa em negrito na cor de destaque (dourado claro no original). As internas são brancas, com numeral serifado grande na cor de destaque, título em negrito preto e texto curto, tudo alinhado à direita; a primeira interna tem uma borda arredondada que revela a foto escura ao lado. O fecho volta ao preto, com linha vertical e pergunta em itálico.",
+   "estrutura": "Capa com retrato e título; 3 lâminas numeradas de aprendizado com título e frase de apoio; fecho com pergunta e convite para comentar.",
+   "quando_escolher": "Transmite um advogado sofisticado e de autoridade, que ao mesmo tempo mostra proximidade ao compartilhar visão pessoal. Combina com advocacia de alto padrão, empresarial, tributário, família patrimonial e escritórios boutique. Pede 1 retrato posado de estúdio, de preferência em fundo escuro e roupa escura, para a capa. Funciona para reflexão, lista de aprendizados, princípios do escritório e lições da prática, com título de até 4 linhas e frase de apoio de 2 a 3 linhas. O tom ideal é sóbrio ou próximo. Serve ao intermediário e ao avançado, que já têm ensaio profissional e uma cor de destaque elegante.",
+   "quando_evitar": "Evite em conteúdo técnico com muito texto ou listas extensas. Também perde força com foto amadora ou de fundo claro na capa.",
+   "tipos_carrossel": [
+    "reflexão",
+    "lista",
+    "apresentação"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Texto alinhado à direita: conferir a leitura em frases longas. O texto original da lâmina 3 usa travessão: reescrever. '@grandesite' a substituir.",
+   "link_modelo": "https://canva.link/whurbdgst4x39b6",
+   "na_arvore": "Clássico 56",
+   "nome_na_arvore": "Retrato escuro com serifa"
+  },
+  {
+   "codigo": "CL-03",
+   "categoria": "Clássico",
+   "design_id": "DAHYxMfEcPM",
+   "titulo_original": "Preto Branco e Cinza Minimalista Minhas Obsessões do Momento Categoria Instagram Post",
+   "view_url": "https://www.canva.com/d/LL9VP0pw7mrBcqf",
+   "paginas": 5,
+   "nome": "Frase sobre foto clara",
+   "visual": "Todas as lâminas são uma foto em tela cheia, de tons claros e neutros (branco, bege, cinza), com uma frase curta em letra branca sem serifa e negrito, em minúsculas, justificada no centro. A capa tem o título sublinhado em três linhas, uma linha de apoio acima e o @ no rodapé. A sensação é editorial, leve e de estilo de vida.",
+   "estrutura": "Capa com foto de mesa de trabalho, título sublinhado e linha de apoio; 4 lâminas com uma foto diferente cada e uma única frase curta no centro.",
+   "quando_escolher": "Transmite um advogado próximo, humano e com senso estético apurado, que mostra a rotina e os valores do escritório. Combina com ofertas em que confiança e afinidade pesam na escolha, como família, sucessões, consultoria para empresários e advocacia pessoal de alto padrão. Pede 5 fotos de ambiente e detalhe com estética coesa (mesa, café, livros, agenda, sala de reunião), sem precisar mostrar o rosto. Funciona para bastidor, reflexão, 'o que aprendi este mês', valores do escritório e listas curtas de hábitos, com uma frase de no máximo 4 linhas por lâmina. O tom ideal é próximo ou descontraído. Serve melhor ao advogado intermediário ou avançado, que já tem um banco de fotos próprio com luz e cor parecidas, porque a foto carrega quase todo o design.",
+   "quando_evitar": "Evite em conteúdo técnico, explicativo ou com mais de uma frase por lâmina, porque não há área de texto de apoio. Também não funciona com fotos escuras ou muito coloridas, que tiram a leitura da letra branca.",
+   "tipos_carrossel": [
+    "bastidor",
+    "reflexão",
+    "lista"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "ambiente",
+    "detalhe"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "O texto justificado abre espaços grandes entre as palavras: revisar as quebras de linha a cada frase nova. '@grandesite' a substituir.",
+   "link_modelo": "https://canva.link/k1bb6r7pu6jrzy8",
+   "na_arvore": "Clássico 57",
+   "nome_na_arvore": "Foto de mesa com título sublinhado"
+  },
+  {
+   "codigo": "CL-02",
+   "categoria": "Clássico",
+   "design_id": "DAHYxJnQC4g",
+   "titulo_original": "Purple White and Black Modern Microblog Carousel Content Instagram Post",
+   "view_url": "https://www.canva.com/d/-JizYi9LFGQ6-Pd",
+   "paginas": 6,
+   "nome": "Grade escura com destaque",
+   "visual": "Fundo preto com grade quadriculada sutil, linhas pontilhadas que atravessam as lâminas e ligam uma à outra, e uma cor de destaque (roxo no original). Tipografia sem serifa geométrica e pesada nos títulos, texto corrido regular em branco, número no canto superior e uma barra em pílula no rodapé com site e botão. Não usa foto; a sensação é tecnológica, moderna e direta.",
+   "estrutura": "Capa com nome do autor no topo, título em duas cores e seta circular; 4 lâminas com número no alto, título forte de 2 linhas e parágrafo explicativo; fecho com pergunta grande na cor de destaque, linha de convite e barra com site.",
+   "quando_escolher": "Transmite um advogado moderno, atualizado e objetivo, com cara de quem domina temas novos. Combina muito com direito digital, LGPD e proteção de dados, direito empresarial para startups, propriedade intelectual, contratos de tecnologia e tributário para negócios digitais. Funciona só com fundo e texto, sem fotos, o que facilita para quem ainda não tem banco de imagens. Aguenta carrossel explicativo, de tendências, de novidades legais e de lista de pontos, com um título curto e um parágrafo de 5 a 7 linhas por lâmina. O tom ideal é sóbrio ou próximo, com frases diretas. Serve para iniciante e intermediário, porque basta trocar a cor de destaque e a fonte pela identidade do advogado.",
+   "quando_evitar": "Evite para advogados com posicionamento tradicional, acolhedor ou de família e sucessões, porque o visual escuro e tecnológico soa frio nesses temas. Também não combina com conteúdo de bastidor ou apresentação pessoal, já que não tem espaço para foto.",
+   "tipos_carrossel": [
+    "explicativo",
+    "lista",
+    "dicas",
+    "novidade legal"
+   ],
+   "tom": [
+    "A",
+    "B"
+   ],
+   "publico": [
+    "iniciante",
+    "intermediario"
+   ],
+   "foto": "nao_usa",
+   "fotos_tipo": [],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "O fecho foi pensado para captação direta ('chame no direct'). No advogado, troque por convite informativo, como acompanhar o perfil ou salvar o conteúdo, sem promessa de resultado.",
+   "observacoes": "Nome fictício 'Daniel Gallego' e site 'reallygreatsite.com' a substituir. Textos originais em inglês.",
+   "link_modelo": "https://canva.link/133j0s4vxn1dlfx",
+   "na_arvore": "Clássico 58",
+   "nome_na_arvore": "Preto com título roxo"
+  },
+  {
+   "codigo": "CL-04",
+   "categoria": "Clássico",
+   "design_id": "DAHYxNf9wog",
+   "titulo_original": "Trend coisas que eu acho chique carrossel fotográfico post do instagram",
+   "view_url": "https://www.canva.com/d/c8nWUrvY3uLQIGr",
+   "paginas": 5,
+   "nome": "Círculo de cor sobre foto",
+   "visual": "Fotos em tela cheia com um grande círculo de cor sólida (azul acinzentado no original) que recebe o texto em branco. A tipografia mistura sem serifa em negrito, sem serifa fina e, na capa, uma palavra em itálico caligráfico; o nome aparece em caixa alta espaçada. A sensação é delicada, sofisticada e de estilo de vida.",
+   "estrutura": "Capa com retrato espontâneo de perfil, círculo com o título e bloco decorativo de texto miúdo; 4 lâminas com foto de detalhe ou ambiente e círculo com frase curta e nome, alternando o círculo entre o topo e a base.",
+   "quando_escolher": "Transmite um advogado próximo, elegante e com personalidade, que fala de valores e de estilo de trabalho. Combina com advocacia de família, sucessões, direito da mulher, advocacia para profissionais liberais e escritórios boutique. Pede 5 fotos: um retrato espontâneo na capa (de perfil, olhando a paisagem ou em ambiente) e 4 fotos de detalhe e ambiente (café, mesa, janela, caderno). Funciona para carrossel de valores, 'o que eu valorizo no atendimento', bastidor e reflexão, com frases de 2 a 3 linhas dentro do círculo. O tom ideal é próximo ou descontraído. Serve ao advogado intermediário ou avançado, que já tem cor de marca definida para o círculo e fotos próprias com estética coerente.",
+   "quando_evitar": "Evite em conteúdo técnico, explicativo ou com listas, porque o círculo só comporta uma frase curta. Também não combina com posicionamento muito sóbrio ou corporativo.",
+   "tipos_carrossel": [
+    "reflexão",
+    "bastidor",
+    "lista",
+    "apresentação"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "detalhe",
+    "ambiente"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Nome fictício 'Claudia Alves' aparece em todas as lâminas. A capa tem um bloco decorativo com a frase do título repetida em letra miúda: trocar pelo novo título ou apagar.",
+   "link_modelo": "https://canva.link/2yeo2cvbpqa2a5k",
+   "na_arvore": "Clássico 59",
+   "nome_na_arvore": "Foto com círculo e serifa itálica"
+  },
+  {
+   "codigo": "CL-16",
+   "categoria": "Clássico",
+   "design_id": "DAHYMsH0CJc",
+   "titulo_original": "Vários defeitos trend minimalista moderno instagram carrossel post",
+   "view_url": "https://www.canva.com/d/yEUI765pPPbJyvL",
+   "paginas": 4,
+   "nome": "Bastidor de palestra com frase",
+   "visual": "Fotos em tela cheia de retratos espontâneos da mesma pessoa em evento (falando ao microfone, sentada em plateia) e uma foto de detalhe de mesa. Texto grande em sem serifa fina na cor creme, com palavras-chave em negrito sublinhado; na capa, a palavra principal é enorme, com estrelinhas e um selo circular girado com o nome. Nome e profissão em caixa alta miúda nos quatro cantos.",
+   "estrutura": "Capa com retrato e título no formato de trend ('tenho vários defeitos, mas nenhum deles é'); 2 lâminas com uma frase sobre foto; lâmina final com frase e convite para comentar e salvar.",
+   "quando_escolher": "Transmite um advogado próximo, humano e com presença, que fala em público e mostra bastidor de eventos e palestras. Combina com advogados que dão palestras, aulas, participam de eventos da OAB ou atendem empresas, em qualquer área. Pede de 3 a 4 retratos espontâneos de bastidor (palestrando, em evento, em reunião) e 1 foto de detalhe. Funciona para reflexão, bastidor, trend e lista de princípios ('o que eu não faço na advocacia'), com uma frase de até 3 linhas por lâmina. O tom ideal é próximo ou descontraído. Serve ao intermediário e ao avançado, que já têm registros profissionais de eventos.",
+   "quando_evitar": "Evite em conteúdo técnico ou explicativo, porque cabe só uma frase por lâmina. Também não funciona sem fotos de bastidor reais e de boa qualidade.",
+   "tipos_carrossel": [
+    "reflexão",
+    "bastidor",
+    "lista",
+    "trend"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario",
+    "avancado"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato espontâneo",
+    "bastidor",
+    "detalhe"
+   ],
+   "densidade": "curta",
+   "aguenta_longa": false,
+   "riscos_oab": "Frases sobre clientes que não valorizam o trabalho podem soar como discussão de preço ou crítica a clientes; e 'copiar o conteúdo dos outros' pode soar como ataque a colegas. Use princípios de conduta, como 'prometer resultado' ou 'atender sem ouvir o caso inteiro'.",
+   "observacoes": "Nome fictício 'Olivia Vieira, empresária e creator' nos quatro cantos de cada lâmina e no selo circular da capa, a substituir.",
+   "link_modelo": "https://canva.link/3w8sott8i8zng5t",
+   "na_arvore": "Clássico 60",
+   "nome_na_arvore": "Trend com foto e título em destaque"
+  },
+  {
+   "codigo": "CL-13",
+   "categoria": "Clássico",
+   "design_id": "DAHYMmXEzIM",
+   "titulo_original": "Yellow Modern Small Business Tips Instagram Carousel Post",
+   "view_url": "https://www.canva.com/d/QgIS_Fe5aC7Zi3N",
+   "paginas": 4,
+   "nome": "Notas sobre retrato no escritório",
+   "visual": "O mesmo retrato posado em ambiente de trabalho (mesa, notebook) é o fundo de todas as lâminas. A capa e o fecho têm título enorme em sem serifa condensada amarelo-claro sobre a foto; as internas trazem janelas brancas imitando um aplicativo de notas, com data, título em marca-texto amarelo e texto. A sensação é moderna, próxima e de bastidor.",
+   "estrutura": "Capa com retrato e título grande; 1 lâmina com uma janela de nota; 1 lâmina com duas notas sobrepostas, uma delas em checklist; fecho com chamada de salvar e compartilhar.",
+   "quando_escolher": "Transmite um advogado moderno, acessível e transparente, que compartilha anotações e aprendizados como num diário de trabalho. Combina com advocacia para empreendedores, empresarial, trabalhista e com perfis de bastidor do escritório. Pede 1 retrato posado no ambiente de trabalho, com espaço livre no meio para as notas, que se repete em todas as lâminas. Funciona para bastidor, 'notas do advogado', dicas e checklist curto, com título de 1 a 2 linhas e parágrafo de 3 a 4 linhas por nota. O tom ideal é próximo ou descontraído. Serve ao intermediário, que tem um bom retrato no escritório e uma cor de destaque definida.",
+   "quando_evitar": "Evite em conteúdo técnico longo ou institucional, porque o recurso de aplicativo de notas é informal. Também não funciona com retrato de fundo poluído, que atrapalha a leitura das janelas.",
+   "tipos_carrossel": [
+    "bastidor",
+    "dicas",
+    "checklist",
+    "reflexão"
+   ],
+   "tom": [
+    "B",
+    "C"
+   ],
+   "publico": [
+    "intermediario"
+   ],
+   "foto": "exige",
+   "fotos_tipo": [
+    "retrato posado",
+    "ambiente"
+   ],
+   "densidade": "media",
+   "aguenta_longa": false,
+   "riscos_oab": "",
+   "observacoes": "Data fictícia 'September 1st, 2034', '000' e '@reallygreatsite' a substituir. Textos originais em inglês. A mesma foto aparece em todas as lâminas.",
+   "link_modelo": "https://canva.link/ntpuexjbcqzge5u",
+   "na_arvore": "Clássico 61",
+   "nome_na_arvore": "Foto com título amarelo"
+  }
+ ],
+ "arvore_de_links": "https://claude.ai/artifact/Hjt9MKmnwZcu8Troy5SY53",
+ "como_identificar": "Na Árvore de Links, cada modelo aparece pelo estilo e por um número contínuo de 01 a 61 (campo na_arvore, ex.: 'Clássico 44') e pelo nome do cartão (nome_na_arvore). O campo codigo é só o identificador interno do catálogo. Copie sempre pelo link_modelo; o design_id é o original da biblioteca e nunca deve ser copiado nem editado."
+}

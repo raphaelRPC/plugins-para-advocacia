@@ -1,0 +1,95 @@
+/* C03 · Gabinete. Escuro e quente, luz difusa, serifa leve, passo circulado à mão, progresso em bolinhas. */
+:root{--preencher:.58}
+body{font-family:var(--f-texto);color:var(--texto)}
+.l{background:var(--fundo);padding:70px 96px 64px}
+.textura{background:
+  radial-gradient(520px 420px at 92% 6%,color-mix(in srgb,var(--destaque) 60%,transparent),transparent 70%),
+  radial-gradient(900px 700px at 100% 0%,color-mix(in srgb,var(--destaque) 16%,transparent),transparent 75%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E")}
+.topo{display:flex;justify-content:space-between;align-items:center;font-size:20px;color:var(--suave)}
+.topo .marca{border:1.5px solid color-mix(in srgb,var(--texto) 55%,transparent);border-radius:999px;padding:6px 16px;color:var(--texto)}
+.topo .secao{letter-spacing:.12em;text-transform:uppercase}
+.rodape{display:flex;align-items:center;gap:22px;margin-top:22px;font-size:20px;color:var(--suave)}
+.rodape .esq{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pag{display:none}
+.progresso{display:flex;gap:9px;align-items:center}
+.progresso i{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--texto);opacity:.75}
+.progresso i.on{background:var(--texto);opacity:1}
+.arraste{width:60px;height:60px;border-radius:50%;background:var(--texto);display:flex;align-items:center;justify-content:center;flex:none}
+.seta{width:30px;height:13px}.seta path{stroke:var(--fundo);stroke-width:8}
+.traco path,.traco ellipse{stroke:var(--destaque);stroke-width:3.5}
+.corpo{justify-content:center;padding:30px 0}
+.t-passo .corpo,.com-print .corpo{justify-content:flex-start;padding-top:70px}
+
+.titulo{font-family:var(--f-titulo);font-weight:400;font-size:96px;line-height:1.02;letter-spacing:-.02em;max-width:860px}
+.titulo em,.mito em,.fato em,.numero em{font-style:italic;color:var(--destaque)}
+.texto{font-size:31px;line-height:1.5;color:var(--suave);max-width:800px;margin-top:34px;font-weight:300}
+.texto b{font-weight:500;color:var(--texto)}
+.rotulo{align-self:flex-start;font-size:24px;color:var(--texto);margin:0 0 28px 6px;padding:6px 4px}
+.rotulo .traco{display:block}
+mark{background:none;color:var(--destaque)}
+.fonte{margin-top:28px;font-size:21px;color:var(--suave);opacity:.85}
+
+/* capa */
+.t-capa .corpo{justify-content:flex-end;padding-bottom:40px}
+.t-capa .ante{font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--destaque);margin-bottom:26px}
+.t-capa .titulo{font-size:132px;line-height:.98}
+.t-capa .sub{font-size:32px;line-height:1.45;color:var(--suave);max-width:700px;margin-top:34px;font-weight:300}
+.foto-sangrada .veu{background:linear-gradient(180deg,rgba(20,14,8,.25) 0%,rgba(20,14,8,.35) 40%,rgba(20,14,8,.88) 100%)}
+
+/* foto e print */
+.t-texto .foto,.print{margin-top:40px;flex:1;min-height:240px;width:100%;border-radius:18px;overflow:hidden}
+.print .quadro{border-radius:18px;background:#fff}
+.print .falta{border:2px dashed var(--linha);border-radius:18px;color:var(--suave)}
+.falta .r{font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--destaque);margin-bottom:12px}
+.falta .d{font-size:26px;line-height:1.4;max-width:640px}
+.grifo .traco ellipse,.grifo .traco path{stroke-width:5}
+
+/* lista */
+.itens{list-style:none;margin-top:40px;font-size:40px;max-width:860px}
+.itens li{display:flex;gap:26px;align-items:baseline;padding:18px 0}
+.itens .num{font-family:var(--f-titulo);font-style:italic;font-size:.9em;color:var(--destaque);flex:none;width:1.5em}
+.itens .item{line-height:1.25;font-weight:400}
+.itens .det{display:block;font-size:.66em;line-height:1.4;color:var(--suave);margin-top:4px;font-weight:300}
+
+/* mito e fato */
+.mito{font-family:var(--f-titulo);font-size:84px;line-height:1.06;letter-spacing:-.015em;color:color-mix(in srgb,var(--texto) 72%,var(--fundo))}
+.fato-r{margin-top:60px}
+.fato{font-size:40px;line-height:1.42;font-weight:300}
+.risco-t path{stroke-width:5}
+
+/* número */
+.t-numero .numero{font-family:var(--f-titulo);font-style:italic;font-size:340px;line-height:.86;color:var(--destaque);letter-spacing:-.03em}
+.t-numero .texto{font-size:40px;color:var(--texto)}
+
+/* regra e citação */
+.trecho{font-family:var(--f-titulo);font-style:italic;font-size:46px;line-height:1.3;margin-top:40px;padding-left:34px;border-left:3px solid var(--destaque);max-width:860px}
+.refs{list-style:none;margin-top:40px;font-size:38px;max-width:880px}
+.refs li{display:flex;justify-content:space-between;gap:24px;padding:22px 0;border-top:1px solid var(--linha)}
+.refs .ref{font-size:21px;color:var(--suave);white-space:nowrap;padding-top:10px}
+.aspas{font-family:var(--f-titulo);font-size:260px;line-height:.62;height:130px;color:var(--destaque)}
+.t-citacao .trecho{border:0;padding:0;font-size:62px;line-height:1.16}
+.autor{margin-top:30px;font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--suave)}
+
+/* comparação */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:46px;font-size:34px}
+.col{border:1.5px solid var(--linha);border-radius:18px;padding:30px 30px 36px}
+.col-depois{border-color:var(--destaque);background:color-mix(in srgb,var(--destaque) 10%,transparent)}
+.col-t{font-size:20px;letter-spacing:.12em;text-transform:uppercase;color:var(--suave);margin-bottom:16px}
+.col-depois .col-t{color:var(--destaque)}
+.col-x{font-family:var(--f-titulo);font-size:1.15em;line-height:1.2}
+
+/* convite */
+.t-convite .textura{background:
+  radial-gradient(700px 520px at 50% 18%,color-mix(in srgb,var(--destaque) 46%,transparent),transparent 72%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E")}
+.t-convite .corpo{align-items:center;text-align:center}
+.t-convite .titulo{font-size:110px}
+.cta{display:flex;flex-direction:column;align-items:center;gap:22px;margin-top:50px}
+.retrato{width:150px;height:150px;border-radius:50%;overflow:hidden;border:3px solid var(--destaque)}
+.chamada{display:inline-block;background:var(--destaque);color:var(--sobre-destaque);border-radius:999px;padding:18px 44px;font-size:34px;font-weight:600;letter-spacing:.04em}
+.detalhe{font-size:26px;color:var(--suave);margin-top:12px}
+.assinatura{margin-top:40px;font-size:22px;line-height:1.5;color:var(--suave)}
+
+.f-claro{background:var(--texto);color:var(--fundo)}
+.f-claro .texto,.f-claro .topo,.f-claro .rodape{color:color-mix(in srgb,var(--fundo) 75%,transparent)}

@@ -1,0 +1,38 @@
+{
+ "codigo": "C01",
+ "nome": "Caderno",
+ "resumo": "Papel claro com textura, título condensado em caixa alta, palavra-chave na cor de destaque e marcas de caneta (grifo, risco, círculo) sobre o print.",
+ "serve": [
+  "tutorial com print",
+  "lista de erros",
+  "mito e fato",
+  "explicativo"
+ ],
+ "evite": [
+  "tema delicado (luto, violência), em que a caneta parece leve demais"
+ ],
+ "fontes": {
+  "titulo": "Archivo",
+  "texto": "Inter",
+  "detalhe": "JetBrains Mono"
+ },
+ "cores": {
+  "fundo": "#F3F0EA",
+  "texto": "#141414",
+  "destaque": "#8E1B2B",
+  "apoio": "#E9E4DA",
+  "suave": "#6B665E",
+  "linha": "#D6CFC2"
+ },
+ "google_fonts": [
+  "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=block"
+ ],
+ "foto_modos": {
+  "capa": "moldura",
+  "texto": "moldura",
+  "numero": "recorte",
+  "citacao": "recorte",
+  "convite": "recorte"
+ },
+ "tratamento": "saturate(.9) contrast(1.04) sepia(.06)"
+}

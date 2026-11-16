@@ -1,0 +1,42 @@
+{
+ "codigo": "C03",
+ "nome": "Gabinete",
+ "resumo": "Fundo escuro e quente com luz difusa no canto, serifa leve, rótulo do passo circulado à mão e bolinhas que mostram em que lâmina o leitor está.",
+ "serve": [
+  "passo a passo",
+  "checklist antes de um ato",
+  "explicativo em tópicos",
+  "tutorial com print"
+ ],
+ "evite": [
+  "marca com fundo claro obrigatório"
+ ],
+ "fontes": {
+  "titulo": "Playfair Display",
+  "texto": "Inter",
+  "detalhe": "Inter"
+ },
+ "google_fonts": [
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=block"
+ ],
+ "cores": {
+  "fundo": "#3A3022",
+  "texto": "#F7F2E8",
+  "destaque": "#F2D58A",
+  "apoio": "#4A3F2F",
+  "suave": "#D4CAB8",
+  "linha": "#6E6250"
+ },
+ "usa_da_marca": [
+  "destaque"
+ ],
+ "foto_modos": {
+  "capa": "sangrada",
+  "texto": "cartao",
+  "numero": "sangrada",
+  "citacao": "sangrada",
+  "lista": "cartao",
+  "convite": "recorte"
+ },
+ "tratamento": "saturate(.78) sepia(.16) contrast(1.05) brightness(.94)"
+}
