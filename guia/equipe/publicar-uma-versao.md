@@ -6,8 +6,13 @@
 4. Commit, depois `git tag vX.Y.Z` e `git push origin main vX.Y.Z`.
 5. Em uns minutos aparece em Releases um **rascunho** com os zips. Abra, confira as notas e clique em **Publish release**.
 
-Sem GitHub Actions (por exemplo, sem minutos no plano): rode `npm run zips -- --versao X.Y.Z` e
-`gh release create vX.Y.Z dist/*.zip dist/plugins/*.zip dist/SHA256SUMS.txt --draft --notes-file <(node ferramentas/versao.mjs notas X.Y.Z)`.
+Sem GitHub Actions (por exemplo, sem minutos no plano). Rode antes `npm run testar` e `npm run checar`. Depois, na raiz do repositório:
+
+```
+npm run zips -- --versao X.Y.Z
+node ferramentas/versao.mjs notas X.Y.Z > notas.md
+gh release create vX.Y.Z dist/*.zip dist/plugins/*.zip dist/SHA256SUMS.txt --draft --notes-file notas.md
+```
 
 ## Compartilhar enquanto o repositório é privado
 
