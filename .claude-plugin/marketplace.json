@@ -10,51 +10,51 @@
   "plugins": [
     {
       "name": "inicio-automacao",
-      "source": "./plugins/inicio-automacao",
+      "source": "./plugins/fundacao/inicio-automacao",
       "description": "Estrutura o escritório de advocacia para a automação com IA, na ordem certa: diagnóstico, cultura, mapa de setores, POPs com IA (S, A, H) desenhados, testados e versionados, base de conhecimento (com o inventário da pasta real do escritório), habilidades do Claude, automação e medição do retorno. Traz roteiros completos para produção de peças e para atendimento pelo WhatsApp. Tem trilha para escritório solo e para escritório com equipe.",
-      "version": "0.3.1"
+      "category": "fundacao"
     },
     {
       "name": "motor-comercial",
-      "source": "./plugins/motor-comercial",
+      "source": "./plugins/motores/motor-comercial",
       "description": "O comercial do escritório de advocacia rodando no Claude, do primeiro contato ao contrato assinado: triagem de cada mensagem, convite e agenda da consulta, roteiro e ata, proposta e contrato de honorários, retorno a quem sumiu, funil registrado e um agente que roda o ciclo do dia e deixa tudo numa fila para aprovação. Parte das fichas do escritório e se adapta ao nicho, às rotinas e às correções de cada uso.",
-      "version": "2.0.0"
+      "category": "motores"
     },
     {
       "name": "motor-experiencia",
-      "source": "./plugins/motor-experiencia",
+      "source": "./plugins/motores/motor-experiencia",
       "description": "A experiência e o suporte ao cliente do escritório de advocacia, do contrato ao encerramento e depois: boas-vindas, régua de atualização, status traduzido, resumo mensal, página do caso, cliente que chega com resposta de IA, preparação para audiência e perícia, reclamação, prestação de contas e pesquisa. Um agente roda o ciclo do dia na carteira e deixa os rascunhos numa fila para aprovação. Parte das fichas do escritório e se adapta ao nicho e às rotinas.",
-      "version": "1.0.0"
+      "category": "motores"
     },
     {
       "name": "motor-juridico",
-      "source": "./plugins/motor-juridico",
+      "source": "./plugins/motores/motor-juridico",
       "description": "A produção jurídica do escritório de advocacia rodando no Claude: dossiê do caso, leitura dos autos, estratégia e contraditório, minuta no padrão do escritório, conferência de cada citação e dos dados da peça, preparo do protocolo, e as peças boas do escritório transformadas em habilidades próprias. Pesquisa de jurisprudência pelo Jus IA, guardada numa base do escritório. Um agente roda a fila de peças do dia e deixa as minutas conferidas para o advogado aprovar.",
-      "version": "1.0.0"
+      "category": "motores"
     },
     {
       "name": "motor-controladoria",
-      "source": "./plugins/motor-controladoria",
+      "source": "./plugins/motores/motor-controladoria",
       "description": "A controladoria do escritório de advocacia rodando no Claude: captação das publicações (DJEN, e-mail do tribunal, exportação do sistema), triagem ligada ao caso, cálculo do prazo pelo calendário de cada tribunal com a conta à vista, dupla conferência por uma pessoa antes de agendar, agenda com data de segurança, audiências e perícias, e o encaminhamento da providência para a produção jurídica e para o aviso ao cliente. A IA capta e calcula; quem confirma o prazo é uma pessoa.",
-      "version": "1.0.0"
+      "category": "motores"
     },
     {
       "name": "marketing-juridico-claude",
-      "source": "./plugins/marketing-juridico-claude",
+      "source": "./plugins/marketing/marketing-juridico-claude",
       "description": "Marketing Jurídico com Claude (RPC Educação), plugin de vídeo. Rito PICO para montar a base, roteiro de vídeo, edição pelo Catálogo, prancha do vídeo, Mesa de edição e vídeo sem rosto, registro de uso do plano e Trava OAB em toda entrega. A base é a mesma do plugin de carrossel.",
-      "version": "1.0.2"
+      "category": "marketing"
     },
     {
       "name": "editor-de-carrossel-mjc",
-      "source": "./plugins/editor-de-carrossel-mjc",
+      "source": "./plugins/marketing/editor-de-carrossel-mjc",
       "description": "Editor de Carrossel do curso Marketing Jurídico com Claude (RPC Educação). Lê a base PICO, constrói o texto com o orquestrador de copy e a Trava OAB, e monta a arte a partir de um modelo da biblioteca do curso no Canva, com a identidade do advogado. Sem Canva, usa motor próprio com seis estilos. Inclui Linha editorial, Protocolo, Informativo e rotinas.",
-      "version": "1.1.2"
+      "category": "marketing"
     },
     {
       "name": "plugin-copywriter",
-      "source": "./plugins/plugin-copywriter",
+      "source": "./plugins/marketing/plugin-copywriter",
       "description": "Sistema completo de copywriting em portugues para redes sociais. Rege sete habilidades que criam, humanizam e lapidam conteudo de marketing para qualquer nicho, do briefing ao texto final: repertorio textual, gatilhos mentais, arquitetura de gancho e fecho, polimento, humanizacao e figuras de linguagem, coordenadas por um orquestrador.",
-      "version": "1.0.1"
+      "category": "marketing"
     }
   ]
 }
