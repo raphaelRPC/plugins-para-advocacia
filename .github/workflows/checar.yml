@@ -15,3 +15,4 @@ jobs:
       - run: node ferramentas/checar.mjs
       - run: node ferramentas/sincronizar.mjs --verificar
       - run: node ferramentas/montar_zips.mjs --versao 0.0.0-teste --saida /tmp/dist
+      - run: node ferramentas/montar_entregas.mjs --versao 0.0.0-teste --saida /tmp/entregas
