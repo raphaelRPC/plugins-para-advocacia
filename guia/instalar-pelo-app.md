@@ -12,7 +12,7 @@ Os menus do Claude podem mudar com as atualizações. Se algum nome for diferent
 
 ## Passo a passo
 
-1. Baixe o zip do plugin, pelo Hub ou pelo release do GitHub. O nome é parecido com `motor-comercial-2.0.0-essencial.zip`.
+1. Baixe o zip do plugin, pelo Hub ou pelo release do GitHub. O nome do zip começa com o nome do plugin, por exemplo `motor-comercial-...zip`.
 2. Abra o app do Claude.
 3. Clique em Personalizar.
 4. Clique em Plugins.
@@ -24,6 +24,7 @@ Os menus do Claude podem mudar com as atualizações. Se algum nome for diferent
 
 O comando faz até 8 perguntas e mostra um resultado com casos de treino.
 
+<!-- so-fonte:inicio -->
 ## Trocar de edição
 
 1. Baixe o zip da edição nova.
@@ -31,6 +32,7 @@ O comando faz até 8 perguntas e mostra um resultado com casos de treino.
 3. Depois de enviar, confira na lista de plugins que ficou só um com aquele nome. Se ficaram dois, remova o antigo.
 
 A pasta `escritorio/` não se perde.
+<!-- so-fonte:fim -->
 
 ## O que funciona onde
 

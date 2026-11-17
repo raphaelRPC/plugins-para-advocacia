@@ -2,11 +2,14 @@
   "name": "plugins-para-advocacia-ferramentas",
   "private": true,
   "description": "Ferramentas de checagem, versão e montagem dos plugins. Sem dependências.",
-  "engines": { "node": ">=22.2" },
+  "engines": {
+    "node": ">=22.2"
+  },
   "scripts": {
     "testar": "node --test \"testes/*.test.mjs\"",
     "checar": "node ferramentas/checar.mjs",
     "sincronizar": "node ferramentas/sincronizar.mjs",
-    "zips": "node ferramentas/montar_zips.mjs"
+    "zips": "node ferramentas/montar_zips.mjs",
+    "entregas": "node ferramentas/montar_entregas.mjs"
   }
 }

@@ -18,6 +18,8 @@ plugins-para-advocacia/
   compartilhado/                    o que se repete em mais de um plugin
     mapa.json                       diz de onde cada cópia vem
   edicoes.json                      habilidades de cada edição dos motores
+  tickets.json                      plugins e edições de cada ticket (ver entregas-por-ticket.md)
+  modelos/                          o modelo do README das entregas
   ferramentas/                      os scripts de checar, sincronizar, montar zips e versões
   testes/                           os testes dos scripts
   guia/                             os guias para o advogado e para a equipe

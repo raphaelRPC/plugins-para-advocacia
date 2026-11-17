@@ -2,11 +2,13 @@
 
 Estes plugins colocam o escritório para rodar dentro do Claude. Cada plugin vem pronto no método e vazio no conteúdo: você preenche as fichas e ajusta ao seu jeito de trabalhar.
 
+<!-- grupos:inicio -->
 ## Os três grupos
 
 - **Fundação:** o `inicio-automacao` faz o diagnóstico, cria o código do escritório, os setores e os POPs. É a base que os outros plugins leem.
 - **Motores:** um por setor. `motor-comercial`, `motor-experiencia`, `motor-juridico` e `motor-controladoria`.
 - **Marketing:** `marketing-juridico-claude` (vídeo), `editor-de-carrossel-mjc` (carrossel) e `plugin-copywriter` (copy para qualquer nicho).
+<!-- grupos:fim -->
 
 ## Em que ordem instalar
 
@@ -16,6 +18,7 @@ Estes plugins colocam o escritório para rodar dentro do Claude. Cada plugin vem
 
 Cada plugin tem um comando de começo, por exemplo `/motor-comercial:comecar`. Rode esse comando logo depois de instalar.
 
+<!-- so-fonte:inicio -->
 ## As três edições dos motores
 
 Cada motor tem três edições:
@@ -25,6 +28,7 @@ Cada motor tem três edições:
 - **Avançada:** a completa mais painéis, lotes e auditorias.
 
 Uma edição contém a anterior. Dá para subir de edição quando quiser: você não perde a pasta `escritorio/`, onde ficam as fichas e tudo o que o escritório já preencheu.
+<!-- so-fonte:fim -->
 
 ## Como instalar
 

@@ -108,16 +108,19 @@ Se você é o Claude ajudando um advogado com estes plugins:
 | Regras de versão | [guia/equipe/versoes.md](guia/equipe/versoes.md) |
 | Dar e tirar acesso ao repositório | [guia/equipe/dar-acesso.md](guia/equipe/dar-acesso.md) |
 | Entender as pastas e as ferramentas | [guia/equipe/estrutura-do-repositorio.md](guia/equipe/estrutura-do-repositorio.md) |
+| Montar as entregas Clássico, Moderno e Futuro | [guia/equipe/entregas-por-ticket.md](guia/equipe/entregas-por-ticket.md) |
 
 ```
 plugins/        os 8 plugins (fundacao, motores, marketing): é o que se instala
 compartilhado/  arquivos repetidos entre plugins, numa versão só
 edicoes.json    o que entra em cada edição dos motores
+tickets.json    o que entra em cada ticket (Clássico, Moderno, Futuro)
+modelos/        o modelo do README das entregas
 ferramentas/    checar, sincronizar, montar zips e controlar versões (Node, sem dependências)
 guia/           guias para o advogado e para a equipe
 ```
 
-Comandos: `npm run testar` · `npm run checar` · `npm run sincronizar` · `npm run zips -- --versao X.Y.Z`. Cada tag `vX.Y.Z` enviada ao GitHub gera um release em rascunho com todos os zips.
+Comandos: `npm run testar` · `npm run checar` · `npm run sincronizar` · `npm run zips -- --versao X.Y.Z` · `npm run entregas -- --versao X.Y.Z`. Cada tag `vX.Y.Z` enviada ao GitHub gera um release em rascunho com todos os zips.
 
 ---
 

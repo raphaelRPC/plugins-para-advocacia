@@ -1,6 +1,9 @@
 # Instalar pelo GitHub
 
-Este caminho usa o Claude Code e o repositório `raphaelRPC/plugins-para-advocacia`. Por ele vem também a edição avançada dos motores.
+Este caminho usa o Claude Code e o repositório `raphaelRPC/plugins-para-advocacia`.
+<!-- so-fonte:inicio -->
+Por ele vem também a edição avançada dos motores.
+<!-- so-fonte:fim -->
 
 ## Antes de começar
 
