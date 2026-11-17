@@ -4,7 +4,7 @@
 2. `npm run testar` e `npm run checar`: tudo tem que passar.
 3. `node ferramentas/versao.mjs fechar X.Y.Z`.
 4. Commit, depois `git tag vX.Y.Z` e `git push origin main vX.Y.Z`.
-5. Em uns minutos aparece em Releases um **rascunho** com os zips. Abra, confira as notas e clique em **Publish release**.
+5. Em uns minutos aparece em Releases um **rascunho** com os três pacotes por ticket (Clássico, Moderno e Futuro). Abra, confira as notas e clique em **Publish release**. Veja `entregas-por-ticket.md`.
 
 Sem GitHub Actions (por exemplo, sem minutos no plano). Rode antes `npm run testar` e `npm run checar`. Depois, na raiz do repositório:
 

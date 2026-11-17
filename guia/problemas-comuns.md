@@ -1,5 +1,6 @@
 # Problemas comuns
 
+<!-- github:inicio -->
 ## "Repositório não encontrado" ou falha ao clonar
 
 O repositório é privado. Isso quer dizer uma destas duas coisas:
@@ -15,6 +16,7 @@ Para definir essa variável:
 - **Mac:** acrescente a linha `export CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` no arquivo `~/.zshrc`.
 
 Depois, feche e abra o terminal e o Claude Code.
+<!-- github:fim -->
 
 ## O comando `/comecar` não aparece
 
@@ -32,7 +34,7 @@ Depois de instalar, feche e abra o Claude de novo.
 
 ## O hook não roda no Mac
 
-Reinstale o plugin com a versão mais nova. A correção veio em versão nova: veja o `CHANGELOG.md` do repositório ou as notas do release.
+Reinstale o plugin com o zip mais novo que você recebeu.
 
 ## O app recusou o zip
 

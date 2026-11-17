@@ -65,6 +65,10 @@ export function selecionar(raiz, nomeTicket) {
 
 export function processarGuia(texto, ctx) {
   let t = texto.replace(/<!-- so-fonte:inicio -->[\s\S]*?<!-- so-fonte:fim -->\n?/g, '');
+  // Sem repositório de entrega no GitHub, o que só vale para quem instala pelo GitHub sai.
+  t = ctx.semGithub
+    ? t.replace(/<!-- github:inicio -->[\s\S]*?<!-- github:fim -->\n?/g, '')
+    : t.replace(/<!-- github:(inicio|fim) -->\n?/g, '');
   t = t.replace(/<!-- grupos:inicio -->[\s\S]*?<!-- grupos:fim -->\n?/g, ctx.grupos);
   t = t.split(`raphaelRPC/${REPOSITORIO_FONTE}`).join(`${ctx.dono}/${ctx.repositorio}`);
   t = t.split(REPOSITORIO_FONTE).join(ctx.repositorio);
@@ -188,7 +192,7 @@ export function montarEntrega(raiz, sel, versao, destino) {
   const modelo = readFileSync(join(raiz, 'modelos', 'README-entrega.md'), 'utf8');
   gravar(destino, 'README.md', Buffer.from(gerarReadme(modelo, sel, versao)));
   gravar(destino, 'CHANGELOG.md', Buffer.from(filtrarChangelog(readFileSync(join(raiz, 'CHANGELOG.md'), 'utf8'), nomes)));
-  const ctx = { dono: config.dono, repositorio: ticket.repositorio, exemplo: ticket.exemplo, grupos: textoDosGrupos(sel) };
+  const ctx = { dono: config.dono, repositorio: ticket.repositorio, exemplo: ticket.exemplo, grupos: textoDosGrupos(sel), semGithub: config.github === false };
   // Só os guias listados em tickets.json: rascunho novo em guia/ não vaza sozinho.
   for (const rel of config.guias) {
     gravar(destino, `guia/${rel}`, Buffer.from(processarGuia(readFileSync(join(raiz, 'guia', rel), 'utf8'), ctx)));
@@ -297,7 +301,7 @@ export function conferirEntrega(destino, sel) {
   for (const rel of listarArquivos(destino).filter(r => /\.(md|json)$/.test(r) && !r.startsWith('plugins/'))) {
     const texto = readFileSync(join(destino, rel), 'utf8');
     if (texto.includes(REPOSITORIO_FONTE)) erros.push(`${sel.nome}: ${rel} cita o repositório da equipe (${REPOSITORIO_FONTE})`);
-    if (/<!-- (so-fonte|grupos):/.test(texto)) erros.push(`${sel.nome}: ${rel} ficou com marcador de montagem`);
+    if (/<!-- (so-fonte|grupos|github):/.test(texto)) erros.push(`${sel.nome}: ${rel} ficou com marcador de montagem`);
   }
   return erros;
 }
@@ -333,6 +337,16 @@ export function relatorioDeReferencias(destino, sel) {
   ].join('\n');
 }
 
+// O LEIA-ME do pacote se basta sozinho: o "comece aqui" e, logo abaixo, os problemas comuns.
+export function gerarLeiaMe(destino) {
+  const comece = readFileSync(join(destino, 'guia', 'comece-aqui.md'), 'utf8').trimEnd();
+  const problemas = readFileSync(join(destino, 'guia', 'problemas-comuns.md'), 'utf8')
+    .replace(/^## /gm, '### ')
+    .replace(/^# /m, '## ')
+    .trimEnd();
+  return `${comece}\n\n${problemas}\n`;
+}
+
 export function montarTodas(raiz, versao, saidaPedida, apenas) {
   const saida = conferirSaida(raiz, saidaPedida);
   const nomes = apenas ? [apenas] : Object.keys(lerTickets(raiz).tickets);
@@ -357,7 +371,7 @@ export function montarTodas(raiz, versao, saidaPedida, apenas) {
     }
     const pacote = `${sel.ticket.repositorio}-v${versao}.zip`;
     writeFileSync(join(zips, pacote), criarZip([
-      { caminho: 'LEIA-ME.md', dados: readFileSync(join(destino, 'guia', 'comece-aqui.md')) },
+      { caminho: 'LEIA-ME.md', dados: Buffer.from(gerarLeiaMe(destino)) },
       ...internos.map(rel => ({ caminho: rel, dados: readFileSync(join(zips, rel)) })),
     ]));
     for (const rel of [pacote, ...internos]) {

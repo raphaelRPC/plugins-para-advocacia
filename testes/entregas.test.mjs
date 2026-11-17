@@ -86,6 +86,14 @@ test('habilidade de edição acima, nome de ticket e guia avulso são barrados',
   assert.match(erros, /commands\/extra\.md:1 manda usar pagina-do-caso/);
 });
 
+test('LEIA-ME do pacote se basta sozinho, sem GitHub', () => {
+  const pacote = lerZip(readFileSync(join(SAIDA, 'moderno', 'zips', 'plugins-advocacia-moderno-v9.9.9.zip')));
+  const leiaMe = pacote.find(e => e.caminho === 'LEIA-ME.md').dados.toString('utf8');
+  assert.match(leiaMe, /## Problemas comuns/);
+  assert.match(leiaMe, /Enviar plugin/);
+  assert.equal(/github\.com|Repositório não encontrado|<!--/.test(leiaMe), false);
+});
+
 test('README do motor cortado só lista as habilidades que vieram', () => {
   const readme = readFileSync(join(arvore('classico'), 'plugins', 'motores', 'motor-juridico', 'README.md'), 'utf8');
   assert.equal(readme.includes('`sustentacao-oral`'), false);

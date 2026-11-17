@@ -15,11 +15,24 @@ jobs:
       - run: node --test "testes/*.test.mjs"
       - run: node ferramentas/checar.mjs --tag "$GITHUB_REF_NAME"
       - run: node ferramentas/sincronizar.mjs --verificar
-      - run: node ferramentas/montar_zips.mjs --versao "${GITHUB_REF_NAME#v}" --saida dist
-      - run: node ferramentas/versao.mjs notas "${GITHUB_REF_NAME#v}" > notas.md
+      - name: Montar os pacotes de cada ticket
+        run: node ferramentas/montar_entregas.mjs --versao "${GITHUB_REF_NAME#v}" --saida entregas-geradas | tee resumo.txt
+      - name: Notas do release
+        run: |
+          {
+            echo "## Pacotes por ticket"
+            echo
+            grep ' habilidades ' resumo.txt | sed 's/^/- /'
+            echo
+            echo "Cada pacote traz o LEIA-ME e, na pasta plugins, um zip por plugin para enviar no app do Claude."
+            echo
+            echo "## O que mudou"
+            echo
+            node ferramentas/versao.mjs notas "${GITHUB_REF_NAME#v}"
+          } > notas.md
       - run: >
           gh release create "$GITHUB_REF_NAME"
-          dist/*.zip dist/plugins/*.zip dist/SHA256SUMS.txt
+          entregas-geradas/*/zips/*.zip entregas-geradas/SHA256SUMS.txt
           --draft
           --title "Plugins para advocacia $GITHUB_REF_NAME"
           --notes-file notas.md
