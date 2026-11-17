@@ -4,6 +4,9 @@ Cada versão do pacote lista o que mudou em cada plugin. Regras de versão em `g
 
 ## [Não publicado]
 
+## [1.2.0] - 2026-11-17
+
+- Pacotes do evento por ticket: Clássico (37 habilidades), Moderno (83) e Futuro (123), montados a partir deste repositório.
 - `motor-experiencia` 1.0.2: agente do suporte: aviso de audiência e de documento sem as habilidades da edição completa vai para PARA DECIDIR
 - `motor-juridico` 1.0.2: caso de teste do lote marcado como dependente da habilidade pecas-em-lote
 

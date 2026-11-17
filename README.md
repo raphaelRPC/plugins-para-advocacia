@@ -4,7 +4,7 @@
 
 **O escritório inteiro rodando dentro do Claude: comercial, atendimento ao cliente, produção de peças, prazos e marketing.**
 
-8 plugins · 123 habilidades · versão do pacote **1.1.0** · [novidades](CHANGELOG.md) · [baixar os zips](https://github.com/raphaelRPC/plugins-para-advocacia/releases)
+8 plugins · 123 habilidades · versão do pacote **1.2.0** · [novidades](CHANGELOG.md) · [baixar os zips](https://github.com/raphaelRPC/plugins-para-advocacia/releases)
 
 </div>
 
