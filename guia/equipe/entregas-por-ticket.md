@@ -19,7 +19,7 @@ npm run entregas -- --versao 1.2.0
 Isso cria `entregas-geradas/` (fora do git) com uma pasta por ticket:
 
 - `repositorio/`: a árvore que vai para o repositório de entrega. Tem `.claude-plugin/marketplace.json`, `plugins/`, `README.md`, `CHANGELOG.md` e `guia/` (sem `equipe/`), todos gerados para aquele ticket;
-- `zips/`: um zip por plugin e o pacote `<repositorio>-v<versão>.zip` com o LEIA-ME;
+- `zips/`: um zip por plugin (`<plugin>.zip`) e o pacote `<repositorio>.zip` com o LEIA-ME;
 - `relatorio-de-referencias.md`: as linhas que citam por nome uma habilidade que não veio no ticket. Não barra nada, mas vale conferir se o texto já diz o que fazer sem ela.
 
 Só entram arquivos **commitados** no git: rascunho local, arquivo ignorado ou não commitado nunca vai para o participante.
@@ -63,7 +63,7 @@ O README das entregas sai de `modelos/README-entrega.md`.
 
 Os plugins são para o evento, sem atualizações depois. Por isso **não há repositório de entrega nem organização no GitHub**: o `"github": false` do `tickets.json` tira dos guias tudo o que fala de instalar pelo GitHub.
 
-1. Cada tag `vX.Y.Z` gera, neste repositório privado, um release em **rascunho** com três pacotes: `plugins-advocacia-classico-vX.Y.Z.zip`, `plugins-advocacia-moderno-vX.Y.Z.zip` e `plugins-advocacia-futuro-vX.Y.Z.zip`.
+1. Cada tag `vX.Y.Z` gera, neste repositório privado, um release em **rascunho** com três pacotes: `plugins-advocacia-classico.zip`, `plugins-advocacia-moderno.zip` e `plugins-advocacia-futuro.zip` (sem a versão no nome; a versão fica no título do release).
 2. Cada pacote tem o `LEIA-ME.md` (como instalar pelo app e problemas comuns) e, na pasta `plugins`, um zip por plugin.
 3. A equipe do Hub baixa os três e coloca cada um só na pasta da turma do seu ticket.
 

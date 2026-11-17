@@ -47,12 +47,13 @@ test('marketplace, README, guias e changelog são do ticket', () => {
 });
 
 test('zips: um por plugin e o pacote com o LEIA-ME', () => {
-  const pacote = lerZip(readFileSync(join(SAIDA, 'classico', 'zips', 'plugins-advocacia-classico-v9.9.9.zip'))).map(e => e.caminho);
+  const pacote = lerZip(readFileSync(join(SAIDA, 'classico', 'zips', 'plugins-advocacia-classico.zip'))).map(e => e.caminho);
   assert.equal(pacote.length, 3);
   assert.ok(pacote.includes('LEIA-ME.md'));
-  assert.ok(pacote.some(c => /^plugins\/inicio-automacao-[\d.]+\.zip$/.test(c)));
-  assert.ok(pacote.some(c => /^plugins\/motor-juridico-[\d.]+\.zip$/.test(c)));
-  assert.match(readFileSync(join(SAIDA, 'SHA256SUMS.txt'), 'utf8'), /classico\/zips\/plugins-advocacia-classico-v9\.9\.9\.zip/);
+  assert.ok(pacote.includes('plugins/inicio-automacao.zip'));
+  assert.ok(pacote.includes('plugins/motor-juridico.zip'));
+  assert.equal(pacote.some(c => /\d+\.\d+\.\d+/.test(c)), false);
+  assert.match(readFileSync(join(SAIDA, 'SHA256SUMS.txt'), 'utf8'), /classico\/zips\/plugins-advocacia-classico\.zip/);
 });
 
 test('arquivo estranho na entrega e promessa não cumprida são barrados', () => {
@@ -87,7 +88,7 @@ test('habilidade de edição acima, nome de ticket e guia avulso são barrados',
 });
 
 test('LEIA-ME do pacote se basta sozinho, sem GitHub', () => {
-  const pacote = lerZip(readFileSync(join(SAIDA, 'moderno', 'zips', 'plugins-advocacia-moderno-v9.9.9.zip')));
+  const pacote = lerZip(readFileSync(join(SAIDA, 'moderno', 'zips', 'plugins-advocacia-moderno.zip')));
   const leiaMe = pacote.find(e => e.caminho === 'LEIA-ME.md').dados.toString('utf8');
   assert.match(leiaMe, /## Problemas comuns/);
   assert.match(leiaMe, /Enviar plugin/);

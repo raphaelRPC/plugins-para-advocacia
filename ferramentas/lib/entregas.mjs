@@ -365,11 +365,11 @@ export function montarTodas(raiz, versao, saidaPedida, apenas) {
     mkdirSync(join(zips, 'plugins'), { recursive: true });
     const internos = [];
     for (const p of lerCatalogo(destino).plugins) {
-      const rel = `plugins/${p.nome}-${p.versao}.zip`;
+      const rel = `plugins/${p.nome}.zip`;
       writeFileSync(join(zips, rel), zipDoPlugin(p, null));
       internos.push(rel);
     }
-    const pacote = `${sel.ticket.repositorio}-v${versao}.zip`;
+    const pacote = `${sel.ticket.repositorio}.zip`;
     writeFileSync(join(zips, pacote), criarZip([
       { caminho: 'LEIA-ME.md', dados: Buffer.from(gerarLeiaMe(destino)) },
       ...internos.map(rel => ({ caminho: rel, dados: readFileSync(join(zips, rel)) })),

@@ -12,7 +12,7 @@ Os menus do Claude podem mudar com as atualizações. Se algum nome for diferent
 
 ## Passo a passo
 
-1. Baixe o zip do plugin, pelo Hub ou pelo release do GitHub. O nome do zip começa com o nome do plugin, por exemplo `motor-comercial-...zip`.
+1. Baixe o zip do plugin, pelo Hub ou pelo release do GitHub. O zip tem o nome do plugin, por exemplo `motor-comercial.zip`.
 2. Abra o app do Claude.
 3. Clique em Personalizar.
 4. Clique em Plugins.
