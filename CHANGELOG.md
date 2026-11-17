@@ -4,6 +4,9 @@ Cada versão do pacote lista o que mudou em cada plugin. Regras de versão em `g
 
 ## [Não publicado]
 
+- `motor-experiencia` 1.0.2: agente do suporte: aviso de audiência e de documento sem as habilidades da edição completa vai para PARA DECIDIR
+- `motor-juridico` 1.0.2: caso de teste do lote marcado como dependente da habilidade pecas-em-lote
+
 ## [1.1.0] - 2026-11-16
 
 - Repositório reorganizado em plugins/fundacao, plugins/motores e plugins/marketing; edições versionadas; release com zips por edição.

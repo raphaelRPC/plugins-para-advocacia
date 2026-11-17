@@ -8,6 +8,7 @@ import { join, resolve } from 'node:path';
 
 const args = process.argv.slice(2);
 const i = args.indexOf('--saida');
+if (i >= 0 && (!args[i + 1] || args[i + 1].startsWith('--'))) { console.error('ERRO: --saida precisa de um valor logo depois'); process.exit(1); }
 const saida = resolve(i >= 0 ? args[i + 1] : join(import.meta.dirname, '..', 'entregas-geradas'));
 if (!existsSync(saida)) { console.error(`ERRO: ${saida} não existe; rode antes npm run entregas`); process.exit(1); }
 
@@ -25,8 +26,10 @@ for (const ticket of readdirSync(saida).filter(n => existsSync(join(saida, n, 'r
     rodar('plugin', 'marketplace', 'add', repo);
     for (const p of catalogo.plugins) rodar('plugin', 'install', `${p.name}@${catalogo.name}`);
     const lista = rodar('plugin', 'list');
-    const faltando = catalogo.plugins.filter(p => !lista.includes(`${p.name}@${catalogo.name}`));
-    if (faltando.length) throw new Error(`não apareceram instalados: ${faltando.map(p => p.name).join(', ')}`);
+    // Cada plugin aparece como "❯ nome@marketplace" e, poucas linhas abaixo, "Status: ✔ enabled".
+    const blocos = lista.split(/\n\s*\n/);
+    const faltando = catalogo.plugins.filter(p => !blocos.some(b => b.includes(`${p.name}@${catalogo.name}`) && /enabled/.test(b)));
+    if (faltando.length) throw new Error(`não apareceram instalados e ativados: ${faltando.map(p => p.name).join(', ')}`);
     console.log(`${ticket}: ${catalogo.plugins.length} plugins instalados e ativados a partir de ${catalogo.name}`);
   } catch (e) {
     falhas++;

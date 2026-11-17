@@ -22,11 +22,16 @@ Isso cria `entregas-geradas/` (fora do git) com uma pasta por ticket:
 - `zips/`: um zip por plugin e o pacote `<repositorio>-v<versão>.zip` com o LEIA-ME;
 - `relatorio-de-referencias.md`: as linhas que citam por nome uma habilidade que não veio no ticket. Não barra nada, mas vale conferir se o texto já diz o que fazer sem ela.
 
+Só entram arquivos **commitados** no git: rascunho local, arquivo ignorado ou não commitado nunca vai para o participante.
+
 A montagem **falha** e não deve ser publicada quando:
 
 - o total de habilidades fica abaixo da promessa;
-- aparece na entrega qualquer arquivo que não seja dos plugins do ticket, do `guia/` do participante, do README, do CHANGELOG ou do `marketplace.json` (checagem de vazamento);
-- um plugin manda rodar o comando de um plugin que não está no ticket sem dizer "se instalado";
+- aparece na entrega qualquer arquivo que não seja dos plugins do ticket, dos guias listados em `"guias"` no `tickets.json`, do README, do CHANGELOG ou do `marketplace.json` (checagem de vazamento);
+- um motor traz uma habilidade de edição acima da do ticket (o corte é recalculado do `edicoes.json`);
+- um arquivo de plugin cita ticket ou repositório de entrega;
+- um agente ou comando manda usar uma habilidade que não veio no ticket sem dizer "se instalada";
+- um plugin manda rodar o comando de um plugin que não está no ticket sem dizer "se instalado" (linhas de tabela ficam de fora: são listas de referência);
 - o README, o catálogo ou um plugin falham nas mesmas regras do `npm run checar`;
 - sobra o nome do repositório da equipe ou um marcador de montagem num texto.
 

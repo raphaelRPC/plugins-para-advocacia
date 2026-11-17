@@ -48,7 +48,10 @@ test('marketplace, README, guias e changelog são do ticket', () => {
 
 test('zips: um por plugin e o pacote com o LEIA-ME', () => {
   const pacote = lerZip(readFileSync(join(SAIDA, 'classico', 'zips', 'plugins-advocacia-classico-v9.9.9.zip'))).map(e => e.caminho);
-  assert.deepEqual(pacote.sort(), ['LEIA-ME.md', 'plugins/inicio-automacao-0.3.2.zip', 'plugins/motor-juridico-1.0.1.zip'].sort());
+  assert.equal(pacote.length, 3);
+  assert.ok(pacote.includes('LEIA-ME.md'));
+  assert.ok(pacote.some(c => /^plugins\/inicio-automacao-[\d.]+\.zip$/.test(c)));
+  assert.ok(pacote.some(c => /^plugins\/motor-juridico-[\d.]+\.zip$/.test(c)));
   assert.match(readFileSync(join(SAIDA, 'SHA256SUMS.txt'), 'utf8'), /classico\/zips\/plugins-advocacia-classico-v9\.9\.9\.zip/);
 });
 
@@ -64,6 +67,30 @@ test('arquivo estranho na entrega e promessa não cumprida são barrados', () =>
   assert.match(erros, /ferramentas\/x\.mjs não pertence/);
   assert.match(erros, /motor-controladoria\/README\.md não pertence/);
   assert.match(erros, /abaixo da promessa de 999/);
+});
+
+test('habilidade de edição acima, nome de ticket e guia avulso são barrados', () => {
+  const copia = join(mkdtempSync(join(tmpdir(), 'vaza2-')), 'repo');
+  cpSync(arvore('moderno'), copia, { recursive: true });
+  const exp = join(copia, 'plugins', 'motores', 'motor-experiencia');
+  mkdirSync(join(exp, 'skills', 'pagina-do-caso'), { recursive: true });
+  writeFileSync(join(exp, 'skills', 'pagina-do-caso', 'SKILL.md'), '---\nname: pagina-do-caso\ndescription: x\n---\n');
+  writeFileSync(join(exp, 'docs', 'nota.md'), 'Disponível no ticket Futuro.\n');
+  mkdirSync(join(copia, 'guia'), { recursive: true });
+  writeFileSync(join(copia, 'guia', 'notas-internas.md'), 'x');
+  writeFileSync(join(exp, 'commands', 'extra.md'), 'Rode a `pagina-do-caso` agora.\n');
+  const erros = conferirEntrega(copia, selecionar(RAIZ, 'moderno')).join('\n');
+  assert.match(erros, /motor-experiencia traz skills\/pagina-do-caso, que não é da edição essencial/);
+  assert.match(erros, /docs\/nota\.md:1 cita ticket/);
+  assert.match(erros, /guia\/notas-internas\.md não pertence/);
+  assert.match(erros, /commands\/extra\.md:1 manda usar pagina-do-caso/);
+});
+
+test('README do motor cortado só lista as habilidades que vieram', () => {
+  const readme = readFileSync(join(arvore('classico'), 'plugins', 'motores', 'motor-juridico', 'README.md'), 'utf8');
+  assert.equal(readme.includes('`sustentacao-oral`'), false);
+  assert.equal(/A edição \*\*essencial\*\* traz/.test(readme), false);
+  assert.match(readme, /`banco-de-teses-vivo`/);
 });
 
 test('changelog filtrado e guia processado', () => {

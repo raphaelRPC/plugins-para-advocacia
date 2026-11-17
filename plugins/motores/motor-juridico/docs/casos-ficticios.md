@@ -73,9 +73,9 @@ Um resultado colado de pesquisa no Jus IA sobre "restabelecimento de benefício 
 
 **O teste:** o caso 2 (Paulo contra o Restaurante Sabor Mineiro) acusa conflito, porque o restaurante foi cliente do escritório. A habilidade para e leva a decisão para a advogada.
 
-## O lote (para `pecas-em-lote`)
+## O lote (para `pecas-em-lote`, se instalada)
 
-Cinco segurados fictícios (códigos C-2026-9001 a C-2026-9005) com a mesma situação (benefício cessado, pedido de prorrogação negado), numa planilha com nome curto, data de cessação, função e documentos. Um deles com a data de cessação faltando e outro com área diferente (trabalhista), para a conferência barrar. A planilha e as colunas estão em `skills/pecas-em-lote/assets/`.
+Cinco segurados fictícios (códigos C-2026-9001 a C-2026-9005) com a mesma situação (benefício cessado, pedido de prorrogação negado), numa planilha com nome curto, data de cessação, função e documentos. Um deles com a data de cessação faltando e outro com área diferente (trabalhista), para a conferência barrar. A planilha e as colunas estão em `skills/pecas-em-lote/assets/`, se a habilidade estiver instalada.
 
 ## Como usar no teste
 

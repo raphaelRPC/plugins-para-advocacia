@@ -53,8 +53,8 @@ Passo a passo completo, com login no GitHub e solução de problemas: [instalar 
 | [`inicio-automacao`](plugins/fundacao/inicio-automacao) | 0.3.2 | 20 | plugin inteiro |
 | **Motores do escritório** | | | |
 | [`motor-comercial`](plugins/motores/motor-comercial) | 2.0.1 | 16 | 6 / 13 / 16 |
-| [`motor-experiencia`](plugins/motores/motor-experiencia) | 1.0.1 | 17 | 6 / 14 / 17 |
-| [`motor-juridico`](plugins/motores/motor-juridico) | 1.0.1 | 21 | 9 / 17 / 21 |
+| [`motor-experiencia`](plugins/motores/motor-experiencia) | 1.0.2 | 17 | 6 / 14 / 17 |
+| [`motor-juridico`](plugins/motores/motor-juridico) | 1.0.2 | 21 | 9 / 17 / 21 |
 | [`motor-controladoria`](plugins/motores/motor-controladoria) | 1.0.0 | 20 | 9 / 16 / 20 |
 | **Marketing jurídico** | | | |
 | [`marketing-juridico-claude`](plugins/marketing/marketing-juridico-claude) | 1.0.2 | 5 | plugin inteiro |

@@ -1,5 +1,6 @@
 {
   "dono": "raphaelRPC",
+  "guias": ["comece-aqui.md", "instalar-pelo-app.md", "instalar-pelo-github.md", "problemas-comuns.md"],
   "plugins": {
     "inicio-automacao": { "quer": "Organizar o escritório antes de automatizar: diagnóstico, código de conduta, setores, POPs", "comecar": "`/inicio-automacao:comecar`" },
     "motor-comercial": { "quer": "Responder quem chega, marcar a consulta, mandar proposta e contrato, retomar quem sumiu", "comecar": "`/motor-comercial:comecar`" },
