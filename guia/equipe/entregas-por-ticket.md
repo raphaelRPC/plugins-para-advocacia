@@ -59,10 +59,12 @@ O README das entregas sai de `modelos/README-entrega.md`.
 2. Rode `npm run checar`: ele confere se os plugins existem, se a edição de cada um é válida e se a promessa continua cumprida.
 3. Rode `npm run entregas -- --versao X.Y.Z` e `node ferramentas/testar_entregas.mjs`.
 
-## Ainda falta (depende da organização no GitHub)
+## Como os pacotes chegam ao participante (decisão de 17/11)
 
-- Criar os três repositórios de entrega, privados, dentro de uma organização, com um time por ticket e permissão **Read**.
-- Desligar os forks de repositórios privados na organização.
-- Guardar na fonte um token que só escreve nos três repositórios.
-- Ligar o workflow que, a cada tag, monta as entregas, envia cada uma ao seu repositório e cria lá um release em rascunho.
-- Trocar `"dono"` em `tickets.json` pelo nome da organização.
+Os plugins são para o evento, sem atualizações depois. Por isso **não há repositório de entrega nem organização no GitHub**: o `"github": false` do `tickets.json` tira dos guias tudo o que fala de instalar pelo GitHub.
+
+1. Cada tag `vX.Y.Z` gera, neste repositório privado, um release em **rascunho** com três pacotes: `plugins-advocacia-classico-vX.Y.Z.zip`, `plugins-advocacia-moderno-vX.Y.Z.zip` e `plugins-advocacia-futuro-vX.Y.Z.zip`.
+2. Cada pacote tem o `LEIA-ME.md` (como instalar pelo app e problemas comuns) e, na pasta `plugins`, um zip por plugin.
+3. A equipe do Hub baixa os três e coloca cada um só na pasta da turma do seu ticket.
+
+Se um dia quiserem a instalação pelo GitHub, o caminho está pronto: criar uma organização, os três repositórios privados com um time por ticket (permissão **Read**), trocar `"dono"` e pôr `"github": true` no `tickets.json`, e ligar a publicação nos repositórios.

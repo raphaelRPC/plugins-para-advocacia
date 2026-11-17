@@ -1,22 +1,55 @@
 {
   "dono": "raphaelRPC",
-  "guias": ["comece-aqui.md", "instalar-pelo-app.md", "instalar-pelo-github.md", "problemas-comuns.md"],
+  "github": false,
+  "guias": [
+    "comece-aqui.md",
+    "instalar-pelo-app.md",
+    "instalar-pelo-github.md",
+    "problemas-comuns.md"
+  ],
   "plugins": {
-    "inicio-automacao": { "quer": "Organizar o escritório antes de automatizar: diagnóstico, código de conduta, setores, POPs", "comecar": "`/inicio-automacao:comecar`" },
-    "motor-comercial": { "quer": "Responder quem chega, marcar a consulta, mandar proposta e contrato, retomar quem sumiu", "comecar": "`/motor-comercial:comecar`" },
-    "motor-experiencia": { "quer": "Manter o cliente informado depois do contrato: andamento traduzido, resumo do mês, página do caso", "comecar": "`/motor-experiencia:comecar`" },
-    "motor-juridico": { "quer": "Produzir peças no padrão do escritório, com cada citação e cada dado conferidos", "comecar": "`/motor-juridico:comecar`" },
-    "motor-controladoria": { "quer": "Captar publicações, contar prazos pelo calendário do tribunal e agendar só o que foi conferido", "comecar": "`/motor-controladoria:comecar`" },
-    "marketing-juridico-claude": { "quer": "Gravar e editar vídeos com roteiro no seu tom", "comecar": "`iniciar o rito`" },
-    "editor-de-carrossel-mjc": { "quer": "Fazer carrosséis com texto revisado pela OAB e arte no Canva", "comecar": "`iniciar o rito`" },
-    "plugin-copywriter": { "quer": "Escrever copy para qualquer nicho", "comecar": "o pedido em linguagem normal, por exemplo `cria um carrossel sobre X`" }
+    "inicio-automacao": {
+      "quer": "Organizar o escritório antes de automatizar: diagnóstico, código de conduta, setores, POPs",
+      "comecar": "`/inicio-automacao:comecar`"
+    },
+    "motor-comercial": {
+      "quer": "Responder quem chega, marcar a consulta, mandar proposta e contrato, retomar quem sumiu",
+      "comecar": "`/motor-comercial:comecar`"
+    },
+    "motor-experiencia": {
+      "quer": "Manter o cliente informado depois do contrato: andamento traduzido, resumo do mês, página do caso",
+      "comecar": "`/motor-experiencia:comecar`"
+    },
+    "motor-juridico": {
+      "quer": "Produzir peças no padrão do escritório, com cada citação e cada dado conferidos",
+      "comecar": "`/motor-juridico:comecar`"
+    },
+    "motor-controladoria": {
+      "quer": "Captar publicações, contar prazos pelo calendário do tribunal e agendar só o que foi conferido",
+      "comecar": "`/motor-controladoria:comecar`"
+    },
+    "marketing-juridico-claude": {
+      "quer": "Gravar e editar vídeos com roteiro no seu tom",
+      "comecar": "`iniciar o rito`"
+    },
+    "editor-de-carrossel-mjc": {
+      "quer": "Fazer carrosséis com texto revisado pela OAB e arte no Canva",
+      "comecar": "`iniciar o rito`"
+    },
+    "plugin-copywriter": {
+      "quer": "Escrever copy para qualquer nicho",
+      "comecar": "o pedido em linguagem normal, por exemplo `cria um carrossel sobre X`"
+    }
   },
   "tickets": {
     "classico": {
       "repositorio": "plugins-advocacia-classico",
       "promessa": 30,
       "exemplo": "motor-juridico",
-      "plugins": { "inicio-automacao": null, "motor-juridico": "completa" }
+      "plugins": {
+        "inicio-automacao": null,
+        "motor-juridico": "completa"
+      }
     },
     "moderno": {
       "repositorio": "plugins-advocacia-moderno",

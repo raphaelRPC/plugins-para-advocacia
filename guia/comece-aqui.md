@@ -39,12 +39,14 @@ Resumo para instalar pelo app do Claude, sem precisar do GitHub:
 3. Escolha o zip de um plugin (comece pelo `inicio-automacao`) e espere ele aparecer na lista, ativado. Repita para cada plugin que quiser.
 4. Escreva no chat o comando de começo do plugin, por exemplo `/motor-comercial:comecar`.
 
+<!-- github:inicio -->
 Os guias completos, para quem tem acesso ao GitHub:
 
 - Pelo app do Claude, com o arquivo zip: [instalar-pelo-app.md](https://github.com/raphaelRPC/plugins-para-advocacia/blob/main/guia/instalar-pelo-app.md)
 - Pelo GitHub, no Claude Code: [instalar-pelo-github.md](https://github.com/raphaelRPC/plugins-para-advocacia/blob/main/guia/instalar-pelo-github.md)
 
 Se algo não funcionar, veja [problemas-comuns.md](https://github.com/raphaelRPC/plugins-para-advocacia/blob/main/guia/problemas-comuns.md).
+<!-- github:fim -->
 
 ## Cuidados
 
