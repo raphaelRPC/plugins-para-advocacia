@@ -40,6 +40,7 @@ export function regraHabilidades(p) {
     if (fm.name !== pasta) erros.push(`${p.nome}: skills/${pasta} tem name "${fm.name}"`);
     if (!fm.description) erros.push(`${p.nome}: skills/${pasta} sem description`);
     else if (fm.description.length > 1024) erros.push(`${p.nome}: skills/${pasta} description com ${fm.description.length} caracteres (máximo 1024)`);
+    if (fm.description && /[<>]/.test(fm.description)) erros.push(`${p.nome}: skills/${pasta} description com < ou > (o app do Claude recusa o zip: "cannot contain XML tags")`);
   }
   return erros;
 }

@@ -4,7 +4,7 @@
 
 **O escritório inteiro rodando dentro do Claude: comercial, atendimento ao cliente, produção de peças, prazos e marketing.**
 
-8 plugins · 123 habilidades · versão do pacote **1.2.0** · [novidades](CHANGELOG.md) · [baixar os zips](https://github.com/raphaelRPC/plugins-para-advocacia/releases)
+8 plugins · 123 habilidades · versão do pacote **1.2.1** · [novidades](CHANGELOG.md) · [baixar os zips](https://github.com/raphaelRPC/plugins-para-advocacia/releases)
 
 </div>
 
@@ -54,7 +54,7 @@ Passo a passo completo, com login no GitHub e solução de problemas: [instalar 
 | **Motores do escritório** | | | |
 | [`motor-comercial`](plugins/motores/motor-comercial) | 2.0.1 | 16 | 6 / 13 / 16 |
 | [`motor-experiencia`](plugins/motores/motor-experiencia) | 1.0.2 | 17 | 6 / 14 / 17 |
-| [`motor-juridico`](plugins/motores/motor-juridico) | 1.0.2 | 21 | 9 / 17 / 21 |
+| [`motor-juridico`](plugins/motores/motor-juridico) | 1.0.3 | 21 | 9 / 17 / 21 |
 | [`motor-controladoria`](plugins/motores/motor-controladoria) | 1.0.0 | 20 | 9 / 16 / 20 |
 | **Marketing jurídico** | | | |
 | [`marketing-juridico-claude`](plugins/marketing/marketing-juridico-claude) | 1.0.2 | 5 | plugin inteiro |
