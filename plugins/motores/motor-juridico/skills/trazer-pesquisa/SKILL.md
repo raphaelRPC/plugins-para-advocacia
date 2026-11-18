@@ -4,7 +4,7 @@ description: >
   Transforma a pesquisa de jurisprudência feita no Jus IA em base do escritório: separa cada
   julgado numa ficha (tribunal, número, órgão, relator, data, tese em uma frase, a favor ou
   contra, fonte com link), marca tudo como não conferido, pergunta a que tema e a que tese
-  serve, e grava em 04-base/juridico/jurisprudencia/<tema>.md por script, sem duplicar o que já
+  serve, e grava em 04-base/juridico/jurisprudencia/[tema].md por script, sem duplicar o que já
   está lá. Julgado sem número, data ou link não entra. Também roda o lote de conferência dos
   temas vencidos e grava o resultado de cada conferência. Use quando o advogado disser "guarda
   essa pesquisa na base", "trouxe isto do Jus IA", "organiza esses julgados", "atualiza o tema",

@@ -1,6 +1,6 @@
 {
   "name": "motor-juridico",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A produção jurídica do escritório de advocacia rodando no Claude: dossiê do caso, leitura dos autos, estratégia e contraditório, minuta no padrão do escritório, conferência de cada citação e dos dados da peça, preparo do protocolo, e as peças boas do escritório transformadas em habilidades próprias. Pesquisa de jurisprudência pelo Jus IA, guardada numa base do escritório. Um agente roda a fila de peças do dia e deixa as minutas conferidas para o advogado aprovar.",
   "author": {
     "name": "Raphael Cardoso"

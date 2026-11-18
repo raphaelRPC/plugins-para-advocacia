@@ -14,6 +14,16 @@ function pluginFalso(grupo, arquivos) {
   return { nome: 'teste', grupo, dir };
 }
 
+test('description com < ou > é erro (o app recusa o zip)', () => {
+  const p = pluginFalso('motores', {
+    'skills/a/SKILL.md': '---\nname: a\ndescription: grava em jurisprudencia/<tema>.md\n---\n',
+    'skills/b/SKILL.md': '---\nname: b\ndescription: >\n  grava em jurisprudencia/[tema].md\n---\n',
+  });
+  const erros = regraHabilidades(p);
+  assert.equal(erros.length, 1);
+  assert.match(erros[0], /skills\/a.*< ou >/);
+});
+
 test('habilidade sem description, com name trocado ou description longa é erro', () => {
   const p = pluginFalso('motores', {
     'skills/a/SKILL.md': '---\nname: a\n---\n',

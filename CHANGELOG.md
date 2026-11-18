@@ -4,6 +4,10 @@ Cada versão do pacote lista o que mudou em cada plugin. Regras de versão em `g
 
 ## [Não publicado]
 
+## [1.2.1] - 2026-11-18
+
+- `motor-juridico` 1.0.3: descrição da habilidade trazer-pesquisa sem < >: o app do Claude recusava o zip ("cannot contain XML tags")
+
 ## [1.2.0] - 2026-11-17
 
 - Pacotes do evento por ticket: Clássico (37 habilidades), Moderno (83) e Futuro (123), montados a partir deste repositório.
